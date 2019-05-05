@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "门店地址",
+  "onReachBottomDistance": 100,
+  "usingComponents": {
+    "loading": "/components/loading/loading",
+    "defaultPage": "/components/defaultPage/defaultPage"
+  }
+}

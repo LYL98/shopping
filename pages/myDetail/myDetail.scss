@@ -1,0 +1,45 @@
+/* pages/myDetail/myDetail.wxss */
+#my-detail {
+    padding: 0 30rpx;
+}
+
+#my-detail > .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 34rpx 0;
+    border-bottom: 1rpx solid #eee;
+    font-size: 30rpx;
+    color: #242424;
+}
+
+#my-detail > .item > .content {
+    color: #A5A5A5;
+    width: 500rpx;
+    text-align: right;
+}
+
+#my-detail > .item > .content > image {
+    width: 108rpx;
+    height: 108rpx;
+    border-radius: 50%;
+}
+
+#my-detail > .item > .content.tag-container {
+    margin-top: -10rpx;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#my-detail > .item > .content > .tag {
+    margin-top: 10rpx;
+    margin-left: 12rpx;
+    border: 1rpx solid #00AE66;
+    border-radius: 4rpx;
+    padding: 7rpx 10rpx;
+    font-size: 24rpx;
+    color: #00AE66;
+    line-height: 24rpx;
+}

@@ -1,0 +1,54 @@
+.item{
+  position:absolute;
+  width: 210rpx;
+  height: 105rpx;
+  z-index: 2;
+}
+.item > image{
+  width: 210rpx;
+  height: 105rpx;
+  border-radius: 5rpx;
+}
+.item_container{
+  height:300rpx;
+  position:relative;
+}
+
+.item > text{
+  position: absolute;
+  width: 32rpx;
+  height: 32rpx;
+  line-height: 27rpx;
+  border-radius: 16rpx;
+  display: block;
+  background: #C7C7C7;
+  text-align: center;
+  color: #fff;
+  top: -16rpx;
+  right: -16rpx;
+  z-index: 3;
+} 
+
+view.photograph{
+  float:left;
+  width: 210rpx;
+  height: 105rpx;
+  background: #F7F7F8;
+  position: absolute;
+  z-index: 1;
+}
+.photograph > image{
+  width:52rpx;
+  height:43rpx;
+  display:block;
+  margin:15rpx auto;
+  display:block;
+  border-radius: 5rpx;
+}
+.photograph > text{
+  font-size:24rpx;
+  color:#C7C7C7;
+  line-height:120%;
+  display:block;
+  text-align:center;
+} 

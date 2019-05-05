@@ -1,0 +1,326 @@
+/* pages/afterSaleDetail/afterSaleDetail.wxss */
+.after-title{
+  border-bottom: 1rpx solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  padding: 15rpx 30rpx 10rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+.after-title > view{
+  flex: 1;
+}
+.after-title > .after-date{
+  text-align: right;
+  flex: initial !important;
+}
+.brief{
+  /* border-bottom: 15rpx solid #f3f4f6; */
+}
+.brief > .top.done{
+  background: #00AE66;
+  min-height: 194rpx;
+}
+.brief > .top.t-c{
+  position: relative;
+}
+.brief > .top.t-c > .afterdoing{
+  position: absolute;
+  padding: 40rpx 0 40rpx 60rpx;
+  top: 0;
+}
+.brief > .top.t-c > .afterdoing text{
+  width: 100%;
+  color: #fff;
+  font-size: 24rpx;
+  display: block;
+  text-align:left;
+}
+.brief > .top.t-c > .afterdoing text:first-child{
+  font-size:32rpx;
+  margin-bottom:5rpx;
+}
+.brief > .top .afterdone{
+  position: relative;
+  width: 100vw;
+  z-index: 2;
+  padding-bottom:10rpx;
+}
+.brief > .top .afterdone .type,
+.brief > .top .afterdone .dic{
+  margin:5rpx 30rpx 0 60rpx;
+}
+.brief > .top .afterdone view{
+  font-size: 24rpx;
+  color: #fff;
+  text-align: left;
+ }
+
+.brief > .top .afterdone view.title{
+  margin-bottom: 5rpx;
+  font-size: 32rpx;
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 40rpx 30rpx 0 60rpx; 
+}
+.brief > .top .afterdone .title text{
+  flex: 1;
+}
+.brief > .top .afterdone .title text:last-child{
+  font-size: 26rpx;
+}
+
+.brief > .amount_refund{
+  border: 20rpx solid #F7F7F8;
+  border-right:none;
+  border-left: none;
+  height: 110rpx;
+  line-height: 110rpx;
+  padding: 0 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.brief > .amount_refund .price{
+  color: #FF6868;
+  font-size: 30rpx;font-weight: 500;
+}
+
+.brief > .top > image{
+  width: 100vw;
+  height: 160rpx;
+}
+.brief > .done >image{
+  height: 194rpx;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+}
+.brief > .item{
+  padding: 15rpx 30rpx;
+  display: flex;
+}
+.brief > .item > view{
+  flex: 1;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.brief > .hint{
+  color: #999;
+  font-size: 26rpx;
+  padding: 20rpx 0;
+}
+.brief > .hint > image{
+  width: 32rpx;
+  height: 32rpx;
+  position: relative;
+  top: 6rpx;
+  margin-left: 6rpx;
+}
+
+.cause, .interact{
+  display: flex;
+  align-items: center;
+  border-top: 20rpx solid #f3f4f6;
+  border-bottom: 20rpx solid #f3f4f6;
+  padding: 20rpx 30rpx;
+}
+.interact{
+  border: 0;
+}
+.cause > .right{
+  flex: 1;
+  text-align: right;
+}
+
+.step-ico{
+  display: flex;
+  align-items: center;
+  padding:64rpx 90rpx 0 90rpx;
+}
+.step-ico > .item{
+  /* width: 190rpx; */
+  height: 70rpx;
+  text-align: center;
+}
+.step-ico > .item > image{
+  width: 70rpx;
+  height: 70rpx;
+}
+.step-ico > .interval{
+  flex: 1;
+  height: 2rpx;
+  background: #00AE66;
+}
+.step-ico > .undone{
+  background: #999;
+}
+.step-content{
+  display: flex;
+  font-size: 18rpx;
+  color: #999;
+  padding:18rpx 0 30rpx 0;
+  border-bottom: 15rpx solid #f3f4f6;
+}
+.step-content > view{
+  flex: 1;
+  text-align: center;
+}
+.step-content > view > .title{
+  font-size: 24rpx;
+  color: #00AE66;
+}
+.step-content > view > .t2{
+  color: #00AE66;
+}
+.step-content > view > .undone{
+  color: #999;
+}
+.comment-item{
+  color:#999;
+  padding:10rpx 30rpx;
+  font-size:24rpx;
+  text-align: left;
+}
+.comment-item:nth-child(n+2) {
+  padding:20rpx 30rpx;
+}
+.comment-item .content{
+  margin: 5rpx 0;
+  font-size: 28rpx;
+  color: #3D4552;
+  text-align: left;
+}
+.comment-item .time{
+  font-size: 20rpx;
+  color:#A7A7A7;
+  text-align: left;
+  margin-top: 14rpx;
+}
+.comment-item .usr{
+  text-align: right;
+  display: flex;
+  justify-content:flex-end;
+}
+.comment-item .usr .name{
+  margin-left: 17rpx;
+}
+.comment-item .usr .dialog{
+  background: #F7F7F8;
+  padding:14rpx 30rpx;
+  border-radius:8rpx;
+  max-width:480rpx;
+  position: relative;
+}
+
+.comment-item .usr .dialog::after{
+  position: absolute;
+  right: -9rpx;
+  top: 30rpx;
+  content: '';
+  margin-top: -8rpx;
+  display: block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  line-height: 0;
+  border-bottom: 10rpx solid #FFF;
+  border-top: 10rpx solid #FFF;
+  border-right: none;
+  border-left: 10rpx solid #F7F7F8; 
+}
+.comment-item .sys{
+  text-align:left;
+  display:flex;
+  justify-content:flex-end;
+  flex-direction:row-reverse;
+}
+.comment-item .sys .name{
+  margin-right: 17rpx;
+}
+.comment-item .sys .dialog{
+  background: #F7F7F8;
+  padding:14rpx 30rpx;
+  border-radius:8rpx;
+  max-width:480rpx;
+  position: relative;
+}
+.comment-item .sys .dialog::after{
+  position: absolute;
+  left: -9rpx;
+  top: 30rpx;
+  content: '';
+  margin-top: -8rpx;
+  display: block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  line-height: 0;
+  border-bottom: 10rpx solid #FFF;
+  border-top: 10rpx solid #FFF;
+  border-left: none;
+  border-right: 10rpx solid #F7F7F8; 
+}
+
+.comment-item .sys .name image,
+.comment-item .usr .name image{
+  width:70rpx;
+  height:70rpx; 
+  border-radius:40rpx;
+}
+.comment-item .imgs{
+  margin-top: 10rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment-item  .imgs > image{
+  width: 144rpx;
+  height: 144rpx;
+  background: #f3f4f6;
+  margin-right: 16rpx;
+  margin-bottom: 10rpx;
+}
+.audit-reply{
+  height:80rpx;
+  line-height:80rpx;
+  text-align:center;
+  position:fixed;
+  bottom:0;
+  width:94vw;
+  padding:20rpx 3vw;
+  background: #fff;
+}
+.audit-reply navigator{
+  background:#00AE66;
+  color: #fff;
+  border-radius: 40rpx;
+}
+.audit-content{
+  color: #999;
+  padding: 20rpx 30rpx;
+  font-size: 24rpx;
+  border-bottom: 20rpx solid #F4F5F7;
+}
+.audit-content > .img-item{
+  overflow: hidden;
+  margin-top: 20rpx;
+}
+.audit-content > .img-item > image{
+  float: left;
+  width: 144rpx;
+  height: 144rpx;
+  background: #f3f4f6;
+  margin-right: 16rpx;
+}
+.serice-code{
+  background: #F4F5F7; 
+  padding: 22rpx 0 22rpx 34rpx;
+}
+.serice-code view{
+  font-size: 24rpx;
+  color: #a7a7a7;
+}
+.serice-code view:last-child{
+  margin-top: 8rpx;
+}

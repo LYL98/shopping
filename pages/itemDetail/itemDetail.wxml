@@ -1,0 +1,188 @@
+<!--pages/itemDetail/itemDetail.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
+
+<view class="skeleton">
+  <view class="skeleton-rect" style="position:relative;">
+    <view class="mark">
+      <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
+    </view>
+    <swiper autoplay interval="3000" class="img-view bg-img-container-item-large" bindchange="swiperChange">
+      <block wx:for="{{detail.images}}" wx:key="detail.images" class="img-item">
+        <swiper-item>
+          <image src="{{tencentPath + item + '_seal750x750'}}" class="slide-image"  data-src="{{detail.images}}" data-index="{{index}}" bindtap="previewImage"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="dotwrap">
+      {{currentSwiper + 1}}/{{detail.images.length}}
+    </view> 
+  </view>
+  <view class="item-title">
+    <text class="skeleton-rect">{{detail.title}}</text>
+  </view>
+  <view class="repertory-price">
+    <view class="price-unit skeleton-rect" wx:if="{{detail.is_quoted}}">
+      ￥{{tools.returnPrice(detail.price_sale_piece)}}/件
+      <text class="price-origin" wx:if="{{detail.price_origin_piece > detail.price_sale_piece}}">￥{{tools.returnPrice(detail.price_origin_piece)}}/件</text>
+    </view>
+    <view class="price-unit" wx:else>
+      <text>今日未报价</text>
+    </view>
+    <view class="repertory">
+      <text>{{tools.returnItemStock(detail.item_stock)}}</text>
+      <text wx:if="{{tools.returnItemStock(detail.item_stock)}}" style="margin: 0 15rpx;">.</text>
+      <text>最多下单{{detail.order_num_max}}件</text>
+    </view>
+  </view>
+
+  <view class="border-across1"></view>
+
+  <!--满折start-->
+  <view class="input-item discount-item" wx:if="{{detail.promotion && detail.promotion.id}}">
+    <view class="title">
+      <text class="discount">满折</text>
+    </view>
+    <view class="content">
+      <!--单品满折start-->
+      <view wx:if="{{detail.promotion.promotion_type === 'type_discount'}}">
+        <text wx:for="{{detail.promotion.rules}}" wx:key="key">满{{item.full}}件价格降至{{tools.returnDiscount(item.reduction)}}折{{index < detail.promotion.rules.length - 1 ? '；' : ''}}</text>
+      </view>
+    </view>
+  </view>
+  <!--满折end-->
+
+  <!--全场满减start-->
+  <view class="input-item reduction-item" wx:if="{{promotionData.id && promotionData.promotion_type === 'type_reduction'}}">
+    <view class="title">
+      <text class="minus">满减</text>
+    </view>
+    <view class="content">
+      <text wx:for="{{promotionData.rules}}" wx:key="key">全场满{{tools.returnPrice(item.full)}}减{{tools.returnPrice(item.reduction)}}元{{index < promotionData.rules.length - 1 ? '；' : ''}}</text>
+    </view>
+  </view>
+  <!--全场满减end-->
+
+  <!--全场满折start-->
+  <view class="input-item reduction-item" wx:if="{{promotionData.id && promotionData.promotion_type === 'scope_discount'}}">
+    <view class="title">
+      <text class="minus">满折</text>
+    </view>
+    <view class="content">
+      <text wx:for="{{promotionData.rules}}" wx:key="key">全场满{{tools.returnPrice(item.full)}}打{{tools.returnDiscount(item.reduction)}}折{{index < promotionData.rules.length - 1 ? '；' : ''}}</text>
+    </view>
+  </view>
+  <!--全场满折end-->
+
+  <!--预售商品日期start-->
+  <view class="input-item" wx:if="{{detail.is_presale}}">
+    <view class="title">配送时间</view>
+    <view class="content">
+      {{detail.presale_begin}} 至 {{detail.presale_end}}
+    </view>
+  </view>
+  <!--预售商品日期end-->
+
+   <view class="title-table skeleton-rect">商品规格</view>
+   <view class="table">
+    <view class="td">
+      <view>
+        <text class="name">品名</text>
+        <text>{{detail.title || '-'}}</text>
+      </view>
+      <view>
+        <text class="name">单价</text>
+        <text>{{detail.is_quoted && detail.price_sale_jin > 0 ? tools.returnPrice(detail.price_sale_jin)+'元/斤' :'-'}}</text>
+      </view>
+    </view>
+    <view class="td">
+        <view>
+        <text  class="name">产地</text>
+        <text>{{detail.origin_place || '-'}}</text>
+      </view>
+      <view>
+        <text class="name">毛重</text>
+        <text>{{detail.gross_weight > 0 ? tools.returnGrossWeight(detail.gross_weight)+'斤' :'-'}}</text>
+      </view>
+    </view>
+    <view class="td">
+      <view>
+        <text class="name">商品分类</text>
+        <text wx:if="{{detail.display_class_code}}">{{detail.display_class.title || '-'}}</text>
+        <text wx:else>-</text>
+      </view>
+      <view>
+        <text class="name">净重</text>
+        <text>{{detail.net_weight >0 ? tools.returnGrossWeight(detail.net_weight) +'斤':'-'}}</text>
+      </view>
+    </view>
+    <view class="td">
+        <view>
+        <text class="name">规格</text>
+        <text>{{detail.item_spec || '-'}}</text>
+      </view>
+      <view>
+        <text class="name">是否含框</text>
+        <text wx:if="{{detail.frame_code}}">是 ({{tools.returnPrice(detail.frame.price)}}元)</text>
+        <text wx:else>否</text>
+      </view>
+    </view>
+    <view class="td">
+      <view>
+        <text class="name">包装规格</text>
+        <text>{{detail.package_spec || '-'}}</text>
+      </view>
+      <view>
+        <text class="name">是否称重</text>
+        <text>{{detail.is_weigh ? '是' : '否'}}</text>
+      </view>
+    </view>
+    <view class="td">
+      <view>
+        <text class="name">销售单位</text>
+        <text>{{detail.sale_unit}}</text>
+      </view>
+      <view></view>
+    </view>
+  </view>
+
+  <view class="introduce">
+    <view class="dec-title">商品详情</view>
+    <view>
+      <video wx:for="{{vidoes}}" wx:key="index" src="{{item}}" id="v_{{index}}" ></video>
+      <rich-text nodes="{{detail.content || '暂无介绍'}}"></rich-text>
+    </view>
+  </view>
+
+  <view class="introduce">
+    <view>
+      <rich-text nodes="{{description || ''}}"></rich-text>
+    </view>
+  </view>
+
+  <view style="height: 120rpx;"></view>
+  <view class="btn-view">
+    <navigator url="/pages/index/index" open-type="switchTab" class="btn-mini">
+      <image src="{{homeSrc}}"></image>
+    </navigator>
+    <navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="btn-mini">
+      <image src="{{shopCartSrc}}"></image>
+      <span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
+    </navigator>
+    <view class="btn-mini" wx:if="{{detail.is_collect}}" bindtap="itemCollectionCancel">
+      <image src="{{collectSSrc}}"></image>
+    </view>
+    <view class="btn-mini" wx:else bindtap="itemCollectionAdd">
+      <image src="{{collectSrc}}"></image>
+    </view>
+    <view class="btn-join" style="padding-left: 16rpx;" wx:if="{{detail.item_stock > 0}}">
+      <!--预售-->
+      <presale wx:if="{{detail.is_presale && detail.id && detail.code}}" itemData="{{detail}}"/>
+      <!--正常购买-->
+      <joinShopCart size="large" wx:if="{{!detail.is_presale && detail.id && detail.code}}" itemData="{{detail}}" bindcallback="joinShoppingCart" sourcePage="itemDetail"/>
+    </view>
+    <view wx:else class="btn-join">
+      <view class="unjoin-shopping-btn">{{detail.is_presale ? '预定' : '加入购物车'}}</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,36 @@
+<!--pages/myDetail/myDetail.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<view id="my-detail">
+  <view class="item">
+    <text class="label">头像</text>
+    <view class="content">
+      <image bindtap="clickPic" src="{{detail.avatar ? tencentPath + detail.avatar + '_min200x200' : defaultSrc}}"></image>
+    </view>
+  </view>
+  <view class="item">
+    <text class="label">用户名</text>
+    <view class="content">{{ detail.realname }}</view>
+  </view>
+  <view class="item">
+    <text class="label">商户名称</text>
+    <view class="content">{{ detail.merchant.title }}</view>
+  </view>
+  <view class="item">
+    <text class="label">商户等级</text>
+    <view class="content">{{ detail.merchant.grade && detail.merchant.grade.title }}</view>
+  </view>
+  <view class="item">
+    <text class="label">协议用户</text>
+    <view class="content">{{ detail.merchant.is_post_pay ? '是' : '否' }}</view>
+  </view>
+  <view class="item" wx:if="{{ detail.merchant.is_post_pay }}">
+    <text class="label">授信额度</text>
+    <view class="content">{{ tools.returnPrice(detail.merchant.credit_limit) }}元</view>
+  </view>
+  <view class="item">
+    <text class="label">标签</text>
+    <view class="content tag-container">
+      <text class="tag" wx:for="{{detail.merchant.outer_tags}}" wx:key="index">{{ item }}</text>
+    </view>
+  </view>
+</view>

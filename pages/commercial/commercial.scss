@@ -1,0 +1,20 @@
+/* pages/commercial/commercial.wxss */
+.title{
+  background: #f3f4f6;
+  padding: 30rpx;
+}
+.content{
+  padding: 20rpx 0;
+  margin: 0 30rpx;
+  border-bottom: 1rpx solid #f3f4f6;
+  display: flex;
+  align-items: center;
+}
+.content > .left{
+  flex: initial;
+}
+.content > .right{
+  flex: 1;
+  text-align: right;
+  color: #999;
+}

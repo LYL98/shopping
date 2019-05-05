@@ -1,0 +1,25 @@
+<!--pages/login/login.wxml-->
+<view>
+  <view class="logo" >Hi,请先登录哦~</view>
+  <view class="input-view">
+    <image class="login_tel" src="{{login_tel}}" />
+    <input placeholder-class="phcolor" type="number" placeholder="请输入手机号码" data-fieldkey="phone" bindinput="inputChange"/>
+  </view>
+  <view class="input-view">
+    <image class="login_pass" src="{{login_pass}}" />
+    <input placeholder-class="phcolor" type="password" placeholder="请输入密码" data-fieldkey="password" bindinput="inputChange"/>
+  </view>
+  <view class="btn-view">
+    <button class="btn2" bindtap="submitLogin">
+      登录
+    </button>
+  </view>
+  <loading loading="{{loading}}"/>
+</view>
+
+<view class="login-btn-view t-c" wx:if="{{loginRes.code}}">
+  <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" type="primary" class="login-btn">
+    <image src="{{login_wx}}" class="image"></image>
+  </button>
+  <view>微信登录</view>
+</view>

@@ -1,0 +1,13 @@
+
+<view class="darg">
+    <view class='item_container' >
+        <view wx:for='{{content}}' wx:key="index" class="item {{index==current?'moving':'normal'}}"  style="left:{{index==current?move_x:item.left}}px;top:{{index==current?move_y:item.top}}px" catchtouchmove="move" catchtouchstart="movestart" bindtouchend="moveend" data-index="{{index}}">
+            <image class="images" src="{{tencentPath + item.text}}_seal375x375" data-index="{{index}}"></image>
+            <text catchtouchend="removeImg" data-index="{{index}}">×</text>
+        </view>
+        <view style="left:{{ content.length == 3 ?(content[0].left) :(content[content.length-1].left+210/2+15)}}px;top:{{content.length == 3 ? (content[content.length-1].top+105 / 2+15) : (content[content.length-1].top) }}px" class="photograph" bindtap="upload">
+            <image src="{{photographSrc}}"></image>
+            <text>上传照片</text>
+        </view> 
+   </view>
+</view>

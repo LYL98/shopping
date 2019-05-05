@@ -1,0 +1,93 @@
+<!--pages/member/member.wxml-->
+<view class="bar">当前账号</view>
+<view>
+  <view>
+  <view class="input-item">
+    <view class="title">姓名</view>
+    <view class="content">
+      {{myInfo.realname}}
+    </view>
+  </view>
+</view>
+  <view class="input-item">
+    <view class="title">绑定手机号</view>
+    <view class="content">
+      {{myInfo.phone || '未绑定'}}
+    </view>
+  </view>
+</view>
+<view>
+  <view class="input-item">
+    <view class="title">账号状态</view>
+    <view class="content">
+      {{myInfo.is_freeze ? '已冻结' : '正常'}}
+    </view>
+  </view>
+</view>
+<view>
+  <view class="input-item">
+    <view class="title">创建时间</view>
+    <view class="content">
+      {{myInfo.created }}
+    </view>
+  </view>
+</view>
+<navigator url="/pages/password/password" class="input-view">
+  <view class="input-item">
+    <view class="title">修改登录密码</view>
+    <view class="content">
+      <image class="right-img" src="{{rightSrc}}"></image>
+    </view>
+  </view>
+</navigator>
+<view class="bar">其他账号</view>
+<view class="other-list" wx:for="{{otherList}}" wx:key="index">
+  <view class="info">
+    <text class="realname">{{item.realname}}</text>
+    <text class="phone">{{item.phone}}</text>
+    <text class="freeze" wx:if="{{item.is_freeze}}">已冻结</text>
+  </view>
+  <view class="created-time">
+    创建时间：<text class="createdTime">{{item.created}}</text>
+  </view>
+</view>
+<view style="height: 110rpx;"></view>
+<view class="logout">
+  <button class="btn1"bindtap="logout">退出</button>
+</view>
+<!--
+<view class="head-str">修改基本资料</view>
+<view class="input-view">
+  <view class="input-item">
+    <view class="title">姓名</view>
+    <view class="content">
+      <input placeholder="请输入姓名" data-fieldkey="address" bindinput="inputChange"></input>
+    </view>
+  </view>
+</view>
+
+<view class="input-view">
+  <view class="input-item">
+    <view class="title">职位</view>
+    <view class="content">
+      <input placeholder="请输入职位" data-fieldkey="address" bindinput="inputChange"></input>
+    </view>
+  </view>
+</view>
+
+<view class="input-view">
+  <view class="input-item">
+    <view class="title">备注</view>
+    <view class="content">
+      <input placeholder="请输入备注" data-fieldkey="address" bindinput="inputChange"></input>
+    </view>
+  </view>
+</view>
+
+<view style="height: 90rpx;"></view>
+<view class="option-bottom">
+  <button>保存</button>
+</view>
+-->
+
+<loading loading="{{loading}}"/>

@@ -1,0 +1,73 @@
+/* components/loading/loading.wxss */
+.pay-body{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .4);
+    z-index: 1;
+  }
+  .pay{
+    background: #fff;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+  .item text{
+    display: block;
+    border-bottom: 1rpx solid #f3f4f6;
+    padding: 20rpx 0 20rpx 26rpx;
+    font-size: 28rpx;
+    color: #041A28; 
+    width: 100%;
+  }
+  .item text.active{
+    color: #00AE66;
+  }
+  .title{
+    padding: 20rpx 0;
+    border-bottom: 1rpx solid #f3f4f6;
+    text-align: center;
+  }
+  .title > view{
+    flex: 1;
+    height: 64rpx;
+    line-height: 64rpx;
+  }
+.cancel-btn{
+  margin: 20rpx 30rpx;
+  background:#00AE66;
+  color:#fff;
+  border-radius:40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  height:80rpx;
+  line-height:80rpx;
+  }
+  
+
+  .content > .item > .left > .balance{
+    color: #999;
+    font-size: 24rpx;
+  }
+  .content > .item > .right{
+    text-align: right;
+  }
+  .content > .item > .price{
+    color: #ff5252;
+    padding-right: 5px;
+  }
+  
+  .btn1{
+    background: #00AE66;
+    font-size: 36rpx;
+    color: #fff;
+  }
+  .btn1:active{
+    opacity: 0.7;
+  }
+  .btn1::after{
+    border: 0;
+  }

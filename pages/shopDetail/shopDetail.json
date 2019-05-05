@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "门店详情",
+  "usingComponents": {
+    "loading": "/components/loading/loading",
+    "drag": "/components/drag/drag"
+  }
+}

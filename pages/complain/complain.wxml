@@ -1,0 +1,18 @@
+<!--pages/complain/complain.wxml-->
+<view>
+  <view class="phone link-active" bindtap="makePhoneCall">
+    <text class="left">投诉电话</text>
+    <text class="right">{{serviceTel}}</text>
+  </view>
+
+  <view>
+    <view class="title">客服微信</view>
+    <view class="qr-code">
+      <image src="{{qrCode}}"></image>
+    </view>
+    <view class="hint">
+      <text>扫扫二维码，加客服微信</text>
+      <text>或搜索微信号：{{serviceTel}}</text>
+    </view>
+  </view>
+</view>

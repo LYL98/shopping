@@ -1,0 +1,335 @@
+<!--pages/orderDetail/orderDetail.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
+
+<view class="skeleton">
+  <!--不是协议客户且未付款-->
+  <view class="order-title skeleton-rect" wx:if="{{detail.status === 'wait_confirm' && (!detail.is_post_pay || detail.to_be_canceled) && detail.amount_pay === 0}}">
+    <image src="{{imgStatus['wait_pay']}}"></image>
+    <text class="title">{{strStatus[detail.status].title}}</text>
+    <text class="content">{{countDownStr}}后自动取消订单</text>
+  </view>
+  <!--否则-->
+  <view class="order-title skeleton-rect" wx:else>
+    <image src="{{imgStatus[detail.status]}}"></image>
+    <text class="title">{{strStatus[detail.status].title}}</text>
+    <text class="content">{{strStatus[detail.status].content}}</text>
+  </view>
+
+  <view class="address-body">
+    <view class="address" style="margin-bottom: {{detail.is_presale ? '-25rpx' : '-65rpx'}}">
+      <view class="content">
+        <view class="store">
+          <text class="skeleton-rect">门店: {{tools.returnOmissionText(detail.store_title, 20)}}</text>
+        </view>
+        <view class="city">
+          <text class="skeleton-rect">所在仓: {{detail.city && detail.city.title}}</text>
+        </view>
+        <view class="name-phone">
+          <text class="skeleton-rect">收件人: {{detail.linkman}} {{detail.phone ? '(' + detail.phone + ')' : '' }}</text>
+        </view>
+        <view class="address-str">
+          <text class="skeleton-rect">收货地址: {{detail.address}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="express-body-wrapper">
+    <view class="express-body" wx:if="{{ detail.express && detail.express.shipper_code }}">
+      <view class="header">
+        <text class="logistic-title">{{ detail.express.shipper_title }}: </text>
+        <text class="logistic-code">{{ detail.express.logistic_code }}</text>
+      </view>
+
+      <view class="content">
+
+        <!-- 如果记录大于两条，并且是最后一条记录，则置灰显示 -->
+        <view
+            class="progress-item"
+            wx:for="{{ detail.express.traces }}"
+            wx:for-item="item"
+            wx:index="index"
+            wx:key="{{ index }}"
+            wx:if="{{ (index >= 2 && isShowMoreExpress) || index < 2 }}"
+            style="{{ index >= 2 ? 'color: #A5A5A5;' : '' }}"
+        >
+
+          <!-- 如果不是最后一条记录，则增加内边距 -->
+          <view class="date" style="{{ (index === detail.express.traces.length - 1) ? '' : 'padding-bottom: 24rpx;' }}">
+            <view class="day-time">
+              <view class="day">{{ tools.returnDateFormat(item.accept_time, 'MM-dd') }}</view>
+              <view class="time">{{ tools.returnDateFormat(item.accept_time, 'HH:mm') }}</view>
+            </view>
+
+            <!-- 如果记录大于两条，并且是最后一条记录，则置灰显示 -->
+            <view class="dot" style="{{ index >= 2 ? 'background-color: #A5A5A5;' : '' }}  "></view>
+          </view>
+
+          <view class="info">
+            <text>{{ tools.returnOmissionText(item.accept_station, 60) }}</text>
+          </view>
+
+        </view>
+
+      </view>
+
+      <!-- 如果物流记录 存在两条以上，则显示更多的折叠面板 -->
+      <view class="footer" bind:tap="showHideMoreExpress" wx:if="{{ detail.express.traces && detail.express.traces.length > 2 }}">
+        <text wx:if="{{ !isShowMoreExpress }}">查看更多物流信息</text>
+        <text wx:if="{{ isShowMoreExpress }}">收起物流信息</text>
+      </view>
+
+      <!-- 如果存在物流快递单号，但没有记录，则显示 暂无物流记录信息 -->
+      <view class="footer" wx:if="{{ detail.express.traces && detail.express.traces.length === 0 }}">
+        <text>暂无物流信息</text>
+      </view>
+
+    </view>
+  </view>
+
+  <!--配送日期start-->
+  <view class="presale" wx:if="{{detail.is_presale}}" style="border-top: none;">
+    <view class="left">配送时间</view>
+    <view class="right">
+      {{detail.delivery_date}}
+    </view>
+  </view>
+  <!--配送日期end-->
+
+  <view class="item-view">
+    <view class="item" wx:for-item="d" wx:for="{{detail.items}}" wx:key="d.id" >
+      <view class="no-nav">
+        <view class="img">
+          <view class="mark">
+            <text wx:if="{{detail.is_presale && !d.is_gift}}" class="is-presale">预</text>
+            <text wx:if="{{detail.is_gb_order}}" class="is-gb-order">团</text>
+          </view>
+          <image class="skeleton-rect" lazy-load wx:if="{{d.item_image}}" class="bg-img-container-item" src="{{tencentPath + d.item_image}}_seal200x200"></image>
+          <view class="image skeleton-rect bg-img-container-item" wx:else></view>
+        </view>
+        <view class="content">
+          <view class="title skeleton-rect"><text class="present" wx:if="{{d.is_gift}}">赠品</text>{{d.item_title}}</view>
+          <view class="label {{system}}">
+            <text class="skeleton-rect" wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
+            <text class="skeleton-rect frame" wx:if="{{d.frame_code}}">含框</text>
+          </view>
+          <view class="price-unit skeleton-rect">
+            ￥{{tools.returnPrice(d.item_price_discount)}} / 件<text class="original" wx:if="{{d.item_price_discount !== d.item_price_sale_piece && !d.is_gift}}">￥{{tools.returnPrice(d.item_price_sale_piece)}}/件</text>
+          </view>
+          <view class="num-price">
+            <text class="num-str skeleton-rect">× {{d.count_real}}</text>
+            <text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="price-log" wx:if="{{d.amount_real - d.amount_pre != 0}}">
+          <view class="amount-pannel" data-index="{{index}}" bindtap="showArrow">
+            <text class="flex">价格变动</text>
+            <view class="flex amount-price">
+              <text class="up" wx:if="{{d.amount_real - d.amount_pre > 0}}">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
+              <text class="down" wx:else>{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
+              <image src="{{d.arrow ? iconDownSrc : iconUpSrc}}" ></image>
+            </view>
+          </view>
+          <view  wx:if="{{!d.arrow }}">
+              <view class="content">
+                <view class="left">
+                  <view class="price-str">原价：{{tools.returnPrice(d.amount_pre)}}</view>
+                </view>
+                <view class="line">
+                    <view class="price2" wx:if="{{d.amount_real - d.amount_pre < 0}}">
+                      <text style="color:#0fd564">{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
+                    </view>
+                    <view class="price2" wx:else>
+                      <text style="color:#f30">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
+                    </view>
+                </view>
+                <view class="right t-r">
+                  <view class="price-str">现价：{{tools.returnPrice(d.amount_real)}}</view>
+                </view>
+              </view>
+
+              <view class="content nums" wx:if="{{d.weight_real - d.weight_pre != 0  }}">
+                <view class="left">
+                  <view>原重：{{d.weight_pre / 10}}斤</view>
+                </view>
+                <view class="line">
+                    <view class="price2" wx:if="{{d.weight_real - d.weight_pre < 0}}">
+                      减少：<text style="color:#0fd564">{{(d.weight_real - d.weight_pre)/10}}斤</text>
+                    </view>
+                    <view class="price2" wx:else>
+                      增加：<text style="color:#f30">+{{(d.weight_real - d.weight_pre)/10}}斤</text>
+                    </view>
+                </view>
+                <view class="right t-r">
+                  <view>现重：{{d.weight_real/10}}斤</view>
+                </view>
+              </view>
+
+              <view class="content nums" wx:if="{{d.count_real - d.count_pre != 0 }}">
+                <view class="left">
+                  <view>原数量：{{d.count_pre}}件</view>
+                </view>
+                <view class="line">
+                    <view class="price2"  wx:if="{{d.count_real - d.count_pre < 0}}">
+                      减少：<text style="color:#0fd564">{{d.count_real - d.count_pre}}件</text>
+                    </view>
+                    <view class="price2" wx:else>
+                      增加：<text style="color:#f30">+{{d.count_real - d.count_pre}}件</text>
+                    </view>
+                </view>
+                <view class="right t-r">
+                  <view>现数量：{{d.count_real}}件</view>
+                </view>
+              </view>
+          </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="total-price">
+    <view class="row">
+      <view class="left"><text class="skeleton-rect">商品总额</text></view>
+      <view class="right">
+        <text class="skeleton-rect">￥{{tools.returnPrice(detail.item_total_price)}}</text>
+      </view>
+    </view>
+    <view class="row" wx:if="{{detail.is_used_coupon}}">
+      <view class="left"><text class="skeleton-rect">优惠券</text></view>
+      <view class="right"><text class="skeleton-rect">-￥{{tools.returnPrice(detail.coupon_reduction)}}</text></view>
+    </view>
+    <view class="row" wx:if="{{detail.promotion_reduction}}">
+      <view class="left"><text class="skeleton-rect">订单满{{detail.scope_promotion_type === 'scope_discount' ? '折' : '减'}}</text></view>
+      <view class="right"><text class="skeleton-rect">-￥{{tools.returnPrice(detail.promotion_reduction)}}</text></view>
+    </view>
+    <view class="row">
+      <view class="left"><text class="skeleton-rect">运费</text></view>
+      <view class="right"><text class="skeleton-rect">+￥{{tools.returnPrice(detail.delivery_fee)}}</text></view>
+    </view>
+
+    <!--价格有变动-->
+    <view class="total" wx:if="{{detail.order_price - detail.price_at_created !== 0}}">
+      <view class="row">
+        <view class="left"><text class="skeleton-rect">合计</text></view>
+        <view class="right"><text class="skeleton-rect">￥{{tools.returnPrice(detail.price_at_created)}}</text></view>
+      </view>
+      <view class="row" wx:if="{{detail.delivery_fee !== detail.delivery_fee + detail.delivery_fee_chg}}">
+        <view class="left"><text class="skeleton-rect">运费重算</text></view>
+        <view class="right">
+          <text class="skeleton-rect" style="color:#FF6868" wx:if="{{ detail.delivery_fee_chg > 0 }}">+￥{{tools.returnPriceAbs(detail.delivery_fee_chg)}}</text>
+          <text class="skeleton-rect" style="color:#0fd564" wx:if="{{ detail.delivery_fee_chg < 0 }}">-￥{{tools.returnPriceAbs(detail.delivery_fee_chg)}}</text>
+        </view>
+      </view>
+      <view class="row" wx:if="{{detail.amount_item !== detail.item_total_price}}">
+        <view class="left"><text class="skeleton-rect">价格变化</text><text class="hint skeleton-rect">因商品数量/重量发生变化</text></view>
+        <view class="right">
+          <text wx:if="{{detail.amount_item - detail.item_total_price < 0}}" class="skeleton-rect" style="color:#0fd564"> -</text>
+          <text wx:else class="skeleton-rect" style="color:#f30"> +</text>
+          <text class="skeleton-rect" style="color: {{detail.amount_item - detail.item_total_price < 0 ? '#0fd564' : '#f30'}}">￥{{tools.returnPriceAbs(detail.amount_item - detail.item_total_price)}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="price-str">共{{detail.piece_num}}件商品，订单价格：<text>￥{{tools.returnPrice(detail.order_price)}}</text></view>
+    <view class="amout-pay" wx:if="{{detail.remain_pay > 0 && detail.status != 'order_canceled'}}">
+      已付款：￥{{tools.returnPrice(detail.amount_pay)}}，待补款：<text class="price">￥{{tools.returnPrice(detail.remain_pay)}}</text>
+    </view>
+  </view>
+
+  <view class="bottom-border2"></view>
+
+  <view class="record" bindtap="showHidePayRecord">
+    <view class="left">付款历史</view>
+    <view class="right">
+      <image src="{{iconUpSrc}}" wx:if="{{isShowPayRecord}}"/>
+      <image src="{{iconDownSrc}}" wx:else />
+    </view>
+  </view>
+
+  <!--付款历史start-->
+  <view class="pay-log" wx:if="{{isShowPayRecord}}">
+    <view wx:for="{{detail.pay_record}}" wx:for-item="l" wx:key="l.id" class="pay-log-item">
+      <view>
+        <view class="left">支付金额</view>
+        <view class="right">￥{{tools.returnPrice(l.total_fee)}}</view>
+      </view>
+      <view>
+        <view class="left">余额支付</view>
+        <view class="right">￥{{tools.returnPrice(l.balance_fee)}}</view>
+      </view>
+      <view>
+        <view class="left">第三方支付</view>
+        <view class="right">￥{{tools.returnPrice(l.pay_fee)}}</view>
+      </view>
+      <view>
+        <view class="left">时间</view>
+        <view class="right">{{l.created}}</view>
+      </view>
+      <view>
+        <view class="left">付款编号</view>
+        <view class="right">{{l.code}}</view>
+      </view>
+    </view>
+    <view class="load-none" style="margin:36rpx 0;" wx:if="{{detail.pay_record.length === 0}}">暂无付款历史</view>
+  </view>
+  
+  <!--付款历史end-->
+  <view class="record" bindtap="showHideLogRecord">
+    <view class="left">退款历史</view>
+    <view class="right">
+      <image src="{{iconUpSrc}}" wx:if="{{isShowLogRecord}}" />
+      <image src="{{iconDownSrc}}" wx:else/>
+    </view>
+  </view>
+  <view class="pay-log" wx:if="{{isShowLogRecord}}">
+    <view wx:for="{{detail.refund_record}}" wx:for-item="l" wx:key="l.id" class="pay-log-item">
+      <view>
+        <view class="left">退款金额</view>
+        <view class="right">￥{{tools.returnPrice(l.amount)}}</view>
+      </view>
+      <view>
+        <view class="left">退款前总价格</view>
+        <view class="right">￥{{tools.returnPrice(l.amount_order_pre)}}</view>
+      </view>
+      <view>
+        <view class="left">退款后总价格</view>
+        <view class="right">￥{{tools.returnPrice(l.amount_order)}}</view>
+      </view>
+      <view>
+        <view class="left">时间</view>
+        <view class="right">{{l.created}}</view>
+      </view>
+      <view>
+        <view class="left">退款原因</view>
+        <view class="right">{{refund[l.reason]}}</view>
+      </view>
+    </view>
+    <view class="load-none" style="margin:36rpx 0;" wx:if="{{detail.refund_record.length === 0}}">暂无退款历史</view>
+  </view>
+
+  <view class="exhibition">
+    <view class="row">
+      <view class="skeleton-rect">订单编号：{{detail.code}}</view>
+      <view class="skeleton-rect">创建时间：{{detail.created}}</view>
+      <view  wx:for="{{detail.action_log}}" wx:for-item="l" wx:key="l.id" >
+        <view class="skeleton-rect" wx:if="{{l.action == 'pay' }}">支付时间：{{l.created}}</view>
+        <view class="skeleton-rect" wx:if="{{l.action == 'delivery' }}">发货时间：{{l.created}}</view>
+        <view class="skeleton-rect" wx:if="{{l.action == 'receive' }}">完成时间：{{l.created}}</view>
+        <view class="skeleton-rect" wx:if="{{l.action == 'cancel' }}">取消时间：{{l.created}} ({{l.remark}})</view>
+      </view>
+    </view>
+  </view>
+
+  <view style="height:100rpx;"></view>
+  <view class="order-bottom b-cfff">
+    <view class="btn-view">
+      <button size="mini" class="btn3" wx:if="{{detail.status === 'wait_confirm'}}" bindtap="cancelOrder">取消订单</button>
+      <button size="mini" class="btn3" wx:if="{{!detail.is_presale}}" bindtap="againOrder">再次下单</button>
+      <button size="mini" class="btn3" style="background-color: #00AE66; color: #fff;" wx:if="{{ detail.status !== 'order_canceled' && detail.pay_status !== 'wait_complete' && detail.status === 'deliveried' }}" bindtap="confirmReceive">确认收货</button>
+      <button size="mini" class="btn4" wx:if="{{detail.status !== 'order_canceled' && detail.pay_status === 'wait_complete'}}" bindtap="orderPay">付款</button>
+    </view>
+  </view>
+
+  <pay payData="{{payData}}" callback="{{payCallBack}}" wx:if="{{isShowPay}}"/>
+</view>

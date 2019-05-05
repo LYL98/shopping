@@ -1,0 +1,72 @@
+/* pages/member/member.wxss */
+.head-str{
+  padding: 30rpx 30rpx 20rpx;
+  background: #f3f4f6;
+  color: #999;
+  font-size: 24rpx;
+}
+.bar{
+  height: 64rpx;
+  background: #F4F5F7;
+  font-size: 28rpx;
+  line-height: 64rpx;
+  padding-left: 30rpx;
+  color:#A7A7A7;
+}
+.other-list {
+  padding: 26rpx 30rpx;
+  border-bottom: 1rpx solid #F2F4F8;
+  > .info{
+    margin-bottom: 12rpx;
+    color: #242424;
+    position: relative;
+    >.realname{
+      margin-right: 70rpx;
+    }
+    >.freeze {
+      position: absolute;
+      right: 0;
+      color: #A5A5A5;
+      font-size: 22rpx;
+      height: 36rpx;
+      width: 88rpx;
+      line-height: 36rpx;
+      text-align: center;
+      &::after{
+        transform: scale(0.5);
+        border: 1px solid #ccc;
+        transform-origin: 0 0;
+        display: flex;
+        box-sizing: border-box;
+        content:' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        border-radius: 12rpx;
+      }
+    }
+  }
+  > .created-time{
+    color: #A5A5A5;
+    font-size: 24rpx;
+  }
+}
+
+.logout{
+   position: fixed;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   background: #fff;
+   border-top: 1rpx solid #F7F7F8;
+   padding: 20rpx 30rpx;
+   > button{
+    border-radius: 88rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    font-size: 32rpx;
+    background: #FF6868;
+  }
+}

@@ -1,0 +1,63 @@
+<!--pages/myMessage/myMessage.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<skeleton selector="skeleton" bgcolor="transparent" wx:if="{{showSkeleton}}"></skeleton>
+<view class="skeleton">
+
+  <view id="page-my-message" wx:if="{{ listItem.num > 0 }}">
+
+    <view id="message-list-wrapper">
+      <navigator url="{{item.msg_type === 'groupbuy_create' ? '' : msgTypes[item.msg_type].url}}" hover-class="{{item.msg_type === 'groupbuy_create' ? 'none' : 'navigator-hover'}}"
+        open-type="{{item.msg_type === 'all_reduction_start' || item.msg_type === 'reduction_start' || item.msg_type === 'all_discount_start' || item.msg_type === 'discount_start' || item.msg_type === 'single_discount_start' ? 'switchTab' : 'navigate'}}"
+        class="message-item" wx:for="{{ newMessageList }}" wx:for-item="item" wx:for-index="index" wx:key="{{ index }}">
+        <view class="header">
+          <text class="title">{{ item.title }}</text>
+          <text class="date">{{ tools.returnDateFormat(item.created, 'MM-dd') }}</text>
+        </view>
+        <view class="content">
+          <view class="icon">
+            <image src="{{ msgTypes[item.msg_type].icon }}" />
+          </view>
+          <view class="description">
+            <text>{{ item.content }}</text>
+          </view>
+        </view>
+      </navigator>
+    </view>
+
+    <view class="message-previous" wx:if="{{ previousMessageList.length > 0 }}">
+
+      <view id="message-previous-title">
+        <text>两周前消息</text>
+      </view>
+      <view id="message-list-wrapper">
+
+        <navigator url="{{msgTypes[item.msg_type].url}}"
+          open-type="{{item.msg_type === 'all_reduction_start' || item.msg_type === 'reduction_start' || item.msg_type === 'all_discount_start' || item.msg_type === 'discount_start' || item.msg_type === 'single_discount_start' ? 'switchTab' : 'navigate'}}"
+          class="message-item" wx:for="{{ previousMessageList }}" wx:for-item="item" wx:for-index="index" wx:key="{{ index }}">
+          <view class="header">
+            <text class="title">{{ item.title }}</text>
+            <text class="date">{{ tools.returnDateFormat(item.created, 'MM-dd') }}</text>
+          </view>
+          <view class="content">
+            <view class="icon">
+              <image src="{{ msgTypes[item.msg_type].icon }}" />
+            </view>
+            <view class="description">
+              <text>{{ item.content }}</text>
+            </view>
+          </view>
+        </navigator>
+
+      </view>
+
+    </view>
+
+    <view class="list-footer" wx:if="{{ !initLoad }}">
+      <text>{{tools.returnMore(listItem.num, query)}}</text>
+    </view>
+
+  </view>
+
+  <defaultPage wx:if="{{ listItem.num <= 0 }}" currentPage="myMessage"></defaultPage>
+
+</view>

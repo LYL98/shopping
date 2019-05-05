@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "搜索商品",
+  "onReachBottomDistance": 100,
+  "usingComponents": {
+    "joinShopCart": "/components/joinShopCart/joinShopCart",
+    "loading": "/components/loading/loading",
+    "defaultPage": "/components/defaultPage/defaultPage"
+  }
+}

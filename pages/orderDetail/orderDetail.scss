@@ -1,0 +1,456 @@
+/* pages/orderDetail/orderDetail.wxss */
+//共用
+.bottom-border1{
+  border-bottom: 1rpx solid #eee;
+}
+.bottom-border2{
+  border-bottom: 20rpx solid #F7F7F8;
+}
+
+.order-title{
+  font-size: 26rpx;
+  background: #F7F7F8;
+  color: #999;
+  height: 210rpx;
+  position: relative;
+  image{
+    width: 100vw;
+    height: 210rpx;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  .title{
+    position: absolute;
+    top: 37rpx;
+    left: 60rpx;
+    color: #fff;
+    font-size: 32rpx;
+  }
+  .content{
+    position: absolute;
+    top: 84rpx;
+    left: 60rpx;
+    color: #fff;
+    font-size: 26rpx;
+  }
+}
+
+.address-body{
+  margin: 0 30rpx;
+  box-shadow: 0 4px 8px 0 rgba(159,159,159,0.14);
+  border-radius: 8px;
+  background: #FFFFFF;
+  position: relative;
+  top: -65rpx;
+  .address{
+    padding: 36rpx 30rpx;
+    position: relative;
+    margin-bottom: -65rpx;
+    > .content{
+      > .store, > .city{
+        font-size: 30rpx;
+        font-weight: bold;
+        margin-bottom: 14rpx;
+        color: #242424;
+      }
+      > .city{
+        margin-bottom: 22rpx;
+      }
+      > .name-phone, .address-str{
+        font-size: 24rpx;
+        margin-bottom: 10rpx;
+        color: #242424;
+        position: relative;
+      }
+      > .address-str{
+        margin-bottom: 0rpx;
+      }
+    }
+  }
+}
+
+.express-body-wrapper {
+  border-bottom: 20rpx solid #f7f7f8;
+}
+
+.express-body {
+  margin: 30rpx;
+  box-shadow: 0 0 8rpx 0 rgba(159,159,159,0.24);
+  border-radius: 8rpx;
+  background: #ffffff;
+  .header {
+    padding-left: 30rpx;
+    line-height: 110rpx;
+    border-bottom: 1rpx solid #eee;
+    .logistic-code {
+      margin-left: 20rpx;
+    }
+  }
+
+  .content {
+    padding: 20rpx 40rpx 30rpx;
+    .progress-item {
+      display: flex;
+      font-size: 28rpx;
+      line-height: 34rpx;
+
+      .date {
+        width: 104rpx;
+        border-right: 1rpx solid #e5e5e5;
+        position: relative;
+
+        .day-time {
+          .day,.time {
+            width: 90rpx;
+            text-align: center;
+          }
+
+          .time {
+            font-size: 24rpx;
+            color: #A5A5A5;
+            line-height: 28rpx;
+          }
+        }
+
+        .dot {
+          width: 13rpx;
+          height: 6rpx;
+          background-color: #00AE66;
+          border-radius: 100rpx;
+          position: absolute;
+          top: 14rpx;
+          right: -6rpx;
+        }
+
+      }
+
+      .info {
+        margin-left: 25rpx;
+        flex: 1;
+
+        text {
+          font-size: 28rpx;
+          line-height: 34rpx;
+          word-break: break-word;
+        }
+      }
+
+    }
+  }
+
+  .footer {
+    font-size: 24rpx;
+    line-height: 33rpx;
+    color: #A5A5A5;
+    text-align: center;
+    padding-bottom: 30rpx;
+  }
+
+}
+
+//配送日期
+.presale{
+  border-top: 20rpx solid #F7F7F8;
+  border-bottom: 20rpx solid #F7F7F8;
+  height: 110rpx;
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+  color: #242424;
+  > view{
+    flex: 1;
+    &.right{
+      text-align: right;
+    }
+  }
+}
+
+.leave-msg{
+  padding: 24rpx 30rpx;
+  display: flex;
+  align-items: center;
+  > .img{
+    flex: initial;
+    width: 84rpx;
+    > image{
+      width: 56rpx;
+      height: 56rpx;
+    }
+  }
+  > .content{
+    flex: 1;
+    > .title{
+      font-size: 26rpx;
+      margin-bottom: 10rpx;
+    }
+    > .str{
+      font-size: 24rpx;
+      color: #666;
+    }
+  }
+}
+
+.freight, .coupon, .balance-pay{
+  display: flex;
+  margin: 0 30rpx;
+  align-items: center;
+  height: 84rpx;
+  border-bottom: 1rpx solid #EEE;
+}
+.freight > view, .coupon > view, .balance-pay > view{
+  flex: 1;
+}
+
+.total-price{
+  padding-top: 24rpx;
+  margin: 0 30rpx;
+  border-top: 1rpx solid #EEE;
+  .row{
+    font-size:28rpx;
+    padding-bottom:20rpx;
+    display: flex;
+    align-items: center;
+    > .left{
+      flex: initial;
+    }
+    > .right{
+      flex: 1;
+      text-align: right;
+    }
+  }
+  >.total{
+    border-top: 1rpx solid #EEE;
+    padding-top: 30rpx;
+    padding-bottom: 10rpx;
+    .hint{
+      color: #A5A5A5;
+      font-size: 26rpx;
+      margin-left:30rpx;
+    }
+  }
+  >.price-str, >.amout-pay {
+    border-top: 1rpx solid #EEE;
+    font-size: 24rpx;
+    padding: 28rpx 0;
+    text-align: right;
+    text{
+      font-size: 30rpx;
+      font-weight: bold;
+    }
+  }
+}
+
+.amout_pay{
+  display:flex;
+  justify-content:flex-end;
+  height:36rpx;
+  line-height:36rpx;
+  padding-bottom:12px;
+  view{
+    font-size: 26rpx;
+    text-align: right;
+    margin-right: 46rpx;
+    text{
+      font-size: 26rpx;
+    }
+    &:last-child text{
+      color: #FF3B00;
+      font-size: 32rpx;
+    }
+  }
+}
+
+.exhibition{
+  border-top: 20rpx solid #F7F7F8;
+  > .row{
+    font-size: 24rpx;
+    color: #A5A5A5;
+    padding: 24rpx 30rpx;
+    border-bottom: 1rpx solid #EEE;
+    view{
+      margin: 10rpx 0;
+    }
+    &:last-child{
+      border-bottom: none;
+    }
+  }
+}
+ 
+.pay-log-title{
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid #EEE;
+  padding: 15rpx 0;
+  font-size: 24rpx;
+  > view{
+    flex: 1;
+    text-align: center;
+    color: #132835;
+  }
+}
+
+.price-log{
+  .content{
+    display: flex;
+    align-items: center;
+    height: 106rpx;
+    background: #F7F7F7;
+    padding: 0 30rpx;
+    &.nums{
+      border-top:1rpx solid #f4f4f4;
+    }
+    > view{
+      flex: 1;
+      height: 34rpx;
+      font-size: 26rpx;
+      > .price-str{
+        margin-bottom: 5rpx;
+      }
+      > .price2{
+        font-size:26rpx;
+        position:absolute;
+        top:-18rpx;
+        width:246rpx;
+        text-align:center;
+        color: #041A28;  
+      }
+    }
+    .line{
+      flex: inherit;
+      position: relative;
+      width: 246rpx;
+      height: 34rpx;
+      &::after{
+        position: absolute;
+        height: 2rpx;
+        content: ' ';
+        width: 246rpx;
+        top:23rpx;
+        background-color: #041A28;
+      }
+      &::before{
+        width:0;
+        height:0;
+        content: '';
+        border-left: 7rpx solid transparent;  
+        border-right: 7rpx solid transparent;
+        border-bottom: 10rpx solid #041A28;
+        transform: rotate(90deg);
+        right: -9rpx; 
+        top: 19rpx;
+        position: absolute;
+      }
+    }
+    .cause, .cause_name{
+      color: #999;
+      font-size: 24rpx;
+      margin-top: 36rpx;
+    }
+    &.cause_name{
+      margin-top: 12rpx;
+    }
+  }
+  > .amount-pannel{
+    display: flex;
+    padding: 0 30rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    .flex{
+      flex: 1;
+    }
+    text:first-child{
+      font-size: 28rpx;
+      color:#041A28;
+    }
+    > .amount-price{
+      text-align: right;
+      .down{
+        font-size: 28rpx;
+        color: #28BE3E;
+      }
+      .up{
+        font-size: 28rpx;
+        color: #FF3B00;
+      }
+      image {
+        width: 26rpx;
+        height: 16rpx;
+        margin-left:20rpx;
+      }
+    }
+  }
+}
+.price-log-item{
+  > .date{
+    font-size: 26rpx;
+    color: #a2a2a2;
+    padding: 12rpx 22rpx;
+    border-bottom: 1rpx solid #F4F5F7;
+  }
+}
+
+.order-bottom{
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1rpx solid #EEE;
+  padding: 0 30rpx;
+  overflow: hidden;
+  max-height: 100rpx;
+  >.btn-view{
+    overflow: hidden;
+    text-align: right;
+    > button{
+      margin: 23rpx 0 23rpx 30rpx;
+      padding: 0 28rpx;
+    }
+  }
+}
+
+.record{
+  font-size: 30rpx;
+  color: #242424;
+  margin: 0 30rpx;
+  display: flex;
+  height: 110rpx;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+  >.left{
+    flex: 1;
+  }
+  >.right{
+    flex: 1;
+    text-align: right;
+    >image{
+      width: 26rpx;
+      height: 16rpx;
+    }
+  }
+}
+
+.pay-log{
+  margin: 0 30rpx;
+  .pay-log-item{
+    border-bottom: 1rpx solid #eee;
+    padding: 10rpx 0;
+    >view{
+      color: #A5A5A5;
+      display: flex;
+      margin: 10rpx 0;
+      .left{
+        flex: initial;
+      }
+      .right{
+        flex: 1;
+        text-align: right;
+      }
+      &:nth-child(1){
+        color: #242424;
+      }
+    }
+  }
+}

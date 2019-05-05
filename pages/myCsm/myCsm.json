@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的客户经理",
+  "usingComponents": {
+    "skeleton": "/components/skeleton/skeleton",
+    "defaultPage": "/components/defaultPage/defaultPage"
+  }
+}

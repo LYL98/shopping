@@ -1,0 +1,97 @@
+/* pages/search/search.wxss */
+.search-body{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  border-bottom: 1rpx solid #f3f4f6;
+}
+.search{
+  padding: 20rpx 30rpx;
+  display: flex;
+  > view{
+    flex: 1;
+    &.icon{
+      width: 64rpx;
+      flex: initial !important;
+      height: 64rpx;
+      line-height: 64rpx;
+      background: #F7F7F8;
+      text-align: center;
+      border-top-left-radius: 12rpx;
+      border-bottom-left-radius: 12rpx;
+      > image{
+        width: 32rpx;
+        height: 32rpx;
+        position: relative;
+        top: 5rpx;
+        left: 5rpx;
+      }
+    }
+  }
+  input{
+    background: #F7F7F8;
+    color: #999;
+    height: 64rpx;
+    line-height: 64rpx;
+    font-size: 24rpx;
+    border-top-right-radius: 12rpx;
+    border-bottom-right-radius: 12rpx;
+  }
+}
+
+.searchHistory{
+  font-size: 24rpx;
+  color: #999;
+  padding:10rpx 30rpx;
+  .hisTitle{
+    display:flex;
+    justify-content: space-between;
+  }
+  .labels {
+    margin-top: 15rpx;
+    display: flex;
+    flex-wrap: wrap;
+    text{
+      margin:0 15rpx 7rpx 0;
+      background:#eee;
+      color:#666;
+      border-radius:18rpx;
+      padding:5rpx 18rpx;
+      
+    }
+  }
+}
+
+.shopping-btn {
+  z-index: 1;
+  height: 82rpx;
+  width: 82rpx;
+  background: #fff;
+  position: fixed;
+  bottom: 100rpx;
+  left: 36rpx;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.20);
+  border-radius: 50rpx;
+}
+
+.shopping-btn > image {
+  width: 48rpx;
+  height: 48rpx;
+  margin: 17rpx 0 0 17rpx;
+  display: block;
+}
+
+.shopping-btn > .sh-cart-num {
+  position: absolute;
+  top: -5rpx;
+  right: -10rpx;
+  background: #ff5252;
+  color: #fff;
+  padding: 0 12rpx;
+  border-radius: 16rpx;
+  font-size: 22rpx;
+  height: 34rpx;
+  line-height: 34rpx;
+}

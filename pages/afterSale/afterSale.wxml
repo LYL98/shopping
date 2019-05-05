@@ -1,0 +1,67 @@
+<!--pages/afterSale/afterSale.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+
+<view class="item-view">
+  <view class="item">
+    <view class="no-nav">
+      <view class="img">
+        <view class="mark">
+          <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
+          <text wx:if="{{detail.is_gb_order}}" class="is-gb-order">团</text>
+        </view>
+        <image lazy-load wx:if="{{detail.item_image}}" class="bg-img-container-item" src="{{tencentPath + detail.item_image}}_seal200x200"></image>
+        <view class="image bg-img-container-item" wx:else></view>
+      </view>
+      <view class="content">
+        <view class="title">{{detail.item_title}}</view>
+        <view class="label {{system}}">
+          <text wx:for="{{detail.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
+          <text class="frame" wx:if="{{detail.frame_code}}">含框</text>
+        </view>
+        <view class="price-unit">
+          <view >
+            ￥{{tools.returnPrice(detail.item_price_discount)}} / 件<text class="original" wx:if="{{detail.item_price_discount !== detail.item_price_sale_piece}}">￥{{tools.returnPrice(detail.item_price_sale_piece)}}/件</text>
+          </view>
+        </view>
+        <view class="num-price">
+          <text class="num-str skeleton-rect">× {{detail.count_real}}</text>
+          <text class="price-str skeleton-rect">￥{{tools.returnPrice(detail.amount_real)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cause-view">
+    <view class="cause">
+      <view class="left" >申请原因</view>
+      <view class="right" bindtap="selectReason">{{selectReasonName || '请选择'}}
+        <image src="./../../assets/img/right.png"></image>
+      </view>
+    </view>
+</view>
+<view class="issue-desc">
+  <view class="title">问题描述</view>
+  <view class="content">
+    <textarea  placeholder-class="placeholder" auto-focus placeholder="请在此处描述问题，如：今日到货3件柚子，共计65斤，有1个烂果重2.5斤，包装及称重图片已上传（最多200个字）" value="{{detail.content}}" bindinput="inputChange" data-fieldkey="content" maxlength="200"/>
+  </view>
+    <view style="display:flex;flex-wrap:wrap;"  class="images">
+      <view class="photograph" bindtap="clickPic">
+        <image src="{{photographSrc}}"></image>
+        <text>上传照片</text>
+      </view>
+      <view wx:for="{{detail.images}}" wx:key="item" class="img-item">
+        <image src="{{tencentPath + item}}_seal200x200" bindtap="showImg" data-index="{{index}}"></image>
+          <view class="close" bindtap="deletelImg" data-index="{{index}}">×</view>
+      </view>
+    </view>
+  </view>
+
+<view style="height: 160rpx;"></view>
+<view class="option-bottom">
+  <view class="option-btn" bindtap="aftersaleAdd" >提交售后申请</view>
+</view>
+
+<actionSheet reason="{{detail.reason}}" wx:if="{{isShow}}" bind:myevent="toggleToast"/>
+
+<loading loading="{{loading}}"/>

@@ -1,0 +1,91 @@
+<!--pages/afterSaleDetail/afterSaleDetail.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+
+<view class="brief">
+  <view class="top t-c"  wx:if="{{detail.status != 'close'}}">
+    <image lazy-load="{{true}}" src="{{checkedSrc}}"></image>
+    <text class="text1" wx:if="{{afterSaleResult[detail.result]}}">{{afterSaleResult[detail.result]}}</text>
+    <view class="afterdoing" wx:else>
+        <text >商家正在处理中</text>
+        <text >商家正在处理中,请您稍等</text>
+    </view>
+  </view>
+  <view class="top t-c done"  wx:else>
+    <image src="{{checkedDone}}"></image>
+    <view class="afterdone">
+      <view class="title">
+        <text >已完成售后服务</text>
+      </view>
+      <view class="type" wx:if="{{detail.opt_type}}">处理类型：{{opt_type[detail.opt_type]}}</view>
+      <view class="dic" wx:if="{{detail.opt_detail}}">处理时间：{{detail.done_time}}</view>
+    </view>
+  </view>
+  <view class="amount_refund" wx:if="{{detail.amount_refund}}">
+    <view>退款金额</view>
+    <text class="price">¥{{tools.returnPrice(detail.amount_refund)}}</text>
+  </view>
+</view>
+
+<view class="item-view">
+  <view class="item">
+    <view class="no-nav">
+      <view class="img">
+        <view class="mark">
+          <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
+          <text wx:if="{{detail.is_gb_order}}" class="is-gb-order">团</text>
+        </view>
+        <image lazy-load wx:if="{{detail.item_image}}" class="bg-img-container-item" src="{{tencentPath + detail.item_image}}_seal200x200"></image>
+        <view class="image bg-img-container-item" wx:else></view>
+      </view>
+      <view class="content">
+        <view class="title">{{detail.item_title}}</view>
+        <view class="label {{system}}">
+          <text wx:for="{{detail.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
+          <text class="frame" wx:if="{{detail.frame_code}}">含框</text>
+        </view>
+        <view class="price-unit">
+          <view >
+            ￥{{tools.returnPrice(detail.item_price_discount)}} / 件<text class="original" wx:if="{{detail.item_price_discount !== detail.item_price_sale_piece}}">￥{{tools.returnPrice(detail.item_price_sale_piece)}}/件</text>
+          </view>
+        </view>
+        <view class="num-price">
+          <text class="num-str skeleton-rect">× {{detail.count_real}}</text>
+          <text class="price-str skeleton-rect">￥{{tools.returnPrice(detail.amount_real)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cause">
+  <view class="left" >申请原因</view>
+  <view class="right">{{detail.reason}}</view>
+</view>
+
+<view class="interact">商家互动</view>
+<view>
+  <view class="comment-item" wx:for="{{detail.comment}}" wx:key="index" wx:if="{{item.content}}">
+    <view class="{{commentName[item.operator_class] == '客服' ? 'sys': 'usr'}}">
+        <view class="dialog">
+          <view class="content">{{item.content}}</view>
+          <view class="imgs" wx:if="{{item.images.length>0}}" >
+            <image wx:key="index" wx:for="{{item.images}}" data-src="{{item.images}}" data-index="{{index}}" bindtap="previewImage" wx:for-item="cell" src="{{tencentPath + cell + '_seal200x200'}}"></image>
+          </view>
+          <view class="time">{{item.created}}</view>
+          <view class="time"wx:if="{{commentName[item.operator_class] == '客服'}}">工号:{{item.employee_no}}</view>
+        </view>
+        <view class="name" wx:if="{{item.operator_class=='member'}}" ><image src="{{item.avatar ? (tencentPath  + item.avatar + '_min200x200') : defImg}}"></image></view>
+        <view class="name" wx:else><image src="{{item.avatar ? (tencentPath  + item.avatar + '_min200x200') : defcustImg}}"></image></view>
+       
+    </view>
+  </view>
+</view>
+
+<view style="height:90px;" wx:if="{{detail.status!='close'}}"></view>
+<view  class="audit-reply"  wx:if="{{detail.status!='close'}}">
+  <navigator url="/pages/reply/reply?id={{detail.id}}"  wx:if="{{detail.status!='close'}}">
+      发送消息
+  </navigator>
+</view>
+
+<loading loading="{{loading}}"/>

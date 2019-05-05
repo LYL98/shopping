@@ -1,0 +1,39 @@
+/* pages/complain/complain.wxss */
+.phone{
+  display: flex;
+  border-bottom: 22rpx solid #F4F5F7;
+  height: 100rpx;
+  align-items: center;
+  padding: 0 30rpx;
+}
+.phone > text{
+  flex: 1;
+}
+.phone > text.right{
+  text-align: right;
+  color: #999;
+}
+
+.title{
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 0 30rpx;
+}
+
+.qr-code{
+  text-align: center;
+  margin-top: 34rpx;
+}
+.qr-code > image{
+  width: 340rpx;
+  height: 340rpx;
+}
+.hint{
+  color: #999;
+  font-size: 28rpx;
+  text-align: center;
+  margin-top: 26rpx;
+}
+.hint > text{
+  display: block;
+}

@@ -1,0 +1,232 @@
+/* pages/itemDetail/itemDetail.wxss */
+
+.dotwrap {
+  position: absolute;
+  bottom: 34rpx;
+  right: 54rpx;
+  opacity: 0.86;
+  background: #9d9990;
+  border-radius: 100rpx;
+  width: 70rpx;
+  height: 40rpx;
+  font-size: 20rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 40rpx;
+}
+
+.mark{
+  position: absolute;
+  z-index: 1;
+  top: 30rpx;
+  left: 30rpx;
+  overflow: hidden;
+  text{
+    color: #fff;
+    width: 80rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    border-top-left-radius: 80rpx;
+    border-bottom-left-radius: 80rpx;
+    border-bottom-right-radius: 80rpx;
+    font-size: 44rpx;
+    float: left;
+    margin-right: 14rpx;
+    &.is-presale{
+      background: #FFA349;
+    }
+  }
+}
+
+.input-item{
+  &,discount-item{
+
+    align-items: flex-start;
+  }
+  &,reduction-item {
+    align-items: flex-start;
+  }
+  >.title{
+    >text{
+      font-size: 26rpx;
+      position: relative;
+      line-height: 40rpx;
+      width: 72rpx;
+      text-align: center;
+      color: #FF6868;
+      display: block;
+      &::after{
+        transform: scale(0.5);
+        border: 1px solid #FF6868;
+        transform-origin: 0 0;
+        display: flex;
+        box-sizing: border-box;
+        content:' ';
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        border-radius: 12rpx;
+      }
+      &.minus{
+        color: #FFA349;
+        // &::after{
+        //   border: 1px solid #FFA349;
+        // }
+      }
+    }
+  }
+}
+
+.img-view {
+  width: 100%;
+  height: 100vw;
+}
+
+.slide-image {
+  width: 100%;
+  height: 100vw;
+}
+
+.item-title {
+  font-size: 38rpx;
+  padding: 30rpx 30rpx 20rpx;
+}
+
+.repertory-price {
+  display: flex;
+  align-items: flex-end;
+  margin: 0 30rpx 50rpx;
+  > view {
+    flex: 1;
+    .price-origin{
+      color: #C7C7C7;
+      font-size: 22rpx;
+      text-decoration: line-through;
+    }
+  }
+}
+
+.repertory {
+  text-align: right;
+  color: #999;
+  font-size: 24rpx;
+}
+
+.price-unit {
+  color: #ff5252;
+  font-size: 40rpx;
+  > text {
+    color: #999;
+    font-size: 28rpx;
+  }
+}
+
+.introduce {
+  padding: 20px;
+  font-size: 24rpx;
+  color: #666;
+  border-top: 16rpx solid #f3f4f6;
+  > .dec-title {
+    font-size: 28rpx;
+    color: #242424;
+    padding-bottom:22rpx;
+  }
+}
+
+.btn-view {
+  z-index: 1;
+  height: 120rpx;
+  background: #fff;
+  display: flex;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-top: 1rpx solid #e5e5e5;
+  align-items: center;
+  > view, > navigator {
+    flex: 1;
+  }
+  > .btn-mini {
+    color: #999;
+    font-size: 16rpx;
+    text-align: center;
+    position: relative;
+    flex: 1;
+    height: 120rpx;
+    > image {
+      width: 50rpx;
+      height: 50rpx;
+      margin: 0 auto;
+      display: block;
+      margin-top: 36rpx;
+    }
+    > .sh-cart-num {
+      position: absolute;
+      top: 10rpx;
+      left: 56%;
+      background: #ff5252;
+      color: #fff;
+      padding: 0 12rpx;
+      border-radius: 16rpx;
+      font-size: 22rpx;
+      height: 34rpx;
+      line-height: 34rpx;
+    }
+  }
+  > .btn-join {
+    flex: initial !important;
+    width: 380rpx;
+    padding: 0 30rpx 0 50rpx;
+    //禁用
+    >.unjoin-shopping-btn {
+      background: #D0DBD7;
+      width: 100%;
+      height: 88rpx;
+      line-height: 88rpx;
+      font-size: 32rpx;
+      color: #fff;
+      text-align: center;
+      border-radius: 88rpx;
+    }
+  }
+}
+
+.table {
+  padding: 0 30rpx;
+  background: #fcfcfc;
+}
+
+.title-table {
+  font-size: 28rpx;
+  color: #242424;
+  padding: 50rpx 30rpx 22rpx;
+}
+
+.td {
+  display: flex;
+  view {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: none;
+    padding: 30rpx 8rpx 30rpx 0;
+    text {
+      flex: 2;
+      font-size: 30rpx;
+      &.name {
+        color: #999;
+        flex: 1.5;
+      }
+    }
+    &:first-child {
+      border-right: none;
+    }
+    &:last-child {
+      padding-left: 30rpx;
+    }
+  }
+}

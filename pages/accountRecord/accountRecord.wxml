@@ -1,0 +1,33 @@
+<!--pages/accountRecord/accountRecord.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+
+<view wx:for="{{dataItem.items}}" wx:key="{{item.id}}" class="item">
+  <view class="center">
+    <view class="title">{{balanceChange[item.reason]}}</view>
+    <view class="row">
+      <view class="date">{{item.created}}</view>
+      <view class="code" wx:if="{{item.code}}">
+        {{codeClass[item.code_class]}}:{{item.code}}
+      </view>
+
+    </view>
+    <view class="row">
+      <view class="code" wx:if="{{item.remark}}">
+        备注：{{item.remark}}
+      </view>
+    </view>
+
+  </view>
+  <view class="right t-r" wx:if="{{item.new_balance > item.old_balance}}" style="color: #FF6868">
+  +{{tools.returnPrice(item.new_balance - item.old_balance)}}
+  </view>
+  <view class="right t-r" wx:else>
+   -{{tools.returnPrice(item.old_balance - item.new_balance)}}
+  </view>
+</view>
+
+<view class="load-more" wx:if="{{dataItem.items.length > 0 && dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
+<defaultPage wx:if="{{ dataItem.items.length <= 0 }}" currentPage="accountRecord" />
+<!--<view class="load-none" wx:else>暂无数据</view>-->
+
+<loading loading="{{loading}}"/>

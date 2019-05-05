@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "订单列表",
+  "usingComponents": {
+    "loading": "/components/loading/loading",
+    "pay": "/components/pay/pay",
+    "defaultPage": "/components/defaultPage/defaultPage"
+  }
+}

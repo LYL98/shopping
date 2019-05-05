@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "提交订单",
+  "usingComponents": {
+    "pay": "/components/pay/pay",
+    "skeleton": "/components/skeleton/skeleton"
+  }
+}

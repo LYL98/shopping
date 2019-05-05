@@ -1,0 +1,40 @@
+/* pages/orderResult/orderResult.wxss */
+
+.img {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 160rpx auto 40rpx;
+}
+
+.result-src {
+  color: #3d4552;
+  font-size: 34rpx;
+  margin: 0 96rpx;
+}
+
+.error {
+  color: #ff5252;
+}
+
+.option-btn {
+  display: flex;
+  margin: 104rpx auto 0;
+  align-items: center;
+  padding: 0 88rpx;
+  color: #999;
+}
+
+.option-btn > .item {
+  width: 256rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border: 2rpx solid #999;
+  border-radius: 8rpx;
+}
+
+.option-btn > .interval {
+  border-color: #ff3b00;
+  color: #ff3b00;
+  background: #fff;
+  margin-left: 64rpx;
+}

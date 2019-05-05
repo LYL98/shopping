@@ -1,0 +1,17 @@
+<view>
+  <view class="logo" >还需要绑定手机号。</view>
+  <view class="input-view">
+    <image class="login_tel" src="{{login_tel}}" />
+    <input placeholder-class="phcolor" type="number"  placeholder="请输入手机号码" data-fieldkey="phone" bindinput="inputChange" />
+  </view>
+  <view class="input-view">
+    <image class="login_pass" src="{{login_pass}}" />
+    <input placeholder-class="phcolor" type="password" placeholder="请输入密码" data-fieldkey="password" bindinput="inputChange" />
+  </view>
+  <view class="btn-view">
+    <button class="btn2" bindtap="submitLogin">
+      立即绑定
+    </button>
+  </view>
+  <loading loading="{{loading}}"/>
+</view>

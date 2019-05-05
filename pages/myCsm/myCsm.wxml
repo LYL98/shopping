@@ -1,0 +1,22 @@
+<!--pages/myCsm/myCsm.wxml-->
+<skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
+<view class="skeleton">
+  <view wx:for="{{dataItem}}" wx:key="key" class="item">
+    <view class="left">
+      <image class="skeleton-radius" src="{{item.avatar ? tencentPath + item.avatar + '_min200x200' : defaultSrc}}"></image>
+    </view>
+    <view class="right">
+      <view class="realname-phone">
+        <text class="realname skeleton-rect">{{item.realname}}</text>
+        <text class="phone link-active skeleton-rect" data-phone="{{item.phone}}" bindtap="makePhoneCall">{{item.phone}}</text>
+      </view>
+      <view class="citys">
+        <view class="skeleton-rect">所属县域：</view>
+        <view class="skeleton-rect" wx:for="{{item.citys}}" wx:key="key" wx:for-item="ci" wx:for-index="i">{{ci.title}}<text wx:if="{{i != item.citys.length - 1}}">、</text></view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--<view class="load-none" wx:if="{{dataItem.length === 0}}">暂无客户经理</view>-->
+<defaultPage wx:if="{{dataItem.length === 0}}" currentPage="myCsm"></defaultPage>

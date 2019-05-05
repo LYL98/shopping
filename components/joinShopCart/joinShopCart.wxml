@@ -1,0 +1,61 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<view style="position: relative;">
+  <view class="plus-minus-body {{sourcePage === 'shoppingCart' && 'shopping-cart-plus-minus'}}">
+    <!--预定start-->
+    <view wx:if="{{itemData.is_presale}}">
+      <view class="plus-minus {{size}}">
+        <navigator wx:if="{{itemData.item_stock > 0 && itemData.order_num_max > 0 && isCanPresale}}" class="presale-btn" url="/pages/itemDetail/itemDetail?id={{itemData.id}}">预定</navigator>
+        <view wx:else class="presale-btn unusable">预定</view>
+      </view>
+    </view>
+    <!--预定end-->
+
+    <!--以下不是预定的-->
+    <view wx:else>
+      <!--数量大于0的情况start-->
+      <view class="plus-minus {{size}}" wx:if="{{num > 0}}">
+        <view class="plus-minus-view">
+          <view class="btn minus" bindtap="down">
+            <image src="{{size =='medium' ? minusIndexSrc : minusSrc}}"></image>
+          </view>
+          <view class="num">{{num}}</view>
+          <view wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}" class="btn add unusable" bindtap="upUnusable">
+            <image src="{{size =='medium' ? addIndexSrc : addSrc}}"></image>
+          </view>
+          <view wx:else class="btn add" bindtap="up">
+            <image src="{{size =='medium' ? addIndexSrc : addSrc}}"></image>
+          </view>
+        </view>
+      </view>
+      <!--数量大于0的情况end-->
+
+      <!--数量等于0的情况start-->
+      <view class="plus-minus {{size}}" wx:else>
+        <view class="join-btn" bindtap="up">加入购物车</view>
+        <view class="add-cart-icon" bindtap="up">
+          <image src="./../../assets/img/cart_icon.png"/>
+        </view>
+      </view>
+      <!--数量等于0的情况end-->
+
+      <!--小飞球-->
+      <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
+    </view>
+  </view>
+
+  <!--购物车专用start-->
+  <view class="shopping-cart-page" wx:if="{{sourcePage === 'shoppingCart'}}">
+    <view class="price-unit">
+      <text wx:if="{{!itemData.is_quoted}}">今日未报价</text>
+      <text wx:elif="{{itemData.item_stock <= 0}}">库存不足</text>
+      <text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
+      <view wx:elif="{{itemData.is_on_sale && itemData.item_stock > 0 && itemData.is_quoted}}">
+        ￥{{tools.returnPrice(itemData.price_sale_piece)}} / 件
+      </view>
+    </view>
+    <view class="discount-repertory">
+      <view class="repertory">{{tools.returnItemStock(itemData.item_stock)}}</view>
+    </view>
+  </view>
+  <!--购物车专用end-->
+</view>

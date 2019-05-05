@@ -1,0 +1,63 @@
+<!--components/pay/pay.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+
+<!--支付主体start-->
+<view class="pay-body">
+  <!--支付结果start-->
+  <view class="pay-result" wx:if="{{showPayResult}}">
+    <view wx:if="{{!isPaySuccess}}">
+      <image class="img" src="{{loadingSrc}}"></image>
+      <view class="hint">正在确认支付...</view>
+    </view>
+    <view wx:else>
+      <image class="img" src="{{successSrc}}"></image>
+      <view class="hint">支付成功</view>
+    </view>
+  </view>
+  <!--支付结果end-->
+  <view class="pay" wx:else>
+    <view class="title">
+      <view class="close-btn link-active" bindtap="cancelPay">
+        <image src="{{closeSrc}}"></image>
+      </view>
+    </view>
+    <view class="content">
+      <view class="top">
+        <view class="price">￥{{tools.returnPrice(payData.price)}}</view>
+        <view class="hint">待支付金额</view>
+        <view wx:if="{{ warning && warning.length > 0 }}" class="warning">
+          <text wx:for="{{ warning }}" wx:for-item="item" wx:for-index="index" wx:key="{{ index }}">{{item}}</text>
+        </view>
+      </view>
+
+      <view class="item" wx:if="{{useType === 'order'}}">
+        <view class="left">使用余额<text class="balance">当前余额:￥{{tools.returnPrice(balance)}}</text></view>
+        <view class="right">
+          <switch color="#00AE66" style="position: relative; right: -15rpx;" disabled="{{balance === 0}}" bindchange="changeUseBalance"></switch>
+        </view>
+      </view>
+
+      <view class="item" wx:if="{{useType === 'order' && isBalance}}">
+        <view class="left">余额抵扣</view>
+        <view class="right">
+          -￥{{tools.returnBalancePrice(balance, isBalance, payData.price)}}
+        </view>
+      </view>
+
+      <view class="item">
+        <view class="left">微信支付</view>
+        <view class="right">
+          -￥{{tools.returnPayPrice(balance, isBalance, payData.price)}}
+        </view>
+      </view>
+    </view>
+
+    <view class="btn">
+      <button class="btn1" bindtap="submitOrderPay" loading="{{loading}}" disabled="{{loading}}">确认支付</button>
+    </view>
+  </view>
+
+</view>
+<!--支付主体end-->
+
+

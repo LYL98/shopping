@@ -1,0 +1,123 @@
+/* pages/shopDetail/shopDetail.wxss */
+
+.placeholder, .content input{
+  color: #333;
+}
+.img-view{
+  overflow: hidden;
+}
+.img-view > view{
+  overflow: hidden;
+}
+
+/* .img-view view{
+  margin: 0 30rpx;
+} */
+.img-view .swiper-img{
+  border-radius: 6rpx;
+}
+.eidtImg{
+  margin:0rpx 0 105rpx 0rpx;
+}
+.eidtImg > .item {
+  position: relative;
+  float: left;
+  width: 210rpx;
+  height: 105rpx;
+  margin: 30rpx 30rpx 0rpx 0rpx;
+} 
+.eidtImg > .item > image{
+  width: 210rpx;
+  height: 105rpx;
+  border-radius: 5rpx;
+}
+.eidtImg > .item > text{
+  position: absolute;
+  width: 32rpx;
+  height: 32rpx;
+  line-height: 27rpx;
+  border-radius: 16rpx;
+  display: block;
+  background: #C7C7C7;
+  text-align: center;
+  color: #fff;
+  top: -16rpx;
+  right: -16rpx;
+} 
+
+view.photograph{
+  float:left;
+  width: 210rpx;
+  height: 105rpx;
+  margin: 30rpx 30rpx 0rpx 0rpx;
+  background: #F7F7F8;
+}
+.photograph > image{
+  width:52rpx;
+  height:43rpx;
+  display:block;
+  margin:15rpx auto;
+  display:block;
+  border-radius: 5rpx;
+}
+.photograph > text{
+  font-size:24rpx;
+  color:#C7C7C7;
+  line-height:120%;
+  display:block;
+  text-align:center;
+} 
+
+
+.content{
+  padding: 34rpx 0rpx;
+  margin: 0 30rpx;
+  height: 42rpx;
+  border-bottom: 1rpx solid #f3f4f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30rpx;
+}
+.content:first-child{
+  border-top: 1rpx solid #f3f4f6;
+}
+.content > .left{
+  flex: initial;
+  color: #242424;
+}
+.content > .right{
+  text-align: right;
+  color: #A5A5A5;
+  width: 500rpx;
+  word-wrap: break-word;
+}
+
+.btn-view{
+  margin: 40rpx 30rpx 0;
+  display: flex;
+}
+.btn-view .btn2{
+  background:#00AE66;
+  color: #fff;
+  border-radius: 40rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  flex: 1;
+}
+.btn-view .btn1{
+  width: 220rpx;
+  margin-right: 20rpx;
+  background: #FFFFFF;
+  border: 1px solid #A5A5A5;
+  border-radius: 40rpx;
+  color: #A5A5A5;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+}
+.btn-view .btn-save{
+  width: 450rpx;
+  flex: initial;
+}

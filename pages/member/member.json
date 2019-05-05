@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "账号管理",
+  "usingComponents": {
+    "loading": "/components/loading/loading"
+  }
+}

@@ -1,0 +1,157 @@
+/* pages/account/account.wxss */
+.balance{
+  text-align: center;
+  position: relative;
+}
+.balance > .price{
+  font-size: 64rpx;
+  margin-bottom: 30rpx;
+}
+.top-view-bg{
+  height:300rpx;
+  margin: 30rpx 50rpx 0rpx;
+}
+.account-pay{
+  margin: 0 50rpx;
+}
+.account-pay .title{
+  margin-bottom: 20rpx;
+  font-weight: 500;
+  font-size: 28rpx;  
+}
+.account-pay .row{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+.account-pay .row view{
+  width: 320rpx;
+  height: 110rpx;
+  background: #F7F7F8;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+  color: #242424;
+  text-align: center;
+  line-height: 110rpx;
+}
+.accout-pay .row view text{
+  margin-right: 4rpx;
+}
+
+.input-pay .title{
+  margin-top: 50rpx;
+}
+.input-pay .content{
+  display: flex;
+}
+.input-pay .content input{
+  width: 410rpx;
+  height: 70rpx;
+  padding: 20rpx 30rpx;
+  line-height: 110rpx;
+  background: #F7F7F8;
+}
+.input-pay .content .button{
+  background: #F7F7F8;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.input-pay .content .button button{
+  width: 180rpx;
+  height: 110rpx;
+  background: #00AE66;
+  color: #fff;
+  line-height: 110rpx;
+}
+.account-detail{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60rpx;
+  position: relative;
+  border-bottom: 1rpx solid #f3f4f6;
+}
+.account-detail navigator{
+  font-size: 24rpx;
+  color: #a5a5a5;
+}
+.account-detail navigator text{
+  margin-right: 30rpx;
+}
+.account-detail navigator image{
+  width: 15rpx;height: 24rpx;
+  position: absolute;
+  right: 0;
+  top: 7rpx;
+}
+
+
+.pos{
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}
+.hint{
+  font-size:26rpx;
+  color:#fff;
+}
+.account{
+  margin:93rpx 0;
+  color: #fff;
+}
+.account .price{
+  font-size:56rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+.button .not_true{
+  opacity: 0.55;
+  background: #888F9A;
+}
+
+.item-log view:last-child{
+  border: none;
+}
+.item{
+  border-bottom: 1rpx solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  margin: 0 50rpx;
+  position: relative;
+}
+
+.item > view{
+  flex: 1;
+}
+.item >view.left{
+  font-size:24rpx;
+  color:#a7a7a7;
+}
+.item >view.right{
+  position: absolute;
+  top: 36rpx;
+  right: 0;
+  color: #a5a5a5;
+  font-size: 36rpx;
+  font-weight: 500;
+}
+.item .center .row{
+  display: flex;
+}
+.item .center .row view{
+  font-size: 22rpx;
+  color: #A7A7A7;
+}
+.item .center .row view.date{
+  margin-right:26rpx;
+}
+
+.item > view > .title{
+  margin-bottom: 10rpx;
+  color: #3D4552;
+}
+.item > view > .date{
+  font-size: 24rpx;
+  color: #999;
+}

@@ -1,0 +1,6 @@
+<!--components/defaultPage/defaultPage.wxml-->
+
+<view class="default-page">
+  <image src="{{ default.imgSrc }}" class="icon"></image>
+  <text class="title">{{ default.title }}</text>
+</view>

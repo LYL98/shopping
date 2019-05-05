@@ -1,0 +1,7 @@
+*.map
+.DS_Store
+.vscode/
+.idea/
+*.css
+*.wxss
+/config.js

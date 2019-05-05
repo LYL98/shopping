@@ -1,0 +1,78 @@
+<!--pages/commercial/commercial.wxml-->
+<view class="title">
+  基本信息
+</view>
+<view class="content">
+  <view class="left">公司名称</view>
+  <view class="right">{{detail.title}}</view>
+</view>
+<view class="content">
+  <view class="left">所在省份</view>
+  <view class="right">
+    {{detail.province && detail.province.title}}
+  </view>
+</view>
+<view class="content">
+  <view class="left">详细地址</view>
+  <view class="right">{{detail.address}}</view>
+</view>
+<view class="content">
+  <view class="left">邮编</view>
+  <view class="right">{{detail.zip}}</view>
+</view>
+<view class="content">
+  <view class="left">电话</view>
+  <view class="right">{{detail.phone}}</view>
+</view>
+<view class="content">
+  <view class="left">传真</view>
+  <view class="right">{{detail.fax}}</view>
+</view>
+
+<!--
+<view class="title">
+  财务信息
+</view>
+<view class="content">
+  <view class="left">发票抬头</view>
+  <view class="right">刘德华有限公司</view>
+</view>
+<view class="content">
+  <view class="left">纳税人号</view>
+  <view class="right">234234234324</view>
+</view>
+<view class="content">
+  <view class="left">地址</view>
+  <view class="right">广东省深圳市南山区科技园</view>
+</view>
+<view class="content">
+  <view class="left">电话</view>
+  <view class="right">13800138000</view>
+</view>
+<view class="content">
+  <view class="left">开户名称</view>
+  <view class="right">刘德华</view>
+</view>
+<view class="content">
+  <view class="left">开户银行</view>
+  <view class="right">招商银行</view>
+</view>
+<view class="content">
+  <view class="left">银行账号</view>
+  <view class="right">1234567890123456</view>
+</view>
+-->
+
+<view class="title">
+  签约时间
+</view>
+<view class="content">
+  <view class="left">开始时间</view>
+  <view class="right">{{detail.sign_start_date || ''}}</view>
+</view>
+<view class="content">
+  <view class="left">结束时间</view>
+  <view class="right">{{detail.sign_end_date || ''}}</view>
+</view>
+
+<loading loading="{{loading}}"/>

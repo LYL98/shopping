@@ -1,0 +1,19 @@
+<!--pages/payResult/payResult.wxml-->
+<view class="t-c">
+  <image class="img" src="{{beenSoldSrc}}"></image>
+  <view class="result-src">支付成功</view>
+</view>
+
+<view class="option-btn t-c" wx:if="{{source === 'balanceTopup'}}">
+  <navigator class="item" open-type="navigateBack" style="margin: 0 auto;">好的</navigator>
+</view>
+
+<view class="option-btn t-c" wx:else>
+  <navigator class="item" open-type="navigateBack" wx:if="{{source === 'orderList'}}">继续补款</navigator>
+  <view bindtap="returnHone" class="item link-active" wx:else>返回首页</view>
+
+  <navigator class="item" open-type="navigateBack" class="item interval" wx:if="{{source === 'orderDetail'}}">查看订单</navigator>
+  <navigator url="/pages/orderDetail/orderDetail?id={{id}}" open-type="redirect" class="item interval" wx:else>查看订单</navigator>
+</view>
+
+

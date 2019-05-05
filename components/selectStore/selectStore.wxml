@@ -1,0 +1,38 @@
+<!--components/selectStore/selectStore.wxml-->
+<view class="seelct-store" bindtap="showSelect">
+  <view class="location"><image src="{{locationSrc}}"/></view>
+  <view class="title">{{address.id ? address.title : '选择门店'}}</view>
+  <view class="down"><image src="{{downSrc}}"/></view>
+</view>
+<!--选择门店主体start-->
+<view class="store-body" wx:if="{{isShow}}" bindtap="cancelSelect">
+  <view class="store" catchtap>
+    <view class="title">
+      <view class="str">选择门店</view>
+      <view class="close-btn link-active" bindtap="cancelSelect" wx:if="{{address.id}}">
+        <image src="{{closeSrc}}"></image>
+      </view>
+    </view>
+    <view class="content">
+      <view class="link-active" wx:for="{{dataItem}}" wx:key="item.id" data-index="{{index}}" bindtap="selectStore">
+        <view class="item">
+          <view class="left add-dot">
+            <view class="store-title add-dot">{{item.title}}</view>
+            <view class="store-address add-dot">{{item.address}}</view>
+          </view>
+          <view class="right">
+            <image src="{{checkedSrc}}" wx:if="{{item.id === addressTemp.id}}"/>
+            <image src="{{checkSrc}}" wx:else/>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="btn">
+      <button class="btn1" bindtap="affirmSelectStore">确认</button>
+    </view>
+  </view>
+
+</view>
+<!--选择门店主体end-->
+
+

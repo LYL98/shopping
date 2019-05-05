@@ -1,0 +1,137 @@
+/* components/loading/loading.wxss */
+.pay-body{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, .4);
+  z-index: 10;
+}
+.pay{
+  background: #fff;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border-top-left-radius: 30rpx;
+  border-top-right-radius: 30rpx;
+  animation: pay-bottom .3s;
+  overflow: hidden;
+}
+@keyframes pay-bottom
+{
+  from {bottom: -1000rpx;}
+  to {bottom: 0;}
+}
+/*支付结果*/
+.pay-result{
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 260rpx;
+  margin: -120rpx 0 0 -130rpx;
+  .img{
+    width: 88rpx;
+    height: 88rpx;
+  }
+  .hint{
+    color: #fff;
+    font-size: 34rpx;
+    margin-top: 30rpx;
+  }
+}
+
+.title{
+  height: 64rpx;
+  > .close-btn{
+    float: right;
+    margin: 20rpx 20rpx 0 0;
+    width: 42rpx;
+    height: 42rpx;
+    > image{
+      width: 24rpx;
+      height: 24rpx;
+      margin: 10rpx 0 0 10rpx;
+    }
+  }
+}
+
+/*链接样式*/
+.link-active:active{
+  background: #f3f4f6;
+}
+
+.content{
+  padding: 26rpx 0;
+  margin-bottom: 104rpx;
+  > .top{
+    text-align: center;
+    padding-bottom: 60rpx;
+    border-bottom: 1rpx solid #f3f4f6;
+    margin: 0 30rpx;
+    > .price{
+      font-size: 80rpx;
+      margin-bottom: 10rpx;
+    }
+    > .hint{
+      color: #041A28;
+      font-size: 26rpx;
+    }
+    > .warning {
+      margin-top: 20rpx;
+      color: #FF6868;
+      font-size: 26rpx;
+      line-height: 34rpx;
+      text {
+        display: block;
+      }
+    }
+  }
+  .item{
+    display: flex;
+    border-bottom: 1rpx solid #f3f4f6;
+    padding: 35rpx 0;
+    align-items: center;
+    position: relative;
+    margin: 0 30rpx;
+    >.left{
+      flex: 1;
+      > .balance{
+        color: #A2A2A2;
+        font-size: 24rpx;
+        margin-left: 20rpx;
+      }
+    }
+    >.right{
+      text-align: right;
+      flex: initial;
+      .select-pay-img{
+        width: 14rpx;
+        height: 22rpx;
+        margin-left: 15rpx;
+        position: relative;
+        top: 3rpx;
+      }
+    }
+    > .price{
+      color: #ff5252;
+      padding-right: 5px;
+    }
+  }
+}
+
+
+.btn1{
+  background: #00AE66;
+  font-size: 36rpx;
+  color: #fff;
+  border-radius: 0;
+  &:active{
+    opacity: 0.7;
+  }
+  &::after{
+    border: 0;
+  }
+}

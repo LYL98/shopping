@@ -1,0 +1,58 @@
+/* pages/myMessage/myMessage.wxss */
+
+#page-my-message {
+    padding-bottom: 30rpx;
+    border-top: 1rpx solid #eee;
+}
+
+#page-my-message > .list-footer {
+    padding: 20rpx 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28rpx;
+    color: #A1A6B3;
+}
+
+#message-list-wrapper{
+    > .message-item {
+        padding: 0 30rpx;
+        > .header {
+            padding-top: 30rpx;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            > .title {
+                font-size: 30rpx;
+                line-height: 42rpx;
+            }
+            > .date {
+                font-size: 24rpx;
+                color: #A5A5A5;
+                line-height: 33rpx;
+            }
+        }
+        > .content {
+            padding: 20rpx 0;
+            border-bottom: 1rpx solid #eee;
+            display: flex;
+            align-items: center;
+            > .icon > image {
+                width: 100rpx;
+                height: 100rpx;
+            }
+            > .description {
+                margin-left: 22rpx;
+                font-size: 26rpx;
+                line-height: 37rpx;
+                word-break: break-word;
+            }
+        }
+    }
+}
+
+#message-previous-title {
+    padding-top: 50rpx;
+    text-align: center;
+    color: #A5A5A5;
+}

@@ -1,0 +1,63 @@
+<!--pages/shoppingCart/shoppingCart.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<view class="close-store" wx:if="{{!closeStore}}"> 
+  营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
+</view>
+<view class="work-field">
+  <view class="hint-black"><text>优惠</text>运费{{tools.returnPrice(activity.amount_delivery)}}元,购物满{{tools.returnPrice(activity.discount_delivery_line)}}元免运费</view>
+  <view class="edit-btn" bindtap="changeEdit" wx:if="{{dataItem.length > 0}}">
+    <text class="f-r">{{isEdit ? '完成':'编辑'}}</text>
+  </view>
+</view>
+
+<view class="item-view">
+  <view class="item" wx:for="{{dataItem}}" wx:key="item.id">
+    <view class="no-nav {{(item.is_on_sale && item.item_stock > 0 && item.is_quoted) ? '' : 'under_ground' }}">
+      <view class="checked" bindtap="redioSelect" data-rs="{{item}}" >
+        <image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
+      </view>
+      <view class="img">
+        <image lazy-load wx:if="{{item.images.length > 0}}" class="bg-img-container-item" src="{{tencentPath + item.images[0]}}_seal200x200"></image>
+        <view class="image bg-img-container-item" wx:else></view>
+      </view>
+      <view class="content">
+        <view class="title">{{item.title}}</view>
+        <view class="label">
+          <text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale)}}元/{{item.sale_unit}}</text>
+          <text wx:if="{{item.item_spec}}" >{{item.item_spec}}</text>
+          <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+          <text wx:if="{{item.gross_weight}}">{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+          <text wx:if="{{item.frame_code}}" class="frame">含框</text>
+        </view>
+        <view class="join-shop-cart">
+          <joinShopCart size="small" wx:if="{{isShowUpDown}}" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" sourcePage="shoppingCart" isDeleteHint/>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view>
+  <defaultPage wx:else currentPage="shoppingCart"></defaultPage>
+  <!--<view class="load-none" wx:else>-->
+    <!--<image src="{{empty_cart}}"></image>-->
+    <!--<view>您的购物车空空如也</view>-->
+  <!--</view>-->
+</view>
+
+<view style="height: 120rpx;"></view>
+<view class="bottom-view b-cfff" wx:if="{{dataItem.length > 0}}">
+  <view class="checked" bindtap="allSelect">
+    <image src="{{isAllSelect ? checkedSSrc : checkedSrc}}"></image>全选
+  </view>
+  <view class="total-price" wx:if="{{!isEdit}}">
+    <text class="hint">不含运费</text>合计:<text class="price"> ￥{{tools.returnPrice(totalPrice)}}</text>
+  </view>
+  <view class="total-price" wx:else></view>
+  <view class="btn" wx:if="{{!isEdit}}">
+    <button bindtap="submitClearing" class="btn2" disabled="{{totalNum <= 0 || !closeStore}}">去结算</button>
+  </view>
+  <view class="btn" wx:else>
+    <button bindtap="removeItem" type="warn" >删除</button>
+  </view>
+</view>
+
+<loading loading="{{loading}}"/>

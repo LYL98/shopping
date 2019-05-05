@@ -1,0 +1,186 @@
+/* components/joinShopCart/joinShopCart.wxss */
+.plus-minus-body{
+  position: relative;
+  &::after{
+    content: "";
+    position: absolute;
+    top: -20rpx;
+    left: -20rpx;
+    bottom: -20rpx;
+    right: -20rpx;
+    z-index: 0;
+  }
+
+  //small 小的
+  //medium 中的
+  //large 大的
+  .plus-minus{
+    display: flex;
+    align-items: center;
+    font-size:24rpx;
+    position: relative;
+    z-index: 1;
+    >.join-btn, >.presale-btn{
+      background: #00AE66;
+      color: #fff;
+      text-align: center;
+      &.unusable{
+        background: #D0DBD7;
+      }
+    }
+    >.add-cart-icon{
+      width: 54rpx;
+      height: 54rpx;
+      >image{
+        width: 54rpx;
+        height: 54rpx;
+      }
+    }
+    //加减号容器
+    .plus-minus-view{
+      display: flex;
+      align-items: center;
+      >.btn{
+        flex: initial;
+        > image{
+          float: left;
+        }
+        &.unusable{
+          opacity: .7;
+        }
+      }
+      > .num{
+        flex: 1;
+        background: #F5F5F5;
+        color: #3D4244;
+        font-size: 26rpx;
+        margin: 0 1rpx;
+        text-align: center;
+      }
+    }
+    
+    //small 小的
+    &.small{
+      >.join-btn{
+        display: none;
+      }
+      >.presale-btn{
+        height: 54rpx;
+        line-height: 54rpx;
+        width: 102rpx;
+        border-radius: 54rpx;
+      }
+      >.plus-minus-view{
+        height: 54rpx;
+        align-items: flex-end;
+        >.btn{
+          width: 50rpx;
+          height: 50rpx;
+          >image{
+            width: 50rpx;
+            height: 50rpx;
+          }
+        }
+        > .num{
+          width: 54rpx;
+          flex: initial !important;
+          height: 50rpx;
+          line-height: 50rpx;
+        }
+      }
+    }
+    //medium 中的
+    &.medium{
+      >.join-btn, >.presale-btn{
+        height: 58rpx;
+        line-height: 58rpx;
+        width: 100%;
+        border-radius: 58rpx;
+      }
+      >.add-cart-icon{
+        display: none;
+      }
+      >.plus-minus-view{
+        width: 100%;
+        >.btn{
+          width: 82rpx;
+          height: 58rpx;
+          >image{
+            width: 82rpx;
+            height: 58rpx;
+          }
+        }
+        > .num{
+          flex: 1;
+          height: 58rpx;
+          line-height: 58rpx;
+        }
+      }
+    }
+    //large 大的
+    &.large{
+      >.add-cart-icon{
+        display: none;
+      }
+      >.join-btn, >.presale-btn{
+        height: 88rpx;
+        line-height: 88rpx;
+        width: 100%;
+        border-radius: 88rpx;
+        font-size: 32rpx;
+      }
+      >.plus-minus-view{
+        width: 100%;
+        >.btn{
+          width: 82rpx;
+          height: 82rpx;
+          >image{
+            width: 82rpx;
+            height: 82rpx;
+          }
+        }
+        > .num{
+          flex: 1;
+          height: 82rpx;
+          line-height: 82rpx;
+        }
+      }
+    }
+  }
+}
+
+.good_box {
+  width: 36rpx;
+  height: 36rpx;
+  z-index: 99;
+  background: #00AE66;
+  position: fixed;
+  border-radius: 50%;
+}
+
+//购物车专用=====================
+.shopping-cart-plus-minus{
+  float: right;
+}
+.shopping-cart-page{
+  >.price-unit{
+    color: #FF6868;
+    font-size: 30rpx;
+    height: 54rpx;
+    line-height: 68rpx;
+    > text{
+      color: #A5A5A5;
+      font-size: 24rpx;
+    }
+  }
+  >.discount-repertory{
+    display: flex;
+    height: 0;
+    >.repertory{
+      flex: initial;
+      color:#A5A5A5;
+      font-size:20rpx;
+      margin-top: 5rpx;
+    }
+  }
+}

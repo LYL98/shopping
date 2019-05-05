@@ -1,0 +1,43 @@
+/* pages/accountRecord/accountRecord.wxss */
+.item{
+  border-bottom: 1rpx solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  margin: 0 30rpx;
+  position: relative;
+}
+.item > view{
+  flex: 1;
+}
+.item >view.left{
+  font-size:24rpx;
+  color:#a7a7a7;
+}
+.item >view.right{
+  position: absolute;
+  top: 36rpx;
+  right: 0;
+  font-size: 36rpx;
+  color: #a5a5a5;
+  font-weight: 500;
+}
+.item .center .row{
+  display: flex;
+}
+.item .center .row view{
+  font-size: 22rpx;
+  color: #A7A7A7;
+}
+.item .center .row view.date{
+  margin-right:26rpx;
+}
+
+.item > view > .title{
+  margin-bottom: 10rpx;
+  color: #3D4552;
+}
+.item > view > .date{
+  font-size: 24rpx;
+  color: #999;
+}

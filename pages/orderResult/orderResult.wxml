@@ -1,0 +1,10 @@
+<!--pages/orderResult/orderResult.wxml-->
+<view class="t-c">
+  <image class="img" src="{{beenSoldSrc}}"></image>
+  <view class="result-src">下单成功</view>
+</view>
+
+<view class="option-btn t-c">
+  <view bindtap="returnHone" class="item link-active">继续下单</view>
+  <navigator url="/pages/orderDetail/orderDetail?id={{id}}" open-type="redirect" class="item interval ">查看订单</navigator>
+</view>

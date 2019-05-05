@@ -1,0 +1,42 @@
+/* pages/itemList/itemList.wxss */
+
+.category-view{
+  z-index: 2;
+}
+.head-view{
+  position: fixed;
+  z-index: 2;
+  left: 160rpx;
+  right: 0;
+  top: 100rpx;
+  background: #fff;
+  display: flex;
+  height: 84rpx;
+  border-bottom: 1rpx solid #f3f4f6;
+  align-items: center;
+  > view{
+    flex: 1;
+    text-align: center;
+    height: 64rpx;
+    font-size: 26rpx;
+    color: #666;
+    line-height: 64rpx;
+    &.interval{
+      flex: initial !important;
+      width: 2rpx;
+      height: 24rpx;
+      background:#f3f4f6;
+    }
+    > image{
+      width:16rpx;
+      height:20rpx;
+      margin-left:10rpx;
+      position:relative;
+      top:2rpx;
+    }
+  }
+}
+
+.item-view{
+  padding: 185rpx 0 0 160rpx;
+}

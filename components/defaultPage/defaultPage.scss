@@ -1,0 +1,20 @@
+/* components/defaultPage/defaultPage.wxss */
+
+.default-page {
+    padding-top: 135rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.default-page > .icon {
+    width: 360rpx;
+    height: 360rpx;
+}
+
+.default-page > .title {
+    margin-top: 44rpx;
+    font-size: 30rpx;
+    line-height: 42rpx;
+    color: #A5A5A5;
+}
