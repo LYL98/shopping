@@ -28,7 +28,7 @@
         <view class="mark">
           <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
         </view>
-        <image lazy-load wx:if="{{item.images.length > 0}}" class="bg-img-container-item" src="{{tencentPath + item.images[0]}}_seal375x375"></image>
+        <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_seal200x200"></image>
         <view class="image bg-img-container-item" wx:else></view>
       </view>
       <view class="content">

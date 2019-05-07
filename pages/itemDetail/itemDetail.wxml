@@ -1,28 +1,27 @@
-<!--pages/itemDetail/itemDetail.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
 
-<view class="skeleton">
-  <view class="skeleton-rect" style="position:relative;">
+<view>
+  <view style="position:relative;">
     <view class="mark">
       <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
     </view>
-    <swiper autoplay interval="3000" class="img-view bg-img-container-item-large" bindchange="swiperChange">
-      <block wx:for="{{detail.images}}" wx:key="detail.images" class="img-item">
-        <swiper-item>
-          <image src="{{tencentPath + item + '_seal750x750'}}" class="slide-image"  data-src="{{detail.images}}" data-index="{{index}}" bindtap="previewImage"/>
-        </swiper-item>
-      </block>
-    </swiper>
-    <view class="dotwrap">
-      {{currentSwiper + 1}}/{{detail.images.length}}
-    </view> 
+    <view class="img-view">
+      <swiper autoplay="{{tempOneImg ? false : true}}" interval="3000" bindchange="swiperChange">
+        <block wx:for="{{detail.images}}" wx:key="detail.images" class="img-item">
+          <swiper-item>
+            <image src="{{tencentPath + item + '_seal750x750'}}" class="slide-image" data-src="{{detail.images}}" data-index="{{index}}" bindtap="previewImage" bindload="oneImgLoad"/>
+          </swiper-item>
+        </block>
+      </swiper>
+      <image wx:if="{{tempOneImg}}" src="{{tencentPath + tempOneImg}}" class="temp-img" style="width: 100%; height: 100vw;" />
+      <view class="dotwrap">
+        {{currentSwiper + 1}}/{{detail.images.length}}
+      </view> 
+    </view>
   </view>
-  <view class="item-title">
-    <text class="skeleton-rect">{{detail.title}}</text>
-  </view>
+  <view class="item-title">{{detail.title}}</view>
   <view class="repertory-price">
-    <view class="price-unit skeleton-rect" wx:if="{{detail.is_quoted}}">
+    <view class="price-unit" wx:if="{{detail.is_quoted}}">
       ￥{{tools.returnPrice(detail.price_sale_piece)}}/件
       <text class="price-origin" wx:if="{{detail.price_origin_piece > detail.price_sale_piece}}">￥{{tools.returnPrice(detail.price_origin_piece)}}/件</text>
     </view>
@@ -83,7 +82,7 @@
   </view>
   <!--预售商品日期end-->
 
-   <view class="title-table skeleton-rect">商品规格</view>
+   <view class="title-table">商品规格</view>
    <view class="table">
     <view class="td">
       <view>
@@ -163,17 +162,17 @@
   <view style="height: 120rpx;"></view>
   <view class="btn-view">
     <navigator url="/pages/index/index" open-type="switchTab" class="btn-mini">
-      <image src="{{homeSrc}}"></image>
+      <image src="./../../assets/img/home.png"></image>
     </navigator>
     <navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="btn-mini">
-      <image src="{{shopCartSrc}}"></image>
+      <image src="./../../assets/img/shop_cart.png"></image>
       <span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
     </navigator>
     <view class="btn-mini" wx:if="{{detail.is_collect}}" bindtap="itemCollectionCancel">
-      <image src="{{collectSSrc}}"></image>
+      <image src="./../../assets/img/collect_s.png"></image>
     </view>
     <view class="btn-mini" wx:else bindtap="itemCollectionAdd">
-      <image src="{{collectSrc}}"></image>
+      <image src="./../../assets/img/collect.png"></image>
     </view>
     <view class="btn-join" style="padding-left: 16rpx;" wx:if="{{detail.item_stock > 0}}">
       <!--预售-->

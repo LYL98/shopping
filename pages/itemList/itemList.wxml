@@ -43,7 +43,7 @@
         <view class="mark">
           <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
         </view>
-        <image lazy-load wx:if="{{item.images.length > 0}}" class="bg-img-container-item" src="{{tencentPath + item.images[0]}}_seal200x200"></image>
+        <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_seal200x200"></image>
         <view class="image bg-img-container-item" wx:else></view>
       </view>
       <view class="content">
@@ -66,7 +66,7 @@
     </navigator>
     <view class="join" style="{{tools.returnItemStock(item.item_stock) ? 'bottom: 38rpx' : 'bottom: 22rpx'}}">
       <view style="min-height:36rpx;">
-        <joinShopCart wx:if="{{isShowUpDown && item.item_stock > 0}}" size="small" style="float:right;" itemData="{{item}}"/>
+        <joinShopCart wx:if="{{item.item_stock > 0}}" size="small" style="float:right;" itemData="{{item}}"/>
       </view>
       <view style="clear: both;"></view>
       <view class="repertory">{{tools.returnItemStock(item.item_stock)}}</view>

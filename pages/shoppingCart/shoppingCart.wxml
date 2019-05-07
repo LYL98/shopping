@@ -17,7 +17,7 @@
         <image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
       </view>
       <view class="img">
-        <image lazy-load wx:if="{{item.images.length > 0}}" class="bg-img-container-item" src="{{tencentPath + item.images[0]}}_seal200x200"></image>
+        <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_seal200x200"></image>
         <view class="image bg-img-container-item" wx:else></view>
       </view>
       <view class="content">
@@ -30,7 +30,7 @@
           <text wx:if="{{item.frame_code}}" class="frame">含框</text>
         </view>
         <view class="join-shop-cart">
-          <joinShopCart size="small" wx:if="{{isShowUpDown}}" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" sourcePage="shoppingCart" isDeleteHint/>
+          <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" sourcePage="shoppingCart" isDeleteHint/>
         </view>
       </view>
     </view>

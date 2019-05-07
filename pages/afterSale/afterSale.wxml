@@ -9,7 +9,7 @@
           <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
           <text wx:if="{{detail.is_gb_order}}" class="is-gb-order">团</text>
         </view>
-        <image lazy-load wx:if="{{detail.item_image}}" class="bg-img-container-item" src="{{tencentPath + detail.item_image}}_seal200x200"></image>
+        <image wx:if="{{detail.item_image}}" src="{{tencentPath + detail.item_image}}_seal200x200"></image>
         <view class="image bg-img-container-item" wx:else></view>
       </view>
       <view class="content">

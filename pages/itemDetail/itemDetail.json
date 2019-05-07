@@ -2,7 +2,6 @@
   "navigationBarTitleText": "商品详情",
   "usingComponents": {
     "joinShopCart": "/components/joinShopCart/joinShopCart",
-    "presale": "/components/presale/presale",
-    "skeleton": "/components/skeleton/skeleton"
+    "presale": "/components/presale/presale"
   }
 }
