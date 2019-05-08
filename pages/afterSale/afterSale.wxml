@@ -9,7 +9,7 @@
           <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
           <text wx:if="{{detail.is_gb_order}}" class="is-gb-order">团</text>
         </view>
-        <image lazy-load wx:if="{{detail.item_image}}" class="bg-img-container-item" src="{{tencentPath + detail.item_image}}_seal200x200"></image>
+        <image wx:if="{{detail.item_image}}" src="{{tencentPath + detail.item_image}}_watermark200x200"></image>
         <view class="image bg-img-container-item" wx:else></view>
       </view>
       <view class="content">
@@ -51,7 +51,7 @@
         <text>上传照片</text>
       </view>
       <view wx:for="{{detail.images}}" wx:key="item" class="img-item">
-        <image src="{{tencentPath + item}}_seal200x200" bindtap="showImg" data-index="{{index}}"></image>
+        <image src="{{tencentPath + item}}_watermark200x200" bindtap="showImg" data-index="{{index}}"></image>
           <view class="close" bindtap="deletelImg" data-index="{{index}}">×</view>
       </view>
     </view>

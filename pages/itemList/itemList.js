@@ -51,7 +51,6 @@ Page({
       })()
     },
     initLoad: true,
-    isShowUpDown: false,
     showSkeleton: true
   },
   onLoad() {
@@ -175,7 +174,6 @@ Page({
     let that = this;
     let { query, dataItem, initLoad } = that.data;
 
-    that.setData({ isShowUpDown: false });
     wx.showNavigationBarLoading();
 
     wx.request({
@@ -191,14 +189,12 @@ Page({
           if (query.page === 1){
             that.setData({
               dataItem: rd,
-              isShowUpDown: true,
               showSkeleton: false
             });
           }else{
             dataItem.items = dataItem.items.concat(rd.items);
             that.setData({
               dataItem: dataItem,
-              isShowUpDown: true,
               showSkeleton: false
             });
           }

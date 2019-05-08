@@ -21,7 +21,6 @@ Page({
     totalPrice: 0,
     isEdit: false,
     initLoad: true,
-    isShowUpDown: true,
     closeStore:true,
     goodsStatus:{
       "on_ground":"已上架",
@@ -226,17 +225,14 @@ Page({
     return newPrice;
   },
   //更新页面数据
-  updateData(){
+  updateData(data){
     let that = this;
     let totalNum = 0, totalPrice = 0;
     let { dataItem } = that.data;
+    if(data) dataItem = data;
+    
     let d = wx.getStorageSync('shoppingCartData');
     
-    if(dataItem.length !== d.length){
-      that.setData({
-        isShowUpDown: false
-      });
-    }
     if (d.length > 0){
       for (let i = 0; i < dataItem.length; i++) {
         for (let j = 0; j < d.length; j++) {
@@ -271,8 +267,7 @@ Page({
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
-        totalPrice: totalPrice,
-        isShowUpDown: true
+        totalPrice: totalPrice
       }, () => {
         that.judgeIsAllSelect();//判断是否全选
       });
@@ -280,8 +275,7 @@ Page({
       that.setData({
         dataItem: [],
         totalNum: 0,
-        totalPrice: 0,
-        isShowUpDown: true
+        totalPrice: 0
       });
     }
     app.shoppingCartNum();
@@ -340,14 +334,7 @@ Page({
               }
               wx.setStorageSync('shoppingCartData', d);
             }
-
-            that.setData({
-              dataItem: rd,
-              isShowUpDown: false
-            },()=>{
-             
-              that.updateData();//更新本地数据
-            });
+            that.updateData(rd);//更新本地数据
           } else {
             app.requestResultCode(res); //处理异常
           }

@@ -11,7 +11,7 @@
   <view class="link-active {{query.tag === item.title && 'active'}}" wx:for="{{tagsList}}" wx:key="item.title" bindtap="selectTags" data-tag="{{item.title}}" wx:if="{{item.title}}">{{item.title}}</view>
   <view style="margin-bottom: 180rpx;"></view>
 </view>
-<!--分类edn-->
+<!--分类end-->
 
 <view class="item-view skeleton">
   <view class="item" wx:for="{{dataItem.items}}" wx:key="item.id">
@@ -20,7 +20,7 @@
         <view class="mark">
           <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
         </view>
-        <image class="skeleton-rect" lazy-load wx:if="{{item.images.length > 0}}" class="bg-img-container-item" src="{{tencentPath + item.images[0]}}_seal200x200"></image>
+        <image class="skeleton-rect" lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_watermark200x200"></image>
         <view class="image skeleton-rect bg-img-container-item" wx:else></view>
       </view>
       <view class="content">
@@ -43,7 +43,7 @@
     </navigator>
     <view class="join" style="{{tools.returnItemStock(item.item_stock) ? 'bottom: 38rpx' : 'bottom: 22rpx'}}">
       <view style="min-height:36rpx;">
-        <joinShopCart wx:if="{{isShowUpDown && item.item_stock > 0}}" size="small" style="float:right;" bindcallback="joinShoppingCart" itemData="{{item}}" sourcePage="itemLabel" />
+        <joinShopCart wx:if="{{item.item_stock > 0}}" size="small" style="float:right;" bindcallback="joinShoppingCart" itemData="{{item}}" sourcePage="itemLabel" />
       </view>
       <view style="clear: both;"></view>
       <view class="repertory">{{tools.returnItemStock(item.item_stock)}}</view>

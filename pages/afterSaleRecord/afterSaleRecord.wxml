@@ -22,7 +22,7 @@
               <text wx:if="{{d.is_presale}}" class="is-presale">预</text>
               <text wx:if="{{item.is_gb_order}}" class="is-gb-order">团</text>
             </view>
-            <image lazy-load wx:if="{{d.item_image}}" class="bg-img-container-item" src="{{tencentPath + d.item_image}}_seal200x200"></image>
+            <image wx:if="{{d.item_image}}" src="{{tencentPath + d.item_image}}_watermark200x200"></image>
             <view class="image bg-img-container-item" wx:else></view>
           </view>
           <view class="content">
@@ -77,7 +77,7 @@
               <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
               <text wx:if="{{item.is_gb_order}}" class="is-gb-order">团</text>
             </view>
-            <image lazy-load wx:if="{{item.item_image}}" src="{{tencentPath + item.item_image}}_seal200x200"></image>
+            <image wx:if="{{item.item_image}}" src="{{tencentPath + item.item_image}}_watermark200x200"></image>
             <view class="image" wx:else></view>
           </view>
           <view class="content">

@@ -2,7 +2,6 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <view  class="{{isShowSelectStore ? 'show-select-store' : ''}}">
   <skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
-
   <view class="closeStore" wx:if="{{!closeStore}}"> 
     营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
   </view>
@@ -57,7 +56,7 @@
               <view class="mark">
                 <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
               </view>
-              <image class="skeleton-rect" lazy-load wx:if="{{item.images.length > 0}}" class="bg-img-container-item" src="{{tencentPath + item.images[0]}}_seal375x375"></image>
+              <image class="skeleton-rect" lazy-load="{{index > 2 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_watermark375x375"></image>
               <view class="image skeleton-rect bg-img-container-item" wx:else></view>
             </view>
             <view class="content">
@@ -88,9 +87,7 @@
           <view class="join" wx:if="{{item.item_stock > 0}}">
             <joinShopCart itemData="{{item}}" size="medium"/>
           </view>
-          <view class="join" wx:else>
-
-          </view>
+          <view class="join" wx:else></view>
         </view>
       </view>
     </view>

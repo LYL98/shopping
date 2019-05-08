@@ -1,4 +1,3 @@
-// pages/itemDetail/itemDetail.js
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
@@ -9,51 +8,12 @@ Page({
    */
   data: {
     tencentPath: config.tencentPath,
-    homeSrc: './../../assets/img/home.png',
-    shopCartSrc: './../../assets/img/shop_cart.png',
-    collectSrc: './../../assets/img/collect.png',
-    collectSSrc: './../../assets/img/collect_s.png',
     id: 0,
-    detail: {
-      auditor_id: 0,
-      buyer_id: 0,
-      code: "000000",
-      content: "",
-      created: "0000-00-00 00:00:00",
-      display_class_code: "19",
-      gross_weight: 0,
-      id: 0,
-      images: [],
-      is_audited: true,
-      is_collect: false,
-      is_deleted: false,
-      is_on_sale: true,
-      is_quoted: true,
-      is_weigh: true,
-      item_spec: "单果3.5斤",
-      item_stock: 0,
-      lower_rate: 0,
-      markup_rate: 150,
-      net_weight: 200,
-      origin_place: "山东",
-      package_spec: "纸箱6头",
-      price_buy: 188,
-      price_sale: 216,
-      price_sale_jin: 216,
-      price_sale_piece: 4752,
-      province_code: "01",
-      rank: 17,
-      sale_num_day: 0,
-      sale_num_total: 621,
-      sale_unit: "斤",
-      tags_edited: "0000-00-00 00:00:00",
-      title: "名称名称名称名称名称名称",
-      updated: "0000-00-00 00:00:00"
-    },
+    tempOneImg: '', //第一张图片，临时
+    detail: {},
     vidoes: [],
     currentSwiper: 0,
     promotionData: {}, //全场活动数据
-    showSkeleton: true
   },
   swiperChange: function (e) {
     this.setData({
@@ -77,8 +37,25 @@ Page({
       let id = options.id;
       let num = app.getShoppingCartNum();//获取购物车数量
       let address = app.getSelectStore(); //当前选择的地址
+
+      //获取上个页面的数据(加快显示数据)===
+      let pages = getCurrentPages();
+      let page = pages[pages.length - 2];
+      let d = page.data.dataItem, tempOneImg = '';
+      if(d && d.items){
+        d = d.items.filter(item => item.id == id);
+        d = d.length > 0 ? d[0] : {images: []};
+        tempOneImg = d.images[0] + (page.route === 'pages/index/index' ? '_watermark375x375' : '_watermark200x200');
+        d.images = [];
+      }else{
+        d = {};
+      }
+      //==============================
+
       that.setData({ 
         id: id,
+        tempOneImg: tempOneImg,
+        detail: d,
         address: address,
         shoppingCartNum: num
       }, ()=>{
@@ -96,7 +73,7 @@ Page({
   //获取商品详情
   getItemDetail() {
     let that = this;
-    let { id, address } = that.data;
+    let { id, address, tencentPath } = that.data;
     wx.showNavigationBarLoading();
     wx.request({
       url: config.api.itemDetail,
@@ -124,8 +101,7 @@ Page({
           
           that.setData({
             detail: rd,
-            vidoes: vidoes,
-            showSkeleton: false
+            vidoes: vidoes
           });
           that.unifiedDescription(); //统一描述
         } else {
@@ -272,16 +248,23 @@ Page({
 
     // let images = img.split(',');
     let urls = [];
-    let current = tencentPath + images[index] + '_seal750';
+    let current = tencentPath + images[index] + '_watermark750';
 
 
     for (let i = 0; i < images.length; i++) {
-      urls.push(tencentPath + images[i] + '_seal750');
+      urls.push(tencentPath + images[i] + '_watermark750');
     }
 
     wx.previewImage({
       current: current,
       urls: urls
     })
+  },
+  //第一张图片加载完成
+  oneImgLoad(e){
+    let index = e.currentTarget.dataset.index;
+    if(index === 0){
+      this.setData({ tempOneImg: '' });
+    }
   }
 })

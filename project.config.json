@@ -11,7 +11,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.4.1",
+	"libVersion": "2.6.4",
 	"appid": "wx70a3bf5f7a69987d",
 	"projectname": "kiwi",
 	"isGameTourist": false,

@@ -44,28 +44,19 @@ Component({
     isCanPresale: false, //是否可预订
   },
 
-  //组件生命周期函数，在组件实例进入页面节点树时执行
-  attached(){
-    let that = this;
-    let num = that.getShoppingCart();
-    that.setData({
-      num: num,
-      tempNum: num
-    });
-    let ww = app.globalData.ww;
-    let x = ww - (ww / 4) - (ww / 4 / 2);
-    let y = app.globalData.hh;
-    if (that.properties.sourcePage === 'itemLabel' || that.properties.sourcePage === 'search'){
-      x = 20;
-      y = app.globalData.hh - 55;
-    }else if (that.properties.size === "large"){
-      x = ww / 4;
+  //监听
+  observers: {
+    //数据
+    itemData(a){
+      this.initData();
     }
-    that.busPos = {
-      x: x,
-      y: y
-    }
-    that.judgePresale();//判断预定
+  },
+
+  lifetimes: {
+    //组件生命周期函数，在组件实例进入页面节点树时执行
+    attached(){
+      //this.initData();
+    },
   },
 
   //组件所在页面的生命周期声明对象，目前仅支持页面的show和hide两个生命周期
@@ -85,6 +76,29 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    //初始化数据
+    initData(){
+      let that = this;
+      let num = that.getShoppingCart();
+      that.setData({
+        num: num,
+        tempNum: num
+      });
+      let ww = app.globalData.ww;
+      let x = ww - (ww / 4) - (ww / 4 / 2);
+      let y = app.globalData.hh;
+      if (that.properties.sourcePage === 'itemLabel' || that.properties.sourcePage === 'search'){
+        x = 20;
+        y = app.globalData.hh - 55;
+      }else if (that.properties.size === "large"){
+        x = ww / 4;
+      }
+      that.busPos = {
+        x: x,
+        y: y
+      }
+      that.judgePresale();//判断预定
+    },
     //判断是否可预订
     judgePresale(){
       let that = this;

@@ -101,11 +101,11 @@ Page({
 
     // let images = img.split(',');
     let urls = [];
-    let current = tencentPath + images[index] + '_seal750';
+    let current = tencentPath + images[index] + '_watermark750';
 
 
     for (let i = 0; i < images.length; i++) {
-      urls.push(tencentPath + images[i] + '_seal750');
+      urls.push(tencentPath + images[i] + '_watermark750');
     }
 
     wx.previewImage({	

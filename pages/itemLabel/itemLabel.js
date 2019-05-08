@@ -56,7 +56,6 @@ Page({
     account: './../../assets/img/my.png',
     collectSSrc: './../../assets/img/collect_s.png',
     collectSrc: './../../assets/img/collect.png',
-    isShowUpDown: true,
     showSkeleton: true
   },
 
@@ -77,8 +76,7 @@ Page({
       that.setData({
         query: query,
         shoppingCartNum: num,
-        system: app.globalData.system,
-        isShowUpDown: false
+        system: app.globalData.system
       }, () => {
         that.itemQuery();
       });
@@ -132,8 +130,7 @@ Page({
     query.tag = value;
     query.page = 1;
     this.setData({
-      query: query,
-      isShowUpDown: false
+      query: query
     }, () => {
       this.itemQuery();//获取商品列表
     });
@@ -184,14 +181,12 @@ Page({
           if (query.page === 1) {
             that.setData({
               dataItem: rd,
-              isShowUpDown: true,
               showSkeleton: false
             });
           } else {
             dataItem.items = dataItem.items.concat(rd.items);
             that.setData({
               dataItem: dataItem,
-              isShowUpDown: true,
               showSkeleton: false
             });
           }
@@ -222,7 +217,6 @@ Page({
           let rd = res.data.data;
           that.setData({
             ["dataItem.items"]: rd,
-            isShowUpDown: true,
             showSkeleton: false
           });
         } else {
@@ -256,14 +250,12 @@ Page({
           if (query.page === 1) {
             that.setData({
               dataItem: rd,
-              isShowUpDown: true,
               showSkeleton: false
             });
           } else {
             dataItem.items = dataItem.items.concat(rd.items);
             that.setData({
               dataItem: dataItem,
-              isShowUpDown: true,
               showSkeleton: false
             });
           }
@@ -292,8 +284,7 @@ Page({
     if (dataItem.num / query.page_size > query.page) {
       query.page = query.page + 1;
       that.setData({
-        query: query,
-        isShowUpDown: false
+        query: query
       }, () => {
         that.itemQuery();
       });
