@@ -9,7 +9,7 @@
       <swiper autoplay="{{tempOneImg ? false : true}}" interval="3000" bindchange="swiperChange">
         <block wx:for="{{detail.images}}" wx:key="detail.images" class="img-item">
           <swiper-item>
-            <image src="{{tencentPath + item + '_seal750x750'}}" class="slide-image" data-src="{{detail.images}}" data-index="{{index}}" bindtap="previewImage" bindload="oneImgLoad"/>
+            <image src="{{tencentPath + item + '_watermark750x750'}}" class="slide-image" data-src="{{detail.images}}" data-index="{{index}}" bindtap="previewImage" bindload="oneImgLoad"/>
           </swiper-item>
         </block>
       </swiper>

@@ -41,10 +41,15 @@ Page({
       //获取上个页面的数据(加快显示数据)===
       let pages = getCurrentPages();
       let page = pages[pages.length - 2];
-      let d = page.data.dataItem.items.filter(item => item.id == id);
-      d = d.length > 0 ? d[0] : {images: []};
-      let tempOneImg = d.images[0] + (page.route === 'pages/index/index' ? '_seal375x375' : '_seal200x200');
-      d.images = [];
+      let d = page.data.dataItem, tempOneImg = '';
+      if(d && d.items){
+        d = d.items.filter(item => item.id == id);
+        d = d.length > 0 ? d[0] : {images: []};
+        tempOneImg = d.images[0] + (page.route === 'pages/index/index' ? '_watermark375x375' : '_watermark200x200');
+        d.images = [];
+      }else{
+        d = {};
+      }
       //==============================
 
       that.setData({ 
@@ -243,11 +248,11 @@ Page({
 
     // let images = img.split(',');
     let urls = [];
-    let current = tencentPath + images[index] + '_seal750';
+    let current = tencentPath + images[index] + '_watermark750';
 
 
     for (let i = 0; i < images.length; i++) {
-      urls.push(tencentPath + images[i] + '_seal750');
+      urls.push(tencentPath + images[i] + '_watermark750');
     }
 
     wx.previewImage({

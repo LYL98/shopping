@@ -34,7 +34,7 @@
           <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
           <text wx:if="{{detail.is_gb_order}}" class="is-gb-order">团</text>
         </view>
-        <image wx:if="{{detail.item_image}}" src="{{tencentPath + detail.item_image}}_seal200x200"></image>
+        <image wx:if="{{detail.item_image}}" src="{{tencentPath + detail.item_image}}_watermark200x200"></image>
         <view class="image bg-img-container-item" wx:else></view>
       </view>
       <view class="content">
@@ -69,7 +69,7 @@
         <view class="dialog">
           <view class="content">{{item.content}}</view>
           <view class="imgs" wx:if="{{item.images.length>0}}" >
-            <image wx:key="index" wx:for="{{item.images}}" data-src="{{item.images}}" data-index="{{index}}" bindtap="previewImage" wx:for-item="cell" src="{{tencentPath + cell + '_seal200x200'}}"></image>
+            <image wx:key="index" wx:for="{{item.images}}" data-src="{{item.images}}" data-index="{{index}}" bindtap="previewImage" wx:for-item="cell" src="{{tencentPath + cell + '_watermark200x200'}}"></image>
           </view>
           <view class="time">{{item.created}}</view>
           <view class="time"wx:if="{{commentName[item.operator_class] == '客服'}}">工号:{{item.employee_no}}</view>

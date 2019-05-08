@@ -17,7 +17,7 @@
         <image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
       </view>
       <view class="img">
-        <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_seal200x200"></image>
+        <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_watermark200x200"></image>
         <view class="image bg-img-container-item" wx:else></view>
       </view>
       <view class="content">

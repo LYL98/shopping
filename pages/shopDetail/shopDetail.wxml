@@ -14,7 +14,7 @@
     <drag list="{{detail.images}}" bind:eventChange="sortChange" bind:myevent="clickPic" bind:eventDel="removeImg"/>
 
     <!-- <view class="item" wx:for="{{detail.images}}" wx:key="item">
-      <image src="{{tencentPath + item}}_seal375x375" data-index="{{index}}"></image>
+      <image src="{{tencentPath + item}}_watermark375x375" data-index="{{index}}"></image>
       <text bindtap="removeImg" data-index="{{index}}">×</text>
     </view> -->
     <!-- <view class="photograph" bindtap="clickPic">
@@ -25,11 +25,11 @@
   <!--<text wx:else>无门店图片</text>-->
   <view wx:else style="{{'height:345rpx; margin:30rpx;'}}" class="bg-img-container-store"></view>
   <!-- <view >
-    <image wx:for="{{detail.images}}" wx:key="item" src="{{tencentPath + item}}_seal375x375" bindtap="showImg" data-index="{{index}}"></image>
+    <image wx:for="{{detail.images}}" wx:key="item" src="{{tencentPath + item}}_watermark375x375" bindtap="showImg" data-index="{{index}}"></image>
   </view>
   <view wx:elif="{{isedit}}" class="eidtImg">
     <view class="item" wx:for="{{detail.images}}" wx:key="item">
-      <image src="{{tencentPath + item}}_seal375x375" data-index="{{index}}"></image>
+      <image src="{{tencentPath + item}}_watermark375x375" data-index="{{index}}"></image>
       <text bindtap="removeImg" data-index="{{index}}">×</text>
     </view>
     <view class="photograph" bindtap="clickPic">
