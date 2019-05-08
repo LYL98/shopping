@@ -225,10 +225,12 @@ Page({
     return newPrice;
   },
   //更新页面数据
-  updateData(){
+  updateData(data){
     let that = this;
     let totalNum = 0, totalPrice = 0;
     let { dataItem } = that.data;
+    if(data) dataItem = data;
+    
     let d = wx.getStorageSync('shoppingCartData');
     
     if (d.length > 0){
@@ -332,13 +334,7 @@ Page({
               }
               wx.setStorageSync('shoppingCartData', d);
             }
-
-            that.setData({
-              dataItem: rd
-            },()=>{
-             
-              that.updateData();//更新本地数据
-            });
+            that.updateData(rd);//更新本地数据
           } else {
             app.requestResultCode(res); //处理异常
           }
