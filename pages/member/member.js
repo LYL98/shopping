@@ -1,7 +1,7 @@
 // pages/member/member.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
+import { Config, Http } from './../../utils/index';
 
 Page({
   /**
@@ -27,97 +27,64 @@ Page({
   },
   //登出
   logout(){
-    wx.request({
-      url: config.api.logout,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let loginUserId = wx.getStorageSync("loginUserId");
-          let shoppingCartData = wx.getStorageSync('shoppingCartData');
-          let searchData = wx.getStorageSync('searchData');
-          wx.clearStorageSync();
-          if (loginUserId) {
-            wx.setStorageSync('loginUserId', loginUserId);
-          }
-          if (shoppingCartData) {
-            wx.setStorageSync('shoppingCartData', shoppingCartData);
-          }
-          if (searchData) {
-            wx.setStorageSync('searchData', searchData);
-          }
-          wx.reLaunch({
-            url: '/pages/login/login',
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function(res){
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.logout();
-        });
+    Http.get(Config.api.logout, {}).then((res)=>{
+      let loginUserId = wx.getStorageSync("loginUserId");
+      let shoppingCartData = wx.getStorageSync('shoppingCartData');
+      let searchData = wx.getStorageSync('searchData');
+      wx.clearStorageSync();
+      if (loginUserId) {
+        wx.setStorageSync('loginUserId', loginUserId);
       }
-    });
-    
+      if (shoppingCartData) {
+        wx.setStorageSync('shoppingCartData', shoppingCartData);
+      }
+      if (searchData) {
+        wx.setStorageSync('searchData', searchData);
+      }
+      wx.reLaunch({
+        url: '/pages/login/login',
+      });
+    });    
   },
   //获取用户信息
   profile() {
     let that = this;
     that.setData({ loading: true });
-    wx.request({
-      url: config.api.profile,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          that.setData({
-            myInfo: rd
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        that.setData({ loading: false });
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.profile();
-        });
-      }
+    Http.get(Config.api.profile, {}).then((res)=>{
+      that.setData({
+        myInfo: res.data,
+        loading: false
+      });
+    }).catch(()=>{
+      that.setData({ loading: false });
     });
   },
   //获取用户列表
   getMemberList() {
     let that = this;
-    wx.request({
-      url: config.api.memberList,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          that.setData({
-            otherList: rd
+    Http.get(Config.api.memberList, {}).then((res)=>{
+      that.setData({
+        otherList: res.data
+      });
+    });
+  },
+  //解除微信绑定
+  signUnBindWechat(){
+    let that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定解除绑定？',
+      confirmColor: "#00AE66",
+      success(res) {
+        if (res.confirm) {
+          Http.get(Config.api.signUnBindWechat, {}).then((res)=>{
+            wx.showToast({
+              title: '已解除绑定',
+              icon: 'none'
+            });
+            that.profile();
           });
-        } else {
-          app.requestResultCode(res); //处理异常
         }
-      },
-      complete: function (res) {
-        that.setData({ loading: false });
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.getMemberList();
-        });
       }
     });
   }

@@ -5,6 +5,18 @@
   color: #999;
   font-size: 24rpx;
 }
+.input-item {
+  > .title{
+    color: #242424;
+  }
+  > .content{
+    >.untie-btn{
+      color: #FF6868;
+      padding: 5rpx 10rpx;
+      display: inline-block;
+    }
+  }
+}
 .bar{
   height: 64rpx;
   background: #F4F5F7;

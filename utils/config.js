@@ -21,6 +21,7 @@ module.exports = {
     signWeappBind: apiC + '/sign/weapp/bind',//微信绑定
     signIsLogin: apiC + '/sign/is_login',//判断是否登录
     signLogin: apiC + '/sign/login',//登录
+    signUnBindWechat: apiC + '/sign/unbind_wechat', //解绑定微信
     profilePasswordModify: apiC + '/profile/password_modify',//用户密码修改
     tencentUploadPresignedUrl: apiCommon + '/tencent/presigned_url',//获取腾讯presigned_url
     tencentTmpSecret: apiCommon + '/tencent/tmp_secret',//获取腾讯上传配置
