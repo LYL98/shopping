@@ -109,28 +109,26 @@
   display: flex;
   align-items: flex-end;
   margin: 0 30rpx 50rpx;
-  > view {
+  >.price-unit {
     flex: 1;
-    .price-origin{
+    color: #ff5252;
+    font-size: 40rpx;
+    //未报价
+    > text {
+      color: #999;
+      font-size: 28rpx;
+    }
+    //原价
+    >.price-origin{
       color: #C7C7C7;
       font-size: 22rpx;
       text-decoration: line-through;
     }
   }
-}
-
-.repertory {
-  text-align: right;
-  color: #999;
-  font-size: 24rpx;
-}
-
-.price-unit {
-  color: #ff5252;
-  font-size: 40rpx;
-  > text {
+  >.repertory {
+    text-align: right;
     color: #999;
-    font-size: 28rpx;
+    font-size: 24rpx;
   }
 }
 

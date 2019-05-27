@@ -41,14 +41,17 @@ Page({
       //获取上个页面的数据(加快显示数据)===
       let pages = getCurrentPages();
       let page = pages[pages.length - 2];
-      let d = page.data.dataItem, tempOneImg = '';
-      if(d && d.items){
-        d = d.items.filter(item => item.id == id);
-        d = d.length > 0 ? d[0] : {images: []};
-        tempOneImg = d.images[0] + (page.route === 'pages/index/index' ? '_watermark375x375' : '_watermark200x200');
-        d.images = [];
-      }else{
-        d = {};
+      let d = {}, tempOneImg = '';
+      if(page){
+        d = page.data.dataItem;
+        if(d && d.items){
+          d = d.items.filter(item => item.id == id);
+          d = d.length > 0 ? d[0] : {images: []};
+          tempOneImg = d.images[0] + (page.route === 'pages/index/index' ? '_watermark375x375' : '_watermark200x200');
+          d.images = [];
+        }else{
+          d = {};
+        }
       }
       //==============================
 
