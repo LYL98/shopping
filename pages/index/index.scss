@@ -192,7 +192,7 @@
           }
           >.repertory-price{
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             > .repertory{
               flex: initial;
               font-size: 20rpx;
@@ -223,6 +223,7 @@
                 font-size: 24rpx;
                 text-decoration: line-through;
                 font-weight: normal;
+                display: block;
               }
             }
           }
