@@ -56,7 +56,7 @@
           <text class="skeleton-rect frame" wx:if="{{item.frame_code}}">含框</text>
         </view>
         <view class="price-unit skeleton-rect" wx:if="{{item.is_quoted}}">
-          <view class="price-origin" wx:if="{{item.price_origin_piece > item.price_sale_piece}}">￥{{tools.returnPrice(item.price_origin_piece)}}/件</view>
+          <view class="price-origin" wx:if="{{item.price_origin_piece > item.price_sale_piece}}">原价:￥{{tools.returnPrice(item.price_origin_piece)}}/件</view>
           <view class="price">￥{{tools.returnPrice(item.price_sale_piece)}}/件</view>
         </view>
         <view class="price-unit skeleton-rect" wx:else>
@@ -64,7 +64,7 @@
         </view>
       </view>
     </navigator>
-    <view class="join" style="{{tools.returnItemStock(item.item_stock) ? 'bottom: 38rpx' : 'bottom: 22rpx'}}">
+    <view class="join" style="{{tools.returnItemStock(item.item_stock) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
       <view style="min-height:36rpx;">
         <joinShopCart wx:if="{{item.item_stock > 0}}" size="small" style="float:right;" itemData="{{item}}"/>
       </view>

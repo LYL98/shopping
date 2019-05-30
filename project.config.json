@@ -35,7 +35,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -69,6 +69,21 @@
 					"id": -1,
 					"name": "商品列表",
 					"pathName": "pages/itemList/itemList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "账号管理",
+					"pathName": "pages/member/member",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品详情",
+					"pathName": "pages/itemDetail/itemDetail",
+					"query": "id=8357",
 					"scene": null
 				}
 			]

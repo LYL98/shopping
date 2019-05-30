@@ -40,6 +40,14 @@
     </view>
   </view>
 </navigator>
+<view wx:if="{{myInfo.weapp_openid}}">
+  <view class="input-item">
+    <view class="title">绑定微信</view>
+    <view class="content">
+      <view class="untie-btn link-active" bind:tap="signUnBindWechat">立即解绑</view>
+    </view>
+  </view>
+</view>
 <view class="bar">其他账号</view>
 <view class="other-list" wx:for="{{otherList}}" wx:key="index">
   <view class="info">

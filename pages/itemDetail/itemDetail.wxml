@@ -23,7 +23,7 @@
   <view class="repertory-price">
     <view class="price-unit" wx:if="{{detail.is_quoted}}">
       ￥{{tools.returnPrice(detail.price_sale_piece)}}/件
-      <text class="price-origin" wx:if="{{detail.price_origin_piece > detail.price_sale_piece}}">￥{{tools.returnPrice(detail.price_origin_piece)}}/件</text>
+      <text class="price-origin" wx:if="{{detail.price_origin_piece > detail.price_sale_piece}}">原价:￥{{tools.returnPrice(detail.price_origin_piece)}}/件</text>
     </view>
     <view class="price-unit" wx:else>
       <text>今日未报价</text>

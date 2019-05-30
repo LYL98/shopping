@@ -411,6 +411,21 @@ App({
         }
     });
   },
+  //获取页面（页面路由）
+  getPage(route){
+    if(!route) return null;
+    //获取页面的数据===
+    let pages = getCurrentPages();
+    pages = pages.filter(item => item.route === route);
+    return pages.length > 0 ? pages[0] : null;
+    //===============
+  },
+  //获取页面组件（页面，组件id）
+  getPageComponent(page, comId){
+    if(!page || !comId) return null;
+    let com = page.selectComponent('#' + comId); //获取页面的组件，在页面上给组件设置id
+    return com ? com : null;
+  },
   //获取当前选择的门店
   getSelectStore(){
     let data = wx.getStorageSync('addOrderSelectAddress');
