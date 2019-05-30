@@ -41,7 +41,7 @@
         </view>
       </view>
     </navigator>
-    <view class="join" style="{{tools.returnItemStock(item.item_stock) ? 'bottom: 38rpx' : 'bottom: 22rpx'}}">
+    <view class="join" style="{{tools.returnItemStock(item.item_stock) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
       <view style="min-height:36rpx;">
         <joinShopCart wx:if="{{item.item_stock > 0}}" size="small" style="float:right;" bindcallback="joinShoppingCart" itemData="{{item}}" sourcePage="itemLabel" />
       </view>
