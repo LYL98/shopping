@@ -140,11 +140,6 @@ Page({
       ["edit.address"]: e.detail.value.trim()
     })
   },
-  bindKeyInput(e){
-    this.setData({
-      ["edit.title"]: e.detail.value.trim()
-    })
-  },
   bindlinkman(e){
     this.setData({
       ["edit.linkman"]: e.detail.value.trim()
