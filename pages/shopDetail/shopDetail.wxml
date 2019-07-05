@@ -1,8 +1,3 @@
-<!--pages/shopDetail/shopDetail.wxml-->
-<!-- <view class="title-str">
-  <view>门店图片</view>
-  <view bindtap="editInof"></view>
-</view> -->
 <view class="img-view">
   <swiper autoplay style="{{'height:345rpx; margin:30rpx;'}}" class="bg-img-container-store" wx:if="{{detail.images.length > 0 && !isedit}}">
     <swiper-item wx:for="{{detail.images}}" wx:key="index">
@@ -10,46 +5,18 @@
     </swiper-item>
   </swiper>
   <view wx:elif="{{isedit}}" class="eidtImg">
-    
     <drag list="{{detail.images}}" bind:eventChange="sortChange" bind:myevent="clickPic" bind:eventDel="removeImg"/>
-
-    <!-- <view class="item" wx:for="{{detail.images}}" wx:key="item">
-      <image src="{{tencentPath + item}}_watermark375x375" data-index="{{index}}"></image>
-      <text bindtap="removeImg" data-index="{{index}}">×</text>
-    </view> -->
-    <!-- <view class="photograph" bindtap="clickPic">
-      <image src="{{photographSrc}}"></image>
-      <text>上传照片</text>
-    </view> -->
   </view>
-  <!--<text wx:else>无门店图片</text>-->
   <view wx:else style="{{'height:345rpx; margin:30rpx;'}}" class="bg-img-container-store"></view>
-  <!-- <view >
-    <image wx:for="{{detail.images}}" wx:key="item" src="{{tencentPath + item}}_watermark375x375" bindtap="showImg" data-index="{{index}}"></image>
-  </view>
-  <view wx:elif="{{isedit}}" class="eidtImg">
-    <view class="item" wx:for="{{detail.images}}" wx:key="item">
-      <image src="{{tencentPath + item}}_watermark375x375" data-index="{{index}}"></image>
-      <text bindtap="removeImg" data-index="{{index}}">×</text>
-    </view>
-    <view class="photograph" bindtap="clickPic">
-      <image src="{{photographSrc}}"></image>
-      <text>上传照片\n最多5张</text>
-    </view>
-  </view>
-  <text wx:else>无门店图片</text> -->
 </view>
 
 <view class="content">
-  <view class="left">门店名称</view>
-  <view class="right" wx:if="{{isedit}}">
-    <input placeholder-class="placeholder" bindinput="bindKeyInput" value="{{edit.title}}" />
-  </view>
-  <view class="right" wx:else>{{edit.title}}</view>
+  <view class="left">门店名称 (不可更改)</view>
+  <view class="right" style="width: auto;">{{edit.title}}</view>
 </view>
 <view class="content">
   <view class="left">所在仓 (不可更改)</view>
-  <view class="right">
+  <view class="right" style="width: auto;">
     {{detail.province && detail.province.title}}
     {{detail.zone && detail.zone.title}}
     {{detail.city && detail.city.title}}
