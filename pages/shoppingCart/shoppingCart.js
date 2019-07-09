@@ -32,7 +32,7 @@ Page({
         0:"今日未报价",
         1:"已报价"
     },
-    activity:{}
+    activity:{},
   },
   onLoad() {
     this.setData({
@@ -53,11 +53,15 @@ Page({
   },
   getWorkTime() {
     let that = this;
+    let address = app.getSelectStore(); //当前选择的地址
     wx.request({
       url: config.api.isOrderTime,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: address.province_code
       },
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {

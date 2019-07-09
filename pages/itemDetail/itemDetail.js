@@ -14,6 +14,7 @@ Page({
     vidoes: [],
     currentSwiper: 0,
     promotionData: {}, //全场活动数据
+    address: {}
   },
   swiperChange: function (e) {
     this.setData({
@@ -150,11 +151,15 @@ Page({
   //获取统一描述
   unifiedDescription(){
     let that = this;
+    let { address } = that.data;
     wx.request({
       url: config.api.unifiedDescription,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: address.province_code
       },
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {
