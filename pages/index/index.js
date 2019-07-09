@@ -118,11 +118,9 @@ Page({
       that.setData({
         userInfo: res
       });
-      that.getBanner();
       that.getTagsList();
       let { query, address } = that.data;
       if(address && address.id){
-        that.getWorkTime();
         let ad = app.getSelectStore(); //当前选择的地址
         query.store_id = ad.id;
         if (query.page !== 1) {
@@ -133,6 +131,8 @@ Page({
             address: ad
           }, () => {
             that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
+            that.getWorkTime();
+            that.getBanner(); //显示ad
           });
         } else {
           that.setData({
@@ -140,6 +140,8 @@ Page({
             address: ad
           }, () => {
             that.itemQuery();
+            that.getWorkTime();
+            that.getBanner(); //显示ad
           });
         }
       }
@@ -156,7 +158,6 @@ Page({
     let that = this;
     let rd = res.detail;
     if(rd && rd.id){
-      that.getWorkTime();
       let { query } = that.data;
       query.page = 1;
       query.page_size = constant.PAGE_SIZE;
@@ -166,17 +167,23 @@ Page({
         address: rd
       }, ()=>{
         that.itemQuery();
+        that.getBanner(); //显示ad
+        that.getWorkTime();
       });
     }
   },
   //是否可下单
   getWorkTime() {
     let that = this;
+    let { address } = that.data;
     wx.request({
       url: config.api.isOrderTime,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: address.province_code
       },
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {
@@ -220,11 +227,15 @@ Page({
   //获取banner
   getBanner() {
     let that = this;
+    let { address } = that.data;
     wx.request({
       url: config.api.banner,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: address.province_code
       },
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {
