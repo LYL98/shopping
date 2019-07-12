@@ -212,22 +212,6 @@ Page({
       });
     }
   },
-  //计算折扣及价格
-  calcDiscount(itemData){
-    let p = itemData.promotion;
-    let newPrice = itemData.price_sale_piece; //新价格，如折后价格
-    if(p && p.id){
-      let r = p.rules;
-      for(let i = 0; i < r.length; i++){
-        if(r[i].full <= itemData.select_num){
-          newPrice = itemData.price_sale_piece * (r[i].reduction / 100);
-        }else{
-          break;
-        }
-      }
-    }
-    return newPrice;
-  },
   //更新页面数据
   updateData(data){
     let that = this;
@@ -254,7 +238,7 @@ Page({
             dataItem[i].select_num = d[j].num;
             
             if (dataItem[i].is_select && status) {
-              totalPrice += that.calcDiscount(dataItem[i]) * dataItem[i].select_num; //折后价加总
+              totalPrice += dataItem[i].price_sale_piece * dataItem[i].select_num; //价格加总
             }
             if (dataItem[i].is_select){
               totalNum += dataItem[i].select_num;

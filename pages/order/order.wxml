@@ -42,7 +42,7 @@
                 <text class="frame" wx:if="{{d.frame_code}}">含框</text>
               </view>
               <view class="price-unit">
-                ￥{{tools.returnPrice(d.item_price_discount)}} / 件<text class="original" wx:if="{{d.item_price_discount !== d.item_price_sale_piece && !d.is_gift}}">￥{{tools.returnPrice(d.item_price_sale_piece)}}/件</text>
+                ￥{{tools.returnPrice(d.item_price_sale_piece)}} / 件<!---<text class="original" wx:if="{{0}}">原价/件</text>-->
               </view>
               <view class="num-price">
                 <text class="num-str skeleton-rect">× {{d.count_real}}</text>
