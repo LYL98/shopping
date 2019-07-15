@@ -195,7 +195,7 @@
         <text class="skeleton-rect">￥{{tools.returnPrice(detail.item_total_price)}}</text>
       </view>
     </view>
-    <view class="row" wx:if="{{detail.is_used_coupon}}">
+    <view class="row" wx:if="{{detail.coupon_reduction}}">
       <view class="left"><text class="skeleton-rect">优惠券</text></view>
       <view class="right"><text class="skeleton-rect">-￥{{tools.returnPrice(detail.coupon_reduction)}}</text></view>
     </view>
