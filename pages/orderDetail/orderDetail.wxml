@@ -115,7 +115,7 @@
             <text class="skeleton-rect frame" wx:if="{{d.frame_code}}">含框</text>
           </view>
           <view class="price-unit skeleton-rect">
-            ￥{{tools.returnPrice(d.item_price_discount)}} / 件<text class="original" wx:if="{{d.item_price_discount !== d.item_price_sale_piece && !d.is_gift}}">￥{{tools.returnPrice(d.item_price_sale_piece)}}/件</text>
+            ￥{{tools.returnPrice(d.item_price_sale_piece)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
           </view>
           <view class="num-price">
             <text class="num-str skeleton-rect">× {{d.count_real}}</text>
@@ -195,7 +195,7 @@
         <text class="skeleton-rect">￥{{tools.returnPrice(detail.item_total_price)}}</text>
       </view>
     </view>
-    <view class="row" wx:if="{{detail.is_used_coupon}}">
+    <view class="row" wx:if="{{detail.coupon_reduction}}">
       <view class="left"><text class="skeleton-rect">优惠券</text></view>
       <view class="right"><text class="skeleton-rect">-￥{{tools.returnPrice(detail.coupon_reduction)}}</text></view>
     </view>
