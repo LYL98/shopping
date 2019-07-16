@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
+import verification from './../../utils/verification';
 import UpCos from './../../utils/upload-tencent-cos';
 
 Page({
@@ -197,7 +198,7 @@ Page({
         return;
       }
 
-      if (!/^1[3|4|5|7|8|9][0-9]{9}$/.test(edit.phone)) {
+      if (!verification.checkMobile(edit.phone)) {
         wx.showToast({
           title: '请输入11位手机号码',
           icon: 'none'
