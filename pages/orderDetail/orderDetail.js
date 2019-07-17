@@ -138,7 +138,7 @@ Page({
       delivery: '发货',
       cancel: '取消',
     },
-    countDownStr: '--分--秒', //倒计时
+    countDownStr: '--分--秒后自动取消订单', //倒计时
     showSkeleton: true, //骨架屏
   },
 
@@ -285,15 +285,22 @@ Page({
     let cTime = rd.created;
     //结束时间
     let endDate = new Date(cTime.replace(/-/g, '/'));
-    let d = util.returnDateStr(new Date(endDate.getTime() + 30000 * 60)); //创建30分钟后
-    console.log(cTime, d);
+    let d = util.returnDateStr(new Date(endDate.getTime() + 10000 * 60)); //创建10分钟后
     let time = setInterval(()=>{
       let data = util.returnSurplusNum(d); //返回剩余时间
       let minutes = data.minutes; //分
       let seconds = data.seconds; //秒
-      that.setData({
-        countDownStr: `${minutes}分${seconds}秒`
-      });
+      if(minutes < 0 || seconds < 0){
+        that.setData({
+          countDownStr: '即将自动取消订单'
+        });
+        clearInterval(time);
+        that.getOrderDetail(); //重新获取详情
+      }else{
+        that.setData({
+          countDownStr: `${minutes}分${seconds}秒后自动取消订单`
+        });
+      }
       if (minutes === 0 && seconds === 0){
         clearInterval(time);
         that.getOrderDetail(); //重新获取详情
