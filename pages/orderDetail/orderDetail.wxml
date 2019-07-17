@@ -7,7 +7,7 @@
   <view class="order-title skeleton-rect" wx:if="{{detail.status === 'wait_confirm' && (!detail.is_post_pay || detail.to_be_canceled) && detail.amount_pay === 0}}">
     <image src="{{imgStatus['wait_pay']}}"></image>
     <text class="title">{{strStatus[detail.status].title}}</text>
-    <text class="content">{{countDownStr}}后自动取消订单</text>
+    <text class="content">{{countDownStr}}</text>
   </view>
   <!--否则-->
   <view class="order-title skeleton-rect" wx:else>
