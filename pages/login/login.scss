@@ -26,8 +26,19 @@
   line-height: 48rpx;
   margin: 43rpx 43rpx 43rpx 5rpx;
 }
+.protocol{
+  display: flex;
+  margin-top: 36rpx;
+  >text{
+    margin-left: 50rpx;
+    color: #808080;
+  }
+  >navigator{
+    color: #529EE9;
+  }
+}
 .btn-view{
-  margin: 80rpx 55rpx 0;
+  margin: 50rpx 55rpx 0;
   height: 88rpx;
   line-height: 88rpx;
   button{

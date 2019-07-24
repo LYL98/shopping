@@ -1,0 +1,19 @@
+.protocol-main{
+  margin: 30rpx;
+  >.title{
+    font-size: 38rpx;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20rpx;
+  }
+  >.content{
+    font-size: 30rpx;
+    >.sub-title{
+      font-weight: bold;
+      margin: 15rpx 0 10rpx;
+    }
+    >.sub-content{
+      margin-bottom: 10rpx;
+    }
+  }
+}

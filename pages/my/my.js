@@ -82,15 +82,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this;
     //判断登录
     app.signIsLogin((res) => {
-      that.setData({
-        loginInfo: res
+      let sys = app.getSystemInfo();
+      this.setData({
+        loginInfo: res,
+        sys: sys
       });
-      that.profile();//获取用户信息
-      that.afterMsg();
-      that.messageInfo(); // 获取未读消息数量
+      this.profile();//获取用户信息
+      this.afterMsg();
+      this.messageInfo(); // 获取未读消息数量
     });
   },
   //获取是否有售后信息

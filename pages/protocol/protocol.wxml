@@ -1,0 +1,7 @@
+<view class="protocol-main">
+  <view class="title">{{title}}</view>
+  <view class="content" wx:for="{{contents}}" wx:key="index">
+    <view class="sub-title" wx:if="{{item.sub_title}}">{{item.sub_title}}</view>
+    <view class="sub-content" wx:for="{{item.sub_contents}}" wx:for-item="c" wx:for-index="i" wx:key="i">{{c}}</view>
+  </view>
+</view>

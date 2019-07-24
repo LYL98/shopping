@@ -97,15 +97,16 @@
           </view>
         </view>
     </view>
-    <view class="my-order-list" style="border-top:20rpx solid #F4F5F7;border-bottom:20rpx solid #F4F5F7;">
-      <view class="pannel" style="height: 110rpx; line-height: 110rpx;">
+    <view class="my-order-list" style="border-top:20rpx solid #F4F5F7; border-bottom:20rpx solid #F4F5F7;">
+      <navigator class="pannel" url="/pages/about/about" style="height: 110rpx; line-height: 110rpx;">
         <view>
-          版本信息
+          关于我们
         </view>
         <view class="item">
-          <text style="margin-right: 10px;">V2.11.2</text>
+          <text>{{sys.custom_version}}</text>
+          <image src="{{arrow}}" />
         </view>
-      </view>
+      </navigator>
     </view>
   </view>
 </view>

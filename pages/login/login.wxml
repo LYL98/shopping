@@ -9,9 +9,13 @@
     <image class="login_pass" src="{{login_pass}}" />
     <input placeholder-class="phcolor" type="password" placeholder="请输入密码" data-fieldkey="password" bindinput="inputChange"/>
   </view>
+  <view class="protocol font-size26">
+    <text>我已阅读并同意</text>
+    <navigator url="/pages/protocol/protocol">《蒲公英用户协议》</navigator>
+  </view>
   <view class="btn-view">
     <button class="btn2" bindtap="submitLogin">
-      登录
+      同意并登录
     </button>
   </view>
   <loading loading="{{loading}}"/>
