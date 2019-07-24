@@ -205,7 +205,6 @@ Page({
       },
       method: 'POST',
       data: {
-        province_code: address.province_code,
         items: orderAddData.items,
         coupon_merchant_id: couponSelectData.id || '',
         store_id: address.id || '',

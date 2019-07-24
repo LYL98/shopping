@@ -1,0 +1,16 @@
+<view class="top">
+  <image class="icon" wx:if="{{brandInfo.brand_icon}}" src="{{tencentPath + brandInfo.brand_icon + '_min200x200'}}" style="width: 140rpx; height: 140rpx;"/>
+  <view class="icon" wx:else style="width: 140rpx; height: 140rpx;"></view>
+  <view class="ver font-size30">版本号{{sys.custom_version}}</view>
+</view>
+
+<view class="menu-view">
+  <navigator class="item" url="/pages/protocol/protocol">
+    <view class="item-body">
+      <view class="left font-size28">用户协议</view>
+      <view class="right">
+        <image src="./../../assets/img/right.png" style="width: 10rpx; height: 20rpx;" />
+      </view>
+    </view>
+  </navigator>
+</view>

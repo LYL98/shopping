@@ -411,6 +411,21 @@ App({
         }
     });
   },
+  //获取系统信息
+  getSystemInfo(){
+    const sysInfo = wx.getSystemInfoSync();
+    const screenWidth = sysInfo.screenWidth;
+    let factor = screenWidth / 750;       // 获取比例
+    const toPx = (rpx) => Math.round(rpx * factor);   // rpx转px
+    const toRpx = (px) => Math.round(px / factor);    // px转rpx
+    return {
+      ...sysInfo,
+      factor: factor,
+      toPx: toPx,
+      toRpx: toRpx,
+      custom_version: 'V2.11.3'
+    }
+  },
   //获取页面（页面路由）
   getPage(route){
     if(!route) return null;

@@ -1,0 +1,33 @@
+.top{
+  margin: 96rpx auto 120rpx;
+  text-align: center;
+  >.icon{
+    border-radius: 50%;
+    background-color: #ececec;
+    margin: 0 auto 36rpx;
+  }
+  >.ver{
+    color: #808080;
+  }
+}
+
+.menu-view{
+  >.item{
+    padding: 0 70rpx;
+    >.item-body{
+      border-top: 1rpx solid #eee;
+      border-bottom: 1rpx solid #eee;
+      display: flex;
+      align-items: center;
+      padding: 36rpx 0;
+      >.left{
+        flex: 1;
+      }
+      >.right{
+        >image{
+          display: block;
+        }
+      }
+    }
+  }
+}
