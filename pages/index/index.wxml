@@ -67,12 +67,12 @@
                   <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
                   <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
                   <text class="skeleton-rect" wx:if="{{item.gross_weight}}">{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-                  <text class="skeleton-rect frame" wx:if="{{item.frame_code}}">含框</text>
+                  <text class="skeleton-rect frame" wx:if="{{item.frame_code}}">有筐</text>
                 </view>
                 <view class="repertory-price">
                   <view class="price" wx:if="{{item.is_quoted}}">
-                    <text class="price-origin" wx:if="{{item.price_origin_piece > item.price_sale_piece}}">原价:￥{{tools.returnPrice(item.price_origin_piece)}}/件</text>
-                    <text class="rmb">¥</text>{{tools.returnPrice(item.price_sale_piece)}}<text class="bias">/</text>件
+                    <text class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}/件</text>
+                    <text class="rmb">¥</text>{{tools.returnPrice(item.price_sale)}}<text class="bias">/</text>件
                   </view>
                   <view class="price" wx:else>
                     <text class="skeleton-rect">今日未报价</text>

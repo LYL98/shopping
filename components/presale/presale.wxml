@@ -18,7 +18,7 @@
       <view class="item">
         <view class="left">单价</view>
         <view class="right">
-          <text class="new-piece">￥{{tools.returnPrice(itemData.price_sale_piece)}}/件</text>
+          <text class="new-piece">￥{{tools.returnPrice(itemData.price_sale)}}/件</text>
         </view>
       </view>
       <view class="item">
@@ -35,7 +35,7 @@
       <view class="item">
         <view class="left">小计<text style="color: #a5a5a5; font-size: 24rpx;">(不含运费)</text></view>
         <view class="right">
-          <text class="price">￥{{tools.returnPrice(itemData.price_sale_piece * num)}}</text>
+          <text class="price">￥{{tools.returnPrice(itemData.price_sale * num)}}</text>
         </view>
       </view>
       <view class="btn-view">

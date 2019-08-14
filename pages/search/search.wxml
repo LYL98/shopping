@@ -38,11 +38,11 @@
           <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
           <text>{{item.origin_place}}</text>
           <text>{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-          <text class="frame" wx:if="{{item.frame_code}}">含框</text>
+          <text class="frame" wx:if="{{item.frame_code}}">有筐</text>
         </view>
         <view class="price-unit" wx:if="{{item.is_quoted}}">
-          <view class="price-origin" wx:if="{{item.price_origin_piece > item.price_sale_piece}}">原价:￥{{tools.returnPrice(item.price_origin_piece)}}/件</view>
-          <view class="price">￥{{tools.returnPrice(item.price_sale_piece)}}/件</view>
+          <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}/件</view>
+          <view class="price">￥{{tools.returnPrice(item.price_sale)}}/件</view>
         </view>
         <view class="price-unit" wx:else>
           <text>今日未报价</text>

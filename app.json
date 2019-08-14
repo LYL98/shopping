@@ -18,6 +18,7 @@
     "pages/shop/shop",
     "pages/shoppingCart/shoppingCart",
     "pages/orderAdd/orderAdd",
+    "pages/orderFram/orderFram",
     "pages/orderCoupon/orderCoupon",
     "pages/coupon/coupon",
     "pages/payResult/payResult",

@@ -27,7 +27,7 @@
           <text wx:if="{{item.item_spec}}" >{{item.item_spec}}</text>
           <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
           <text wx:if="{{item.gross_weight}}">{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-          <text wx:if="{{item.frame_code}}" class="frame">含框</text>
+          <text wx:if="{{item.frame_code}}" class="frame">有筐</text>
         </view>
         <view class="join-shop-cart">
           <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" sourcePage="shoppingCart" isDeleteHint/>

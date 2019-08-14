@@ -50,7 +50,7 @@
       <text wx:elif="{{itemData.item_stock <= 0}}">库存不足</text>
       <text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
       <view wx:elif="{{itemData.is_on_sale && itemData.item_stock > 0 && itemData.is_quoted}}">
-        ￥{{tools.returnPrice(itemData.price_sale_piece)}} / 件
+        ￥{{tools.returnPrice(itemData.price_sale)}} / 件
       </view>
     </view>
     <view class="discount-repertory">

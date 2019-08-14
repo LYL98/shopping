@@ -238,7 +238,7 @@ Page({
             dataItem[i].select_num = d[j].num;
             
             if (dataItem[i].is_select && status) {
-              totalPrice += dataItem[i].price_sale_piece * dataItem[i].select_num; //价格加总
+              totalPrice += dataItem[i].price_sale * dataItem[i].select_num; //价格加总
             }
             if (dataItem[i].is_select){
               totalNum += dataItem[i].select_num;

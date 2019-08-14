@@ -16,11 +16,11 @@
         <view class="title">{{detail.item_title}}</view>
         <view class="label {{system}}">
           <text wx:for="{{detail.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-          <text class="frame" wx:if="{{detail.frame_code}}">含框</text>
+          <text class="frame" wx:if="{{detail.frame_code}}">有筐</text>
         </view>
         <view class="price-unit">
           <view >
-            ￥{{tools.returnPrice(detail.item_price_sale_piece)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
+            ￥{{tools.returnPrice(detail.item_price_sale)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
           </view>
         </view>
         <view class="num-price">

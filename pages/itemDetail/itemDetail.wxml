@@ -22,8 +22,8 @@
   <view class="item-title">{{detail.title}}</view>
   <view class="repertory-price">
     <view class="price-unit" wx:if="{{detail.is_quoted}}">
-      ￥{{tools.returnPrice(detail.price_sale_piece)}}/件
-      <text class="price-origin" wx:if="{{detail.price_origin_piece > detail.price_sale_piece}}">原价:￥{{tools.returnPrice(detail.price_origin_piece)}}/件</text>
+      ￥{{tools.returnPrice(detail.price_sale)}}/件
+      <text class="price-origin" wx:if="{{detail.price_origin > detail.price_sale}}">原价:￥{{tools.returnPrice(detail.price_origin)}}/件</text>
     </view>
     <view class="price-unit" wx:else>
       <text>今日未报价</text>
@@ -86,18 +86,19 @@
    <view class="table">
     <view class="td">
       <view>
-        <text class="name">品名</text>
-        <text>{{detail.title || '-'}}</text>
+        <!--销售价 / 毛重-->
+        <text class="name">单价</text>
+        <text>{{detail.price_sale > 0 ? tools.returnPrice(detail.price_sale / (detail.gross_weight / 10)) : '-'}}</text>
       </view>
       <view>
-        <text class="name">单价</text>
-        <text>{{detail.is_quoted && detail.price_sale_jin > 0 ? tools.returnPrice(detail.price_sale_jin)+'元/斤' :'-'}}</text>
+        <text  class="name">产地</text>
+        <text>{{detail.origin_place || '-'}}</text>
       </view>
     </view>
     <view class="td">
-        <view>
-        <text  class="name">产地</text>
-        <text>{{detail.origin_place || '-'}}</text>
+      <view>
+        <text class="name">规格</text>
+        <text>{{detail.item_spec || '-'}}</text>
       </view>
       <view>
         <text class="name">毛重</text>
@@ -106,40 +107,20 @@
     </view>
     <view class="td">
       <view>
-        <text class="name">商品分类</text>
-        <text wx:if="{{detail.display_class_code}}">{{detail.display_class.title || '-'}}</text>
-        <text wx:else>-</text>
+        <text class="name">框</text>
+        <text wx:if="{{detail.frame_code}}">{{tools.returnPrice(detail.frame.price)}}元</text>
+        <text wx:else>无</text>
       </view>
-      <view>
-        <text class="name">净重</text>
-        <text>{{detail.net_weight >0 ? tools.returnGrossWeight(detail.net_weight) +'斤':'-'}}</text>
-      </view>
-    </view>
-    <view class="td">
-        <view>
-        <text class="name">规格</text>
-        <text>{{detail.item_spec || '-'}}</text>
-      </view>
-      <view>
-        <text class="name">是否含框</text>
-        <text wx:if="{{detail.frame_code}}">是 ({{tools.returnPrice(detail.frame.price)}}元)</text>
-        <text wx:else>否</text>
-      </view>
-    </view>
-    <view class="td">
       <view>
         <text class="name">包装规格</text>
         <text>{{detail.package_spec || '-'}}</text>
       </view>
-      <view>
-        <text class="name">是否称重</text>
-        <text>{{detail.is_weigh ? '是' : '否'}}</text>
-      </view>
     </view>
     <view class="td">
       <view>
-        <text class="name">销售单位</text>
-        <text>{{detail.sale_unit}}</text>
+        <text class="name">商品分类</text>
+        <text wx:if="{{detail.display_class_code}}">{{detail.display_class.title || '-'}}</text>
+        <text wx:else>-</text>
       </view>
       <view></view>
     </view>

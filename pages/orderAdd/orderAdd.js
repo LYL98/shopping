@@ -44,7 +44,6 @@ Page({
             origin_place: "123",
             package_spec: "123",
             price_sale: 123,
-            price_sale_piece: 123,
             sale_unit: "件",
             title: "xxxxxxxx",
             number: 20
@@ -108,6 +107,14 @@ Page({
         url: '/pages/orderCoupon/orderCoupon'
       });
     }
+  },
+  
+  //跳转页面
+  skipPage(e){
+    let page = e.currentTarget.dataset.page;
+    wx.navigateTo({
+      url: page
+    });
   },
 
   //获取优惠券列表

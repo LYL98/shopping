@@ -112,10 +112,10 @@
           <view class="title skeleton-rect"><text class="present" wx:if="{{d.is_gift}}">赠品</text>{{d.item_title}}</view>
           <view class="label {{system}}">
             <text class="skeleton-rect" wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-            <text class="skeleton-rect frame" wx:if="{{d.frame_code}}">含框</text>
+            <text class="skeleton-rect frame" wx:if="{{d.frame_code}}">有筐</text>
           </view>
           <view class="price-unit skeleton-rect">
-            ￥{{tools.returnPrice(d.item_price_sale_piece)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
+            ￥{{tools.returnPrice(d.item_price_sale)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
           </view>
           <view class="num-price">
             <text class="num-str skeleton-rect">× {{d.count_real}}</text>
@@ -202,6 +202,10 @@
     <view class="row" wx:if="{{detail.promotion_reduction}}">
       <view class="left"><text class="skeleton-rect">订单满{{detail.scope_promotion_type === 'scope_discount' ? '折' : '减'}}</text></view>
       <view class="right"><text class="skeleton-rect">-￥{{tools.returnPrice(detail.promotion_reduction)}}</text></view>
+    </view>
+    <view class="row">
+      <view class="left"><text class="skeleton-rect">筐费用</text></view>
+      <view class="right"><text class="skeleton-rect">+￥{{tools.returnPrice(detail.fram_total_price)}}</text></view>
     </view>
     <view class="row">
       <view class="left"><text class="skeleton-rect">运费</text></view>

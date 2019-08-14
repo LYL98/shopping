@@ -29,11 +29,11 @@
             <view class="title">{{d.item_title}}</view>
             <view class="label">
               <text wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-              <text class="frame" wx:if="{{d.frame_code}}">含框</text>
+              <text class="frame" wx:if="{{d.frame_code}}">有筐</text>
             </view>
             <view class="price-unit">
               <view>
-                ￥{{tools.returnPrice(d.item_price_sale_piece)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
+                ￥{{tools.returnPrice(d.item_price_sale)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
               </view>
             </view>
             <view class="num-price">
@@ -84,11 +84,11 @@
             <view class="title">{{item.item_title}}</view>
             <view class="label {{system}}">
               <text wx:for="{{item.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-              <text class="frame" wx:if="{{item.frame_code}}">含框</text>
+              <text class="frame" wx:if="{{item.frame_code}}">有筐</text>
             </view>
             <view class="price-unit">
               <view>
-                ￥{{tools.returnPrice(item.item_price_sale_piece)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
+                ￥{{tools.returnPrice(item.item_price_sale)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
               </view>
             </view>
             <view class="num-price">

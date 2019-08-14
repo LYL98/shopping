@@ -40,7 +40,6 @@ Page({
             origin_place: "123",
             package_spec: "123",
             price_sale: 123,
-            price_sale_piece: 123,
             sale_unit: "件",
             title: "xxxxxxxx",
           };

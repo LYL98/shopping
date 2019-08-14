@@ -54,7 +54,6 @@ Page({
       origin_place: "......",
       package_spec: "纸箱",
       price_sale: 2000,
-      price_sale_piece: 2000,
       sale_unit: "件",
       title: "xxxxxxxxxx"
     }],[{
@@ -68,7 +67,6 @@ Page({
       origin_place: "......",
       package_spec: "纸箱",
       price_sale: 2000,
-      price_sale_piece: 2000,
       sale_unit: "件",
       title: "xxxxxxxxxx"
     }]],

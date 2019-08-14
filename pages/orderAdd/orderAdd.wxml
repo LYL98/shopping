@@ -48,14 +48,14 @@
             <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
             <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
             <text class="skeleton-rect" wx:if="{{item.gross_weight}}">{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-            <text class="skeleton-rect frame" wx:if="{{item.frame_code}}">含框</text>
+            <text class="skeleton-rect frame" wx:if="{{item.frame_code}}">有筐</text>
           </view>
           <view class="price-unit skeleton-rect">
-            ￥{{tools.returnPrice(item.price_sale_piece)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
+            ￥{{tools.returnPrice(item.price_sale)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
           </view>
           <view class="num-price">
             <text class="num-str skeleton-rect">× {{item.number}}</text>
-            <text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale_piece * item.number)}}</text>
+            <text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale * item.number)}}</text>
           </view>
         </view>
       </view>
@@ -102,6 +102,16 @@
     <view class="content"><text class="skeleton-rect">{{deliveryDate}}</text></view>
   </view>
   <!--预定日期end-->
+
+  <!--筐费用-->
+  <view class="input-item" wx:if="{{dataItem.fram_total_price}}" bind:tap="skipPage" data-page="/pages/orderFram/orderFram">
+    <view class="title"><text class="skeleton-rect">筐费用</text><text style="color: #a5a5a5; font-size: 24rpx; margin-left: 8rpx;">(退筐后费用将返还到您的账户余额)</text></view>
+    <view class="content">
+      <image class="right-img f-r" style="top: 8rpx;" src="{{rightSrc}}"></image>
+      <text class="skeleton-rect">+￥{{tools.returnPrice(dataItem.fram_total_price)}}</text>
+    </view>
+  </view>
+
   <!--运费start-->
   <view class="input-item">
     <view class="title"><text class="skeleton-rect">运费</text></view>
