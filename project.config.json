@@ -8,7 +8,16 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
@@ -35,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 11,
 			"list": [
 				{
 					"id": 0,
@@ -112,6 +121,13 @@
 					"name": "登录绑定",
 					"pathName": "pages/loginBind/loginBind",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "下单",
+					"pathName": "pages/orderAdd/orderAdd",
+					"query": "type=presale&delivery_date=2019-08-16",
 					"scene": null
 				}
 			]

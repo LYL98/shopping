@@ -7,7 +7,8 @@ Page({
    */
   data: {
     dataItem: {
-      frames: []
+      frames: [],
+      fram_total_price: 0
     }
   },
   /**
@@ -15,11 +16,6 @@ Page({
    */
   onLoad: function (options) {
     let p = app.getPage('pages/orderAdd/orderAdd');
-    console.log(p);
-    if(p){
-      this.setData({
-        dataItem: p.data.dataItem
-      });
-    }
+    if(p) this.setData({ dataItem: p.data.dataItem });
   },
 })
