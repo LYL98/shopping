@@ -23,8 +23,8 @@
       <view class="content">
         <view class="title">{{item.title}}</view>
         <view class="label">
-          <text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale)}}元/{{item.sale_unit}}</text>
-          <text wx:if="{{item.item_spec}}" >{{item.item_spec}}</text>
+          <text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+          <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
           <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
           <text wx:if="{{item.gross_weight}}">{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
           <text wx:if="{{item.frame_code}}" class="frame">有筐</text>

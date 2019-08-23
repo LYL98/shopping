@@ -54,7 +54,6 @@ Page({
       origin_place: "......",
       package_spec: "纸箱",
       price_sale: 2000,
-      sale_unit: "件",
       title: "xxxxxxxxxx"
     }],[{
       frame_code: '00',
@@ -67,7 +66,6 @@ Page({
       origin_place: "......",
       package_spec: "纸箱",
       price_sale: 2000,
-      sale_unit: "件",
       title: "xxxxxxxxxx"
     }]],
     currentSwiper: 0,

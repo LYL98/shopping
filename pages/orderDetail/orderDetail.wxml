@@ -150,23 +150,6 @@
                 </view>
               </view>
 
-              <view class="content nums" wx:if="{{d.weight_real - d.weight_pre != 0  }}">
-                <view class="left">
-                  <view>原重：{{d.weight_pre / 10}}斤</view>
-                </view>
-                <view class="line">
-                    <view class="price2" wx:if="{{d.weight_real - d.weight_pre < 0}}">
-                      减少：<text style="color:#0fd564">{{(d.weight_real - d.weight_pre)/10}}斤</text>
-                    </view>
-                    <view class="price2" wx:else>
-                      增加：<text style="color:#f30">+{{(d.weight_real - d.weight_pre)/10}}斤</text>
-                    </view>
-                </view>
-                <view class="right t-r">
-                  <view>现重：{{d.weight_real/10}}斤</view>
-                </view>
-              </view>
-
               <view class="content nums" wx:if="{{d.count_real - d.count_pre != 0 }}">
                 <view class="left">
                   <view>原数量：{{d.count_pre}}件</view>
@@ -225,12 +208,11 @@
           <text class="skeleton-rect" style="color:#0fd564" wx:if="{{ detail.delivery_fee_chg < 0 }}">-￥{{tools.returnPriceAbs(detail.delivery_fee_chg)}}</text>
         </view>
       </view>
-      <view class="row" wx:if="{{detail.amount_item !== detail.item_total_price}}">
+      <view class="row" wx:if="{{detail.check_chg  + detail.fram_total_price_chg !== 0}}">
         <view class="left"><text class="skeleton-rect">价格变化</text><text class="hint skeleton-rect">因商品数量/重量发生变化</text></view>
         <view class="right">
-          <text wx:if="{{detail.amount_item - detail.item_total_price < 0}}" class="skeleton-rect" style="color:#0fd564"> -</text>
-          <text wx:else class="skeleton-rect" style="color:#f30"> +</text>
-          <text class="skeleton-rect" style="color: {{detail.amount_item - detail.item_total_price < 0 ? '#0fd564' : '#f30'}}">￥{{tools.returnPriceAbs(detail.amount_item - detail.item_total_price)}}</text>
+          <text class="skeleton-rect" style="color: #0fd564;">-</text>
+          <text class="skeleton-rect" style="color: #0fd564;">￥{{tools.returnPriceAbs(detail.check_chg  + detail.fram_total_price_chg)}}</text>
         </view>
       </view>
     </view>

@@ -44,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 13,
 			"list": [
 				{
 					"id": 0,
@@ -128,6 +128,19 @@
 					"name": "下单",
 					"pathName": "pages/orderAdd/orderAdd",
 					"query": "type=presale&delivery_date=2019-08-16",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "订单列表",
+					"pathName": "pages/order/order",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后列表",
+					"pathName": "pages/afterSaleRecord/afterSaleRecord",
 					"scene": null
 				}
 			]

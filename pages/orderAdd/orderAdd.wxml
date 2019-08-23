@@ -44,7 +44,7 @@
         <view class="content">
           <view class="title skeleton-rect"><text class="present" wx:if="{{item.is_gift}}">赠品</text>{{item.title}}</view>
           <view class="label">
-            <text class="skeleton-rect">{{tools.returnPrice(item.price_sale)}}元/{{item.sale_unit}}</text>
+            <text class="skeleton-rect">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
             <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
             <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
             <text class="skeleton-rect" wx:if="{{item.gross_weight}}">{{tools.returnGrossWeight(item.gross_weight)}}斤</text>

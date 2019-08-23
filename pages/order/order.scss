@@ -66,34 +66,35 @@
   }
 }
 
-.date-total{
+.total{
   border-top: 1rpx solid #eee;
   border-bottom: 1rpx solid #eee;
+  text-align: right;
   margin: 0 30rpx;
   padding: 30rpx 0;
-  display: flex;
   font-size: 24rpx;
-  >.date{
-    flex: initial;
-    color: #A5A5A5;
-  }
-  >.total{
-    flex: 1;
-    text-align: right;
-    >.price-str, >.amout-pay{
-      text{
-        font-size: 30rpx;
-        font-weight: bold;
-      }
+  >.price-str, >.amout-pay{
+    text{
+      font-size: 30rpx;
+      font-weight: bold;
     }
   }
 }
 
 .order-bottom{
   padding: 15rpx 30rpx;
-  text-align: right;
   height: 54rpx;
-  >button{
-    margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+  >.left{
+    flex: 1;
+    color: #A5A5A5;
+    font-size: 24rpx;
+  }
+  >.right{
+    height: 54rpx;
+    >button{
+      margin-left: 30rpx;
+    }
   }
 }

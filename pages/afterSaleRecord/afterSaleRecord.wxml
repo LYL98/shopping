@@ -54,7 +54,10 @@
       
     </view>
     <view class="date-total">
-        <view class="price-str">共{{item.piece_num}}件商品，订单价格:<text>￥{{tools.returnPrice(item.order_price)}}</text></view>
+        <view class="price-str">
+          共{{item.piece_num}}件商品，订单价格:<text>￥{{tools.returnPrice(item.order_price)}}</text>
+          <block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block>
+        </view>
     </view>
   </view>
 </view>
