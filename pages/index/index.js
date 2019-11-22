@@ -114,7 +114,6 @@ Page({
       that.setData({
         userInfo: res
       });
-      that.getTagsList();
       let { query, address } = that.data;
       if(address && address.id){
         let ad = app.getSelectStore(); //当前选择的地址
@@ -126,6 +125,7 @@ Page({
             query: query,
             address: ad
           }, () => {
+            that.getTagsList();
             that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
             that.getWorkTime();
             that.getBanner(); //显示ad
@@ -135,6 +135,7 @@ Page({
             query: query,
             address: ad
           }, () => {
+            that.getTagsList();
             that.itemQuery();
             that.getWorkTime();
             that.getBanner(); //显示ad
@@ -162,6 +163,7 @@ Page({
         query: query,
         address: rd
       }, ()=>{
+        that.getTagsList();
         that.itemQuery();
         that.getBanner(); //显示ad
         that.getWorkTime();
@@ -254,11 +256,15 @@ Page({
   //获取商品标签
   getTagsList(){
     let that = this;
+    let { address } = that.data;
     wx.request({
       url: config.api.itemTagsList,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: address.province_code
       },
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {

@@ -71,22 +71,24 @@ Page({
       let { query } = that.data;
       let address = app.getSelectStore(); //当前选择的地址
       query.store_id = address.id || '';
+      query.province_code = address.province_code || '';
       if(query.page !== 1){
         query.page_size = query.page_size * query.page;
         query.page = 1;
         that.setData({
           query: query
         }, ()=>{
+          that.displayClassQuery();//获取商品分类
           that.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
         });
       }else{
         that.setData({
           query: query
         }, ()=>{
+          that.displayClassQuery();//获取商品分类
           that.itemListDisplayClass();
         });
       }
-      that.displayClassQuery();//获取商品分类
     });
     if(this.data.urlJumpId) {
       this.selectCategory(this.data.urlJumpId)
@@ -142,11 +144,15 @@ Page({
   //获取商品分类
   displayClassQuery(){
     let that = this;
+    let { query } = that.data;
     wx.request({
       url: config.api.displayClassQuery,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: query.province_code
       },
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
