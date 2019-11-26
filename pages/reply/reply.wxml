@@ -4,14 +4,24 @@
     <textarea placeholder="请您在此描述问题（最多200个字）" value="{{detail.remark}}" bindinput="inputChange" data-fieldkey="remark" maxlength="200"/>
   </view>
     <view style="display:flex;flex-wrap:wrap;"  class="images">
+      <!--图片-->
       <view class="photograph" bindtap="clickPic">
         <image src="{{photographSrc}}"></image>
         <text>上传照片\n最多5张</text>
       </view>
-       <view wx:for="{{detail.images}}" wx:key="item" class="img-item">
+       <view wx:for="{{detail.images}}" wx:key="item" class="img-item right">
         <image src="{{tencentPath + item}}_watermark200x200" bindtap="showImg" data-index="{{index}}"></image>
           <view class="close" bindtap="deletelImg" data-index="{{index}}">×</view>
       </view>
+      <!--视频-->
+      <view wx:if="{{detail.media_url}}" class="img-item right">
+        <image src="./../../assets/img/video.png" bindtap="showVideo"></image>
+        <view class="close" bindtap="deleteVideo">×</view>
+      </view>
+      <navigator class="video right" url="/pages/shootVideo/shootVideo?event=reply" wx:else>
+        <image src="./../../assets/img/video.png"></image>
+        <text>上传视频</text>
+      </navigator>
     </view>
   </view>
 

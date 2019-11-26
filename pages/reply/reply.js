@@ -151,7 +151,8 @@ Page({
       data: {
         aftersale_id: id,
         content: detail.remark,
-        images: detail.images
+        images: detail.images,
+        media_url: detail.media_url,
       },
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {

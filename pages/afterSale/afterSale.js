@@ -13,7 +13,7 @@ Page({
     id: 0,
     isShow: false,
     detail: {
-      images: []
+      images: [],
     },
     selectReasonName: '',
     photographSrc: './../../assets/img/photograph.png',
@@ -68,7 +68,7 @@ Page({
       title: '提示',
       content: '您确定删除图片？',
       confirmColor: '#00AE66',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           let index = e.currentTarget.dataset.index;
           let { detail } = that.data;
@@ -79,6 +79,24 @@ Page({
         }
       }
     });
+  },
+  //删除video
+  deleteVideo(){
+    let that = this;
+    wx.showModal({
+      title: '提示',
+      content: '您确定删除视频？',
+      confirmColor: '#00AE66',
+      success: function(res) {
+        if (res.confirm) {
+          that.setData({ 'detail.media_url': '' });
+        }
+      }
+    });
+  },
+  //查看视频
+  showVideo(){
+
   },
   selectReason() {
     let that = this;
@@ -247,6 +265,7 @@ Page({
         order_item_id: id,
         reason: detail.reason,
         content: detail.content,
+        media_url: detail.media_url,
         images: detail.images
       },
       success: function (res) {
