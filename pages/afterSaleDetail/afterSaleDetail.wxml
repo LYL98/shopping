@@ -70,8 +70,9 @@
           <view class="content">{{item.content}}</view>
           <view class="imgs" wx:if="{{item.images.length>0}}" >
             <image wx:key="index" wx:for="{{item.images}}" data-src="{{item.images}}" data-index="{{index}}" bindtap="previewImage" wx:for-item="cell" src="{{tencentPath + cell + '_watermark200x200'}}"></image>
-            <view wx:if="{{item.media_url}}">123</view>
           </view>
+          <navigator class="video" url="/pages/playVideo/playVideo?src={{item.media_url}}" wx:if="{{item.media_url}}"
+            style="width: 100rpx; height: 100rpx; line-height: 100rpx; text-align: center; background: #999; color: #fff;">有视频</navigator>
           <view class="time">{{item.created}}</view>
           <view class="time"wx:if="{{commentName[item.operator_class] == '客服'}}">工号:{{item.employee_no}}</view>
         </view>

@@ -96,7 +96,9 @@ Page({
   },
   //查看视频
   showVideo(){
-
+    wx.navigateTo({
+      url: '/pages/playVideo/playVideo?src=' + this.data.detail.media_url
+    });
   },
   selectReason() {
     let that = this;

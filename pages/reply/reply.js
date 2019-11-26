@@ -69,6 +69,27 @@ Page({
     })
   },
 
+  //删除video
+  deleteVideo(){
+    let that = this;
+    wx.showModal({
+      title: '提示',
+      content: '您确定删除视频？',
+      confirmColor: '#00AE66',
+      success: function(res) {
+        if (res.confirm) {
+          that.setData({ 'detail.media_url': '' });
+        }
+      }
+    });
+  },
+  //查看视频
+  showVideo(){
+    wx.navigateTo({
+      url: '/pages/playVideo/playVideo?src=' + this.data.detail.media_url
+    });
+  },
+
  //点击上传图片
  clickPic() {
   let that = this;
