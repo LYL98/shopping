@@ -2,6 +2,7 @@
   "navigationBarTitleText": "申请售后服务",
   "usingComponents": {
     "loading": "/components/loading/loading",
-    "actionSheet": "/components/actionSheet/actionSheet"
+    "actionSheet": "/components/actionSheet/actionSheet",
+    "getFormId": "/components/getFormId/getFormId"
   }
 }

@@ -1,0 +1,10 @@
+.form-btn{
+    border: 0 !important;
+    padding: 0 !important;
+    border-radius: 0;
+    line-height: normal;
+    background: none !important;
+    &::after{
+        border: 0;
+    }
+}

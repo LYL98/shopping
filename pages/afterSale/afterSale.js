@@ -222,15 +222,7 @@ Page({
   aftersaleAdd() {
     let that = this;
     let { detail, id } = that.data;
-
-    if (detail.images.length === 0){
-      wx.showToast({
-        title: '请至少上传一张图片',
-        icon: 'none'
-      });
-      return false;
-    }
-
+    
     if (!detail.reason) {
       wx.showToast({
         title: '请选择售后原因',
@@ -250,6 +242,14 @@ Page({
     if (detail.content.trim() && detail.content.length > 200){
       wx.showToast({
         title: '描述不能超过200个字符',
+        icon: 'none'
+      });
+      return false;
+    }
+
+    if (detail.images.length === 0 && !detail.media_url){
+      wx.showToast({
+        title: '请至少上传一张图片或视频',
         icon: 'none'
       });
       return false;

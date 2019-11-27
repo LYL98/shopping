@@ -1,7 +1,7 @@
 // pages/shoppingCart/shoppingCart.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
+import { Http, Config } from './../../utils/index';
 
 Page({
 
@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     loading: false,
     checkedSSrc: './../../assets/img/checked_s.png',
     checkedSrc: './../../assets/img/checked_disabled.png',
@@ -32,6 +32,7 @@ Page({
         0:"今日未报价",
         1:"已报价"
     },
+    couponNum: 0, //今日可用优惠券数量
     activity:{},
   },
   onLoad() {
@@ -49,41 +50,28 @@ Page({
       that.activity();
       that.getWorkTime();
       that.getShoppingCartData();
+      that.couponList(); //获取优惠券列表
     });
   },
+  //获取工作时间
   getWorkTime() {
     let that = this;
     let address = app.getSelectStore(); //当前选择的地址
-    wx.request({
-      url: config.api.isOrderTime,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        province_code: address.province_code
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          that.setData({
-            closeStore: rd.is_time_order,
-            order_end_time: rd.order_end_time,
-            order_start_time: rd.order_start_time
-          })
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function(res) {
-        that.setData({
-          loading: false
-        });
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.getWorkTime();
-        });
-      }
+    Http.get(Config.api.isOrderTime, {
+      province_code: address.province_code
+    }).then((res)=>{
+      that.setData({
+        closeStore: res.data.is_time_order,
+        order_end_time: res.data.order_end_time,
+        order_start_time: res.data.order_start_time
+      });
+    });
+  },
+  //获取优惠券列表
+  couponList(){
+    let that = this;
+    Http.get(Config.api.couponList, { avaiable: 1, avaiable_now: 1, is_no_prompt: true }).then((res)=>{
+      that.setData({ couponNum: res.data.num });
     });
   },
   //切换编辑模式
@@ -284,56 +272,40 @@ Page({
         that.setData({ loading: true });
       }
       let address = app.getSelectStore(); //当前选择的地址
-      wx.request({
-        url: config.api.itemCartQuery,
-        header: {
-          'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-        },
-        data: {
-          ids: ids.join(),
-          store_id: address.id || ''
-        },
-        success: function (res) {
-          if (res.statusCode == 200 && res.data.code === 0) {
-            let rd = res.data.data;
-            if(rd.length<=0) {
-              wx.removeStorageSync('shoppingCartData')
+      Http.get(Config.api.itemCartQuery, {
+        ids: ids.join(),
+        store_id: address.id || ''
+      }).then((res)=>{
+        let rd = res.data;
+        if(rd.length<=0) {
+          wx.removeStorageSync('shoppingCartData')
 
-            }else{
-              for(let i = 0; i<d.length; i++) {
-                let obj = d[i];
-                let dId = obj.id;
-                let isExist = false;
+        }else{
+          for(let i = 0; i<d.length; i++) {
+            let obj = d[i];
+            let dId = obj.id;
+            let isExist = false;
 
-                for(let j = 0; j < rd.length; j++){
-                  let child = rd[j];
-                  let status = child.is_quoted && child.is_on_sale && child.item_stock >0
-                  let n = child.id;
-                  if(n == dId){ //判断ID是否相等
-                    if(obj.num<1 && status) obj.num=1;
-                    isExist = true;
-                    break;
-                  }
-                }
-                if(!isExist){
-                  d.remove(i)
-                }
+            for(let j = 0; j < rd.length; j++){
+              let child = rd[j];
+              let status = child.is_quoted && child.is_on_sale && child.item_stock >0
+              let n = child.id;
+              if(n == dId){ //判断ID是否相等
+                if(obj.num<1 && status) obj.num=1;
+                isExist = true;
+                break;
               }
-              wx.setStorageSync('shoppingCartData', d);
             }
-            that.updateData(rd);//更新本地数据
-          } else {
-            app.requestResultCode(res); //处理异常
+            if(!isExist){
+              d.remove(i)
+            }
           }
-        },
-        complete: function (res) {
-          that.setData({ loading: false, initLoad: false });
-          //判断是否网络超时
-          app.requestTimeout(res, () => {
-            that.getShoppingCartData();
-          });
+          wx.setStorageSync('shoppingCartData', d);
         }
+        that.updateData(rd);//更新本地数据
+        that.setData({ loading: false, initLoad: false });
+      }).catch(()=>{
+        that.setData({ loading: false, initLoad: false });
       });
     }else{
       that.setData({
@@ -344,29 +316,10 @@ Page({
   //邮费优惠
   activity(){
     let that = this;
-    wx.request({
-      url: config.api.activity,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code === 0) {
-          let rd = res.data.data;
-          that.setData({
-            activity: rd,
-          })
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        that.setData({ loading: false});
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.activity();
-        });
-      }
+    Http.get(Config.api.activity, {}).then((res)=>{
+      that.setData({
+        activity: res.data,
+      })
     });
   },
   //结算

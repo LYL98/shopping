@@ -138,6 +138,12 @@
 					"pathName": "pages/afterSaleDetail/afterSaleDetail",
 					"query": "id=75",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/shoppingCart/shoppingCart",
+					"scene": null
 				}
 			]
 		}

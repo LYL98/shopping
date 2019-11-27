@@ -1,8 +1,9 @@
 <!--pages/shoppingCart/shoppingCart.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<view class="close-store" wx:if="{{!closeStore}}"> 
+<view class="top-hint" wx:if="{{!closeStore}}"> 
   营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
 </view>
+<navigator url="/pages/coupon/coupon" class="top-hint" wx:elif="{{couponNum > 0}}">您今日有{{couponNum}}张可用优惠券哦，点击查看</navigator>
 <view class="work-field">
   <view class="hint-black"><text>优惠</text>运费{{tools.returnPrice(activity.amount_delivery)}}元,购物满{{tools.returnPrice(activity.discount_delivery_line)}}元免运费</view>
   <view class="edit-btn" bindtap="changeEdit" wx:if="{{dataItem.length > 0}}">
@@ -37,12 +38,7 @@
   </view>
   <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view>
   <defaultPage wx:else currentPage="shoppingCart"></defaultPage>
-  <!--<view class="load-none" wx:else>-->
-    <!--<image src="{{empty_cart}}"></image>-->
-    <!--<view>您的购物车空空如也</view>-->
-  <!--</view>-->
 </view>
-
 <view style="height: 120rpx;"></view>
 <view class="bottom-view b-cfff" wx:if="{{dataItem.length > 0}}">
   <view class="checked" bindtap="allSelect">

@@ -9,7 +9,7 @@
  */
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
+import { Config, Http } from './../../utils/index';
 
 Page({
 
@@ -17,7 +17,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     orderLoading: false,
     orderType: 'normal', //订单类型 normal：正常， presale：预订
     deliveryDate: '', //预订配送日期
@@ -134,51 +134,44 @@ Page({
           items: data
         }
       }, () => {
-        wx.showNavigationBarLoading();
-        wx.request({
-          url: config.api.orderCouponList, 
-          header: {
-            'content-type': 'application/json',
-            'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-          },
-          method: 'POST',
-          data: {
-            items: data
-          },
-          success: function(res) {
-            if (res.statusCode == 200 && res.data.code === 0) {
-              let cou = wx.getStorageSync('orderCouponSelectData');
-              let csd = {};
-              let rd = res.data.data;
-              let d = rd.filter(item => item.is_usable); //可用
-              if(cou && cou.id){
-                let dd = d.filter(item => item.id === cou.id); //有当前选择的
-                if(dd.length > 0){
-                  csd = dd[0];
-                }else{
-                  csd = {}
-                }
+        Http.post(Config.api.orderCouponList, {
+          items: data
+        }).then((res)=>{
+          let cou = wx.getStorageSync('orderCouponSelectData');
+          let csd = {};
+          let rd = res.data;
+          let d = rd.filter(item => item.is_usable); //可用
+          //如果已选择
+          if(typeof cou === 'object'){
+            //判断如果选择了优惠券
+            if(cou.id){
+              let dd = d.filter(item => item.id === cou.id); //有当前选择的
+              if(dd.length > 0){
+                csd = dd[0];
+              }else{
+                csd = d.length > 0 ? d[0] : {};
               }
-
-              wx.setStorageSync('orderCouponListData', rd); //所有优惠券
-
-              that.setData({
-                couponListData: d, //只有可用的
-                couponSelectData: csd
-              }, ()=>{
-                that.orderPre(); //订单预生成
-              });
-            } else {
-              app.requestResultCode(res); //处理异常
             }
-          },
-          complete: function(res) {
-            wx.hideNavigationBarLoading();
-            //判断是否网络超时
-            app.requestTimeout(res, () => {
-              that.getCoupon();
-            });
+            //如果选择不使用优惠券
+            else{
+              csd = {}
+            }
           }
+          //如刚进页面未有选择，自动选择最最优的
+          else{
+            csd = d.length > 0 ? d[0] : {};
+          }
+
+          console.log(csd);
+
+          wx.setStorageSync('orderCouponListData', rd); //所有优惠券
+
+          that.setData({
+            couponListData: d, //只有可用的
+            couponSelectData: csd
+          }, ()=>{
+            that.orderPre(); //订单预生成
+          });
         });
       });
     } else {
@@ -198,7 +191,7 @@ Page({
     let { address, orderType, deliveryDate, couponSelectData, orderAddData } = that.data;
     wx.showNavigationBarLoading();
     wx.request({
-      url: config.api.orderPre,
+      url: Config.api.orderPre,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -300,58 +293,41 @@ Page({
     }
     that.setData({
       orderLoading: true
-    });
-    wx.request({
-      url: config.api.orderAdd,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      method: 'POST',
-      data: {
+    }, ()=>{
+      Http.post(Config.api.orderAdd, {
         store_id: address.id,
         coupon_merchant_id: couponSelectData.id || '',
         ...orderAddData,
         delivery_date: deliveryDate,
         is_presale: orderType === 'presale' ? true : false //是否预售订单
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code === 0) {
-          let rd = res.data.data;
-          //下单成功，待支付。如果为协议客户
-          if (rd.is_post_pay){
-            // 如果已经超过授信额度
-            if (rd.to_be_canceled) {
-              that.setData({
-                payWarning: ['您未支付的订单累计金额已超授信额度，需支付该订单！', '否则订单将在30分钟后取消']
-              })
-              that.orderPay(rd.id, rd.order_price); //去支付
-            } else {
-              // 如果未超过授信额度
-              that.clearShoppingCart(); //清除购买的购物车
-              that.setData({
-                orderLoading: false
-              });
-              wx.redirectTo({
-                url: '/pages/orderResult/orderResult?id=' + rd.id
-              });
-            }
-          }else{
+      }).then((res)=>{
+        let rd = res.data;
+        //下单成功，待支付。如果为协议客户
+        if (rd.is_post_pay){
+          // 如果已经超过授信额度
+          if (rd.to_be_canceled) {
+            that.setData({
+              payWarning: ['您未支付的订单累计金额已超授信额度，需支付该订单！', '否则订单将在30分钟后取消']
+            })
             that.orderPay(rd.id, rd.order_price); //去支付
+          } else {
+            // 如果未超过授信额度
+            that.clearShoppingCart(); //清除购买的购物车
+            that.setData({
+              orderLoading: false
+            });
+            wx.redirectTo({
+              url: '/pages/orderResult/orderResult?id=' + rd.id
+            });
           }
-        } else {
-          app.requestResultCode(res); //处理异常
-          that.setData({
-            orderLoading: false
-          });
+        }else{
+          that.orderPay(rd.id, rd.order_price); //去支付
         }
-      },
-      complete: function(res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.submitOrder();
+      }).catch(()=>{
+        that.setData({
+          orderLoading: false
         });
-      }
+      });
     });
   },
 
@@ -399,6 +375,11 @@ Page({
       }
       wx.setStorageSync('shoppingCartData', d);
     }
-  }
+  },
 
+  //页面卸载时
+  onUnload(){
+    wx.removeStorageSync('orderCouponListData');
+    wx.removeStorageSync('orderCouponSelectData');
+  }
 })
