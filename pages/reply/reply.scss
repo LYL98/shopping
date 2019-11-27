@@ -49,8 +49,8 @@
     &.video{
       margin-left:30rpx;
       >image{
-        height: 52rpx;
-        margin:48rpx auto 6rpx;
+        height: 36rpx;
+        margin:56rpx auto 20rpx;
       }
     }
   }
@@ -59,7 +59,7 @@
     overflow: hidden;
     margin:0 0rpx 20rpx 0;
     padding-top: 20rpx;
-    > .img-item{
+    > .img-item, >.play-video{
       float:left;
       margin-left:30rpx;
       position:relative;
@@ -88,6 +88,18 @@
         > image{
           width: 36rpx;
           height: 36rpx;
+        }
+      }
+      &.play-video{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width:180rpx;
+        height:180rpx;
+        background:#F7F7F8;
+        > image{
+          float: none;
+          background: none;
         }
       }
     }

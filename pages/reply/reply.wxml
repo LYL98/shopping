@@ -14,8 +14,8 @@
           <view class="close" bindtap="deletelImg" data-index="{{index}}">×</view>
       </view>
       <!--视频-->
-      <view wx:if="{{detail.media_url}}" class="img-item right">
-        <image src="./../../assets/img/video.png" bindtap="showVideo"></image>
+      <view wx:if="{{detail.media_url}}" class="play-video right">
+        <image src="./../../assets/img/play_video.png" bindtap="showVideo" style="width: 52rpx; height: 52rpx;"></image>
         <view class="close" bindtap="deleteVideo">×</view>
       </view>
       <navigator class="video right" url="/pages/shootVideo/shootVideo?event=reply" wx:else>
