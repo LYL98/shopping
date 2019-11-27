@@ -278,6 +278,21 @@
   margin-right: 16rpx;
   margin-bottom: 10rpx;
 }
+.comment-item {
+  .videos{
+    overflow: hidden;
+    >.video{
+      float: left;
+      width: 100rpx;
+      height: 100rpx;
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10rpx;
+    }
+  }
+}
 .audit-reply{
   height:80rpx;
   line-height:80rpx;

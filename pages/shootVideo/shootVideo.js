@@ -25,6 +25,7 @@ Page({
   chooseVideo(){
     let that = this;
     wx.chooseVideo({
+      sourceType: ['camera'],
       maxDuration: 15,
       success(res){
         wx.showLoading({
@@ -64,7 +65,7 @@ Page({
       let afterSale = app.getPage('pages/afterSale/afterSale');
       if(afterSale){
         let { detail } = afterSale.data;
-        detail.media_url = res.data.key;
+        detail.media_urls.push(res.data.key);
         afterSale.setData({
           detail: detail
         }, ()=>{
@@ -77,7 +78,7 @@ Page({
       let reply = app.getPage('pages/reply/reply');
       if(reply){
         let { detail } = reply.data;
-        detail.media_url = res.data.key;
+        detail.media_urls.push(res.data.key);
         reply.setData({
           detail: detail
         }, ()=>{
