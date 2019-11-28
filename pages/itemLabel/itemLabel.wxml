@@ -15,7 +15,7 @@
 
 <view class="item-view skeleton">
   <view class="item" wx:for="{{dataItem.items}}" wx:key="item.id">
-    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}">
+    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-id="{{item.id}}">
       <view class="img">
         <view class="mark">
           <text wx:if="{{item.is_presale}}" class="is-presale">预</text>

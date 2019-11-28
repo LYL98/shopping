@@ -1,8 +1,7 @@
 // pages/login/login.js
 //获取应用实例
 const app = getApp();
-const config = require('./../../utils/config');
-const verification = require('./../../utils/verification');
+import { Http, Config, Verification, Constant } from './../../utils/index';
 const md5 = require('./../../utils/md5');
 
 let loginTime;
@@ -96,7 +95,7 @@ Page({
       });
       return false;
     }
-    if (!verification.checkMobile(loginData.phone)) {
+    if (!Verification.checkMobile(loginData.phone)) {
       wx.showToast({
         title: '请输入正确的手机号',
         icon: 'none'
@@ -119,48 +118,30 @@ Page({
   signLogin() {
     let that = this;
     let { loginData } = that.data;
-
-    that.setData({ loading: true });
-
-    wx.request({
-      url: config.api.signLogin,
-      header: {
-        'content-type': 'application/json'
-      },
-      method: 'POST',
-      data: {
+    that.setData({ loading: true }, ()=>{
+      Http.post(Config.api.signLogin, {
         login_name: loginData.phone,
         password: md5(loginData.password)
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code === 0) {
-          let id = wx.getStorageSync("loginUserId");
-          if(res.data.data.id != id) {
-            wx.removeStorageSync("shoppingCartData");
-            wx.removeStorageSync('searchData');
-          } 
-          wx.setStorageSync("loginUserInfo", res.data.data); //写登录信息
-          wx.setStorageSync('loginUserId', res.data.data.id);
-          wx.reLaunch({
-            url: '/pages/index/index',
-          });
-        } else {
-          wx.showModal({
-            title: "提示",
-            content: res.data.message,
-            confirmText: "我知道了",
-            confirmColor: "#00AE66",
-            showCancel: false
-          });
-        }
-      },
-      complete: function (res) {
-        that.setData({ loading: false });
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.signLogin();
+      }).then((res)=>{
+        let id = wx.getStorageSync("loginUserId");
+        if(res.data.id != id) {
+          wx.removeStorageSync("shoppingCartData");
+          wx.removeStorageSync('searchData');
+        } 
+        wx.setStorageSync("loginUserInfo", res.data); //写登录信息
+        wx.setStorageSync('loginUserId', res.data.id);
+        /*===== 埋点 start ======*/
+        app.actionRecordAdd({
+          action: Constant.ACTION_RECORD.LOGIN
         });
-      }
+        /*===== 埋点 end ======*/
+        that.setData({ loading: false });
+        wx.reLaunch({
+          url: '/pages/index/index',
+        });
+      }).catch(()=>{
+        that.setData({ loading: false });
+      });
     });
   },
 })

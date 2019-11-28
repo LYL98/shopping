@@ -1,7 +1,7 @@
 // pages/my/my.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
+import { Config, Http, Constant } from './../../utils/index';
 
 Page({
 
@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     defaultSrc: './../../assets/img/default_avatar.png',
     myMessageSrc: './../../assets/img/my_message.png',
     myBalanceSrc: './../../assets/img/my_balance.png',
@@ -71,6 +71,7 @@ Page({
     loginInfo: {}, //登录用户信息
   },
   onLoad(option) {
+    this.address = {}; //当前选择地址
     let { avatar } = option
     if (avatar) {
       this.setData({
@@ -82,6 +83,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.address = app.getSelectStore(); //当前选择地址
     //判断登录
     app.signIsLogin((res) => {
       let sys = app.getSystemInfo();
@@ -94,11 +96,20 @@ Page({
       this.messageInfo(); // 获取未读消息数量
     });
   },
+  //点击页面底下的tab
+  onTabItemTap(e){
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.TAB_MY,
+      content: { store_id: this.address.id }
+    });
+    /*===== 埋点 end ======*/
+  },
   //获取是否有售后信息
   afterMsg: function() {
     let that = this;
     wx.request({
-      url: config.api.afterMsg,
+      url: Config.api.afterMsg,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -151,7 +162,7 @@ Page({
       wx.showNavigationBarLoading();
     }
     wx.request({
-      url: config.api.profile,
+      url: Config.api.profile,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -180,7 +191,7 @@ Page({
   messageInfo() {
     let that = this;
     wx.request({
-      url: config.api.messageInfo,
+      url: Config.api.messageInfo,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -216,7 +227,7 @@ Page({
   //打开社区团购小程序app
   openMiniApp(){
     wx.navigateToMiniProgram({
-      appId: config.weiXinAppIds[0],
+      appId: Config.weiXinAppIds[0],
       path: '/pages/head/head?access_token=' + this.data.loginInfo.access_token,
       envVersion: 'trial'
     });

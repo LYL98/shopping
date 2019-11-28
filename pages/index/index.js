@@ -1,12 +1,11 @@
 //index.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
-import constant from './../../utils/constant';
+import { Constant, Config } from './../../utils/index';
 
 Page({
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     rightSrc: './../../assets/img/right.png',
     bannerList: [],
     tagsImg: [
@@ -37,7 +36,7 @@ Page({
       tag: '今日主推',
       sort: '-tags_edited',
       page: 1,
-      page_size: constant.PAGE_SIZE
+      page_size: Constant.PAGE_SIZE
     },
     dataItem: {
       items: []
@@ -144,8 +143,23 @@ Page({
             that.getBanner(); //显示ad
           });
         }
+        /*===== 埋点 start ======*/
+        app.actionRecordAdd({
+          action: Constant.ACTION_RECORD.SHOW_HOME,
+          content: { store_id: address.id }
+        });
+        /*===== 埋点 end ======*/
       }
     });
+  },
+  //页面隐藏
+  onHide(){
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.HIDE_HOME,
+      content: { store_id: this.data.address.id }
+    });
+    /*===== 埋点 end ======*/
   },
   //显示选择收货地址
   storeShowHide(e){
@@ -160,7 +174,7 @@ Page({
     if(rd && rd.id){
       let { query } = that.data;
       query.page = 1;
-      query.page_size = constant.PAGE_SIZE;
+      query.page_size = Constant.PAGE_SIZE;
       query.store_id = rd.id;
       that.setData({
         query: query,
@@ -177,7 +191,7 @@ Page({
     let that = this;
     let { address } = that.data;
     wx.request({
-      url: config.api.isOrderTime,
+      url: Config.api.isOrderTime,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -229,7 +243,7 @@ Page({
     let that = this;
     let { address } = that.data;
     wx.request({
-      url: config.api.banner,
+      url: Config.api.banner,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -259,7 +273,7 @@ Page({
   getTagsList(){
     let that = this;
     wx.request({
-      url: config.api.itemTagsList,
+      url: Config.api.itemTagsList,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -309,7 +323,7 @@ Page({
       wx.showNavigationBarLoading();
     }
     wx.request({
-      url: config.api.itemQuery,
+      url: Config.api.itemQuery,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -351,9 +365,9 @@ Page({
 
         //重新恢复数据
         if (isInit) {
-          if (query.page_size > constant.PAGE_SIZE) {
-            query.page = Math.ceil(query.page_size / constant.PAGE_SIZE); //向上取整
-            query.page_size = constant.PAGE_SIZE;
+          if (query.page_size > Constant.PAGE_SIZE) {
+            query.page = Math.ceil(query.page_size / Constant.PAGE_SIZE); //向上取整
+            query.page_size = Constant.PAGE_SIZE;
             that.setData({
               query: query
             });
@@ -374,21 +388,61 @@ Page({
       }
     });
   },
+  //点击banner
   urlJump(e){
+    let item = e.target.dataset.item;
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.BANNER,
+      content: { banner_id: item.id, store_id: this.data.query.store_id }
+    });
+    /*===== 埋点 end ======*/
+    
     let url = e.target.dataset.url;
-    let isPage = url.indexOf("/pages") == 0;
-    let tab = url.match(/\/\/|(\w+)/g)
+    if(url !== 'none'){
+      let isPage = url.indexOf("/pages") == 0;
+      let tab = url.match(/\/\/|(\w+)/g)
 
-    if(isPage) {
-      wx.navigateTo({
-        url: url
-      })
-    }else if(tab[0] == 'app'){
-      app.globalData.urlJump = tab[3];
-      wx.switchTab({
-        url: `/pages/itemList/itemList`
-      })
+      if(isPage) {
+        wx.navigateTo({
+          url: url
+        })
+      }else if(tab[0] == 'app'){
+        app.globalData.urlJump = tab[3];
+        wx.switchTab({
+          url: `/pages/itemList/itemList`
+        })
+      }
     }
+  },
+  //点击tags
+  clickTags(e){
+    let tag = e.currentTarget.dataset.tag;
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.HOME_TAG,
+      content: { tag: tag, store_id: this.data.query.store_id }
+    });
+    /*===== 埋点 end ======*/
+  },
+  //点击商品
+  clickItem(e){
+    let id = e.currentTarget.dataset.id;
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.ITEM_DETAIL_HOME,
+      content: { item_id: id, store_id: this.data.query.store_id }
+    });
+    /*===== 埋点 end ======*/
+  },
+  //点击页面底下的tab
+  onTabItemTap(e){
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.TAB_HOME,
+      content: { store_id: this.data.query.store_id }
+    });
+    /*===== 埋点 end ======*/
   },
   /**
    * 页面上拉触底事件的处理函数

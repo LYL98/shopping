@@ -9,7 +9,7 @@
  */
 //获取应用实例
 const app = getApp();
-import { Config, Http } from './../../utils/index';
+import { Config, Http, Constant } from './../../utils/index';
 
 Page({
 
@@ -73,6 +73,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.relatedKey = ''; //生成供埋点系列用
     this.setData({
       orderType: options.type || 'normal',
       deliveryDate: options.delivery_date || ''
@@ -83,6 +84,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    this.relatedKey = wx.getStorageSync('actionRecordShopCartId'); //生成供埋点系列用
     let that = this;
     //判断登录
     app.signIsLogin(() => {
@@ -102,11 +104,17 @@ Page({
 
   //选择优惠券
   selectCoupon(){
-    let { couponListData } = this.data;
+    let { couponListData, address } = this.data;
     if(couponListData.length  > 0){
       wx.navigateTo({
         url: '/pages/orderCoupon/orderCoupon'
       });
+      /*===== 埋点 start ======*/
+      app.actionRecordAdd({
+        action: Constant.ACTION_RECORD.ORDER_ADD_COUPON,
+        content: { store_id: address.id, related_key: this.relatedKey}
+      });
+      /*===== 埋点 end ======*/
     }
   },
 
@@ -161,8 +169,6 @@ Page({
           else{
             csd = d.length > 0 ? d[0] : {};
           }
-
-          console.log(csd);
 
           wx.setStorageSync('orderCouponListData', rd); //所有优惠券
 
@@ -291,17 +297,25 @@ Page({
       });
       return false;
     }
+    let d = {
+      store_id: address.id,
+      coupon_merchant_id: couponSelectData.id || '',
+      ...orderAddData,
+      delivery_date: deliveryDate,
+      is_presale: orderType === 'presale' ? true : false //是否预售订单
+    };
     that.setData({
       orderLoading: true
     }, ()=>{
-      Http.post(Config.api.orderAdd, {
-        store_id: address.id,
-        coupon_merchant_id: couponSelectData.id || '',
-        ...orderAddData,
-        delivery_date: deliveryDate,
-        is_presale: orderType === 'presale' ? true : false //是否预售订单
-      }).then((res)=>{
+      Http.post(Config.api.orderAdd, d).then((res)=>{
         let rd = res.data;
+        /*===== 埋点 start ======*/
+        app.actionRecordAdd({
+          action: Constant.ACTION_RECORD.ORDER_ADD_SUBMIT,
+          content: { store_id: address.id, order_id: rd.id, related_key: that.relatedKey}
+        });
+        /*===== 埋点 end ======*/
+        
         //下单成功，待支付。如果为协议客户
         if (rd.is_post_pay){
           // 如果已经超过授信额度
@@ -334,6 +348,7 @@ Page({
   //订单支付
   orderPay(id, price) {
     let that = this;
+    let { address } = that.data;
     that.setData({
       payData: {
         order_id: id,
@@ -346,6 +361,12 @@ Page({
           orderLoading: false
         });
         if (res === 'success') {
+          /*===== 埋点 start ======*/
+          app.actionRecordAdd({
+            action: Constant.ACTION_RECORD.ORDER_ADD_PAY_SUBMIT,
+            content: { store_id: address.id, order_id: id, related_key: that.relatedKey}
+          });
+          /*===== 埋点 end ======*/
           wx.redirectTo({
             url: `/pages/payResult/payResult?id=${id}&source=orderAdd`
           });
@@ -354,6 +375,7 @@ Page({
             url: '/pages/orderDetail/orderDetail?id=' + id
           });
         }
+        wx.removeStorageSync('actionRecordShopCartId'); //删除系列号
       },
       isShowPay: true
     });

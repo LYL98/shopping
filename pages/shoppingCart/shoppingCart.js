@@ -1,7 +1,7 @@
 // pages/shoppingCart/shoppingCart.js
 //获取应用实例
 const app = getApp();
-import { Http, Config } from './../../utils/index';
+import { Http, Config, Constant } from './../../utils/index';
 
 Page({
 
@@ -14,52 +14,65 @@ Page({
     checkedSSrc: './../../assets/img/checked_s.png',
     checkedSrc: './../../assets/img/checked_disabled.png',
     hintBlackSrc: './../../assets/img/hint_black.png',
-    empty_cart:'./../../assets/img/empty_cart.png',
+    empty_cart: './../../assets/img/empty_cart.png',
     dataItem: [],
     isAllSelect: true,
     totalNum: 0,
     totalPrice: 0,
     isEdit: false,
     initLoad: true,
-    closeStore:true,
-    goodsStatus:{
-      "on_ground":"已上架",
-      "under_ground":"已下架",
-      "audited":"已审核",
-      "auditing":"待审核",
+    closeStore: true,
+    goodsStatus: {
+      "on_ground": "已上架",
+      "under_ground": "已下架",
+      "audited": "已审核",
+      "auditing": "待审核",
     },
-    priceStatus:{
-        0:"今日未报价",
-        1:"已报价"
+    priceStatus: {
+      0: "今日未报价",
+      1: "已报价"
     },
     couponNum: 0, //今日可用优惠券数量
-    activity:{},
+    isShowCouponHint: true,
+    activity: {},
   },
   onLoad() {
+    this.address = {}; //当前选择地址
     this.setData({
-      system:  app.globalData.system
+      system: app.globalData.system
     })
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-    let that = this;
+  onShow: function () {
+    this.address = app.getSelectStore(); //当前选择地址
+    this.relatedKey = '123456564564564564546456456645';
+    wx.setStorageSync('actionRecordShopCartId', this.relatedKey); //生成供埋点系列用
+    
     //判断登录
     app.signIsLogin(() => {
-      that.activity();
-      that.getWorkTime();
-      that.getShoppingCartData();
-      that.couponList(); //获取优惠券列表
+      this.activity();
+      this.getWorkTime();
+      this.getShoppingCartData();
+      this.couponList(); //获取优惠券列表
     });
+  },
+  //点击页面底下的tab
+  onTabItemTap(e) {
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.TAB_SHOP_CART,
+      content: { store_id: this.address.id }
+    });
+    /*===== 埋点 end ======*/
   },
   //获取工作时间
   getWorkTime() {
     let that = this;
-    let address = app.getSelectStore(); //当前选择的地址
     Http.get(Config.api.isOrderTime, {
-      province_code: address.province_code
-    }).then((res)=>{
+      province_code: that.address.province_code
+    }).then((res) => {
       that.setData({
         closeStore: res.data.is_time_order,
         order_end_time: res.data.order_end_time,
@@ -68,14 +81,18 @@ Page({
     });
   },
   //获取优惠券列表
-  couponList(){
+  couponList() {
     let that = this;
-    Http.get(Config.api.couponList, { avaiable: 1, avaiable_now: 1, is_no_prompt: true }).then((res)=>{
-      that.setData({ couponNum: res.data.num });
+    Http.get(Config.api.couponList, { avaiable: 1, avaiable_now: 1, is_no_prompt: true }).then((res) => {
+      that.setData({ couponNum: res.data.num, isShowCouponHint: true });
     });
   },
+  //隐藏优惠券提示
+  hideCouponHint() {
+    this.setData({ isShowCouponHint: false });
+  },
   //切换编辑模式
-  changeEdit(){
+  changeEdit() {
     let { isEdit } = this.data;
     this.setData({
       isEdit: !isEdit
@@ -84,7 +101,7 @@ Page({
   },
 
   //删除购物车商品
-  removeItem(){
+  removeItem() {
     let that = this;
     let d = wx.getStorageSync('shoppingCartData');
 
@@ -121,12 +138,12 @@ Page({
   },
 
   //添加或减少回调
-  upDownCallback(res){
+  upDownCallback(res) {
     this.updateData();//更新本地数据
   },
 
   //全选购物车
-  allSelect(){
+  allSelect() {
     let that = this;
     let { isAllSelect } = that.data;
     let d = wx.getStorageSync('shoppingCartData');
@@ -145,7 +162,7 @@ Page({
   },
 
   //单选
-  redioSelect(e){
+  redioSelect(e) {
     let that = this;
     let id = e.currentTarget.dataset.rs.id;
     let rs = e.currentTarget.dataset.rs;
@@ -154,10 +171,10 @@ Page({
     //更新本地存储
 
     for (let i = 0; i < d.length; i++) {
-      if (d[i].id === id && status ) {
+      if (d[i].id === id && status) {
         d[i].is_select = !d[i].is_select;
         break;
-      }else if(d[i].id === id && !status  && this.data.isEdit) {
+      } else if (d[i].id === id && !status && this.data.isEdit) {
         d[i].is_select = !d[i].is_select;
         break;
       }
@@ -168,67 +185,67 @@ Page({
   },
   setStorage(item) {
     let d = wx.getStorageSync('shoppingCartData');
-    for(let i = 0; i< d.length; i++) {
-      if(d[i].id== item.id ) {
-          d[i].is_select = item.is_select;
-          d[i].num = 0;
+    for (let i = 0; i < d.length; i++) {
+      if (d[i].id == item.id) {
+        d[i].is_select = item.is_select;
+        d[i].num = 0;
       }
     }
     wx.setStorageSync('shoppingCartData', d);
   },
   //判断是否全选
-  judgeIsAllSelect(){
+  judgeIsAllSelect() {
     let that = this;
     let { dataItem } = that.data;
     if (dataItem && dataItem.length > 0) {
       for (let i = 0; i < dataItem.length; i++) {
-        if (!dataItem[i].is_select){
+        if (!dataItem[i].is_select) {
           that.setData({
             isAllSelect: false
           });
           break;
         }
-        if(i === dataItem.length - 1){
+        if (i === dataItem.length - 1) {
           that.setData({
             isAllSelect: true
           });
         }
       }
-    }else{
+    } else {
       that.setData({
         isAllSelect: false
       });
     }
   },
   //更新页面数据
-  updateData(data){
+  updateData(data) {
     let that = this;
     let totalNum = 0, totalPrice = 0;
     let { dataItem } = that.data;
-    if(data) dataItem = data;
-    
+    if (data) dataItem = data;
+
     let d = wx.getStorageSync('shoppingCartData');
-    
-    if (d.length > 0){
+
+    if (d.length > 0) {
       for (let i = 0; i < dataItem.length; i++) {
         for (let j = 0; j < d.length; j++) {
           if (dataItem[i].id === d[j].id) {
-            let status = dataItem[i].is_quoted && dataItem[i].is_on_sale && dataItem[i].item_stock >0
+            let status = dataItem[i].is_quoted && dataItem[i].is_on_sale && dataItem[i].item_stock > 0
             //上架
-            if(status){
+            if (status) {
               dataItem[i].is_select = d[j].is_select;
-            }else if(!status && that.data.isEdit) {
+            } else if (!status && that.data.isEdit) {
               dataItem[i].is_select = d[j].is_select;
-            }else if(!status && !that.data.isEdit) {
+            } else if (!status && !that.data.isEdit) {
               dataItem[i].is_select = false;
               that.setStorage(dataItem[i]);
             }
             dataItem[i].select_num = d[j].num;
-            
+
             if (dataItem[i].is_select && status) {
               totalPrice += dataItem[i].price_sale_piece * dataItem[i].select_num; //价格加总
             }
-            if (dataItem[i].is_select){
+            if (dataItem[i].is_select) {
               totalNum += dataItem[i].select_num;
             }
             break;
@@ -247,7 +264,7 @@ Page({
       }, () => {
         that.judgeIsAllSelect();//判断是否全选
       });
-    }else{
+    } else {
       that.setData({
         dataItem: [],
         totalNum: 0,
@@ -259,44 +276,49 @@ Page({
   },
 
   //获取购物车数据
-  getShoppingCartData(){
+  getShoppingCartData() {
     let that = this;
     let d = wx.getStorageSync('shoppingCartData');
+    let item = [];
     if (d && d.length > 0) {
       let ids = [];
       for (let i = 0; i < d.length; i++) {
         ids.push(d[i].id);
+        item.push({
+          id: d[i].id,
+          num: d[i].num
+        })
       }
       let { initLoad, dataItem } = that.data;
-      if (initLoad || dataItem.length === 0){
+      if (initLoad || dataItem.length === 0) {
         that.setData({ loading: true });
       }
-      let address = app.getSelectStore(); //当前选择的地址
+
       Http.get(Config.api.itemCartQuery, {
         ids: ids.join(),
-        store_id: address.id || ''
-      }).then((res)=>{
+        store_id: this.address.id || ''
+      }).then((res) => {
         let rd = res.data;
-        if(rd.length<=0) {
+        if (rd.length <= 0) {
           wx.removeStorageSync('shoppingCartData')
 
-        }else{
-          for(let i = 0; i<d.length; i++) {
+        } else {
+          for (let i = 0; i < d.length; i++) {
             let obj = d[i];
             let dId = obj.id;
             let isExist = false;
 
-            for(let j = 0; j < rd.length; j++){
+            for (let j = 0; j < rd.length; j++) {
               let child = rd[j];
-              let status = child.is_quoted && child.is_on_sale && child.item_stock >0
+              let status = child.is_quoted && child.is_on_sale && child.item_stock > 0
               let n = child.id;
-              if(n == dId){ //判断ID是否相等
-                if(obj.num<1 && status) obj.num=1;
+              if (n == dId) { //判断ID是否相等
+                if (obj.num < 1 && status) obj.num = 1;
                 isExist = true;
                 break;
               }
             }
-            if(!isExist){
+            if (!isExist) {
               d.remove(i)
             }
           }
@@ -304,19 +326,26 @@ Page({
         }
         that.updateData(rd);//更新本地数据
         that.setData({ loading: false, initLoad: false });
-      }).catch(()=>{
+      }).catch(() => {
         that.setData({ loading: false, initLoad: false });
       });
-    }else{
+    } else {
       that.setData({
         dataItem: []
       });
     }
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.SHOP_CART,
+      content: { store_id: this.address.id, item: item },
+      related_key: this.relatedKey
+    });
+    /*===== 埋点 end ======*/
   },
   //邮费优惠
-  activity(){
+  activity() {
     let that = this;
-    Http.get(Config.api.activity, {}).then((res)=>{
+    Http.get(Config.api.activity, {}).then((res) => {
       that.setData({
         activity: res.data,
       })
@@ -328,42 +357,48 @@ Page({
     let notallow = {
 
     };
-    for(let i=0; i<dataItem.length; i++) {
-        if(dataItem[i].is_select && dataItem[i].item_status === 'under_ground' ){
-          notallow.code = 1;
-          break;
-        }else if(dataItem[i].is_select && dataItem[i].price_status == 0 ){
-          notallow.code = 2;
-          break;
-        }
+    for (let i = 0; i < dataItem.length; i++) {
+      if (dataItem[i].is_select && dataItem[i].item_status === 'under_ground') {
+        notallow.code = 1;
+        break;
+      } else if (dataItem[i].is_select && dataItem[i].price_status == 0) {
+        notallow.code = 2;
+        break;
+      }
     }
-   if(notallow.code == 1){
-    wx.showModal({
-      title: "提示",
-      content: "您所购买的商品有未上架，请在购物车移除",
-      confirmText: "我知道了",
-      confirmColor: "#00AE66",
-      showCancel: false,
-      success: function () {
-        //wx.navigateBack();
-      }
-    });
-   }else if(notallow.code == 2) {
-    wx.showModal({
-      title: "提示",
-      content: "您所购买的商品有未报价，请在购物车移除或等待报价",
-      confirmText: "我知道了",
-      confirmColor: "#00AE66",
-      showCancel: false,
-      success: function () {
-        // wx.navigateBack();
-      }
-    });
-   }else{
-    wx.navigateTo({
-      url: '/pages/orderAdd/orderAdd',
-    });
-   }
-    
+    if (notallow.code == 1) {
+      wx.showModal({
+        title: "提示",
+        content: "您所购买的商品有未上架，请在购物车移除",
+        confirmText: "我知道了",
+        confirmColor: "#00AE66",
+        showCancel: false,
+        success: function () {
+          //wx.navigateBack();
+        }
+      });
+    } else if (notallow.code == 2) {
+      wx.showModal({
+        title: "提示",
+        content: "您所购买的商品有未报价，请在购物车移除或等待报价",
+        confirmText: "我知道了",
+        confirmColor: "#00AE66",
+        showCancel: false,
+        success: function () {
+          // wx.navigateBack();
+        }
+      });
+    } else {
+      /*===== 埋点 start ======*/
+      app.actionRecordAdd({
+        action: Constant.ACTION_RECORD.SHOP_CART_CLEARING,
+        content: { store_id: this.address.id },
+        related_key: this.relatedKey
+      });
+      /*===== 埋点 end ======*/
+      wx.navigateTo({
+        url: '/pages/orderAdd/orderAdd',
+      });
+    }
   },
 })

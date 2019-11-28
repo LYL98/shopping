@@ -14,12 +14,12 @@ const http = {
     return new Promise((resolve, reject) => {
       const app = getApp(); //移动到此位置，防止app.js调用出错
       const fun = () => {
-        let tokenKey = app.globalData.loginUserInfo.token_key; //动态tokenKey
+        let tokenKey = app ? app.globalData.loginUserInfo.token_key : ''; //动态tokenKey
         wx.request({
           url: url,
           header: {
             'content-type': 'application/json',
-            [tokenKey || type]: app.globalData.loginUserInfo.access_token
+            [tokenKey || type]: app ? app.globalData.loginUserInfo.access_token : ''
           },
           method: method,
           data: data || {},

@@ -1,8 +1,7 @@
 // pages/itemList/itemList.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
-import constant from './../../utils/constant';
+import { Constant, Config } from './../../utils/index';
 
 Page({
 
@@ -10,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     rankSrc: './../../assets/img/rank.png',
     rankSSrc: './../../assets/img/rank_s.png',
     rankSl: './../../assets/img/rank_l.png',
@@ -21,7 +20,7 @@ Page({
       sort: '-other',
       display_class_code: '',
       page: 1,
-      page_size: constant.PAGE_SIZE
+      page_size: Constant.PAGE_SIZE
     },
     urlJumpId:0,
     dataItem: {
@@ -54,6 +53,7 @@ Page({
     showSkeleton: true
   },
   onLoad() {
+    this.address = {}; //当前选择的地址
     this.setData({
       system:  app.globalData.system
     });
@@ -62,37 +62,45 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this;
-
+    this.address = app.getSelectStore(); //当前选择的地址
     let value = app.globalData.urlJump < 10 ? '0'+app.globalData.urlJump : app.globalData.urlJump
     this.setData({
       urlJumpId: value || 0,
     })
     //判断登录
     app.signIsLogin(() => {
-      let { query } = that.data;
-      let address = app.getSelectStore(); //当前选择的地址
-      query.store_id = address.id || '';
+      let { query } = this.data;
+      query.store_id = this.address.id || '';
       if(query.page !== 1){
         query.page_size = query.page_size * query.page;
         query.page = 1;
-        that.setData({
+        this.setData({
           query: query
         }, ()=>{
-          that.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
+          this.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
         });
       }else{
-        that.setData({
+        this.setData({
           query: query
         }, ()=>{
-          that.itemListDisplayClass();
+          this.itemListDisplayClass();
         });
       }
-      that.displayClassQuery();//获取商品分类
+      this.displayClassQuery();//获取商品分类
     });
     if(this.data.urlJumpId) {
       this.selectCategory(this.data.urlJumpId)
     }
+  },
+
+  //点击页面底下的tab
+  onTabItemTap(e){
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.TAB_ITEM,
+      content: { store_id: this.address.id }
+    });
+    /*===== 埋点 end ======*/
   },
 
   //选择商品分类
@@ -120,6 +128,24 @@ Page({
       duration: 0
     });
 
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.ITEM_CLASS,
+      content: { display_class_code: value, store_id: query.store_id }
+    });
+    /*===== 埋点 end ======*/
+
+  },
+
+  //点击商品
+  clickItem(e){
+    let id = e.currentTarget.dataset.id;
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.ITEM_DETAIL_LIST,
+      content: { item_id: id, store_id: this.data.query.store_id }
+    });
+    /*===== 埋点 end ======*/
   },
 
   //排序
@@ -145,7 +171,7 @@ Page({
   displayClassQuery(){
     let that = this;
     wx.request({
-      url: config.api.displayClassQuery,
+      url: Config.api.displayClassQuery,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -177,7 +203,7 @@ Page({
     wx.showNavigationBarLoading();
 
     wx.request({
-      url: config.api.itemListDisplayClass,
+      url: Config.api.itemListDisplayClass,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -204,9 +230,9 @@ Page({
 
         //重新恢复数据
         if (isInit){
-          if (query.page_size > constant.PAGE_SIZE) {
-            query.page = Math.ceil(query.page_size / constant.PAGE_SIZE);//向上取整
-            query.page_size = constant.PAGE_SIZE;
+          if (query.page_size > Constant.PAGE_SIZE) {
+            query.page = Math.ceil(query.page_size / Constant.PAGE_SIZE);//向上取整
+            query.page_size = Constant.PAGE_SIZE;
             that.setData({
               query: query
             });

@@ -47,6 +47,44 @@
   }
 }
 
+.coupon-hint{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 88rpx;
+  border-top: 1rpx solid #eee;
+  text-align: center;
+  background: #fff;
+  >.coupon-item{
+    height: 62rpx;
+    background: #FFE1E1;
+    border-radius: 40rpx;
+    color: #FF6868;
+    font-size: 26rpx;
+    display: inline-flex;
+    align-items: center;
+    margin: 13rpx auto 0;
+    padding: 0 30rpx;
+    >view{
+      margin: 0 18rpx 0 12rpx;
+    }
+  }
+  >.close{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 88rpx;
+    height: 88rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    >image{
+      display: block;
+    }
+  }
+}
+
 .bottom-view{
   height: 120rpx;
   position: fixed;

@@ -41,34 +41,40 @@ Page({
     },
     couponType: constant.COUPON_TYPE,
     showSkeleton: true,
-    nowDataTime: '' //当前时间
+    nowDataTime: '', //当前时间
+    from: '', //来自什么页面：shoppingCart 购物车
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    let that = this;
-    let date = util.returnDateStr(); //返回当前时间字符串
-    console.log(date);
-    that.setData({
-      nowDataTime: date
-    });
     //判断登录
     app.signIsLogin(() => {
-      that.couponList();
+      let date = util.returnDateStr(); //返回当前时间字符串
+      let { from } = this.options;
+      let { query } = this.data;
+      if(from === 'shoppingCart'){
+        query.avaiable_now = '1';
+      }
+      this.setData({
+        nowDataTime: date,
+        from: from || '',
+        query: query
+      }, ()=>{
+        this.couponList();
+      });
     });
   },
   //单击菜单
   clickTab(e) {
-    let that = this;
     let v = e.target.dataset.index;
-    let { query } = that.data;
+    let { query } = this.data;
     query.page = 1;
     query.avaiable = v;
-    that.setData({
+    this.setData({
       query: query
     }, ()=>{
-      that.couponList();
+      this.couponList();
     });
 
     wx.pageScrollTo({

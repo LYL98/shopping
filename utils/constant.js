@@ -76,5 +76,32 @@ module.exports = {
     type_reduction: '订单满减券',
     type_discount: '订单满折券',
     type_gift: '订单满赠券'
+  },
+  //埋点action
+  ACTION_RECORD: {
+    LOGIN: 'LOGIN', //登录
+    SHOW_HOME: 'SHOW_HOME', //进入首页
+    HIDE_HOME: 'HIDE_HOME', //离开首页
+    SEARCH: 'SEARCH', //点击搜索
+    BANNER: 'BANNER', //点击banner
+    HOME_TAG: 'HOME_TAG', //点击首页标签
+    LABEL_TAG: 'LABEL_TAG', //点击标签页标签
+    TAB_HOME: 'TAB_HOME', //点击首页tab
+    TAB_ITEM: 'TAB_ITEM', //点击商品列表
+    TAB_SHOP_CART: 'TAB_SHOP_CART', //点击购物车tab
+    TAB_MY: 'TAB_MY', //点击我的tab
+    ITEM_CLASS: 'ITEM_CLASS', //商品列表页点击类型
+    ITEM_DETAIL_HOME: 'ITEM_DETAIL_HOME', //商品详情（首页点击过来）
+    ITEM_DETAIL_SEARCH: 'ITEM_DETAIL_SEARCH', //商品详情（搜索点击过来）
+    ITEM_DETAIL_LABEL: 'ITEM_DETAIL_LABEL', //商品详情（标签页点击过来）
+    ITEM_DETAIL_LIST: 'ITEM_DETAIL_LIST', //商品详情（商品列表点击过来）
+    SHOP_CART: 'SHOP_CART', //进入购物车
+    SHOP_CART_CLEARING: 'SHOP_CART_CLEARING', //购物车去结算
+    ORDER_ADD_COUPON: 'ORDER_ADD_COUPON', //订单页面点击优惠券
+    ORDER_ADD_SUBMIT: 'ORDER_ADD_SUBMIT', //订单页面提交订单
+    ORDER_ADD_PAY_TYPE: 'ORDER_ADD_PAY_TYPE', //订单页面支付选择方式
+    ORDER_ADD_PAY_SUBMIT: 'ORDER_ADD_PAY_SUBMIT', //订单页面支付成功
+    ORDER_PAY_TYPE: 'ORDER_PAY_TYPE', //订单列表或详情支付选择方式
+    ORDER_PAY_SUBMIT: 'ORDER_PAY_SUBMIT', //订单列表或详情支付成功
   }
 }

@@ -26,6 +26,7 @@ module.exports = {
     tencentUploadPresignedUrl: apiCommon + '/tencent/presigned_url',//获取腾讯presigned_url
     tencentTmpSecret: apiCommon + '/tencent/tmp_secret',//获取腾讯上传配置
     messageFormAdd: apiC + '/member/form/add', //formid收集
+    actionRecordAdd: apiC + '/action_record/add', //埋点收集
 
     banner: apiC + '/item/banner', //banner首页
     itemTagsList: apiC + '/item/tags/list', //tags首页
