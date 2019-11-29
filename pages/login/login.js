@@ -82,6 +82,11 @@ Page({
    */
   onGetUserInfo(res) {
     let { loginRes } = this.data;
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.LOGIN_AUTH
+    });
+    /*===== 埋点 end ======*/
     app.loginCallBack(loginRes, res.detail);//登录回调
   },
   //登录

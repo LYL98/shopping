@@ -200,16 +200,34 @@ App({
   requestTimeout(res, callback){
     if (res.errMsg.indexOf('timeout') >= 0) {
       wx.showModal({
-        title: "提示",
-        content: "网络超时，请重试",
-        confirmText: "重试",
-        confirmColor: "#00AE66",
+        title: '提示',
+        content: '网络超时，请重试',
+        confirmText: '重试',
+        confirmColor: '#00AE66',
         success: function(res){
           if (res.confirm) {
-            typeof callback === 'function' && callback();
+            typeof callback === 'function' && callback('timeout');
+          }else{
+            //typeof callback === 'function' && callback('cancel');
           }
         }
       });
+    }else if(res.errMsg.indexOf('fail') >= 0){
+      wx.showModal({
+        title: '提示',
+        content: '请求出错啦,请检查网络是否可用',
+        confirmText: '重试',
+        confirmColor: '#00AE66',
+        success: function(res){
+          if (res.confirm) {
+            typeof callback === 'function' && callback('netFail');
+          }else{
+            //typeof callback === 'function' && callback('cancel');
+          }
+        }
+      });
+    }else{
+      //typeof callback === 'function' && callback('fail');
     }
   },
 
@@ -417,7 +435,7 @@ App({
       factor: factor,
       toPx: toPx,
       toRpx: toRpx,
-      custom_version: 'V2.11.3'
+      custom_version: 'V2.12.0'
     }
   },
   //获取页面（页面路由）

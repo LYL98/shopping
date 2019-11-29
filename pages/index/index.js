@@ -143,12 +143,6 @@ Page({
             that.getBanner(); //显示ad
           });
         }
-        /*===== 埋点 start ======*/
-        app.actionRecordAdd({
-          action: Constant.ACTION_RECORD.SHOW_HOME,
-          content: { store_id: address.id }
-        });
-        /*===== 埋点 end ======*/
       }
     });
   },
@@ -184,6 +178,12 @@ Page({
         that.getBanner(); //显示ad
         that.getWorkTime();
       });
+      /*===== 埋点 start ======*/
+      app.actionRecordAdd({
+        action: Constant.ACTION_RECORD.SHOW_HOME,
+        content: { store_id: rd.id }
+      });
+      /*===== 埋点 end ======*/
     }
   },
   //是否可下单

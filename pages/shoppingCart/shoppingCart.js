@@ -1,7 +1,7 @@
 // pages/shoppingCart/shoppingCart.js
 //获取应用实例
 const app = getApp();
-import { Http, Config, Constant } from './../../utils/index';
+import { Http, Config, Constant, Util } from './../../utils/index';
 
 Page({
 
@@ -47,7 +47,7 @@ Page({
    */
   onShow: function () {
     this.address = app.getSelectStore(); //当前选择地址
-    this.relatedKey = '123456564564564564546456456645';
+    this.relatedKey = Util.getUuid(); //生成uuid
     wx.setStorageSync('actionRecordShopCartId', this.relatedKey); //生成供埋点系列用
     
     //判断登录
