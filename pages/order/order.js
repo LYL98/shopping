@@ -1,8 +1,7 @@
 // pages/order/order.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
-import constant from './../../utils/constant';
+import { Config, Constant } from './../../utils/index';
 
 Page({
 
@@ -10,11 +9,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
-    orderStatus: constant.ORDER_STATUS,
+    tencentPath: Config.tencentPath,
+    orderStatus: Constant.ORDER_STATUS,
     query: {
       page: 1,
-      page_size: constant.PAGE_SIZE
+      page_size: Constant.PAGE_SIZE
     },
     dataItem: {
       items: []
@@ -189,7 +188,7 @@ Page({
       wx.showNavigationBarLoading()
     }
     wx.request({
-      url: config.api.orderQuery,
+      url: Config.api.orderQuery,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -214,9 +213,9 @@ Page({
 
         //重新恢复数据
         if (isInit) {
-          if (query.page_size > constant.PAGE_SIZE) {
-            query.page = Math.ceil(query.page_size / constant.PAGE_SIZE);//向上取整
-            query.page_size = constant.PAGE_SIZE;
+          if (query.page_size > Constant.PAGE_SIZE) {
+            query.page = Math.ceil(query.page_size / Constant.PAGE_SIZE);//向上取整
+            query.page_size = Constant.PAGE_SIZE;
             that.setData({
               query: query
             });
@@ -241,6 +240,7 @@ Page({
     let index = e.target.dataset.index;
     let orderId = dataItem.items[index].id;
     let price = dataItem.items[index].remain_pay;
+    let storeId = dataItem.items[index].store_id;
     that.setData({
       payData: {
         order_id: orderId,
@@ -248,6 +248,12 @@ Page({
       },
       payCallBack: function(res){
         if(res === 'success'){
+          /*===== 埋点 start ======*/
+          app.actionRecordAdd({
+            action: Constant.ACTION_RECORD.ORDER_PAY_SUBMIT,
+            content: { store_id: storeId, order_id: orderId }
+          });
+          /*===== 埋点 end ======*/
           that.setData({
             isShowPay: false
           });
@@ -293,7 +299,7 @@ Page({
         if (res.confirm) {
           that.setData({ loading: true });
           wx.request({
-            url: config.api.orderConfirmReceive,
+            url: Config.api.orderConfirmReceive,
             header: {
               'content-type': 'application/json',
               'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token

@@ -1,6 +1,6 @@
 <!--pages/shoppingCart/shoppingCart.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<view class="close-store" wx:if="{{!closeStore}}"> 
+<view class="top-hint" wx:if="{{!closeStore}}"> 
   营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
 </view>
 <view class="work-field">
@@ -37,11 +37,21 @@
   </view>
   <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view>
   <defaultPage wx:else currentPage="shoppingCart"></defaultPage>
-  <!--<view class="load-none" wx:else>-->
-    <!--<image src="{{empty_cart}}"></image>-->
-    <!--<view>您的购物车空空如也</view>-->
-  <!--</view>-->
 </view>
+
+<block wx:if="{{couponNum > 0 && isShowCouponHint}}">
+  <view style="height: 89rpx;"></view>
+  <view class="coupon-hint" style="bottom: {{dataItem.length > 0 ? 120 : 0}}rpx;">
+    <navigator url="/pages/coupon/coupon?from=shoppingCart" class="coupon-item">
+      <image src="./../../assets/img/coupon.png" style="width: 40rpx; height: 30rpx;" />
+      <view>您有{{couponNum}}张可用优惠券</view>
+      <image src="./../../assets/img/right_red.png" style="width: 12rpx; height: 20rpx;" />
+    </navigator>
+    <view class="close" bind:tap="hideCouponHint">
+      <image src="./../../assets/img/close2.png" style="width: 24rpx; height: 24rpx;" />
+    </view>
+  </view>
+</block>
 
 <view style="height: 120rpx;"></view>
 <view class="bottom-view b-cfff" wx:if="{{dataItem.length > 0}}">

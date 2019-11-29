@@ -6,117 +6,113 @@
   padding: 15rpx 30rpx 10rpx;
   font-size: 24rpx;
   color: #999;
+  > view{
+    flex: 1;
+  }
+  > .after-date{
+    text-align: right;
+    flex: initial !important;
+  }
 }
-.after-title > view{
-  flex: 1;
-}
-.after-title > .after-date{
-  text-align: right;
-  flex: initial !important;
-}
+
 .brief{
-  /* border-bottom: 15rpx solid #f3f4f6; */
-}
-.brief > .top.done{
-  background: #00AE66;
-  min-height: 194rpx;
-}
-.brief > .top.t-c{
-  position: relative;
-}
-.brief > .top.t-c > .afterdoing{
-  position: absolute;
-  padding: 40rpx 0 40rpx 60rpx;
-  top: 0;
-}
-.brief > .top.t-c > .afterdoing text{
-  width: 100%;
-  color: #fff;
-  font-size: 24rpx;
-  display: block;
-  text-align:left;
-}
-.brief > .top.t-c > .afterdoing text:first-child{
-  font-size:32rpx;
-  margin-bottom:5rpx;
-}
-.brief > .top .afterdone{
-  position: relative;
-  width: 100vw;
-  z-index: 2;
-  padding-bottom:10rpx;
-}
-.brief > .top .afterdone .type,
-.brief > .top .afterdone .dic{
-  margin:5rpx 30rpx 0 60rpx;
-}
-.brief > .top .afterdone view{
-  font-size: 24rpx;
-  color: #fff;
-  text-align: left;
- }
-
-.brief > .top .afterdone view.title{
-  margin-bottom: 5rpx;
-  font-size: 32rpx;
-  display: flex;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding: 40rpx 30rpx 0 60rpx; 
-}
-.brief > .top .afterdone .title text{
-  flex: 1;
-}
-.brief > .top .afterdone .title text:last-child{
-  font-size: 26rpx;
-}
-
-.brief > .amount_refund{
-  border: 20rpx solid #F7F7F8;
-  border-right:none;
-  border-left: none;
-  height: 110rpx;
-  line-height: 110rpx;
-  padding: 0 30rpx;
-  display: flex;
-  justify-content: space-between;
-}
-.brief > .amount_refund .price{
-  color: #FF6868;
-  font-size: 30rpx;font-weight: 500;
-}
-
-.brief > .top > image{
-  width: 100vw;
-  height: 160rpx;
-}
-.brief > .done >image{
-  height: 194rpx;
-  position: absolute;
-  left: 0;
-  z-index: 1;
-}
-.brief > .item{
-  padding: 15rpx 30rpx;
-  display: flex;
-}
-.brief > .item > view{
-  flex: 1;
-  color: #999;
-  font-size: 26rpx;
-}
-
-.brief > .hint{
-  color: #999;
-  font-size: 26rpx;
-  padding: 20rpx 0;
-}
-.brief > .hint > image{
-  width: 32rpx;
-  height: 32rpx;
-  position: relative;
-  top: 6rpx;
-  margin-left: 6rpx;
+  > .top.done{
+    background: #00AE66;
+    min-height: 194rpx;
+  }
+  > .top.t-c{
+    position: relative;
+    > .afterdoing{
+      position: absolute;
+      padding: 40rpx 0 40rpx 60rpx;
+      top: 0;
+    }
+    > .afterdoing text{
+      width: 100%;
+      color: #fff;
+      font-size: 24rpx;
+      display: block;
+      text-align:left;
+    }
+    > .afterdoing text:first-child{
+      font-size:32rpx;
+      margin-bottom:5rpx;
+    }
+    .afterdone{
+      position: relative;
+      width: 100vw;
+      z-index: 2;
+      padding-bottom:10rpx;
+      .type, .dic{
+        margin:5rpx 30rpx 0 60rpx;
+      }
+      view{
+        font-size: 24rpx;
+        color: #fff;
+        text-align: left;
+        &.title{
+          margin-bottom: 5rpx;
+          font-size: 32rpx;
+          display: flex;
+          -ms-flex-pack: justify;
+          justify-content: space-between;
+          padding: 40rpx 30rpx 0 60rpx;
+          text{
+            flex: 1;
+            &:last-child{
+              font-size: 26rpx;
+            }
+          }
+        }
+      }
+    }
+  }
+  > .amount_refund{
+    border: 20rpx solid #F7F7F8;
+    border-right:none;
+    border-left: none;
+    height: 110rpx;
+    line-height: 110rpx;
+    padding: 0 30rpx;
+    display: flex;
+    justify-content: space-between;
+    .price{
+      color: #FF6868;
+      font-size: 30rpx;font-weight: 500;
+    }
+  }
+  > .top > image{
+    width: 100vw;
+    height: 160rpx;
+  }
+  > .done >image{
+    height: 194rpx;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+  }
+  > .item{
+    padding: 15rpx 30rpx;
+    display: flex;
+    > view{
+      flex: 1;
+      color: #999;
+      font-size: 26rpx;
+    }
+  }
+  
+  > .hint{
+    color: #999;
+    font-size: 26rpx;
+    padding: 20rpx 0;
+    > image{
+      width: 32rpx;
+      height: 32rpx;
+      position: relative;
+      top: 6rpx;
+      margin-left: 6rpx;
+    }
+  }
 }
 
 .cause, .interact{
@@ -125,10 +121,11 @@
   border-top: 20rpx solid #f3f4f6;
   border-bottom: 20rpx solid #f3f4f6;
   padding: 20rpx 30rpx;
+  &.interact{
+    border: 0;
+  }
 }
-.interact{
-  border: 0;
-}
+
 .cause > .right{
   flex: 1;
   text-align: right;
@@ -280,6 +277,21 @@
   background: #f3f4f6;
   margin-right: 16rpx;
   margin-bottom: 10rpx;
+}
+.comment-item {
+  .videos{
+    overflow: hidden;
+    >.video{
+      float: left;
+      width: 100rpx;
+      height: 100rpx;
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10rpx;
+    }
+  }
 }
 .audit-reply{
   height:80rpx;

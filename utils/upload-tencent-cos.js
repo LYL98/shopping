@@ -3,13 +3,14 @@ var Http = require('./http.js');
 var Config = require('./config.js');
 
 var mod = ''; //图片前缀
-
+var nameSuffix = '';//文件后缀
 var cos = new COS({
     //打开后手机上传失败，后续研究
     ForcePathStyle: false, // 如果使用了很多存储桶，可以通过打开后缀式，减少配置白名单域名数量，请求时会用地域域名
     getAuthorization: function (options, callback) {
         Http.get(Config.api.tencentTmpSecret, {
-            module: mod
+            module: mod,
+            name_suffix: nameSuffix
         }).then((res)=>{
             var rd = res.data;
             callback({
@@ -39,7 +40,9 @@ var createKey = function(){
 
 var upload = function(data){
     mod = data.module;
+    nameSuffix = data.name_suffix || '';
     let key = mod + '/' + createKey(); //返回key
+    if(nameSuffix) key += nameSuffix;
     return new Promise((resolve, reject) => {
         cos.postObject({
             Bucket: Config.tencentBucket,

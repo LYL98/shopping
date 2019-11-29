@@ -13,33 +13,46 @@ const http = {
     let that = this;
     return new Promise((resolve, reject) => {
       const app = getApp(); //移动到此位置，防止app.js调用出错
-      let tokenKey = app.globalData.loginUserInfo.token_key; //动态tokenKey
-      wx.request({
-        url: url,
-        header: {
-          'content-type': 'application/json',
-          [tokenKey || type]: app.globalData.loginUserInfo.access_token
-        },
-        method: method,
-        data: data || {},
-        success: function (res) {
-          if (res.statusCode == 200 && res.data.code === 0) {
-            resolve(res.data)
-          } else {
-            app.requestResultCode(res);
-            reject(res);
+      const fun = () => {
+        let tokenKey = app ? app.globalData.loginUserInfo.token_key : ''; //动态tokenKey
+        wx.request({
+          url: url,
+          header: {
+            'content-type': 'application/json',
+            [tokenKey || type]: app ? app.globalData.loginUserInfo.access_token : ''
+          },
+          method: method,
+          data: data || {},
+          success: function (res) {
+            if (res.statusCode == 200 && res.data.code === 0) {
+              resolve(res.data)
+            } else {
+              //不提示判断
+              if(!data.is_no_prompt) app.requestResultCode(res);
+              reject(res);
+            }
+          },
+          fail: function(res) {
+            //reject(res); //已在complete处理
+          },
+          complete: function (res) {
+            //不提示判断
+            if(!data.is_no_prompt){
+              //判断是否网络超时
+              app.requestTimeout(res, (result) => {
+                if(result === 'fail' || result === 'cancel'){
+                  reject(res);
+                }else{
+                  fun();
+                }
+              });
+            }else{
+              reject(res);
+            }
           }
-        },
-        fail: function(res) {
-          reject(res);
-        },
-        complete: function (res) {
-          //判断是否网络超时
-          app.requestTimeout(res, () => {
-            that.request(method, url, data);
-          });
-        }
-      });
+        });
+      }
+      fun();
     })
   }
 }

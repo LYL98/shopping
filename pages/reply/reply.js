@@ -8,12 +8,14 @@ Page({
    */
   data: {
     tencentPath: config.tencentPath,
+    isShowSelectMedia: false,
     loading: false,
     photographSrc: './../../assets/img/photograph.png',
     closeSrc: './../../assets/img/close.png',
     id:'',
     detail:{
-        images: []
+        images: [],
+        media_urls: []
     },
   },
   onLoad(option) {
@@ -69,17 +71,46 @@ Page({
     })
   },
 
+  //删除video
+  deleteVideo(e){
+    let that = this;
+    wx.showModal({
+      title: '提示',
+      content: '您确定删除视频？',
+      confirmColor: '#00AE66',
+      success: function(res) {
+        if (res.confirm) {
+          let index = e.currentTarget.dataset.index;
+          let { detail } = that.data;
+          detail.media_urls.remove(index);
+          that.setData({ detail: detail });
+        }
+      }
+    });
+  },
+  //查看视频
+  showVideo(e){
+    let index = e.currentTarget.dataset.index;
+    wx.navigateTo({
+      url: '/pages/playVideo/playVideo?src=' + this.data.detail.media_urls[index]
+    });
+  },
+  //显示隐藏选择图片视频
+  showHideSelectMedia(){
+    let { detail } = this.data;
+    if(detail.images.length + detail.media_urls.length >= 5){
+      wx.showToast({
+        title: '最多只能上传5个',
+        icon: 'none'
+      });
+      return;
+    }
+    this.setData({ isShowSelectMedia: !this.data.isShowSelectMedia });
+  },
+
  //点击上传图片
  clickPic() {
   let that = this;
-  let { detail } = that.data;
-  if(detail.images.length >= 5){
-    wx.showToast({
-      title: '最多只能上传5张图片',
-      icon: 'none'
-    });
-    return false;
-  }
   wx.chooseImage({
     count: 5,
     sizeType: ['original', 'compressed'],
@@ -132,14 +163,6 @@ Page({
       return false;
     }
 
-    // if (detail.images.length === 0){
-    //   wx.showToast({
-    //     title: '请至少上传一张图片',
-    //     icon: 'none'
-    //   });
-    //   return false;
-    // }
-
     that.setData({ loading: true });
     wx.request({
       url: config.api.aftersaleComment,
@@ -151,7 +174,8 @@ Page({
       data: {
         aftersale_id: id,
         content: detail.remark,
-        images: detail.images
+        images: detail.images,
+        media_urls: detail.media_urls,
       },
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
