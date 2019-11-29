@@ -471,6 +471,7 @@ App({
     if((member && member.id) || (memberSto && memberSto.id)){
       Http.post(Config.api.actionRecordAdd, {
         member_id: member.id || memberSto.id || '',
+        phone_model: `机型：${sys.model}；系统：${sys.system}；微信版本：${sys.version}`,
         ...data,
         is_no_prompt: true
       })

@@ -26,18 +26,18 @@
     </view>
     
     <view class="tags-list">
-      <navigator wx:for="{{tagsList}}" wx:key="item.title" url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" bind:tap="clickTags" data-tag="{{item.title}}">
+      <navigator wx:for="{{tagsList}}" wx:key="item.title" url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" bind:tap="clickTags" data-tag="{{item}}">
         <image class="skeleton-rect" wx:if="{{item.image}}" src="{{item.image}}"></image>
         <image class="img-none skeleton-rect" wx:else></image>
         <view><text class="skeleton-rect">{{item.title}}</text></view>
       </navigator>
-      <navigator url="/pages/itemLabel/itemLabel?tag=收藏商品" bind:tap="clickTags" data-tag="收藏商品">
+      <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[0].title}}" bind:tap="clickTags" data-tag="{{tagsList2[0]}}">
         <image class="skeleton-rect" src="{{tagsImg[6]}}"></image>
-        <view><text class="skeleton-rect">收藏商品</text></view>
+        <view><text class="skeleton-rect">{{tagsList2[0].title}}</text></view>
       </navigator>
-      <navigator url="/pages/itemLabel/itemLabel?tag=最近购买" bind:tap="clickTags" data-tag="最近购买">
+      <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[1].title}}" bind:tap="clickTags" data-tag="{{tagsList2[1]}}">
         <image class="skeleton-rect" src="{{tagsImg[7]}}"></image>
-        <view><text class="skeleton-rect">最近购买</text></view>
+        <view><text class="skeleton-rect">{{tagsList2[1].title}}</text></view>
       </navigator>
     </view>
     <view class="pannel-line"></view>

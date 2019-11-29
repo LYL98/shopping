@@ -18,8 +18,10 @@ Page({
       page_size: Constant.PAGE_SIZE
     },
     tagsList: [{
+      id: 'collect',
       title: '收藏商品'
     }, {
+      id: 'lately_buy',
       title: '最近购买'
     }],
     dataItem: {
@@ -125,8 +127,8 @@ Page({
   //选择左边分类
   selectTags(e) {
     let { query } = this.data;
-    let value = e.target.dataset.tag;
-    query.tag = value;
+    let tag = e.target.dataset.tag;
+    query.tag = tag.title;
     query.page = 1;
     this.setData({
       query: query
@@ -142,7 +144,7 @@ Page({
     /*===== 埋点 start ======*/
     app.actionRecordAdd({
       action: Constant.ACTION_RECORD.LABEL_TAG,
-      content: { tag: value, store_id: query.store_id }
+      content: { tag_id: tag.id, tag_title: tag.title, store_id: query.store_id }
     });
     /*===== 埋点 end ======*/
 

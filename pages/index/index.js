@@ -31,6 +31,13 @@ Page({
       }
       return items;
     })(),
+    tagsList2: [{
+      id: 'collect',
+      title: '收藏商品'
+    }, {
+      id: 'lately_buy',
+      title: '最近购买'
+    }],
     query: {
       store_id: 0,
       tag: '今日主推',
@@ -421,7 +428,7 @@ Page({
     /*===== 埋点 start ======*/
     app.actionRecordAdd({
       action: Constant.ACTION_RECORD.HOME_TAG,
-      content: { tag: tag, store_id: this.data.query.store_id }
+      content: { tag_id: tag.id, tag_title: tag.title, store_id: this.data.query.store_id }
     });
     /*===== 埋点 end ======*/
   },

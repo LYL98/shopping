@@ -8,7 +8,7 @@
 
 <!--分类start-->
 <view class="category-view">
-  <view class="link-active {{query.tag === item.title && 'active'}}" wx:for="{{tagsList}}" wx:key="item.title" bindtap="selectTags" data-tag="{{item.title}}" wx:if="{{item.title}}">{{item.title}}</view>
+  <view class="link-active {{query.tag === item.title && 'active'}}" wx:for="{{tagsList}}" wx:key="item.title" bindtap="selectTags" data-tag="{{item}}" wx:if="{{item.title}}">{{item.title}}</view>
   <view style="margin-bottom: 180rpx;"></view>
 </view>
 <!--分类end-->
