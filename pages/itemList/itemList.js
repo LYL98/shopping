@@ -67,43 +67,24 @@ Page({
     })
     //判断登录
     app.signIsLogin(() => {
-<<<<<<< HEAD
-      let { query } = that.data;
-      let address = app.getSelectStore(); //当前选择的地址
-      query.store_id = address.id || '';
-      query.province_code = address.province_code || '';
-=======
       let { query } = this.data;
       query.store_id = this.address.id || '';
->>>>>>> xxp2
       if(query.page !== 1){
         query.page_size = query.page_size * query.page;
         query.page = 1;
         this.setData({
           query: query
         }, ()=>{
-<<<<<<< HEAD
-          that.displayClassQuery();//获取商品分类
-          that.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
-=======
           this.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
->>>>>>> xxp2
         });
       }else{
         this.setData({
           query: query
         }, ()=>{
-<<<<<<< HEAD
-          that.displayClassQuery();//获取商品分类
-          that.itemListDisplayClass();
-        });
-      }
-=======
           this.itemListDisplayClass();
         });
       }
       this.displayClassQuery();//获取商品分类
->>>>>>> xxp2
     });
     if(this.data.urlJumpId) {
       this.selectCategory(this.data.urlJumpId)
