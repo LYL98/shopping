@@ -78,7 +78,7 @@ App({
             typeof callBack == "function" && callBack(rd);
           } else {
             wx.reLaunch({
-              url: '/pages/login/login'
+              url: '/pages/loginGuide/loginGuide'
             });
           }
         },
@@ -91,7 +91,7 @@ App({
       });
     } else {
       wx.reLaunch({
-        url: '/pages/login/login'
+        url: '/pages/loginGuide/loginGuide'
       });
     }
   },
@@ -137,7 +137,7 @@ App({
             that.globalData.userInfo = null; //微信用户信息
             that.globalData.loginUserInfo = {}; //系统登录信息
             wx.reLaunch({
-              url: '/pages/login/login'
+              url: '/pages/loginGuide/loginGuide'
             });
           }
         }

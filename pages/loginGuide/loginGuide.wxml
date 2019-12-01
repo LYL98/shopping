@@ -1,0 +1,9 @@
+<view class="auth-body">
+  <view class="top">
+    <image class="bg-img" src="./../../assets/img/auth_bg.png" />
+    <image class="person-img" src="./../../assets/img/auth_person.png" />
+  </view>
+  <view class="content">
+      <navigator class="auth-btn btn1" url="/pages/login/login">我要登录</navigator>
+  </view>
+</view>

@@ -17,6 +17,7 @@
     <button class="btn2" bindtap="submitLogin">
       同意并登录
     </button>
+    <navigator class="cancel-btn" open-type="navigateBack">暂不登录</navigator>
   </view>
   <loading loading="{{loading}}"/>
 </view>

@@ -8,6 +8,7 @@
     "pages/myMessage/myMessage",
     "pages/search/search",
     "pages/itemLabel/itemLabel",
+    "pages/loginGuide/loginGuide",
     "pages/login/login",
     "pages/loginBind/loginBind",
     "pages/itemList/itemList",
