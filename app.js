@@ -1,5 +1,5 @@
 //app.js
-const config = require("./utils/config");
+import { Config, Http, Constant } from './utils/index';
 
 /**
  * 初始化删除数组；删除数组重组数组
@@ -65,7 +65,7 @@ App({
       typeof callBack == "function" && callBack(resData);
     }else if (resData) {
       wx.request({
-        url: config.api.signIsLogin,
+        url: Config.api.signIsLogin,
         header: {
           'content-type': 'application/json',
           'Durian-Custom-Access-Token': resData.access_token
@@ -78,7 +78,7 @@ App({
             typeof callBack == "function" && callBack(rd);
           } else {
             wx.reLaunch({
-              url: '/pages/login/login'
+              url: '/pages/loginGuide/loginGuide'
             });
           }
         },
@@ -91,7 +91,7 @@ App({
       });
     } else {
       wx.reLaunch({
-        url: '/pages/login/login'
+        url: '/pages/loginGuide/loginGuide'
       });
     }
   },
@@ -137,7 +137,7 @@ App({
             that.globalData.userInfo = null; //微信用户信息
             that.globalData.loginUserInfo = {}; //系统登录信息
             wx.reLaunch({
-              url: '/pages/login/login'
+              url: '/pages/loginGuide/loginGuide'
             });
           }
         }
@@ -159,7 +159,7 @@ App({
     wx.login({
       success: function (res) {
         wx.request({
-          url: config.api.weappGetOpenId,
+          url: Config.api.weappGetOpenId,
           header: {
             'content-type': 'application/json'
           },
@@ -200,16 +200,34 @@ App({
   requestTimeout(res, callback){
     if (res.errMsg.indexOf('timeout') >= 0) {
       wx.showModal({
-        title: "提示",
-        content: "网络超时，请重试",
-        confirmText: "重试",
-        confirmColor: "#00AE66",
+        title: '提示',
+        content: '网络超时，请重试',
+        confirmText: '重试',
+        confirmColor: '#00AE66',
         success: function(res){
           if (res.confirm) {
-            typeof callback === 'function' && callback();
+            typeof callback === 'function' && callback('timeout');
+          }else{
+            //typeof callback === 'function' && callback('cancel');
           }
         }
       });
+    }else if(res.errMsg.indexOf('fail') >= 0){
+      wx.showModal({
+        title: '提示',
+        content: '请求出错啦,请检查网络是否可用',
+        confirmText: '重试',
+        confirmColor: '#00AE66',
+        success: function(res){
+          if (res.confirm) {
+            typeof callback === 'function' && callback('netFail');
+          }else{
+            //typeof callback === 'function' && callback('cancel');
+          }
+        }
+      });
+    }else{
+      //typeof callback === 'function' && callback('fail');
     }
   },
 
@@ -221,7 +239,7 @@ App({
       mask: true,
       success: function () {
         wx.request({
-          url: config.api.signWeappAuth,
+          url: Config.api.signWeappAuth,
           header: {
             'content-type': 'application/json'
           },
@@ -300,21 +318,15 @@ App({
       });
     }
   },
-  //收集用户事件
-  eventCollector(data){
-    wx.request({
-      url: config.api.eventCollector,
-      header: {
-        'content-type': 'application/json'
-      },
-      data: data
-    });
-  },
 
   //小程序初始化完成时触发，全局只触发一次。
   onLaunch() {
     this.screenSize();//获取屏宽高
     this.getBrand();
+    //埋点
+    this.actionRecordAdd({
+      action: Constant.ACTION_RECORD.LOGIN
+    });
 
     //监听网络
     /*wx.onNetworkStatusChange(function (res) {
@@ -397,7 +409,7 @@ App({
   getBrand: function(callBack) {
     let that = this;
     wx.request({
-        url: config.api.sysBrand,
+        url: Config.api.sysBrand,
         header: {
           'content-type': 'application/json'
         },
@@ -423,7 +435,7 @@ App({
       factor: factor,
       toPx: toPx,
       toRpx: toRpx,
-      custom_version: 'V2.11.3'
+      custom_version: 'V2.12.0'
     }
   },
   //获取页面（页面路由）
@@ -450,6 +462,20 @@ App({
       address = data;
     }
     return address;
+  },
+  //埋点请求数据（map数据）
+  actionRecordAdd(data){
+    let member = this.globalData.loginUserInfo;
+    let memberSto = wx.getStorageSync('loginUserInfo');
+    let sys = this.getSystemInfo();
+    if((member && member.id) || (memberSto && memberSto.id)){
+      Http.post(Config.api.actionRecordAdd, {
+        member_id: member.id || memberSto.id || '',
+        phone_model: `机型：${sys.model}；系统：${sys.system}；微信版本：${sys.version}`,
+        ...data,
+        is_no_prompt: true
+      })
+    }
   },
   //贝塞尔曲线
   bezier: function (anchorpoints, pointsAmount) {

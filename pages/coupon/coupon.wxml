@@ -3,11 +3,14 @@
 <skeleton selector="skeleton" bgcolor="transparent" wx:if="{{showSkeleton}}"></skeleton>
 
 <view class="skeleton">
-  <view class="tab-menu">
-    <view class="{{ query.avaiable === '1' && 'active' }}" bindtap="clickTab" data-index="1">可用</view>
-    <view class="{{ query.avaiable === '0' && 'active' }}" bindtap="clickTab" data-index="0">不可用</view>
-  </view>
-  <view style="height: 80rpx;"></view>
+  <!--如果不是来自购物车-->
+  <block wx:if="{{from !== 'shoppingCart'}}">
+    <view class="tab-menu">
+      <view class="{{ query.avaiable === '1' && 'active' }}" bindtap="clickTab" data-index="1">可用</view>
+      <view class="{{ query.avaiable === '0' && 'active' }}" bindtap="clickTab" data-index="0">不可用</view>
+    </view>
+    <view style="height: 80rpx;"></view>
+  </block>
 
   <view class="coupon-body">
     <view wx:for="{{dataItem.items}}" wx:key="item.coupon.id" 

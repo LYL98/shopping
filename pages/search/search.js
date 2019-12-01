@@ -1,8 +1,7 @@
 // pages/search/search.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
-import constant from './../../utils/constant';
+import { Constant, Config } from './../../utils/index';
 
 Page({
 
@@ -10,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     searchSrc: './../../assets/img/search_s.png',
     homeSrc: './../../assets/img/home.png',
     goods: './../../assets/img/item.png',
@@ -23,7 +22,7 @@ Page({
       tag: '',
       sort: '-rank',
       page: 1,
-      page_size: constant.PAGE_SIZE
+      page_size: Constant.PAGE_SIZE
     },
     isSearch: false,
     loading: false, // 查询商品的状态
@@ -136,7 +135,7 @@ Page({
     let { query, dataItem } = that.data;
     this.setData({ loading: true });
     wx.request({
-      url: config.api.itemQuery,
+      url: Config.api.itemQuery,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -155,6 +154,12 @@ Page({
               dataItem: dataItem
             });
           }
+          /*===== 埋点 start ======*/
+          app.actionRecordAdd({
+            action: Constant.ACTION_RECORD.SEARCH,
+            content: { store_id: query.store_id, condition: query.condition }
+          });
+          /*===== 埋点 end ======*/
         } else {
           app.requestResultCode(res); //处理异常
         }
@@ -167,6 +172,17 @@ Page({
         });
       }
     });
+  },
+
+  //点击商品
+  clickItem(e){
+    let id = e.currentTarget.dataset.id;
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.ITEM_DETAIL_SEARCH,
+      content: { item_id: id, store_id: this.data.query.store_id }
+    });
+    /*===== 埋点 end ======*/
   },
 
   /**

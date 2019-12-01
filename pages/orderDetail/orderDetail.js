@@ -1,20 +1,18 @@
 // pages/orderDetail/orderDetail.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
-import constant from './../../utils/constant';
-import util from './../../utils/util';
+import { Config, Constant, Util } from './../../utils/index';
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     leaveMsgSrc: './../../assets/img/leave_msg.png',
-    orderStatus: constant.ORDER_STATUS,
-    payType: constant.PAY_TYPE,
-    priceChange: constant.PRICE_CHANGE,
+    orderStatus: Constant.ORDER_STATUS,
+    payType: Constant.PAY_TYPE,
+    priceChange: Constant.PRICE_CHANGE,
     arrow:true,
     iconUpSrc:'./../../assets/img/up.png',
     iconDownSrc:'./../../assets/img/down.png',
@@ -128,7 +126,7 @@ Page({
     isShowPay: false, //是否显示支付
     payData: {}, //支付数据
     payCallBack: null, //支付回调
-    refund: constant.ORDER_REFUND,
+    refund: Constant.ORDER_REFUND,
     orderAction:{
       order: '下单',
       pay: '付款',
@@ -242,7 +240,7 @@ Page({
     let { id } = that.data;
     wx.showNavigationBarLoading();
     wx.request({
-      url: config.api.orderDetail,
+      url: Config.api.orderDetail,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -283,9 +281,9 @@ Page({
     let cTime = rd.created;
     //结束时间
     let endDate = new Date(cTime.replace(/-/g, '/'));
-    let d = util.returnDateStr(new Date(endDate.getTime() + 10000 * 60)); //创建10分钟后
+    let d = Util.returnDateStr(new Date(endDate.getTime() + 10000 * 60)); //创建10分钟后
     let time = setInterval(()=>{
-      let data = util.returnSurplusNum(d); //返回剩余时间
+      let data = Util.returnSurplusNum(d); //返回剩余时间
       let minutes = data.minutes; //分
       let seconds = data.seconds; //秒
       if(minutes < 0 || seconds < 0){
@@ -317,7 +315,7 @@ Page({
           let { id } = that.data;
           that.setData({ loading: true });
           wx.request({
-            url: config.api.orderCancel,
+            url: Config.api.orderCancel,
             header: {
               'content-type': 'application/json',
               'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -363,6 +361,12 @@ Page({
           isShowPay: false
         });
         if (res === 'success') {
+          /*===== 埋点 start ======*/
+          app.actionRecordAdd({
+            action: Constant.ACTION_RECORD.ORDER_PAY_SUBMIT,
+            content: { store_id: detail.store_id, order_id: id }
+          });
+          /*===== 埋点 end ======*/
           wx.navigateTo({
             url: `/pages/payResult/payResult?id=${id}&source=orderDetail`
           });
@@ -388,7 +392,7 @@ Page({
         if (res.confirm) {
           that.setData({ loading: true });
           wx.request({
-            url: config.api.orderConfirmReceive,
+            url: Config.api.orderConfirmReceive,
             header: {
               'content-type': 'application/json',
               'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token

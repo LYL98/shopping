@@ -8,6 +8,7 @@
     "pages/myMessage/myMessage",
     "pages/search/search",
     "pages/itemLabel/itemLabel",
+    "pages/loginGuide/loginGuide",
     "pages/login/login",
     "pages/loginBind/loginBind",
     "pages/itemList/itemList",
@@ -34,7 +35,9 @@
     "pages/commercial/commercial",
     "pages/myCsm/myCsm",
     "pages/complain/complain",
-    "pages/myDetail/myDetail"
+    "pages/myDetail/myDetail",
+    "pages/shootVideo/shootVideo",
+    "pages/playVideo/playVideo"
   ],
   "window": {
     "backgroundTextStyle": "dark",

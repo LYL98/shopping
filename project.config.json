@@ -43,6 +43,10 @@
 			"currentL": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 13,
 			"list": [
@@ -125,22 +129,29 @@
 				},
 				{
 					"id": 11,
-					"name": "下单",
-					"pathName": "pages/orderAdd/orderAdd",
-					"query": "type=presale&delivery_date=2019-08-16",
+					"name": "申请售后服务",
+					"pathName": "pages/afterSale/afterSale",
+					"query": "id=3205658",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "订单列表",
-					"pathName": "pages/order/order",
+					"name": "拍摄视频",
+					"pathName": "pages/shootVideo/shootVideo",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "售后列表",
-					"pathName": "pages/afterSaleRecord/afterSaleRecord",
+					"name": "售后详情",
+					"pathName": "pages/afterSaleDetail/afterSaleDetail",
+					"query": "id=75",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/shoppingCart/shoppingCart",
 					"scene": null
 				}
 			]

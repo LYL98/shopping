@@ -1,8 +1,7 @@
 // pages/itemLabel/itemLabel.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
-import constant from './../../utils/constant';
+import { Constant, Config } from './../../utils/index';
 
 Page({
 
@@ -10,17 +9,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     query: {
       store_id: 0,
       tag: '',
       sort: '',
       page: 1,
-      page_size: constant.PAGE_SIZE
+      page_size: Constant.PAGE_SIZE
     },
     tagsList: [{
+      id: 'collect',
       title: '收藏商品'
     }, {
+      id: 'lately_buy',
       title: '最近购买'
     }],
     dataItem: {
@@ -99,7 +100,7 @@ Page({
     let that = this;
     let { query } = that.data;
     wx.request({
-      url: config.api.itemTagsList,
+      url: Config.api.itemTagsList,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -129,8 +130,8 @@ Page({
   //选择左边分类
   selectTags(e) {
     let { query } = this.data;
-    let value = e.target.dataset.tag;
-    query.tag = value;
+    let tag = e.target.dataset.tag;
+    query.tag = tag.title;
     query.page = 1;
     this.setData({
       query: query
@@ -143,7 +144,26 @@ Page({
       duration: 0
     });
 
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.LABEL_TAG,
+      content: { tag_id: tag.id, tag_title: tag.title, store_id: query.store_id }
+    });
+    /*===== 埋点 end ======*/
+
   },
+
+  //点击商品
+  clickItem(e){
+    let id = e.currentTarget.dataset.id;
+    /*===== 埋点 start ======*/
+    app.actionRecordAdd({
+      action: Constant.ACTION_RECORD.ITEM_DETAIL_LABEL,
+      content: { item_id: id, store_id: this.data.query.store_id }
+    });
+    /*===== 埋点 end ======*/
+  },
+
   //获取商品列表
   itemQuery() {
     let that = this;
@@ -172,7 +192,7 @@ Page({
     } = that.data;
 
     wx.request({
-      url: config.api.itemCollectionQuery,
+      url: Config.api.itemCollectionQuery,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -210,7 +230,7 @@ Page({
   itemRecoentlyBuy() {
     let that = this;
     wx.request({
-      url: config.api.itemRecoentlyBuy,
+      url: Config.api.itemRecoentlyBuy,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -241,7 +261,7 @@ Page({
     let { query, dataItem } = that.data;
 
     wx.request({
-      url: config.api.itemQuery,
+      url: Config.api.itemQuery,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token

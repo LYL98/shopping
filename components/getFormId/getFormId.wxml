@@ -1,0 +1,5 @@
+<form bindsubmit="formSubmit" report-submit report-submit-timeout="{{7 * 24 * 60 * 1000}}">
+    <button form-type='submit' plain class="form-btn" disabled="{{disabled}}">
+        <slot></slot>
+    </button>
+</form>
