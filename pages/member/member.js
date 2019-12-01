@@ -42,7 +42,7 @@ Page({
         wx.setStorageSync('searchData', searchData);
       }
       wx.reLaunch({
-        url: '/pages/login/login',
+        url: '/pages/loginGuide/loginGuide',
       });
     });    
   },

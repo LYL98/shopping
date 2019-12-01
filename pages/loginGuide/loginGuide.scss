@@ -1,0 +1,45 @@
+.auth-body{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  background-image: linear-gradient(-180deg, #FFFFFF 320rpx, #F7F7F8 100%);
+  >.top{
+    height: 320rpx;
+    position: relative;
+    >.bg-img{
+        width: 750rpx;
+        height: 320rpx;
+    }
+    >.person-img{
+        width: 242rpx;
+        height: 205rpx;
+        position: absolute;
+        left: 147rpx;
+        bottom: 87rpx;
+        z-index: 1;
+    }
+  }
+  >.content{
+      width: 650rpx;
+      height: 148rpx;
+      margin: 0 auto;
+      position: relative;
+      background: #FFF;
+      box-shadow: 0 0 18rpx 0 rgba(0,0,0,0.04);
+      border-radius: 12rpx;
+      top: -100rpx;
+      padding-top: 60rpx;
+      >.auth-btn{
+          height: 88rpx;
+          line-height: 88rpx;
+          width: 500rpx;
+          margin: 0 auto;
+          font-size: 34rpx;
+          text-align: center;
+          border-radius: 8rpx;
+      }
+  }
+}
