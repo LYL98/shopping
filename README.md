@@ -15,7 +15,8 @@
             "savePath": null
         }
     ],
-    "liveServer.settings.donotShowInfoMsg": true
+    "liveServer.settings.donotShowInfoMsg": true,
+    "liveSassCompile.settings.generateMap":false
 }
 ```
 
