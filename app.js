@@ -1,6 +1,10 @@
 //app.js
 import { Config, Http, Constant } from './utils/index';
 
+//添加gio
+var gio = require("utils/gio-minp/index.js").default;
+gio('init', 'a2dac281ef3539e4', 'wx70a3bf5f7a69987d', { version: 'V2.12.0' });
+
 /**
  * 初始化删除数组；删除数组重组数组
  * 用法：数组.remove(元素下标)
@@ -36,7 +40,8 @@ App({
     userInfo: null, //微信用户信息
     loginUserInfo: {}, //系统登录信息
     isLoginCallBack: null, //判断登录回调
-    system: null
+    system: null,
+    gioIsSetUserId: false,
   },
   //登录页面回调（临时改动，可登录别的用户）
   loginCallBack(loginData, data) {
@@ -62,6 +67,11 @@ App({
     //如本地已有access_token
     if(resData && resData.access_token && typeof resData.is_head === 'boolean'){
       that.globalData.loginUserInfo = resData;
+      //gio设置userid
+      if(!that.globalData.gioIsSetUserId){
+        gio('setUserId', resData.id);
+        that.globalData.gioIsSetUserId = true;
+      }
       typeof callBack == "function" && callBack(resData);
     }else if (resData) {
       wx.request({
@@ -75,6 +85,11 @@ App({
             let rd = res.data.data;
             wx.setStorageSync("loginUserInfo", rd);
             that.globalData.loginUserInfo = rd;
+            //gio设置userid
+            if(!that.globalData.gioIsSetUserId){
+              gio('setUserId', rd.id);
+              that.globalData.gioIsSetUserId = true;
+            }
             typeof callBack == "function" && callBack(rd);
           } else {
             wx.reLaunch({
