@@ -69,6 +69,7 @@ Page({
     showSkeleton: true,
     messageUnreadNum: 0, // 消息未读数量
     loginInfo: {}, //登录用户信息
+    version: Config.version, //app版本
   },
   onLoad(option) {
     this.address = {}; //当前选择地址

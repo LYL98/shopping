@@ -33,3 +33,6 @@ export const ServiceTel = '1234567890';
 
 //要打开的微信appids
 export const WeiXinAppIds = ['wxxxxxxxxxxxxxxx'];
+
+//版本
+export const Version = 'Vx.x.x';

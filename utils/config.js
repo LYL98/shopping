@@ -1,7 +1,7 @@
 /***
  * 导入配置
  */
-import { Conn, RequestHttpDev, RequestHttpTest, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds } from './../config';
+import { Conn, RequestHttpDev, RequestHttpTest, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds, Version } from './../config';
 
 //config
 let requestHttp = '';
@@ -93,4 +93,6 @@ module.exports = {
   tencentPath: Conn === 'dev' || Conn === 'test' ? TencentPathDev : TencentPathPro, //腾讯下载地址
   serviceTel: ServiceTel, //服务电话
   weiXinAppIds: WeiXinAppIds, //要打开的微信appids
+  conn: Conn,
+  version: Version
 }

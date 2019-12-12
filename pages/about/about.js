@@ -9,12 +9,10 @@ Page({
    */
   data: {
     tencentPath: Config.tencentPath,
-    sys: {},
-    brandInfo: {}
+    brandInfo: {},
+    version: Config.version,
   },
   onLoad(option) {
-    let sys = app.getSystemInfo();
-    this.setData({sys: sys});
     //判断登录
     app.signIsLogin((res) => {
       this.getBrand();
