@@ -148,6 +148,12 @@ Page({
     });
     /*===== 埋点 end ======*/
 
+    app.globalData.gio('track', 'searchSuccess', { 
+      searchKeywords: tag.title, 
+      searchEntrance: '分类-搜索', 
+      storeID: query.store_id
+    });
+
   },
 
   //点击商品

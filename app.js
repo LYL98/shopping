@@ -42,6 +42,7 @@ App({
     isLoginCallBack: null, //判断登录回调
     system: null,
     gioIsSetUserId: false,
+    gio: gio,
   },
   //登录页面回调（临时改动，可登录别的用户）
   loginCallBack(loginData, data) {
@@ -450,7 +451,7 @@ App({
       factor: factor,
       toPx: toPx,
       toRpx: toRpx,
-      custom_version: 'V2.12.0'
+      custom_version: 'V2.12.2'
     }
   },
   //获取页面（页面路由）

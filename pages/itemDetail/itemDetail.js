@@ -56,6 +56,10 @@ Page({
       }
       //==============================
 
+      app.globalData.gio('setPage', {
+        storeID: address.id
+      });
+
       that.setData({ 
         id: id,
         tempOneImg: tempOneImg,
