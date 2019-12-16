@@ -7,12 +7,12 @@
       <image src="{{searchSrc}}"></image>
     </view>
     <view>
-      <input value="{{inputValue}}" focus placeholder="请输入商品名称" bindconfirm="confirm" bindinput="inputSearch"></input>
+      <input value="{{inputValue}}" focus placeholder="请输入商品名称" bindconfirm="confirm" confirm-type="search"></input>
     </view>
   </view>
 </view>
 <view style="height: 104rpx;"></view>
-<view class="searchHistory" wx:if="{{!isSearch && searchData.length>0}}">
+<view class="searchHistory" wx:if="{{dataItem.num <= 0 && searchData.length > 0}}">
   <view class="hisTitle">
     <text>搜索历史</text>
     <text bindtap="clearHistory">清除</text>

@@ -43,6 +43,7 @@ App({
     system: null,
     gio: gio,
     gioIsSetUserId: false,
+    gio: gio,
   },
   //登录页面回调（临时改动，可登录别的用户）
   loginCallBack(loginData, data) {

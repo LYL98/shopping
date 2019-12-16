@@ -159,6 +159,13 @@ Page({
     });
     /*===== 埋点 end ======*/
   },
+  //点击搜索
+  clickSearch(){
+    app.globalData.gio('track', 'searchClick', { 
+      searchEntrance: '分类-搜索', 
+      storeID: this.data.query.store_id
+    });
+  },
   //显示选择收货地址
   storeShowHide(e){
     this.setData({

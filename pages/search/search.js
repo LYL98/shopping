@@ -24,10 +24,10 @@ Page({
       page: 1,
       page_size: Constant.PAGE_SIZE
     },
-    isSearch: false,
     loading: false, // 查询商品的状态
     dataItem: {
-      items: []
+      items: [],
+      num: 0
     },
     searchData: []
   },
@@ -74,50 +74,14 @@ Page({
       searchData: [],
     })
   },
+  //点击搜索历史
   labelEvent(e) {
-    let { query } = this.data;
     let { key } = e.target.dataset;
-    query.condition = key;
-    query.page = 1;
-
-    this.setData({
-      query: query,
-      inputValue: key,
-      isSearch: true
-    }, () => {
-      this.itemQuery();
-    });
-
-  },
-  //输入搜索
-  inputSearch(e) {
-    let that = this;
-    let { query } = that.data;
-    let value = e.detail.value;
-    value = value.trim();
-
-    query.condition = value;
-    query.page = 1;
-    that.setData({
-      query: query,
-      inputValue: value,
-      isSearch: value.length > 0 ? true : false
-    }, () => {
-      if (value) {
-        that.itemQuery();
-      } else {
-        that.setData({
-          dataItem: {
-            items: []
-          },
-        });
-      }
-    });
-
+    this.setSearchData(key);
   },
   //完成
   confirm(e) {
-    let value = e.detail.value || this.data.inputValue;
+    let value = e.detail.value;
     value = value.trim();
     let list = this.data.searchData;
     if (value && list.indexOf(value) == -1) {
@@ -126,8 +90,34 @@ Page({
     if (list.length > 10) {
       list.length = 10
     }
-
-    wx.setStorageSync('searchData', list)
+    wx.setStorageSync('searchData', list);
+    this.setSearchData(value);
+  },
+  //设置搜索数据
+  setSearchData(condition){
+    let { query } = this.data;
+    query.condition = condition;
+    query.page = 1;
+    this.setData({
+      query: query,
+      inputValue: condition,
+    }, () => {
+      if(condition === ''){
+        this.setData({
+          dataItem: {
+            items: [],
+            num: 0
+          }
+        });
+      }else{
+        this.itemQuery();
+        app.globalData.gio('track', 'searchSuccess', { 
+          searchKeywords: condition, 
+          searchEntrance: '分类-搜索', 
+          storeID: query.store_id
+        });
+      }
+    });
   },
   //获取商品列表
   itemQuery() {

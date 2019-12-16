@@ -133,6 +133,14 @@ Page({
     });
     /*===== 埋点 end ======*/
 
+    let keyWords = this.data.categoryList.filter(item => item.code === value);
+    if(keyWords.length > 0){
+      app.globalData.gio('track', 'searchSuccess', { 
+        searchKeywords: keyWords[0].title, 
+        searchEntrance: '分类-搜索', 
+        storeID: query.store_id
+      });
+    }
   },
 
   //点击商品
