@@ -1,9 +1,8 @@
-<view class="auth-body">
-  <view class="top">
-    <image class="bg-img" src="./../../assets/img/auth_bg.png" />
-    <image class="person-img" src="./../../assets/img/auth_person.png" />
-  </view>
-  <view class="content">
-      <navigator class="auth-btn btn1" url="/pages/login/login">我要登录</navigator>
-  </view>
+<image class="bg-img" src="./../../assets/img/login_bg.png" />
+<view class="content">
+    <navigator class="login-btn btn1" url="/pages/login/login">立即登录</navigator>
+</view>
+<view class="protocol font-size26">
+  <text>请仔细阅读</text>
+  <navigator url="/pages/protocol/protocol">《蒲公英用户协议》</navigator>
 </view>
