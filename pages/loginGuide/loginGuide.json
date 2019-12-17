@@ -1,6 +1,5 @@
 {
-  "navigationBarTitleText": "我要登录",
+  "navigationBarTitleText": "蒲公英商城",
   "usingComponents": {
-    "loading": "/components/loading/loading"
   }
 }
