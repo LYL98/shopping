@@ -1,7 +1,7 @@
 // pages/itemList/itemList.js
 //获取应用实例
 const app = getApp();
-import { Constant, Config } from './../../utils/index';
+import { Constant, Config, Http } from './../../utils/index';
 
 Page({
 
@@ -176,33 +176,15 @@ Page({
   //获取商品分类
   displayClassQuery(){
     let that = this;
-    let { query } = that.data;
-    wx.request({
-      url: Config.api.displayClassQuery,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        province_code: query.province_code
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          that.setData({
-            categoryList: rd
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function(res){
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.displayClassQuery();
-        });
-      }
-    });
+    Http.get(Config.api.displayClassQuery, {
+      province_code: that.address.province_code
+    }).then((res)=>{
+      that.setData({
+        categoryList: res.data
+      });
+    }).catch(()=>{
+
+    })
   },
 
   //获取商品列表
