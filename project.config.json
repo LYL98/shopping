@@ -109,13 +109,6 @@
 				},
 				{
 					"id": -1,
-					"name": "用户协议",
-					"pathName": "pages/protocol/protocol",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "登录",
 					"pathName": "pages/login/login",
 					"query": "",
@@ -153,6 +146,7 @@
 					"id": -1,
 					"name": "购物车",
 					"pathName": "pages/shoppingCart/shoppingCart",
+					"query": "",
 					"scene": null
 				}
 			]

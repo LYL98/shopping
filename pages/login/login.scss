@@ -30,8 +30,10 @@
   display: flex;
   margin-top: 36rpx;
   >text{
-    margin-left: 50rpx;
     color: #808080;
+    &.t1{
+      margin-left: 50rpx;
+    }
   }
   >navigator{
     color: #529EE9;

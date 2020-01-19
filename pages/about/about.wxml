@@ -5,9 +5,17 @@
 </view>
 
 <view class="menu-view">
-  <navigator class="item" url="/pages/protocol/protocol">
+  <navigator class="item" url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/protocol.html">
     <view class="item-body">
       <view class="left font-size28">用户协议</view>
+      <view class="right">
+        <image src="./../../assets/img/right.png" style="width: 10rpx; height: 20rpx;" />
+      </view>
+    </view>
+  </navigator>
+  <navigator class="item" url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/privacy_policy.html">
+    <view class="item-body">
+      <view class="left font-size28">隐私政策</view>
       <view class="right">
         <image src="./../../assets/img/right.png" style="width: 10rpx; height: 20rpx;" />
       </view>
