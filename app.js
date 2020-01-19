@@ -451,7 +451,7 @@ App({
       factor: factor,
       toPx: toPx,
       toRpx: toRpx,
-      custom_version: 'V2.12.2'
+      custom_version: 'V2.12.3'
     }
   },
   //获取页面（页面路由）

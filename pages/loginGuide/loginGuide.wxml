@@ -4,5 +4,7 @@
 </view>
 <view class="protocol font-size26">
   <text>请仔细阅读</text>
-  <navigator url="/pages/protocol/protocol">《蒲公英用户协议》</navigator>
+  <navigator url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/protocol.html">《用户协议》</navigator>
+  <text>和</text>
+  <navigator url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/privacy_policy.html">《隐私政策》</navigator>
 </view>
