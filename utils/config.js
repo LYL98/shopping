@@ -1,7 +1,7 @@
 /***
  * 导入配置
  */
-import { Conn, RequestHttpDev, RequestHttpTest, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds, Version } from './../config';
+import { Conn, RequestHttpDev, RequestHttpTest, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds, Version, ApiVersion } from './../config';
 
 //config
 let requestHttp = '';
@@ -12,8 +12,8 @@ if(Conn === 'dev'){
 }else{
   requestHttp = RequestHttpPro;
 }
-let apiC = requestHttp + '/c';
-let apiCommon = requestHttp + '/common';
+let apiC = requestHttp + ApiVersion + '/c';
+let apiCommon = requestHttp + ApiVersion + '/common';
 
 module.exports = {
   api: {
