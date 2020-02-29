@@ -1,14 +1,14 @@
 /***
  * 导入配置
  */
-import { Conn, RequestHttpDev, RequestHttpTest, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds, Version, ApiVersion } from './../config';
+import { Conn, RequestHttpDev, RequestHttpPre, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds, Version, ApiVersion } from './../config';
 
 //config
 let requestHttp = '';
 if(Conn === 'dev'){
   requestHttp = RequestHttpDev;
-}else if(Conn === 'test'){
-  requestHttp = RequestHttpTest;
+}else if(Conn === 'pre'){
+  requestHttp = RequestHttpPre;
 }else{
   requestHttp = RequestHttpPro;
 }
@@ -87,10 +87,10 @@ module.exports = {
 
   },
   //腾讯Bucket、Region
-  tencentBucket: Conn === 'dev' || Conn === 'test' ? TencentBucketDev : TencentBucketPro, //Bucket
-  tencentRegion: Conn === 'dev' || Conn === 'test' ? TencentRegionDev : TencentRegionPro, //Region
+  tencentBucket: Conn === 'dev' ? TencentBucketDev : TencentBucketPro, //Bucket
+  tencentRegion: Conn === 'dev' ? TencentRegionDev : TencentRegionPro, //Region
 
-  tencentPath: Conn === 'dev' || Conn === 'test' ? TencentPathDev : TencentPathPro, //腾讯下载地址
+  tencentPath: Conn === 'dev' ? TencentPathDev : TencentPathPro, //腾讯下载地址
   serviceTel: ServiceTel, //服务电话
   weiXinAppIds: WeiXinAppIds, //要打开的微信appids
   conn: Conn,
