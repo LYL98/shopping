@@ -102,7 +102,7 @@
       </view>
       <view>
         <text class="name">毛重</text>
-        <text>{{detail.gross_weight > 0 ? tools.returnGrossWeight(detail.gross_weight)+'斤' :'-'}}</text>
+        <text>{{tools.returnGrossWeight(detail)}}</text>
       </view>
     </view>
     <view class="td">

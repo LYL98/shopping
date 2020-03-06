@@ -34,10 +34,9 @@
       <view class="content">
         <view class="title">{{item.title}}</view>
         <view class="label">
-          <text class="tips-price" wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
           <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
           <text>{{item.origin_place}}</text>
-          <text>{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+          <text>{{tools.returnGrossWeight(item)}}</text>
           <text class="frame" wx:if="{{item.frame_code}}">有筐</text>
         </view>
         <view class="price-unit" wx:if="{{item.is_quoted}}">
