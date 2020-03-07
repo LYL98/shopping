@@ -1,4 +1,3 @@
-// pages/itemList/itemList.js
 //获取应用实例
 const app = getApp();
 import { Constant, Config, Http } from './../../utils/index';
@@ -18,7 +17,7 @@ Page({
     query: {
       store_id: 0,
       sort: '-other',
-      display_class_code: '',
+      display_class_id: '',
       page: 1,
       page_size: Constant.PAGE_SIZE
     },
@@ -61,7 +60,7 @@ Page({
    */
   onShow: function () {
     this.address = app.getSelectStore(); //当前选择的地址
-    let value = app.globalData.urlJump < 10 ? '0'+app.globalData.urlJump : app.globalData.urlJump
+    let value = app.globalData.urlJump < 10 ? '0' + app.globalData.urlJump : app.globalData.urlJump
     this.setData({
       urlJumpId: value || 0,
     })
@@ -113,7 +112,7 @@ Page({
     let { query } = this.data;
     let value = param ? param : e.target.dataset.category;
 
-    query.display_class_code = value;
+    query.display_class_id = value;
     query.page = 1;
     this.setData({
       query: query
@@ -129,7 +128,7 @@ Page({
     /*===== 埋点 start ======*/
     app.actionRecordAdd({
       action: Constant.ACTION_RECORD.ITEM_CLASS,
-      content: { display_class_code: value, store_id: query.store_id }
+      content: { display_class_id: value, store_id: query.store_id }
     });
     /*===== 埋点 end ======*/
 

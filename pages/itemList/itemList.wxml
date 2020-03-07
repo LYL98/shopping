@@ -1,4 +1,3 @@
-<!--pages/itemList/itemList.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <skeleton selector="skeleton" bgcolor="transparent" wx:if="{{showSkeleton}}"></skeleton>
 
@@ -6,12 +5,12 @@
 <search style="position: fixed; top: 0; left: 0; right: 0; z-index: 2;"/>
 <!--搜索组件end-->
 <view class="category-view">
-  <view class="link-active {{query.display_class_code == '' && 'active'}}" bindtap="selectCategory" data-category="" >全部</view>
-  <view class="link-active {{query.display_class_code === item.code && 'active'}}"
+  <view class="link-active {{query.display_class_id == '' && 'active'}}" bindtap="selectCategory" data-category="" >全部</view>
+  <view class="link-active {{query.display_class_id === item.id && 'active'}}"
     wx:for="{{categoryList}}"
-    wx:key="item.code"
+    wx:key="item.id"
     bindtap="selectCategory"
-    data-category="{{item.code}}"
+    data-category="{{item.id}}"
     wx:if="{{item.title}}" >{{item.title}}</view>
 </view>
 <view class="head-view">
