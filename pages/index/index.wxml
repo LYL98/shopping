@@ -66,7 +66,7 @@
                   <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
                   <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
                   <text class="skeleton-rect" wx:if="{{item.weight_s || item.weight_e}}">{{tools.returnGrossWeight(item)}}</text>
-                  <text class="skeleton-rect frame" wx:if="{{item.frame_code}}">有筐</text>
+                  <text class="skeleton-rect frame" wx:if="{{item.frame_id}}">有筐</text>
                 </view>
                 <view class="repertory-price">
                   <view class="price" wx:if="{{item.is_quoted}}">

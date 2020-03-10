@@ -101,7 +101,7 @@
       </view>
       <view>
         <text class="name">框</text>
-        <text wx:if="{{detail.frame_code}}">{{tools.returnPrice(detail.frame.price)}}元</text>
+        <text wx:if="{{detail.frame_id}}">{{tools.returnPrice(detail.frame.price)}}元</text>
         <text wx:else>无</text>
       </view>
     </view>

@@ -50,7 +50,7 @@ Page({
     },
     //瀑布流数据(骨架屏数据)
     dataMap:[[{
-      frame_code: '00',
+      frame_id: '00',
       gross_weight: 0,
       id: 1,
       images: [],
@@ -62,7 +62,7 @@ Page({
       price_sale: 2000,
       title: "xxxxxxxxxx"
     }],[{
-      frame_code: '00',
+      frame_id: '00',
       gross_weight: 0,
       id: 2,
       images: [],

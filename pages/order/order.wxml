@@ -39,7 +39,7 @@
               <view class="title"><text class="present" wx:if="{{d.is_gift}}">赠品</text>{{d.item_title}}</view>
               <view class="label">
                 <text wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-                <text class="frame" wx:if="{{d.frame_code}}">有筐</text>
+                <text class="frame" wx:if="{{d.frame_id}}">有筐</text>
               </view>
               <view class="price-unit">
                 ￥{{tools.returnPrice(d.item_price_sale)}} / 件<!---<text class="original" wx:if="{{0}}">原价/件</text>-->

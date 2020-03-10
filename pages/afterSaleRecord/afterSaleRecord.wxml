@@ -29,7 +29,7 @@
             <view class="title">{{d.item_title}}</view>
             <view class="label">
               <text wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-              <text class="frame" wx:if="{{d.frame_code}}">有筐</text>
+              <text class="frame" wx:if="{{d.frame_id}}">有筐</text>
             </view>
             <view class="price-unit">
               <view>
@@ -87,7 +87,7 @@
             <view class="title">{{item.item_title}}</view>
             <view class="label {{system}}">
               <text wx:for="{{item.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-              <text class="frame" wx:if="{{item.frame_code}}">有筐</text>
+              <text class="frame" wx:if="{{item.frame_id}}">有筐</text>
             </view>
             <view class="price-unit">
               <view>

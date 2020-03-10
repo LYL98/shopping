@@ -29,7 +29,7 @@ Page({
         for(let i = 0; i < 4; i++){
           let d = {
             code: "123456",
-            frame_code: "20",
+            frame_id: "20",
             gross_weight: 123,
             id: i + 1,
             images: [],
