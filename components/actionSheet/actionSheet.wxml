@@ -8,7 +8,6 @@
     </view>
     <view class="content">
          <!-- <text class="{{detail.reason === '质量问题' && 'active'}}" data-reason="质量问题" bindtap="changeReason">质量问题</text>
-        <text class="{{detail.reason === '不足称重' && 'active'}}" data-reason="不足称重" bindtap="changeReason">不足称重</text>
         <text class="{{detail.reason === '其它' && 'active'}}" data-reason="其它" bindtap="changeReason">其它</text> -->
       <view class="item" >
         <text wx:for="{{reasons}}" wx:key="index" class="{{reason === item ? 'active' : ''}}" data-reason="{{item}}" bindtap="changeReason">{{item}}</text>

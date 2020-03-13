@@ -1,4 +1,3 @@
-<!--pages/itemList/itemList.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <skeleton selector="skeleton" bgcolor="transparent" wx:if="{{showSkeleton}}"></skeleton>
 
@@ -6,12 +5,12 @@
 <search style="position: fixed; top: 0; left: 0; right: 0; z-index: 2;"/>
 <!--搜索组件end-->
 <view class="category-view">
-  <view class="link-active {{query.display_class_code == '' && 'active'}}" bindtap="selectCategory" data-category="" >全部</view>
-  <view class="link-active {{query.display_class_code === item.code && 'active'}}"
+  <view class="link-active {{query.display_class_id == '' && 'active'}}" bindtap="selectCategory" data-category="" >全部</view>
+  <view class="link-active {{query.display_class_id === item.id && 'active'}}"
     wx:for="{{categoryList}}"
-    wx:key="item.code"
+    wx:key="item.id"
     bindtap="selectCategory"
-    data-category="{{item.code}}"
+    data-category="{{item.id}}"
     wx:if="{{item.title}}" >{{item.title}}</view>
 </view>
 <view class="head-view">
@@ -49,15 +48,14 @@
       <view class="content">
         <view class="title skeleton-rect">{{item.title}}</view>
         <view class="label">
-          <text class="skeleton-rect tips-price" wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale)}}元/{{item.sale_unit}}</text>
           <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
           <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
-          <text class="skeleton-rect" wx:if="{{item.gross_weight}}">{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-          <text class="skeleton-rect frame" wx:if="{{item.frame_code}}">含框</text>
+          <text class="skeleton-rect" wx:if="{{item.weight_s || item.weight_e}}">{{tools.returnGrossWeight(item)}}</text>
+          <text class="skeleton-rect frame" wx:if="{{item.frame_id}}">有筐</text>
         </view>
         <view class="price-unit skeleton-rect" wx:if="{{item.is_quoted}}">
-          <view class="price-origin" wx:if="{{item.price_origin_piece > item.price_sale_piece}}">原价:￥{{tools.returnPrice(item.price_origin_piece)}}/件</view>
-          <view class="price">￥{{tools.returnPrice(item.price_sale_piece)}}/件</view>
+          <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}/件</view>
+          <view class="price">￥{{tools.returnPrice(item.price_sale)}}/件</view>
         </view>
         <view class="price-unit skeleton-rect" wx:else>
           <text>今日未报价</text>

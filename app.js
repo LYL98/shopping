@@ -1,9 +1,9 @@
 //app.js
 import { Config, Http, Constant } from './utils/index';
 
-//添加gio
 var gio = require("utils/gio-minp/index.js").default;
-gio('init', 'a2dac281ef3539e4', 'wx70a3bf5f7a69987d', { version: 'V2.12.0' });
+gio('init', 'a2dac281ef3539e4', 'wx70a3bf5f7a69987d', { version: Config.version });
+
 
 /**
  * 初始化删除数组；删除数组重组数组
@@ -41,6 +41,7 @@ App({
     loginUserInfo: {}, //系统登录信息
     isLoginCallBack: null, //判断登录回调
     system: null,
+    gio: gio,
     gioIsSetUserId: false,
     gio: gio,
   },
@@ -450,8 +451,7 @@ App({
       ...sysInfo,
       factor: factor,
       toPx: toPx,
-      toRpx: toRpx,
-      custom_version: 'V2.12.3'
+      toRpx: toRpx
     }
   },
   //获取页面（页面路由）

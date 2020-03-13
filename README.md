@@ -1,4 +1,4 @@
-小程序
+### selene 希腊神话-塞勒涅：商城小程序
 
 ### 安装vscode扩展插件
 ```
@@ -15,7 +15,8 @@
             "savePath": null
         }
     ],
-    "liveServer.settings.donotShowInfoMsg": true
+    "liveServer.settings.donotShowInfoMsg": true,
+    "liveSassCompile.settings.generateMap":false
 }
 ```
 

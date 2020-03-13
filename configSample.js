@@ -9,7 +9,7 @@ export const Conn = 'dev';
 export const RequestHttpDev = 'https://xxx.xxx.xxx';
 
 //预发布环境api地址
-export const RequestHttpTest = 'https://xxx.xxx.xxx';
+export const RequestHttpPre = 'https://xxx.xxx.xxx';
 
 //生产环境api地址
 export const RequestHttpPro = 'https://xxx.xxx.xxx';
@@ -33,3 +33,9 @@ export const ServiceTel = '1234567890';
 
 //要打开的微信appids
 export const WeiXinAppIds = ['wxxxxxxxxxxxxxxx'];
+
+//版本
+export const Version = 'Vx.x.x';
+
+//api版本
+export const ApiVersion = '/0000';

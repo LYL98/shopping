@@ -34,7 +34,7 @@ Page({
         for (let i = 0; i < 2; i++) {
           let d = {
             code: "123456",
-            frame_code: "20",
+            frame_id: "20",
             gross_weight: 123,
             id: i + 1,
             images: [],
@@ -44,8 +44,6 @@ Page({
             origin_place: "123",
             package_spec: "123",
             price_sale: 123,
-            price_sale_piece: 123,
-            sale_unit: "件",
             title: "xxxxxxxx",
             number: 20
           };
@@ -117,6 +115,14 @@ Page({
       });
       /*===== 埋点 end ======*/
     }
+  },
+  
+  //跳转页面
+  skipPage(e){
+    let page = e.currentTarget.dataset.page;
+    wx.navigateTo({
+      url: page
+    });
   },
 
   //获取优惠券列表

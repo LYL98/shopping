@@ -1,7 +1,6 @@
-// pages/itemList/itemList.js
 //获取应用实例
 const app = getApp();
-import { Constant, Config } from './../../utils/index';
+import { Constant, Config, Http } from './../../utils/index';
 
 Page({
 
@@ -18,7 +17,7 @@ Page({
     query: {
       store_id: 0,
       sort: '-other',
-      display_class_code: '',
+      display_class_id: '',
       page: 1,
       page_size: Constant.PAGE_SIZE
     },
@@ -30,7 +29,7 @@ Page({
         for(let i = 0; i < 4; i++){
           let d = {
             code: "123456",
-            frame_code: "20",
+            frame_id: "20",
             gross_weight: 123,
             id: i + 1,
             images: [],
@@ -40,8 +39,6 @@ Page({
             origin_place: "123",
             package_spec: "123",
             price_sale: 123,
-            price_sale_piece: 123,
-            sale_unit: "件",
             title: "xxxxxxxx",
           };
           items.push(d);
@@ -63,7 +60,7 @@ Page({
    */
   onShow: function () {
     this.address = app.getSelectStore(); //当前选择的地址
-    let value = app.globalData.urlJump < 10 ? '0'+app.globalData.urlJump : app.globalData.urlJump
+    let value = app.globalData.urlJump < 10 ? '0' + app.globalData.urlJump : app.globalData.urlJump
     this.setData({
       urlJumpId: value || 0,
     })
@@ -89,7 +86,7 @@ Page({
       this.displayClassQuery();//获取商品分类
     });
     if(this.data.urlJumpId) {
-      this.selectCategory(this.data.urlJumpId)
+      this.selectCategory(this.data.urlJumpId, 'auto_select')
     }
   },
 
@@ -104,18 +101,19 @@ Page({
   },
 
   //选择商品分类
-  selectCategory(e){
-    let param; 
-    if(typeof e == 'string') {
-      param = e;
+  selectCategory(e, type){
+    console.log(e, type);
+    let param = ''; 
+    if(type === 'auto_select') {
+      param = Number(e);
     }else{
       delete this.data.urlJumpId;
       delete app.globalData.urlJump;
+      param = e.target.dataset.category;
     }
     let { query } = this.data;
-    let value = param ? param : e.target.dataset.category;
 
-    query.display_class_code = value;
+    query.display_class_id = param;
     query.page = 1;
     this.setData({
       query: query
@@ -131,11 +129,11 @@ Page({
     /*===== 埋点 start ======*/
     app.actionRecordAdd({
       action: Constant.ACTION_RECORD.ITEM_CLASS,
-      content: { display_class_code: value, store_id: query.store_id }
+      content: { display_class_id: param, store_id: query.store_id }
     });
     /*===== 埋点 end ======*/
 
-    let keyWords = this.data.categoryList.filter(item => item.code === value);
+    let keyWords = this.data.categoryList.filter(item => item.id === param);
     if(keyWords.length > 0){
       app.globalData.gio('track', 'searchSuccess', { 
         searchKeywords: keyWords[0].title, 
@@ -178,29 +176,15 @@ Page({
   //获取商品分类
   displayClassQuery(){
     let that = this;
-    wx.request({
-      url: Config.api.displayClassQuery,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          that.setData({
-            categoryList: rd
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function(res){
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.displayClassQuery();
-        });
-      }
-    });
+    Http.get(Config.api.displayClassQuery, {
+      province_code: that.address.province_code
+    }).then((res)=>{
+      that.setData({
+        categoryList: res.data
+      });
+    }).catch(()=>{
+
+    })
   },
 
   //获取商品列表

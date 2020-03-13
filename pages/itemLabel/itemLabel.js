@@ -31,7 +31,7 @@ Page({
         for (let i = 0; i < 4; i++) {
           let d = {
             code: "123456",
-            frame_code: "20",
+            frame_id: "20",
             gross_weight: 123,
             id: i + 1,
             images: [],
@@ -41,8 +41,6 @@ Page({
             origin_place: "123",
             package_spec: "123",
             price_sale: 123,
-            price_sale_piece: 123,
-            sale_unit: "件",
             title: "xxxxxxxx",
           };
           items.push(d);
@@ -69,6 +67,7 @@ Page({
     app.signIsLogin(() => {
       let address = app.getSelectStore(); //当前选择的地址
       let { query } = that.data;
+      query.province_code = address.province_code || '';
       query.store_id = address.id || '';
       query.sort = options.sort || '';
       query.tag = options.tag || '';
@@ -79,9 +78,9 @@ Page({
         shoppingCartNum: num,
         system: app.globalData.system
       }, () => {
+        that.getTagsList(); //获取标签
         that.itemQuery();
       });
-      that.getTagsList(); //获取标签
     });
   },
   //页面卸载时触发
@@ -99,11 +98,15 @@ Page({
   //获取商品标签
   getTagsList(){
     let that = this;
+    let { query } = that.data;
     wx.request({
       url: Config.api.itemTagsList,
       header: {
         'content-type': 'application/json',
         'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: query.province_code
       },
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {

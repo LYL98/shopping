@@ -1,0 +1,25 @@
+<!--pages/complain/complain.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+
+<view class="head">
+  <view class="title">商品名称</view>
+  <view class="fram-price">筐价格</view>
+  <view class="num">数量</view>
+  <view class="total">小计</view>
+</view>
+<view style="height: 110rpx;"></view>
+
+<view class="content">
+  <view wx:for="{{dataItem.frames}}" wx:key="index" class="frame-item">
+    <view class="title add-dot">{{item.item_title}}</view>
+    <view class="fram-price">￥{{tools.returnPrice(item.price)}}</view>
+    <view class="num">{{item.num}}</view>
+    <view class="total">￥{{tools.returnPrice(item.price * item.num)}}</view>
+  </view>
+</view>
+
+<view style="height: 120rpx;"></view>
+<view class="bottom">
+  <view class="left font-size24">合计:</view>
+  <view class="right price font-size32">￥{{tools.returnPrice(dataItem.fram_total_price)}}</view>
+</view>

@@ -27,7 +27,7 @@ Page({
         for (let i = 0; i < 3; i++) {
           let d = {
             code: '123456',
-            frame_code: '20',
+            frame_id: '20',
             gross_weight: 123,
             id: i + 1,
             images: [],
@@ -37,8 +37,6 @@ Page({
             origin_place: '123',
             package_spec: '123',
             price_sale: 123,
-            price_sale_piece: 123,
-            sale_unit: '件',
             title: 'xxxxxxxx',
             item_attrs: ['xxx', 'xxx', 'xxx', 'xxx', 'xxx'],
             count_real: 20,

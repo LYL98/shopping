@@ -39,10 +39,10 @@
               <view class="title"><text class="present" wx:if="{{d.is_gift}}">赠品</text>{{d.item_title}}</view>
               <view class="label">
                 <text wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-                <text class="frame" wx:if="{{d.frame_code}}">含框</text>
+                <text class="frame" wx:if="{{d.frame_id}}">有筐</text>
               </view>
               <view class="price-unit">
-                ￥{{tools.returnPrice(d.item_price_sale_piece)}} / 件<!---<text class="original" wx:if="{{0}}">原价/件</text>-->
+                ￥{{tools.returnPrice(d.item_price_sale)}} / 件<!---<text class="original" wx:if="{{0}}">原价/件</text>-->
               </view>
               <view class="num-price">
                 <text class="num-str skeleton-rect">× {{d.count_real}}</text>
@@ -64,26 +64,30 @@
     </view>
   </view>
 
-  <view class="date-total">
-    <view class="date">{{item.created}}</view>
-    <view class="total">
-      <view class="price-str">共{{item.piece_num}}件商品，订单价格：<text>￥{{tools.returnPrice(item.order_price)}}</text></view>
-      <view class="amout-pay" wx:if="{{item.remain_pay > 0 && item.status != 'order_canceled'}}">
-        已付款：￥{{tools.returnPrice(item.amount_pay)}}，待补款：<text class="price">￥{{tools.returnPrice(item.remain_pay)}}</text>
-      </view>
+  <view class="total">
+    <view class="price-str">共{{item.piece_num}}
+      件商品，订单价格：<text>￥{{tools.returnPrice(item.order_price)}}</text>
+      <block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block>
+    </view>
+    <view class="amout-pay" wx:if="{{item.remain_pay > 0 && item.status != 'order_canceled'}}">
+      已付款：￥{{tools.returnPrice(item.amount_pay)}}，待补款：<text class="price">￥{{tools.returnPrice(item.remain_pay)}}</text>
+      <block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block>
     </view>
   </view>
 
   <view class="order-bottom">
-    <button class="btn3" wx:if="{{!item.is_presale}}" size="mini" bindtap="againOrder" data-index="{{index}}">再次下单</button>
-    <button
-        size="mini"
-        class="btn3"
-        style="background-color: #00AE66; color: #fff;"
-        wx:if="{{ item.status !== 'order_canceled' && item.pay_status !== 'wait_complete' && item.status === 'deliveried' }}"
-        data-index="{{index}}"
-        bindtap="confirmReceive">确认收货</button>
-    <button class="btn4" wx:if="{{item.status !== 'order_canceled' && item.pay_status === 'wait_complete'}}" bindtap="orderPay" data-index="{{index}}" size="mini">付款</button>
+    <view class="left">{{item.created}}</view>
+    <view class="right">
+      <button class="btn3" wx:if="{{!item.is_presale}}" size="mini" bindtap="againOrder" data-index="{{index}}">再次下单</button>
+      <button
+          size="mini"
+          class="btn3"
+          style="background-color: #00AE66; color: #fff;"
+          wx:if="{{ item.status !== 'order_canceled' && item.pay_status !== 'wait_complete' && item.status === 'deliveried' }}"
+          data-index="{{index}}"
+          bindtap="confirmReceive">确认收货</button>
+      <button class="btn4" wx:if="{{item.status !== 'order_canceled' && item.pay_status === 'wait_complete'}}" bindtap="orderPay" data-index="{{index}}" size="mini">付款</button>
+    </view>
   </view>
 </view>
 

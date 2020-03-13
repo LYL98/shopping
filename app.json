@@ -18,6 +18,7 @@
     "pages/shop/shop",
     "pages/shoppingCart/shoppingCart",
     "pages/orderAdd/orderAdd",
+    "pages/orderFram/orderFram",
     "pages/orderCoupon/orderCoupon",
     "pages/coupon/coupon",
     "pages/payResult/payResult",
@@ -36,6 +37,20 @@
     "pages/myDetail/myDetail",
     "pages/shootVideo/shootVideo",
     "pages/playVideo/playVideo"
+  ],
+  "subpackages": [
+    {
+      "root": "packageLive",
+      "pages": [
+        "pages/home/home"
+      ],
+      "plugins": {
+        "live-player-plugin": {
+          "version": "1.0.0",
+          "provider": "wx2b03c6e691cd7370"
+        }
+      }
+    }
   ],
   "window": {
     "backgroundTextStyle": "dark",
