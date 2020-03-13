@@ -87,10 +87,10 @@ module.exports = {
 
   },
   //腾讯Bucket、Region
-  tencentBucket: Conn === 'dev' ? TencentBucketDev : TencentBucketPro, //Bucket
-  tencentRegion: Conn === 'dev' ? TencentRegionDev : TencentRegionPro, //Region
+  tencentBucket: Conn === 'pro' ? TencentBucketPro : TencentBucketDev, //Bucket
+  tencentRegion: Conn === 'pro' ? TencentRegionPro : TencentRegionDev, //Region
 
-  tencentPath: Conn === 'dev' ? TencentPathDev : TencentPathPro, //腾讯下载地址
+  tencentPath: Conn === 'pro' ? TencentPathPro : TencentPathDev, //腾讯下载地址
   serviceTel: ServiceTel, //服务电话
   weiXinAppIds: WeiXinAppIds, //要打开的微信appids
   conn: Conn,

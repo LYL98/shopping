@@ -86,7 +86,7 @@ Page({
       this.displayClassQuery();//获取商品分类
     });
     if(this.data.urlJumpId) {
-      this.selectCategory(this.data.urlJumpId)
+      this.selectCategory(this.data.urlJumpId, 'auto_select')
     }
   },
 
@@ -101,18 +101,19 @@ Page({
   },
 
   //选择商品分类
-  selectCategory(e){
-    let param; 
-    if(typeof e == 'string') {
-      param = e;
+  selectCategory(e, type){
+    console.log(e, type);
+    let param = ''; 
+    if(type === 'auto_select') {
+      param = Number(e);
     }else{
       delete this.data.urlJumpId;
       delete app.globalData.urlJump;
+      param = e.target.dataset.category;
     }
     let { query } = this.data;
-    let value = param ? param : e.target.dataset.category;
 
-    query.display_class_id = value;
+    query.display_class_id = param;
     query.page = 1;
     this.setData({
       query: query
@@ -128,11 +129,11 @@ Page({
     /*===== 埋点 start ======*/
     app.actionRecordAdd({
       action: Constant.ACTION_RECORD.ITEM_CLASS,
-      content: { display_class_id: value, store_id: query.store_id }
+      content: { display_class_id: param, store_id: query.store_id }
     });
     /*===== 埋点 end ======*/
 
-    let keyWords = this.data.categoryList.filter(item => item.code === value);
+    let keyWords = this.data.categoryList.filter(item => item.id === param);
     if(keyWords.length > 0){
       app.globalData.gio('track', 'searchSuccess', { 
         searchKeywords: keyWords[0].title, 
