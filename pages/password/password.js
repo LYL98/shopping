@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
+import { Http } from './../../utils/index';
 import md5 from './../../utils/md5';
 
 Page({
@@ -57,36 +58,21 @@ Page({
       });
       return false;
     }
-    that.setData({ loading: true });
-    wx.request({
-      url: config.api.profilePasswordModify,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      method: 'POST',
-      data: {
+    that.setData({ loading: true }, () => {
+      Http.post(config.api.profilePasswordModify, {
         password_ori: md5(editData.password_ori),
         password: md5(editData.password)
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          wx.navigateBack();
-          wx.showToast({
-            title: '密码修改成功',
-            icon: 'none'
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
+      }).then(res => {
         that.setData({ loading: false });
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.submit();
+        wx.navigateBack();
+        wx.showToast({
+          title: '密码修改成功',
+          icon: 'none'
         });
-      }
+      }).catch(err => {
+        that.setData({ loading: false });
+      });
     });
+
   }
 })

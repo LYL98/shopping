@@ -1,0 +1,8 @@
+<!--pages/live/live.wxml-->
+<button bindtap="getLiveList">getLiveList</button>
+
+<button bindtap="getLiveDetail">getLiveDetail</button>
+
+<video src="http://1258344707.vod2.myqcloud.com/1b87576bvodcq1258344707/8d14a88e5285890800083186099/f0.mp4"></video>
+
+

@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
+import { Http } from './../../utils/index';
 import verification from './../../utils/verification';
 import UpCos from './../../utils/upload-tencent-cos';
 
@@ -242,30 +243,11 @@ Page({
         });
       }
     }
-  
-    wx.request({
-      url: config.api.editStore,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      method: 'POST',
-      data: that.data.edit,
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          wx.navigateTo({
-            url: '/pages/shop/shop',
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.editStore();
-        });
-      }
+
+    Http.post(config.api.editStore, that.data.edit).then(res => {
+      wx.navigateTo({
+        url: '/pages/shop/shop',
+      });
     });
   },
   cancel(){

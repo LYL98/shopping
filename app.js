@@ -43,7 +43,6 @@ App({
     system: null,
     gio: gio,
     gioIsSetUserId: false,
-    gio: gio,
   },
   //登录页面回调（临时改动，可登录别的用户）
   loginCallBack(loginData, data) {
@@ -489,8 +488,7 @@ App({
         member_id: member.id || memberSto.id || '',
         phone_model: `机型：${sys.model}；系统：${sys.system}；微信版本：${sys.version}`,
         ...data,
-        is_no_prompt: true
-      })
+      }, { throttle: false, handleError: false });
     }
   },
   //贝塞尔曲线

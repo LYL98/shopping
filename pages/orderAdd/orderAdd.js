@@ -95,11 +95,6 @@ Page({
     });
   },
 
-  //页面卸载时触发
-  onUnload() {
-    app.shoppingCartNum(); //计算购物车数量并显示角标
-  },
-
   //选择优惠券
   selectCoupon(){
     let { couponListData, address } = this.data;
@@ -151,7 +146,7 @@ Page({
       }, () => {
         Http.post(Config.api.orderCouponList, {
           items: data
-        }).then((res)=>{
+        }, { throttle: false }).then((res)=>{
           let cou = wx.getStorageSync('orderCouponSelectData');
           let csd = {};
           let rd = res.data;
@@ -409,7 +404,8 @@ Page({
   },
 
   //页面卸载时
-  onUnload(){
+  onUnload: function() {
+    app.shoppingCartNum(); //计算购物车数量并显示角标
     wx.removeStorageSync('orderCouponListData');
     wx.removeStorageSync('orderCouponSelectData');
   }

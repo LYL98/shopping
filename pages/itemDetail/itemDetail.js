@@ -1,6 +1,7 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
+import { Http } from './../../utils/index';
 
 Page({
   /**
@@ -190,66 +191,24 @@ Page({
   itemCollectionAdd(){
     let that = this;
     let { id } = that.data;
-    wx.request({
-      url: config.api.itemCollectionAdd,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        id: id
-      },
-      method: 'POST',
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          that.getItemDetail();
-          wx.showToast({
-            title: '已收藏',
-            icon: 'none'
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.itemCollectionAdd();
-        });
-      }
+    Http.post(config.api.itemCollectionAdd, {id: id}).then(res => {
+      that.getItemDetail();
+      wx.showToast({
+        title: '已收藏',
+        icon: 'none'
+      });
     });
   },
   //取消收藏
   itemCollectionCancel() {
     let that = this;
     let { id } = that.data;
-    wx.request({
-      url: config.api.itemCollectionCancel,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        id: id
-      },
-      method: 'POST',
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          that.getItemDetail();
-          wx.showToast({
-            title: '已取消收藏',
-            icon: 'none'
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.itemCollectionCancel();
-        });
-      }
+    Http.post(config.api.itemCollectionCancel, {id: id}).then(res => {
+      that.getItemDetail();
+      wx.showToast({
+        title: '已取消收藏',
+        icon: 'none'
+      });
     });
   },
   //查看大图

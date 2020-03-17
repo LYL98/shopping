@@ -85,24 +85,27 @@ Component({
       });
     },
     //确认支付
-    submitOrderPay(){
+    submitOrderPay() {
       let that = this;
+      if (that.data.loading) return;
       let { useType } = that.data;
-      that.setData({ loading: true });
-      //获取oepnid
-      app.codeGetOpenId((openid) => {
-        if (openid === 0){
-          that.setData({ loading: false });
-        }else{
-          if (useType === 'balanceTopup'){
-            //余额充值
-            that.balanceTopup(openid);
+      that.setData({ loading: true }, () => {
+        //获取oepnid
+        app.codeGetOpenId((openid) => {
+          if (openid === 0){
+            that.setData({ loading: false });
           }else{
-            //订单支付
-            that.orderPay(openid);
+            if (useType === 'balanceTopup'){
+              //余额充值
+              that.balanceTopup(openid);
+            }else{
+              //订单支付
+              that.orderPay(openid);
+            }
           }
-        }
+        });
       });
+
     },
     //订单支付
     orderPay(openid) {

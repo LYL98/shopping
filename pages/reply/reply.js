@@ -1,5 +1,6 @@
 const app = getApp();
 import config from './../../utils/config';
+import { Http } from './../../utils/index';
 import UpCos from './../../utils/upload-tencent-cos';
 
 Page({
@@ -163,41 +164,24 @@ Page({
       return false;
     }
 
-    that.setData({ loading: true });
-    wx.request({
-      url: config.api.aftersaleComment,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      method: 'POST',
-      data: {
+    that.setData({ loading: true }, () => {
+      Http.post(config.api.aftersaleComment, {
         aftersale_id: id,
         content: detail.remark,
         images: detail.images,
         media_urls: detail.media_urls,
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          wx.redirectTo({
-            url: '/pages/afterSaleDetail/afterSaleDetail?id='+ that.data.id
-          });
-          wx.showToast({
-            title: '售后申请已提交',
-            icon: 'none'
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.aftersaleAdd();
-        });
-
+      }).then(res => {
         that.setData({ loading: false });
-      }
+        wx.redirectTo({
+          url: '/pages/afterSaleDetail/afterSaleDetail?id='+ that.data.id
+        });
+        wx.showToast({
+          title: '售后申请已提交',
+          icon: 'none'
+        });
+      }).catch(err => {
+        that.setData({ loading: false });
+      });
     });
   }
 });
