@@ -17,10 +17,13 @@ Page({
     promotionData: {}, //全场活动数据
     address: {}
   },
+  //滑动
   swiperChange: function (e) {
     this.setData({
       currentSwiper: e.detail.current
-    })
+    });
+    let cvc = wx.createVideoContext('swiper-video');
+    cvc.pause();
   },
   //加入购物车回调
   joinShoppingCart() {
@@ -99,12 +102,11 @@ Page({
           let rd = res.data.data;
           let vidoes= [];
           if(rd.content){
-            let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] :'';
-            vidoes = m ? m.match(/https:[\'\"]?([^\'\"]*)[\'\"]?/ig):[];
-            for(let i =0; i<vidoes.length;i++) {
+            let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] : '';
+            vidoes = m ? m.match(/https:[\'\"]?([^\'\"]*)[\'\"]?/ig) : [];
+            for(let i =0; i < vidoes.length; i++) {
               vidoes[i] = vidoes[i].replace(/"/g,'')
             }
-
             rd.content = rd.content.replace(/<img/g, '<img style="width:100%;height:auto" ');
           }
           
@@ -237,5 +239,6 @@ Page({
     if(index === 0){
       this.setData({ tempOneImg: '' });
     }
-  }
+  },
+
 })
