@@ -58,17 +58,18 @@ Page({
       });
       return false;
     }
+    if (that.data.loading) return;
     that.setData({ loading: true }, () => {
       Http.post(config.api.profilePasswordModify, {
         password_ori: md5(editData.password_ori),
         password: md5(editData.password)
       }).then(res => {
-        that.setData({ loading: false });
         wx.navigateBack();
         wx.showToast({
           title: '密码修改成功',
           icon: 'none'
         });
+        that.setData({ loading: false });
       }).catch(err => {
         that.setData({ loading: false });
       });

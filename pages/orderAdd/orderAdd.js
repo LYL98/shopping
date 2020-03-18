@@ -306,6 +306,8 @@ Page({
       delivery_date: deliveryDate,
       is_presale: orderType === 'presale' ? true : false //是否预售订单
     };
+
+    if (that.data.orderLoading) return;
     that.setData({
       orderLoading: true
     }, ()=>{
@@ -330,11 +332,11 @@ Page({
           } else {
             // 如果未超过授信额度
             that.clearShoppingCart(); //清除购买的购物车
-            that.setData({
-              orderLoading: false
-            });
             wx.redirectTo({
               url: '/pages/orderResult/orderResult?id=' + rd.id
+            });
+            that.setData({
+              orderLoading: false
             });
           }
         }else{

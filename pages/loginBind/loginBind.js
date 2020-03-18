@@ -81,6 +81,7 @@ Page({
     let that = this;
     let { bindData } = that.data;
 
+    if (that.data.loading) return;
     that.setData({ loading: true }, () => {
       Http.post(config.api.signWeappBind, {
         phone: bindData.phone,
@@ -88,11 +89,11 @@ Page({
         weapp_openid: bindData.weapp_openid,
         unionid: bindData.unionid
       }).then(res => {
-        that.setData({ loading: false });
         wx.setStorageSync("loginUserInfo", res.data); //写登录信息
         wx.reLaunch({
           url: '/pages/index/index',
         });
+        that.setData({ loading: false });
       }).catch(err => {
         that.setData({ loading: false });
       });

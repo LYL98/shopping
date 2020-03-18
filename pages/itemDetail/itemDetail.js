@@ -193,7 +193,7 @@ Page({
   itemCollectionAdd(){
     let that = this;
     let { id } = that.data;
-    Http.post(config.api.itemCollectionAdd, {id: id}).then(res => {
+    Http.post(config.api.itemCollectionAdd, {id: id}, {throttle: false}).then(res => {
       that.getItemDetail();
       wx.showToast({
         title: '已收藏',
@@ -205,7 +205,7 @@ Page({
   itemCollectionCancel() {
     let that = this;
     let { id } = that.data;
-    Http.post(config.api.itemCollectionCancel, {id: id}).then(res => {
+    Http.post(config.api.itemCollectionCancel, {id: id}, {throttle: false}).then(res => {
       that.getItemDetail();
       wx.showToast({
         title: '已取消收藏',
