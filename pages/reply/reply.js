@@ -164,6 +164,8 @@ Page({
       return false;
     }
 
+    if (that.data.loading) return;
+
     that.setData({ loading: true }, () => {
       Http.post(config.api.aftersaleComment, {
         aftersale_id: id,
@@ -171,10 +173,10 @@ Page({
         images: detail.images,
         media_urls: detail.media_urls,
       }).then(res => {
-        that.setData({ loading: false });
         wx.redirectTo({
           url: '/pages/afterSaleDetail/afterSaleDetail?id='+ that.data.id
         });
+        that.setData({ loading: false });
         wx.showToast({
           title: '售后申请已提交',
           icon: 'none'

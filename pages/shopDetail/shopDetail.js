@@ -241,13 +241,23 @@ Page({
           title: that.data.vk[i],
           icon: 'none'
         });
+
+        return;
       }
     }
 
-    Http.post(config.api.editStore, that.data.edit).then(res => {
-      wx.navigateTo({
-        url: '/pages/shop/shop',
-      });
+    if (that.data.loading) return;
+    that.setData({ loading: true }, () => {
+      Http.post(config.api.editStore, that.data.edit)
+        .then(res => {
+          wx.navigateTo({
+            url: '/pages/shop/shop',
+          });
+          that.setData({ loading: false });
+        })
+        .catch(() => {
+          that.setData({ loading: false });
+        });
     });
   },
   cancel(){
