@@ -1,4 +1,4 @@
-const TOKEN_DEFAULT_KEY = 'Durian-Custom-Access-Token';
+const TOKEN_DEFAULT_KEY = 'Vesta-Custom-Access-Token';
 const SUCCESS_STATUS_CODE = 200; // 正确的响应码
 const SUCCESS_DATA_CODE = 0; // 正确的数据码
 let CATCHE_POSTED_LIST = []; // 缓存 post api 请求 的列表 { url: string, latest_timestamp: number  }
@@ -53,13 +53,19 @@ const request = function (method, url, data, config) {
 
 
     const app = getApp(); //移动到此位置，防止app.js调用出错
+
+    let tokenKey = (app && app.getTokenKey()) || ''; //动态tokenKey
+    let accessToken = (app && app.getAccessToken()) || '';
+
+    console.log('tokenKey： ', tokenKey);
+
     const fun = () => {
-      let tokenKey = app ? app.globalData.loginUserInfo.token_key : ''; //动态tokenKey
+
       wx.request({
         url: url,
         header: {
           'content-type': contentType,
-          [tokenKey || TOKEN_DEFAULT_KEY]: app ? app.globalData.loginUserInfo.access_token : ''
+          [tokenKey || TOKEN_DEFAULT_KEY]: accessToken
         },
         method: method,
         data: data || {},

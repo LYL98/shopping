@@ -52,7 +52,7 @@ Page({
       url: config.api.balanceLog,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: query,
       success: function (res) {

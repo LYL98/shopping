@@ -1,0 +1,47 @@
+.blank {
+  height: 106rpx;
+}
+
+.navbar {
+  font-size: 0rpx;
+  width: 100%;
+  height: 106rpx;
+  position: relative;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1rpx solid #EEE;
+
+  .item {
+    font-size: 28rpx;
+    line-height: 100rpx;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .active {
+    font-weight: bold;
+    font-size: 30rpx;
+  }
+
+  .slider {
+    content: " ";
+    display: block;
+    height: 6rpx;
+    border-radius: 100px;
+    transition: transform 0.3s, -webkit-transform 0.3s;
+    position: absolute;
+    left: 0;
+    top: 101rpx;
+
+  }
+}
+
+.navbar.fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  background: #fff;
+}

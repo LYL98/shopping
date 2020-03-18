@@ -56,7 +56,7 @@ Component({
         url: config.api.merchantStoreList,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         data: {
           is_freeze: 0

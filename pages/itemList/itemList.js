@@ -198,7 +198,7 @@ Page({
       url: Config.api.itemListDisplayClass,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: query,
       success: function (res) {

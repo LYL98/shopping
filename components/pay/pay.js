@@ -60,7 +60,7 @@ Component({
         url: config.api.merchantBalance,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         success: function (res) {
           if (res.statusCode == 200 && res.data.code === 0) {
@@ -116,7 +116,7 @@ Component({
         url: config.api.orderPay,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         method: 'POST',
         data: {
@@ -167,7 +167,7 @@ Component({
         url: config.api.balanceTopup,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         method: 'POST',
         data: {
@@ -211,7 +211,7 @@ Component({
         url: config.api.orderPayConfirm,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         method: 'POST',
         data: {
@@ -243,7 +243,7 @@ Component({
         url: config.api.balanceTopupConfirm,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         method: 'POST',
         data: {
