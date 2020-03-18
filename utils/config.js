@@ -85,6 +85,11 @@ module.exports = {
     sysService: apiC + '/basicdata/constant/customer_service', //投诉电话
     unifiedDescription: apiC + '/basicdata/constant/unified_description', //获取商品统一描述
 
+    liveQuery: apiC + '/live_video/query',    //  直播查询
+    liveRepQuery: apiC + '/live_rep/query',   //  重播查询
+    liveRoomMark: apiC + '/room/mark',        //  直播间订阅
+    liveRoomUnMark: apiC + '/room/un_mark',   //  直播间取消订阅
+
   },
   //腾讯Bucket、Region
   tencentBucket: Conn === 'pro' ? TencentBucketPro : TencentBucketDev, //Bucket

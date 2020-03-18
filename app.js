@@ -44,6 +44,18 @@ App({
     gio: gio,
     gioIsSetUserId: false,
   },
+
+  /**
+   * 获取登录用户的 token_key 和 access_token
+   */
+  getTokenKey() {
+    return this.globalData.loginUserInfo.token_key || wx.getStorageSync('loginUserInfo').token_key;
+  },
+
+  getAccessToken() {
+    return this.globalData.loginUserInfo.access_token || wx.getStorageSync('loginUserInfo').access_token;
+  },
+
   //登录页面回调（临时改动，可登录别的用户）
   loginCallBack(loginData, data) {
     let that = this;
@@ -79,7 +91,7 @@ App({
         url: Config.api.signIsLogin,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': resData.access_token
+          'Vesta-Custom-Access-Token': resData.access_token
         },
         success: function (res) {
           if (res.statusCode == 200 && res.data.code == 0) {

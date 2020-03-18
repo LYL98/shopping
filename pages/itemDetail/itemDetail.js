@@ -91,7 +91,7 @@ Page({
       url: config.api.itemDetail,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: {
         id: id,
@@ -135,7 +135,7 @@ Page({
       url: config.api.promotion,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {
@@ -163,7 +163,7 @@ Page({
       url: config.api.unifiedDescription,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: {
         province_code: address.province_code

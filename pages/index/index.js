@@ -206,7 +206,7 @@ Page({
       url: Config.api.isOrderTime,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: {
         province_code: address.province_code
@@ -258,7 +258,7 @@ Page({
       url: Config.api.banner,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: {
         province_code: address.province_code
@@ -289,7 +289,7 @@ Page({
       url: Config.api.itemTagsList,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: {
         province_code: address.province_code
@@ -342,7 +342,7 @@ Page({
       url: Config.api.itemQuery,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: query,
       success: function(res) {

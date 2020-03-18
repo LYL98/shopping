@@ -1,93 +1,139 @@
 // pages/live/live.js
-
-import { Http } from './../../utils/index';
+const app = getApp();
+import { Http, Config } from './../../utils/index';
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
+    statusList: ['全部', '即将开播', '直播中', '直播回看'],
+    statusStr: ['', 102, 101, 103],
 
-  },
+    query: {
+      live_status: '',
+      page: 1,
+      page_size: 10
+    },
 
-  getLiveList: function() {
-    Http.post('http://api.weixin.qq.com/wxa/business/getliveinfo?access_token=31_SOe88ZRSDYbliNl2_IyDVelXyWMAVY95B0wSG0NOEhTzPEgPVtXevaZXYZ2nk9MrbG1x_RwfSx-MRSC9bmO7vh9egNrnwFY_W1Yy7NjCrSgvMbtT6RmUjPcXapzmIH80DdfEv5DuuYjVIQH9EXXaABATMM', {
-      start: 0,
-      limit: 10
-    }).then(res => {
-      console.log('res: ', res);
-    }).catch(err => {
-      console.log('err: ', err);
-    });
-  },
-
-  getLiveDetail: function() {
-    Http.post('http://api.weixin.qq.com/wxa/business/getliveinfo?access_token=31_SOe88ZRSDYbliNl2_IyDVelXyWMAVY95B0wSG0NOEhTzPEgPVtXevaZXYZ2nk9MrbG1x_RwfSx-MRSC9bmO7vh9egNrnwFY_W1Yy7NjCrSgvMbtT6RmUjPcXapzmIH80DdfEv5DuuYjVIQH9EXXaABATMM', {
-      "action": "get_replay", // 获取回放
-      "room_id": 3, // 直播间id
-      "start": 0, // 起始拉取视频，start=0表示从第1个视频片段开始拉取
-      "limit": 10 // 每次拉取的个数上限，不要设置过大，建议100以内
-    }).then(res => {
-      console.log('res: ', res);
-    }).catch(err => {
-      console.log('err: ', err);
-    });
+    list: {
+      items: []
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onLoad: function(options) {
+    //判断登录
+    app.signIsLogin(() => {
+      this.liveQuery();
+    });
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  // navbar 切换的响应事件
+  handleNavTouch(e) {
+    let { query, statusStr } = this.data;
+    query.live_status = statusStr[e.detail.index];
+    query.page = 1;
+    this.setData(
+      {
+        query: query,
+        list: {
+          items: [],
+          num: 0
+        }
+      },
+      () => {
+        this.liveQuery();
+        wx.pageScrollTo({
+          scrollTop: 0,
+          duration: 0
+        });
+      }
+    );
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
+  liveQuery() {
+    wx.showNavigationBarLoading();
+    let { list, query } = this.data;
+    Http.get(Config.api.liveQuery, query)
+      .then(res => {
+        let rd = res.data || {};
+        rd.items = Array.isArray(rd.items)
+          ? rd.items.map(item => {
+              item.start_time = (item.start_time || '').slice(5, 16);
+              return item;
+            })
+          : [];
+        rd.num = rd.num || 0;
 
+        if (query.page === 1) {
+          this.setData({ list: rd });
+        } else {
+          this.setData({ 
+            list: {
+              items: list.items.concat(rd.items),
+              num: rd.num
+            }
+          });
+        }
+
+        wx.hideNavigationBarLoading();
+      })
+      .catch(() => {
+        wx.hideNavigationBarLoading();
+      })
+  },
+
+  liveRep(e) {
+    let roomid = e.target.dataset.roomid;
+    wx.navigateTo({
+      url: '/pages/live-rep/live-rep?roomid=' + roomid
+    });
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
+  onPullDownRefresh: function() {
+    let that = this;
+    let {query} = that.data;
+      query.page = 1;
+      that.setData({
+        query: query
+      }, () => {
+        that.liveQuery();
+      });
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
+  onReachBottom: function() {
+    let that = this;
+    let {query, list} = that.data;
+    if (list.num / query.page_size > query.page) {
+      //如果没有到达最后一页，加载数据
+      query.page = query.page + 1;
+      that.setData({
+        query: query
+      }, () => {
+        that.liveQuery();
+      });
+    }
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {}
 
-  }
-})
+});

@@ -23,8 +23,8 @@ Component({
       shoppingCart: { imgSrc: './../../assets/img/default_page_shopping_cart.png', title: '购物车空空如也' },
       itemList: { imgSrc: './../../assets/img/default_page_item_list.png', title: '还没有商品呢' },
       itemLabel: { imgSrc: './../../assets/img/default_page_item_list.png', title: '还没有商品呢' },
-      accountRecord: { imgSrc: './../../assets/img/default_page_account_record.png', title: '暂无账户明细' }
-
+      accountRecord: { imgSrc: './../../assets/img/default_page_account_record.png', title: '暂无账户明细' },
+      live: { imgSrc: './../../assets/img/default_live.png', title: '暂无直播' }
     },
     default: {
       imgSrc: '',
