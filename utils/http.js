@@ -38,7 +38,7 @@ const request = function (method, url, data, config) {
 
       if (posted) {
 
-        if (posted.latest_timestamp + (5 * 1000) > new Date().getTime()) {
+        if (posted.latest_timestamp + (3 * 1000) > new Date().getTime()) {
           console.warn('提交频率过于频繁，请稍后重试！', posted);
           reject({message: '提交频率过于频繁，请稍后重试！'});
           return;
@@ -56,8 +56,6 @@ const request = function (method, url, data, config) {
 
     let tokenKey = (app && app.getTokenKey()) || ''; //动态tokenKey
     let accessToken = (app && app.getAccessToken()) || '';
-
-    console.log('tokenKey： ', tokenKey);
 
     const fun = () => {
 

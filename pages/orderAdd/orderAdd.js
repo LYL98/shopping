@@ -333,10 +333,10 @@ Page({
             // 如果未超过授信额度
             that.clearShoppingCart(); //清除购买的购物车
             wx.redirectTo({
-              url: '/pages/orderResult/orderResult?id=' + rd.id
-            });
-            that.setData({
-              orderLoading: false
+              url: '/pages/orderResult/orderResult?id=' + rd.id,
+              complete: () => {
+                that.setData({ orderLoading: false });
+              }
             });
           }
         }else{
@@ -359,12 +359,9 @@ Page({
         order_id: id,
         price: price
       },
+      isShowPay: true,
       payCallBack: function(res) {
         that.clearShoppingCart(); //清除购买的购物车
-        that.setData({
-          isShowPay: false,
-          orderLoading: false
-        });
         if (res === 'success') {
           /*===== 埋点 start ======*/
           app.actionRecordAdd({
@@ -374,16 +371,27 @@ Page({
           });
           /*===== 埋点 end ======*/
           wx.redirectTo({
-            url: `/pages/payResult/payResult?id=${id}&source=orderAdd`
+            url: `/pages/payResult/payResult?id=${id}&source=orderAdd`,
+            complete: () => {
+              that.setData({
+                isShowPay: false,
+                orderLoading: false
+              });
+            }
           });
         } else {
           wx.redirectTo({
-            url: '/pages/orderDetail/orderDetail?id=' + id
+            url: '/pages/orderDetail/orderDetail?id=' + id,
+            complete: () => {
+              that.setData({
+                isShowPay: false,
+                orderLoading: false
+              });
+            }
           });
         }
         wx.removeStorageSync('actionRecordShopCartId'); //删除系列号
       },
-      isShowPay: true
     });
   },
 

@@ -18,9 +18,21 @@
       wx:for-index="index"
       wx:key="index"
     >
-      <navigator class="prev-img" url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomid}}">
+      <navigator 
+        class="prev-img" 
+        wx:if="{{item.live_status == 103}}" 
+        url="/pages/live-rep/live-rep?roomid={{item.roomid}}"
+      >
         <image src="{{item.cover_img}}" class="bg-img-container-banner"></image>
       </navigator>
+      <navigator 
+        class="prev-img" 
+        wx:else
+        url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomid}}"
+      >
+        <image src="{{item.cover_img}}" class="bg-img-container-banner"></image>
+      </navigator>
+
       <view class="footer">
         <view class="desc">
           <view class="title">
@@ -35,7 +47,7 @@
         <view class="action">
           <navigator class="btn-round" wx:if="{{item.live_status == 101}}" url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomid}}">立即进入</navigator>
           <navigator class="btn-round" wx:if="{{item.live_status == 102}}" url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomid}}">立即订阅</navigator>
-          <view class="btn-round" wx:if="{{item.live_status == 103}}" data-roomid="{{item.roomid}}" bindtap="liveRep">直播回放</view>
+          <navigator class="btn-round" wx:if="{{item.live_status == 103}}" url="/pages/live-rep/live-rep?roomid={{item.roomid}}">直播回放</navigator>
         </view>
       </view>
     </view>

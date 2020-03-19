@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    statusList: ['全部', '即将开播', '直播中', '直播回看'],
+    statusList: ['全部', '即将开播', '直播中', '直播回放'],
     statusStr: ['', 102, 101, 103],
 
     query: {
@@ -91,13 +91,6 @@ Page({
       .catch(() => {
         wx.hideNavigationBarLoading();
       })
-  },
-
-  liveRep(e) {
-    let roomid = e.target.dataset.roomid;
-    wx.navigateTo({
-      url: '/pages/live-rep/live-rep?roomid=' + roomid
-    });
   },
 
   /**

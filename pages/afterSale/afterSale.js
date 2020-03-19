@@ -278,9 +278,11 @@ Page({
         images: detail.images
       }).then(res => {
         wx.redirectTo({
-          url: '/pages/afterSaleDetail/afterSaleDetail?id=' + res.data.id
+          url: '/pages/afterSaleDetail/afterSaleDetail?id=' + res.data.id,
+          complete: () => {
+            that.setData({ loading: false });
+          }
         });
-        that.setData({ loading: false });
         wx.showToast({
           title: '售后申请已提交',
           icon: 'none'

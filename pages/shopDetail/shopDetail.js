@@ -252,8 +252,10 @@ Page({
         .then(res => {
           wx.navigateTo({
             url: '/pages/shop/shop',
+            complete: () => {
+              that.setData({ loading: false });
+            }
           });
-          that.setData({ loading: false });
         })
         .catch(() => {
           that.setData({ loading: false });
