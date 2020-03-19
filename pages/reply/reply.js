@@ -174,9 +174,11 @@ Page({
         media_urls: detail.media_urls,
       }).then(res => {
         wx.redirectTo({
-          url: '/pages/afterSaleDetail/afterSaleDetail?id='+ that.data.id
+          url: '/pages/afterSaleDetail/afterSaleDetail?id='+ that.data.id,
+          complete: () => {
+            that.setData({ loading: false });
+          }
         });
-        that.setData({ loading: false });
         wx.showToast({
           title: '售后申请已提交',
           icon: 'none'
