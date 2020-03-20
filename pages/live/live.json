@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "直播",
+  "usingComponents": {
+    "subscribe": "plugin-private://wx2b03c6e691cd7370/components/subscribe/subscribe",
+    "navbar": "/components/navbar/navbar",
+    "defaultPage": "/components/defaultPage/defaultPage"
+  }
+}

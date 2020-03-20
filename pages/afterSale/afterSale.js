@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
+import { Http } from './../../utils/index';
 import UpCos from './../../utils/upload-tencent-cos';
 
 Page({
@@ -197,7 +198,7 @@ Page({
         url: config.api.aftersaleAddData,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         data: {
           order_item_id: id
@@ -267,42 +268,28 @@ Page({
       return false;
     }
 
-    that.setData({ loading: true });
-    wx.request({
-      url: config.api.aftersaleAdd,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      method: 'POST',
-      data: {
+    if (that.data.loading) return;
+    that.setData({ loading: true }, () => {
+      Http.post(config.api.aftersaleAdd, {
         order_item_id: id,
         reason: detail.reason,
         content: detail.content,
         media_urls: detail.media_urls,
         images: detail.images
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          wx.redirectTo({
-            url: '/pages/afterSaleDetail/afterSaleDetail?id=' + res.data.data.id
-          });
-          wx.showToast({
-            title: '售后申请已提交',
-            icon: 'none'
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.aftersaleAdd();
+      }).then(res => {
+        wx.redirectTo({
+          url: '/pages/afterSaleDetail/afterSaleDetail?id=' + res.data.id,
+          complete: () => {
+            that.setData({ loading: false });
+          }
         });
-
+        wx.showToast({
+          title: '售后申请已提交',
+          icon: 'none'
+        });
+      }).catch(err => {
         that.setData({ loading: false });
-      }
+      });
     });
   }
 

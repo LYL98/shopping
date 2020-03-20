@@ -1,7 +1,7 @@
 // pages/order/order.js
 //获取应用实例
 const app = getApp();
-import { Config, Constant } from './../../utils/index';
+import { Config, Constant, Http } from './../../utils/index';
 
 Page({
 
@@ -191,7 +191,7 @@ Page({
       url: Config.api.orderQuery,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: query,
       success: function (res) {
@@ -297,35 +297,19 @@ Page({
       confirmColor: '#00AE66',
       success: function (res) {
         if (res.confirm) {
-          that.setData({ loading: true });
-          wx.request({
-            url: Config.api.orderConfirmReceive,
-            header: {
-              'content-type': 'application/json',
-              'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-            },
-            method: 'POST',
-            data: {
-              id: id
-            },
-            success: function (res) {
-              if (res.statusCode == 200 && res.data.code == 0) {
+          that.setData({ loading: true }, () => {
+            Http.post(Config.api.orderConfirmReceive, {id: id})
+              .then(res => {
+                that.setData({ loading: false });
                 that.getOrderList();//重新获取详情
                 wx.showToast({
                   title: '订单已确认收货',
                   icon: 'none'
                 });
-              } else {
-                app.requestResultCode(res); //处理异常
-              }
-            },
-            complete: function (res) {
-              that.setData({ loading: false });
-              //判断是否网络超时
-              app.requestTimeout(res, () => {
-                that.confirmReceive(e);
+              })
+              .catch(err => {
+                that.setData({ loading: false });
               });
-            }
           });
         }
       }

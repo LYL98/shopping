@@ -1,0 +1,14 @@
+<!--pages/live-rep/live-rep.wxml-->
+<view class="page-live-rep">
+  <video 
+    id="video" 
+    src="{{items[index].media_url}}" 
+    controls 
+    autoplay 
+    direction="0" 
+    object-fit="fill"
+    enable-play-gesture
+    show-fullscreen-btn="{{false}}"
+    bindended="onEnded"
+  ></video>
+</view>

@@ -73,7 +73,7 @@ Page({
       url: config.api.upavatar,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       method:'POST',
       data:data,

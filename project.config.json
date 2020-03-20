@@ -4,13 +4,15 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
 		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -97,7 +99,7 @@
 					"id": 6,
 					"name": "商品详情",
 					"pathName": "pages/itemDetail/itemDetail",
-					"query": "id=84",
+					"query": "id=16732",
 					"scene": null
 				},
 				{

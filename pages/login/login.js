@@ -123,6 +123,7 @@ Page({
   signLogin() {
     let that = this;
     let { loginData } = that.data;
+    if (that.data.loading) return;
     that.setData({ loading: true }, ()=>{
       Http.post(Config.api.signLogin, {
         login_name: loginData.phone,

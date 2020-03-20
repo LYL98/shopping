@@ -95,11 +95,6 @@ Page({
     });
   },
 
-  //页面卸载时触发
-  onUnload() {
-    app.shoppingCartNum(); //计算购物车数量并显示角标
-  },
-
   //选择优惠券
   selectCoupon(){
     let { couponListData, address } = this.data;
@@ -151,7 +146,7 @@ Page({
       }, () => {
         Http.post(Config.api.orderCouponList, {
           items: data
-        }).then((res)=>{
+        }, { throttle: false }).then((res)=>{
           let cou = wx.getStorageSync('orderCouponSelectData');
           let csd = {};
           let rd = res.data;
@@ -207,7 +202,7 @@ Page({
       url: Config.api.orderPre,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       method: 'POST',
       data: {
@@ -311,6 +306,8 @@ Page({
       delivery_date: deliveryDate,
       is_presale: orderType === 'presale' ? true : false //是否预售订单
     };
+
+    if (that.data.orderLoading) return;
     that.setData({
       orderLoading: true
     }, ()=>{
@@ -335,11 +332,11 @@ Page({
           } else {
             // 如果未超过授信额度
             that.clearShoppingCart(); //清除购买的购物车
-            that.setData({
-              orderLoading: false
-            });
             wx.redirectTo({
-              url: '/pages/orderResult/orderResult?id=' + rd.id
+              url: '/pages/orderResult/orderResult?id=' + rd.id,
+              complete: () => {
+                that.setData({ orderLoading: false });
+              }
             });
           }
         }else{
@@ -362,12 +359,9 @@ Page({
         order_id: id,
         price: price
       },
+      isShowPay: true,
       payCallBack: function(res) {
         that.clearShoppingCart(); //清除购买的购物车
-        that.setData({
-          isShowPay: false,
-          orderLoading: false
-        });
         if (res === 'success') {
           /*===== 埋点 start ======*/
           app.actionRecordAdd({
@@ -377,16 +371,27 @@ Page({
           });
           /*===== 埋点 end ======*/
           wx.redirectTo({
-            url: `/pages/payResult/payResult?id=${id}&source=orderAdd`
+            url: `/pages/payResult/payResult?id=${id}&source=orderAdd`,
+            complete: () => {
+              that.setData({
+                isShowPay: false,
+                orderLoading: false
+              });
+            }
           });
         } else {
           wx.redirectTo({
-            url: '/pages/orderDetail/orderDetail?id=' + id
+            url: '/pages/orderDetail/orderDetail?id=' + id,
+            complete: () => {
+              that.setData({
+                isShowPay: false,
+                orderLoading: false
+              });
+            }
           });
         }
         wx.removeStorageSync('actionRecordShopCartId'); //删除系列号
       },
-      isShowPay: true
     });
   },
 
@@ -409,7 +414,8 @@ Page({
   },
 
   //页面卸载时
-  onUnload(){
+  onUnload: function() {
+    app.shoppingCartNum(); //计算购物车数量并显示角标
     wx.removeStorageSync('orderCouponListData');
     wx.removeStorageSync('orderCouponSelectData');
   }

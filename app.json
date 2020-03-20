@@ -36,22 +36,16 @@
     "pages/complain/complain",
     "pages/myDetail/myDetail",
     "pages/shootVideo/shootVideo",
-    "pages/playVideo/playVideo"
+    "pages/playVideo/playVideo",
+    "pages/live/live",
+    "pages/live-rep/live-rep"
   ],
-  "subpackages": [
-    {
-      "root": "packageLive",
-      "pages": [
-        "pages/home/home"
-      ],
-      "plugins": {
-        "live-player-plugin": {
-          "version": "1.0.0",
-          "provider": "wx2b03c6e691cd7370"
-        }
-      }
+  "plugins": {
+    "live-player-plugin": {
+      "version": "1.0.3",
+      "provider": "wx2b03c6e691cd7370"
     }
-  ],
+  },
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
@@ -78,6 +72,12 @@
         "text": "商品",
         "iconPath": "assets/img/item.png",
         "selectedIconPath": "assets/img/item_s.png"
+      },
+      {
+        "pagePath": "pages/live/live",
+        "text": "直播",
+        "iconPath": "assets/img/live.png",
+        "selectedIconPath": "assets/img/live_s.png"
       },
       {
         "pagePath": "pages/shoppingCart/shoppingCart",

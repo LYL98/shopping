@@ -75,9 +75,7 @@
 
 <view style="height: 160rpx;"></view>
 <view class="option-bottom">
-  <getFormId bindcallback="aftersaleAdd" disabled="{{loading}}">
-      <view class="option-btn">提交售后申请</view>
-  </getFormId>
+  <button class="option-btn" bind:tap="aftersaleAdd" disabled="{{loading}}" loading="{{loading}}">提交售后申请</button>
 </view>
 <!--类型-->
 <actionSheet reason="{{detail.reason}}" wx:if="{{isShow}}" bind:myevent="toggleToast"/>

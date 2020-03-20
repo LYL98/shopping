@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
+import { Http } from './../../utils/index';
 import verification from './../../utils/verification';
 import UpCos from './../../utils/upload-tencent-cos';
 
@@ -240,32 +241,25 @@ Page({
           title: that.data.vk[i],
           icon: 'none'
         });
+
+        return;
       }
     }
-  
-    wx.request({
-      url: config.api.editStore,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      method: 'POST',
-      data: that.data.edit,
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
+
+    if (that.data.loading) return;
+    that.setData({ loading: true }, () => {
+      Http.post(config.api.editStore, that.data.edit)
+        .then(res => {
           wx.navigateTo({
             url: '/pages/shop/shop',
+            complete: () => {
+              that.setData({ loading: false });
+            }
           });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.editStore();
+        })
+        .catch(() => {
+          that.setData({ loading: false });
         });
-      }
     });
   },
   cancel(){
@@ -285,7 +279,7 @@ Page({
       url: config.api.merchantStoreDetail,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: {
         id: id

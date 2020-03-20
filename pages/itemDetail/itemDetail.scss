@@ -43,6 +43,28 @@
   width: 100%;
   height: 100vw;
   position: relative;
+  >.video-view{
+    position: absolute;
+    z-index: 2;
+    background: #000;
+    width: 100vw;
+    height: 100vw;
+    >video{
+      width: 100vw;
+      height: 640rpx;
+    }
+    >.stop-btn{
+      background: #D8D8D8;
+      width: 156rpx;
+      height: 52rpx;
+      text-align: center;
+      line-height: 52rpx;
+      color: #242424;
+      font-size: 24rpx;
+      border-radius: 52rpx;
+      margin: 20rpx auto 0;
+    }
+  }
   >.temp-img{
     position: absolute;
     z-index: 1;
@@ -52,19 +74,30 @@
   >swiper{
     width: 100%;
     height: 100vw;
+    .img-item{
+      >.play-view{
+        position: absolute;
+        width: 120rpx;
+        height: 120rpx;
+        top: 50%;
+        left: 50%;
+        margin: -60rpx 0 0 -60rpx;
+      }
+      >.slide-image {
+        width: 100%;
+        height: 100vw;
+      }
+    }
   }
 }
 
-.slide-image {
-  width: 100%;
-  height: 100vw;
-}
+
 
 .dotwrap {
   position: absolute;
-  bottom: 34rpx;
-  right: 54rpx;
-  opacity: 0.86;
+  bottom: 30rpx;
+  right: 30rpx;
+  opacity: 0.6;
   background: #9d9990;
   border-radius: 100rpx;
   width: 70rpx;
@@ -140,6 +173,9 @@
     font-size: 28rpx;
     color: #242424;
     padding-bottom:22rpx;
+  }
+  .dec-video{
+    width: 100%;
   }
 }
 

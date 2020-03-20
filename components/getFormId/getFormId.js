@@ -1,4 +1,4 @@
-import { Config, Http } from './../../utils/index';
+import {Config, Http} from './../../utils/index';
 
 Component({
   options: {
@@ -17,14 +17,15 @@ Component({
   },
   methods: {
     //from提交
-    formSubmit(e){
+    formSubmit(e) {
       this.triggerEvent('callback');
       let formId = e.detail.formId;
-      if(formId === 'the formId is a mock one') return;
-      Http.post(Config.api.messageFormAdd, {
-        form_id: formId,
-        is_no_prompt: true
-      });
+      if (formId === 'the formId is a mock one') return;
+      Http.post(
+        Config.api.messageFormAdd,
+        {form_id: formId, is_no_prompt: true},
+        {handleError: false}
+      );
     }
   }
 })

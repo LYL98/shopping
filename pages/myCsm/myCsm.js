@@ -48,7 +48,7 @@ Page({
       url: config.api.myCsm,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {

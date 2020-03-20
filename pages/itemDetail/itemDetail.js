@@ -1,6 +1,7 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
+import { Http } from './../../utils/index';
 
 Page({
   /**
@@ -14,12 +15,22 @@ Page({
     vidoes: [],
     currentSwiper: 0,
     promotionData: {}, //全场活动数据
-    address: {}
+    address: {},
+    isShowVideo: false,
   },
+  //播放视频
+  playVideo(){
+    this.setData({ isShowVideo: true });
+  },
+  //停止播放
+  stopVideo(){
+    this.setData({ isShowVideo: false });
+  },
+  //滑动
   swiperChange: function (e) {
     this.setData({
       currentSwiper: e.detail.current
-    })
+    });
   },
   //加入购物车回调
   joinShoppingCart() {
@@ -87,7 +98,7 @@ Page({
       url: config.api.itemDetail,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: {
         id: id,
@@ -98,12 +109,11 @@ Page({
           let rd = res.data.data;
           let vidoes= [];
           if(rd.content){
-            let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] :'';
-            vidoes = m ? m.match(/https:[\'\"]?([^\'\"]*)[\'\"]?/ig):[];
-            for(let i =0; i<vidoes.length;i++) {
+            let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] : '';
+            vidoes = m ? m.match(/https:[\'\"]?([^\'\"]*)[\'\"]?/ig) : [];
+            for(let i =0; i < vidoes.length; i++) {
               vidoes[i] = vidoes[i].replace(/"/g,'')
             }
-
             rd.content = rd.content.replace(/<img/g, '<img style="width:100%;height:auto" ');
           }
           
@@ -132,7 +142,7 @@ Page({
       url: config.api.promotion,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {
@@ -160,7 +170,7 @@ Page({
       url: config.api.unifiedDescription,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: {
         province_code: address.province_code
@@ -190,66 +200,24 @@ Page({
   itemCollectionAdd(){
     let that = this;
     let { id } = that.data;
-    wx.request({
-      url: config.api.itemCollectionAdd,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        id: id
-      },
-      method: 'POST',
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          that.getItemDetail();
-          wx.showToast({
-            title: '已收藏',
-            icon: 'none'
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.itemCollectionAdd();
-        });
-      }
+    Http.post(config.api.itemCollectionAdd, {id: id}, {throttle: false}).then(res => {
+      that.getItemDetail();
+      wx.showToast({
+        title: '已收藏',
+        icon: 'none'
+      });
     });
   },
   //取消收藏
   itemCollectionCancel() {
     let that = this;
     let { id } = that.data;
-    wx.request({
-      url: config.api.itemCollectionCancel,
-      header: {
-        'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        id: id
-      },
-      method: 'POST',
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          that.getItemDetail();
-          wx.showToast({
-            title: '已取消收藏',
-            icon: 'none'
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.itemCollectionCancel();
-        });
-      }
+    Http.post(config.api.itemCollectionCancel, {id: id}, {throttle: false}).then(res => {
+      that.getItemDetail();
+      wx.showToast({
+        title: '已取消收藏',
+        icon: 'none'
+      });
     });
   },
   //查看大图
@@ -278,5 +246,6 @@ Page({
     if(index === 0){
       this.setData({ tempOneImg: '' });
     }
-  }
+  },
+
 })

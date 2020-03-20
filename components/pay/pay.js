@@ -60,7 +60,7 @@ Component({
         url: config.api.merchantBalance,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         success: function (res) {
           if (res.statusCode == 200 && res.data.code === 0) {
@@ -85,24 +85,27 @@ Component({
       });
     },
     //确认支付
-    submitOrderPay(){
+    submitOrderPay() {
       let that = this;
+      if (that.data.loading) return;
       let { useType } = that.data;
-      that.setData({ loading: true });
-      //获取oepnid
-      app.codeGetOpenId((openid) => {
-        if (openid === 0){
-          that.setData({ loading: false });
-        }else{
-          if (useType === 'balanceTopup'){
-            //余额充值
-            that.balanceTopup(openid);
+      that.setData({ loading: true }, () => {
+        //获取oepnid
+        app.codeGetOpenId((openid) => {
+          if (openid === 0){
+            that.setData({ loading: false });
           }else{
-            //订单支付
-            that.orderPay(openid);
+            if (useType === 'balanceTopup'){
+              //余额充值
+              that.balanceTopup(openid);
+            }else{
+              //订单支付
+              that.orderPay(openid);
+            }
           }
-        }
+        });
       });
+
     },
     //订单支付
     orderPay(openid) {
@@ -113,7 +116,7 @@ Component({
         url: config.api.orderPay,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         method: 'POST',
         data: {
@@ -164,7 +167,7 @@ Component({
         url: config.api.balanceTopup,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         method: 'POST',
         data: {
@@ -208,7 +211,7 @@ Component({
         url: config.api.orderPayConfirm,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         method: 'POST',
         data: {
@@ -240,7 +243,7 @@ Component({
         url: config.api.balanceTopupConfirm,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
         },
         method: 'POST',
         data: {

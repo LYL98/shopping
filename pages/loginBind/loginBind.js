@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp();
 const config = require('./../../utils/config');
+import { Http } from './../../utils/index';
 const verification = require('./../../utils/verification');
 const md5 = require('./../../utils/md5');
 
@@ -80,44 +81,24 @@ Page({
     let that = this;
     let { bindData } = that.data;
 
-    that.setData({ loading: true });
-
-    wx.request({
-      url: config.api.signWeappBind,
-      header: {
-        'content-type': 'application/json',
-        //'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      method: 'POST',
-      data: {
+    if (that.data.loading) return;
+    that.setData({ loading: true }, () => {
+      Http.post(config.api.signWeappBind, {
         phone: bindData.phone,
         password: md5(bindData.password),
         weapp_openid: bindData.weapp_openid,
         unionid: bindData.unionid
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code === 0) {
-          wx.setStorageSync("loginUserInfo", res.data.data); //写登录信息
-          wx.reLaunch({
-            url: '/pages/index/index',
-          });
-        } else {
-          wx.showModal({
-            title: "提示",
-            content: res.data.message,
-            confirmText: "我知道了",
-            confirmColor: "#00AE66",
-            showCancel: false
-          });
-        }
-      },
-      complete: function (res) {
-        that.setData({ loading: false });
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.bindPhone();
+      }).then(res => {
+        wx.setStorageSync("loginUserInfo", res.data); //写登录信息
+        wx.reLaunch({
+          url: '/pages/index/index',
         });
-      }
+        that.setData({ loading: false });
+      }).catch(err => {
+        that.setData({ loading: false });
+      });
+
     });
+
   }
 })

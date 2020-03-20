@@ -1,0 +1,62 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+
+<view class="page-live">
+  <navbar 
+    fixed 
+    width="187.5" 
+    bind:navtouch="handleNavTouch" 
+    list="{{statusList}}" 
+    slider="{{0.1}}"
+  />
+
+  <view class="main">
+    
+    <view 
+      class="item" 
+      wx:for="{{list.items}}" 
+      wx:for-item="item" 
+      wx:for-index="index"
+      wx:key="index"
+    >
+      <navigator 
+        class="prev-img" 
+        wx:if="{{item.live_status == 103}}" 
+        url="/pages/live-rep/live-rep?roomid={{item.roomid}}"
+      >
+        <image src="{{item.cover_img}}" class="bg-img-container-banner"></image>
+      </navigator>
+      <navigator 
+        class="prev-img" 
+        wx:else
+        url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomid}}"
+      >
+        <image src="{{item.cover_img}}" class="bg-img-container-banner"></image>
+      </navigator>
+
+      <view class="footer">
+        <view class="desc">
+          <view class="title">
+            {{ item.name }}
+          </view>
+          <view class="status">
+            <text class="living" wx:if="{{item.live_status == 101}}">直播中</text>
+            <text class="soon" wx:if="{{item.live_status == 102}}">{{item.start_time}}开播</text>
+            <text class="end" wx:if="{{item.live_status == 103}}">直播已结束</text>
+          </view>
+        </view>
+        <view class="action">
+          <navigator class="btn-round" wx:if="{{item.live_status == 101}}" url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomid}}">立即进入</navigator>
+          <navigator class="btn-round" wx:if="{{item.live_status == 102}}" url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomid}}">立即订阅</navigator>
+          <navigator class="btn-round" wx:if="{{item.live_status == 103}}" url="/pages/live-rep/live-rep?roomid={{item.roomid}}">直播回放</navigator>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="load-more" wx:if="{{list.num > 0}}">{{tools.returnMore(list.num, query)}}</view>
+
+  <defaultPage currentPage="live" wx:elif="{{list.num === 0}}"></defaultPage>
+</view>
+
+

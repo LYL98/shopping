@@ -47,7 +47,7 @@ Page({
       url: config.api.merchantStoreList,
       header: {
         'content-type': 'application/json',
-        'Durian-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       data: from ? "" : query,
       success: function (res) {

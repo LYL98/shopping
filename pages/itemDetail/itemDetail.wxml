@@ -6,17 +6,23 @@
       <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
     </view>
     <view class="img-view">
-      <swiper autoplay="{{tempOneImg ? false : true}}" interval="3000" bindchange="swiperChange">
-        <block wx:for="{{detail.images}}" wx:key="detail.images" class="img-item">
-          <swiper-item>
+      <!--视频-->
+      <view class="video-view" wx:if="{{isShowVideo}}">
+        <video src="{{tencentPath + detail.video}}" id="swiper-video" autoplay></video>
+        <view class="stop-btn" hover-class="link-active" bind:tap="stopVideo">退出播放</view>
+      </view>
+      <swiper bindchange="swiperChange">
+        <block wx:for="{{detail.images}}" wx:key="item">
+          <swiper-item class="img-item">
+            <view class="play-view" wx:if="{{detail.video && index == 0}}" bind:tap="playVideo">
+              <image src="./../../assets/img/play.png" style="width: 120rpx; height: 120rpx;" />
+            </view>
             <image src="{{tencentPath + item + '_watermark750x750'}}" class="slide-image" data-src="{{detail.images}}" data-index="{{index}}" bindtap="previewImage" bindload="oneImgLoad"/>
           </swiper-item>
         </block>
       </swiper>
       <image wx:if="{{tempOneImg}}" src="{{tencentPath + tempOneImg}}" class="temp-img" style="width: 100%; height: 100vw;" />
-      <view class="dotwrap">
-        {{currentSwiper + 1}}/{{detail.images.length}}
-      </view> 
+      <view class="dotwrap">{{currentSwiper + 1}}/{{detail.images.length}}</view>
     </view>
   </view>
   <view class="item-title">{{detail.title}}</view>
@@ -121,7 +127,7 @@
   <view class="introduce">
     <view class="dec-title">商品详情</view>
     <view>
-      <video wx:for="{{vidoes}}" wx:key="index" src="{{item}}" id="v_{{index}}" ></video>
+      <video class="dec-video" wx:for="{{vidoes}}" wx:key="index" src="{{item}}" id="dec-video{{index}}"></video>
       <rich-text nodes="{{detail.content || '暂无介绍'}}"></rich-text>
     </view>
   </view>

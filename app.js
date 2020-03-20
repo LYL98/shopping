@@ -43,8 +43,19 @@ App({
     system: null,
     gio: gio,
     gioIsSetUserId: false,
-    gio: gio,
   },
+
+  /**
+   * 获取登录用户的 token_key 和 access_token
+   */
+  getTokenKey() {
+    return this.globalData.loginUserInfo.token_key || wx.getStorageSync('loginUserInfo').token_key;
+  },
+
+  getAccessToken() {
+    return this.globalData.loginUserInfo.access_token || wx.getStorageSync('loginUserInfo').access_token;
+  },
+
   //登录页面回调（临时改动，可登录别的用户）
   loginCallBack(loginData, data) {
     let that = this;
@@ -80,7 +91,7 @@ App({
         url: Config.api.signIsLogin,
         header: {
           'content-type': 'application/json',
-          'Durian-Custom-Access-Token': resData.access_token
+          'Vesta-Custom-Access-Token': resData.access_token
         },
         success: function (res) {
           if (res.statusCode == 200 && res.data.code == 0) {
@@ -489,8 +500,7 @@ App({
         member_id: member.id || memberSto.id || '',
         phone_model: `机型：${sys.model}；系统：${sys.system}；微信版本：${sys.version}`,
         ...data,
-        is_no_prompt: true
-      })
+      }, { throttle: false, handleError: false });
     }
   },
   //贝塞尔曲线
