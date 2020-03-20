@@ -9,7 +9,9 @@ Page({
    */
   data: {
     roomid: '',
-    media_url: ''
+    media_url: '',
+    items: [],
+    index: 0,
   },
 
   /**
@@ -44,11 +46,11 @@ Page({
         if (rd.num < 1) return;
         if (!Array.isArray(rd.items)) return;
 
-        let media = rd.items[0]; // 取该房间最近的一次回放记录。
-        if (typeof media !== 'object') return;
+        // let media = rd.items[0]; // 取该房间最近的一次回放记录。
+        // if (typeof media !== 'object') return;
 
-        let media_url = media.media_url;
-        this.setData({ media_url: media_url });
+        // let media_url = media.media_url;
+        this.setData({ items: rd.items, index: 0 });
         
         wx.setNavigationBarTitle({
           title: (media.room && media.room.name) || '直播回放'
@@ -58,6 +60,13 @@ Page({
       .catch(() => {
         wx.hideNavigationBarLoading();
       });
+  },
+
+  onEnded() {
+    const { index, items } = this.data;
+    if (index < items.length - 1) {
+      this.setData({index: index + 1});
+    }
   },
 
   /**
