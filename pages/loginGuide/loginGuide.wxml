@@ -1,6 +1,6 @@
 <image class="bg-img" src="./../../assets/img/login_bg.png" />
 <view class="content">
-    <button class="login-btn" disabled="{{!isConsent}}" bind:tap="skipPage">立即登录</button>
+    <button class="login-btn {{!isConsent && 'disabled'}}" bind:tap="skipPage">立即登录</button>
 </view>
 <view class="consent">
     <view class="img" hover-class="link-active" bind:tap="checkConsent">

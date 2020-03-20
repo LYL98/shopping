@@ -15,15 +15,22 @@ Page({
     vidoes: [],
     currentSwiper: 0,
     promotionData: {}, //全场活动数据
-    address: {}
+    address: {},
+    isShowVideo: false,
+  },
+  //播放视频
+  playVideo(){
+    this.setData({ isShowVideo: true });
+  },
+  //停止播放
+  stopVideo(){
+    this.setData({ isShowVideo: false });
   },
   //滑动
   swiperChange: function (e) {
     this.setData({
       currentSwiper: e.detail.current
     });
-    let cvc = wx.createVideoContext('swiper-video');
-    cvc.pause();
   },
   //加入购物车回调
   joinShoppingCart() {
