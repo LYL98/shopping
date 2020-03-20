@@ -20,7 +20,7 @@
   &::after{
     border: 0;
   }
-  &[disabled]{
+  &.disabled{
     color: #fff !important;
     background: #BCC4C0 !important;
     box-shadow: 0 0 8rpx 0 rgba(188,196,192,0.40) !important;

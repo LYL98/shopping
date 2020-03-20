@@ -14,6 +14,13 @@ Page({
   },
   //跳转
   skipPage(){
+    if(!this.data.isConsent){
+      wx.showToast({
+        title: '请勾选同意\r\n《用户协议》和《隐私政策》',
+        icon: 'none'
+      });
+      return;
+    }
     wx.navigateTo({
       url: '/pages/login/login'
     })
