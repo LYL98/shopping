@@ -117,13 +117,6 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "登录绑定",
-					"pathName": "pages/loginBind/loginBind",
-					"query": "",
-					"scene": null
-				},
-				{
 					"id": 11,
 					"name": "申请售后服务",
 					"pathName": "pages/afterSale/afterSale",

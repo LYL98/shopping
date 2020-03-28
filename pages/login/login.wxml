@@ -1,32 +1,25 @@
-<!--pages/login/login.wxml-->
-<view>
-  <view class="logo" >Hi,请先登录哦~</view>
-  <view class="input-view">
-    <image class="login_tel" src="{{login_tel}}" />
-    <input placeholder-class="phcolor" type="number" placeholder="请输入手机号码" data-fieldkey="phone" bindinput="inputChange"/>
-  </view>
-  <view class="input-view">
-    <image class="login_pass" src="{{login_pass}}" />
-    <input placeholder-class="phcolor" type="password" placeholder="请输入密码" data-fieldkey="password" bindinput="inputChange"/>
-  </view>
-  <view class="protocol font-size26">
-    <text class="t1">我已阅读并同意</text>
-    <navigator url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/protocol.html">《用户协议》</navigator>
-    <text>和</text>
-    <navigator url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/privacy_policy.html">《隐私政策》</navigator>
-  </view>
-  <view class="btn-view">
-    <button class="btn2" bindtap="submitLogin">
-      同意并登录
-    </button>
-    <navigator class="cancel-btn" open-type="navigateBack">暂不登录</navigator>
-  </view>
-  <loading loading="{{loading}}"/>
-</view>
+<!--获取手机号-->
+<block wx:if="{{!myInfo.phone}}">
+    <image class="d-b" src="./../../assets/img/login/login1.png" style="width: 100%; height: 900rpx;" />
+    <view class="btn-view">
+        <getPhoneNumber fromPage="login" bind:callback="getPhoneNumberCallBack"/>
+    </view>
+</block>
 
-<view class="login-btn-view t-c" wx:if="{{loginRes.code}}">
-  <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" type="primary" class="login-btn">
-    <image src="{{login_wx}}" class="image"></image>
-  </button>
-  <view>微信登录</view>
-</view>
+<!--授权登录-->
+<block wx:elif="{{!myInfo.weapp_openid}}">
+    <image class="d-b" src="./../../assets/img/login/login2.png" style="width: 100%; height: 900rpx;" />
+    <view class="btn-view">
+        <getLogin bind:callback="getLoginCallBack"/>
+    </view>
+</block>
+
+<!--已登录-->
+<block wx:else>
+    <image class="d-b" src="./../../assets/img/login/login2.png" style="width: 100%; height: 900rpx;" />
+    <view class="btn-view">
+        <navigator class="btn2 btn-primary btn-size-circle-88" open-type="reLaunch" url="/pages/index/index">登录</navigator>
+    </view>
+</block>
+
+<navigator class="botton-btn t-c" open-type="navigateBack">暂不登录</navigator>

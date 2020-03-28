@@ -8,7 +8,7 @@
   <view class="link-active {{query.display_class_id == '' && 'active'}}" bindtap="selectCategory" data-category="" >全部</view>
   <view class="link-active {{query.display_class_id === item.id && 'active'}}"
     wx:for="{{categoryList}}"
-    wx:key="item.id"
+    wx:key="index"
     bindtap="selectCategory"
     data-category="{{item.id}}"
     wx:if="{{item.title}}" >{{item.title}}</view>
@@ -36,7 +36,7 @@
   </view>
 </view>
 <view class="item-view skeleton">
-  <view class="item" wx:for="{{dataItem.items}}" wx:key="item.id">
+  <view class="item" wx:for="{{dataItem.items}}" wx:key="index">
     <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-id="{{item.id}}">
       <view class="img">
         <view class="mark">

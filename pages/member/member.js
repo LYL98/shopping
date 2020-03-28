@@ -31,6 +31,7 @@ Page({
       let loginUserId = wx.getStorageSync("loginUserId");
       let shoppingCartData = wx.getStorageSync('shoppingCartData');
       let searchData = wx.getStorageSync('searchData');
+      app.updateLoginInfo({}); //系统登录信息
       wx.clearStorageSync();
       if (loginUserId) {
         wx.setStorageSync('loginUserId', loginUserId);

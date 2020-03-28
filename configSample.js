@@ -36,6 +36,3 @@ export const WeiXinAppIds = ['wxxxxxxxxxxxxxxx'];
 
 //版本
 export const Version = 'Vx.x.x';
-
-//api版本
-export const ApiVersion = '/0000';

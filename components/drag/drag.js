@@ -1,5 +1,4 @@
 import config from './../../utils/config';
-const app = getApp();
 
 var x, y, x1, y1, x2, y2;
 
@@ -38,8 +37,7 @@ Component({
             this.setData({
                 content: arr_m
             })
-    
-            var width = self.data.all_width = app.globalData.windowWidth, _w = 0, row = 0, column = 0;
+            var width = self.data.all_width = wx.getSystemInfoSync().windowWidth, _w = 0, row = 0, column = 0;
             var arr = [].concat(self.data.content)
             arr.forEach(function (n, i) {
                 n.left = (self.data.u_w + self.data.s_h) * row + self.data.s_h;
