@@ -1,7 +1,7 @@
 /***
  * 导入配置
  */
-import { Conn, RequestHttpDev, RequestHttpPre, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds, Version, ApiVersion } from './../config';
+import { Conn, RequestHttpDev, RequestHttpPre, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds, Version } from './../config';
 
 //config
 let requestHttp = '';
@@ -12,15 +12,14 @@ if(Conn === 'dev'){
 }else{
   requestHttp = RequestHttpPro;
 }
-let apiC = requestHttp + ApiVersion + '/c';
-let apiCommon = requestHttp + ApiVersion + '/common';
+let apiC = requestHttp + '/c';
+let apiCommon = requestHttp + '/common';
 
 module.exports = {
   api: {
-    signWeappAuth: apiC + '/sign/weapp_oauth',//微信授权登录
-    signWeappBind: apiC + '/sign/weapp/bind',//微信绑定
+    signLogin: apiC + '/login',//登录
+    signUpdateOUID: apiC + '/update_ouid', //更新用户的oid和uid
     signIsLogin: apiC + '/sign/is_login',//判断是否登录
-    signLogin: apiC + '/sign/login',//登录
     signUnBindWechat: apiC + '/sign/unbind_wechat', //解绑定微信
     profilePasswordModify: apiC + '/profile/password_modify',//用户密码修改
     tencentUploadPresignedUrl: apiCommon + '/tencent/presigned_url',//获取腾讯presigned_url

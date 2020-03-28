@@ -32,6 +32,8 @@ Page({
       amount_delivery: '运费退还',
       weight: '少称',
       num: '缺货/错货',
+      num_short: '缺货',
+      num_error: '错货',
       big_order_bonus: '大单优惠',
       other: '其他',
     },

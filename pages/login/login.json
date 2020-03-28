@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "",
   "usingComponents": {
-    "loading": "/components/loading/loading"
+    "getLogin": "/components/getLogin/getLogin",
+    "getPhoneNumber": "/components/getPhoneNumber/getPhoneNumber"
   }
 }

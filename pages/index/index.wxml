@@ -26,7 +26,7 @@
     </view>
     
     <view class="tags-list">
-      <navigator wx:for="{{tagsList}}" wx:key="item.title" url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" bind:tap="clickTags" data-tag="{{item}}">
+      <navigator wx:for="{{tagsList}}" wx:key="index" url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" bind:tap="clickTags" data-tag="{{item}}">
         <image class="skeleton-rect" wx:if="{{item.image}}" src="{{item.image}}"></image>
         <image class="img-none skeleton-rect" wx:else></image>
         <view><text class="skeleton-rect">{{item.title}}</text></view>
@@ -50,7 +50,7 @@
     </view>
     <view class="recently-collect-content">
       <view wx:for="{{dataMap}}" wx:for-item="dataMapItem" wx:key="index" class="{{index === 0 ? 'left' : 'right'}}">
-        <view class="content-item" wx:for="{{dataMapItem}}" wx:key="item.id">
+        <view class="content-item" wx:for="{{dataMapItem}}" wx:key="index">
           <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-id="{{item.id}}">
             <view class="img">
               <view class="mark">

@@ -1,81 +1,11 @@
-/* pages/login/login.wxss */
-.logo{
-  color:#242424;
-  font-size: 56rpx;
-  padding: 110rpx 0 79rpx 56rpx;
-}
-.input-view{
-  border-bottom: 1rpx solid #f3f4f6;
-  height: 120rpx;
-  display: flex;
-  margin: 0 50rpx;
-  > input{
-    height: 48rpx;
-    line-height: 48rpx;
-    margin: 36rpx 0;
-    width: 100%;
-  }
-}
-
-.phcolor{
-  color:#C7C7C7 
-}
-.login_tel, .login_pass{
-  height: 34rpx;
-  width: 26rpx;
-  line-height: 48rpx;
-  margin: 43rpx 43rpx 43rpx 5rpx;
-}
-.protocol{
-  display: flex;
-  margin-top: 36rpx;
-  >text{
-    color: #808080;
-    &.t1{
-      margin-left: 50rpx;
-    }
-  }
-  >navigator{
-    color: #529EE9;
-  }
-}
 .btn-view{
-  margin: 50rpx 55rpx 0;
-  height: 88rpx;
-  line-height: 88rpx;
-  button{
-    background:#00AE66;
-    color: #fff;
-    border-radius: 44rpx;
-  }
-  > .cancel-btn {
-    width: 200rpx;
-    margin: 20rpx auto 0;
-    color: #ccc;
-    text-align: center;
-  }
+    margin: 117rpx 105rpx 20rpx;
 }
-.login-btn-view{
-  .login-btn{
-    margin-top: 294rpx;
-    width: 108rpx;
-    height: 108rpx;
-    background: #fff;
-    border-radius: 50%;
-    padding: 0;
-    &::after{
-      border: 0;
-      border-radius: 50%;
-    }
-    .image{
-      width: 108rpx;
-      height: 108rpx;
-    }
-  }
-  >view{
-    text-align: center;
-    color: #A5A5A5;
-    font-size: 28rpx;
-    margin-top: 24rpx;
-  }
+.botton-btn{
+    color: #666;
+    width: 140rpx;
+    font-size: 26rpx;
+    height: 46rpx;
+    line-height: 46rpx;
+    margin: 0 auto;
 }
