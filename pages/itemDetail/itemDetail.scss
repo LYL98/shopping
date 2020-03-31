@@ -1,9 +1,8 @@
 .input-item{
-  &,discount-item{
-
+  &.discount-item{
     align-items: flex-start;
   }
-  &,reduction-item {
+  &.reduction-item {
     align-items: flex-start;
   }
   >.title{
@@ -143,18 +142,36 @@
   margin: 0 30rpx 50rpx;
   >.price-unit {
     flex: 1;
-    color: #ff5252;
-    font-size: 40rpx;
-    //未报价
-    > text {
-      color: #999;
-      font-size: 28rpx;
-    }
     //原价
     >.price-origin{
       color: #C7C7C7;
       font-size: 22rpx;
       text-decoration: line-through;
+    }
+    >.price{
+      font-size: 40rpx;
+      color: #ff5252;
+      >.icon{
+        margin-right: 6rpx;
+      }
+    }
+    //未报价
+    > text {
+      color: #999;
+      font-size: 28rpx;
+    }
+    .min-num{
+      font-size: 24rpx;
+      border: 1rpx solid #FF6868;
+      padding: 4rpx;
+      color: #FF6868;
+      line-height: 24rpx;
+      display: inline-block;
+      border-radius: 8rpx 8rpx 8rpx 0;
+      margin-left: 10rpx;
+      position: relative;
+      top: -6rpx;
+      font-weight: normal;
     }
   }
   >.repertory {
@@ -209,6 +226,7 @@
     }
     > .sh-cart-num {
       position: absolute;
+      z-index: 2;
       top: 10rpx;
       left: 56%;
       background: #ff5252;

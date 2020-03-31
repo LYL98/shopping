@@ -19,6 +19,7 @@ Page({
     isAllSelect: true,
     totalNum: 0,
     totalPrice: 0,
+    discountsPrice: 0,
     isEdit: false,
     initLoad: true,
     closeStore: true,
@@ -220,7 +221,7 @@ Page({
   //更新页面数据
   updateData(data) {
     let that = this;
-    let totalNum = 0, totalPrice = 0;
+    let totalNum = 0, totalPrice = 0, discountsPrice = 0;
     let { dataItem } = that.data;
     if (data) dataItem = data;
 
@@ -243,7 +244,9 @@ Page({
             dataItem[i].select_num = d[j].num;
 
             if (dataItem[i].is_select && status) {
-              totalPrice += dataItem[i].price_sale * dataItem[i].select_num; //价格加总
+              let td = this.getStepPrices(dataItem[i]);
+              totalPrice += td.totalPrice;
+              discountsPrice += td.discountsPrice;
             }
             if (dataItem[i].is_select) {
               totalNum += dataItem[i].select_num;
@@ -260,7 +263,8 @@ Page({
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
-        totalPrice: totalPrice
+        totalPrice: totalPrice,
+        discountsPrice: discountsPrice,
       }, () => {
         that.judgeIsAllSelect();//判断是否全选
       });
@@ -268,11 +272,38 @@ Page({
       that.setData({
         dataItem: [],
         totalNum: 0,
-        totalPrice: 0
+        totalPrice: 0,
+        discountsPrice: 0
       });
     }
     app.shoppingCartNum();
 
+  },
+
+  //阶梯价
+  getStepPrices(data){
+    let d = data.step_prices,
+        num = data.select_num,
+        totalPrice = data.price_sale * data.select_num,
+        discountsPrice = 0;
+    if(d && d.length > 0){
+      for(let i = 0; i < d.length; i++){
+        if(i === d.length - 1 && num >= d[i].num){
+          totalPrice = d[i].discount * data.select_num;
+          discountsPrice = (data.price_sale - d[i].discount) * data.select_num;
+          break;
+        }
+        if(i < d.length - 1 && num >= d[i].num && num <= d[i + 1].num){
+          totalPrice = d[i].discount * data.select_num;
+          discountsPrice = (data.price_sale - d[i].discount) * data.select_num;
+          break;
+        }
+      }
+    }
+    return {
+      totalPrice: totalPrice,
+      discountsPrice: discountsPrice
+    };
   },
 
   //获取购物车数据

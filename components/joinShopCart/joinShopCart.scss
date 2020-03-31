@@ -23,6 +23,31 @@
     font-size:24rpx;
     position: relative;
     z-index: 1;
+    >.step-prices-hint{
+      position: absolute;
+      color: #FF6868;
+      //商品详情页
+      &.item-detail{
+        background: #fff;
+        left: -370rpx;
+        right: -30rpx;
+        top: -61rpx;
+        height: 60rpx;
+        line-height: 60rpx;
+        text-align: center;
+        font-size: 28rpx;
+        border-top: 1rpx solid #eee;
+      }
+      //购物车页
+      &.shopping-cart{
+        left: -300rpx;
+        right: -25rpx;
+        top: 60rpx;
+        height: 26rpx;
+        line-height: 26rpx;
+        font-size: 22rpx;
+      }
+    }
     >.join-btn, >.presale-btn{
       background: #00AE66;
       color: #fff;

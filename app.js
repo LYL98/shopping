@@ -77,6 +77,7 @@ App({
             }
             typeof callBack == "function" && callBack(rd);
           } else {
+            that.updateLoginInfo({});
             wx.reLaunch({
               url: '/pages/loginGuide/loginGuide'
             });
@@ -90,6 +91,7 @@ App({
 
       });
     } else {
+      that.updateLoginInfo({});
       wx.reLaunch({
         url: '/pages/loginGuide/loginGuide'
       });

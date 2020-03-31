@@ -14,6 +14,11 @@
     <view wx:else>
       <!--数量大于0的情况start-->
       <view class="plus-minus {{size}}" wx:if="{{num > 0}}">
+        <!--阶梯优惠提示-->
+        <view class="step-prices-hint {{sourcePage === 'itemDetail' && 'item-detail'}} {{sourcePage === 'shoppingCart' && 'shopping-cart'}}" wx:if="{{stepPricesHint}}">
+          {{stepPricesHint}}
+        </view>
+
         <view class="plus-minus-view">
           <view class="btn minus" bindtap="down">
             <image src="{{size =='medium' ? minusIndexSrc : minusSrc}}"></image>

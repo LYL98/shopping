@@ -58,7 +58,11 @@
     <image src="{{isAllSelect ? checkedSSrc : checkedSrc}}"></image>全选
   </view>
   <view class="total-price" wx:if="{{!isEdit}}">
-    <text class="hint">不含运费</text>合计:<text class="price"> ￥{{tools.returnPrice(totalPrice)}}</text>
+    <view class="hint">不含运费</view>
+    <view class="total-discounts">
+      <view class="total">合计:<text class="price"> ￥{{tools.returnPrice(totalPrice)}}</text></view>
+      <view class="discounts" wx:if="{{discountsPrice}}">已优惠:<text> ￥{{tools.returnPrice(discountsPrice)}}</text></view>
+    </view>
   </view>
   <view class="total-price" wx:else></view>
   <view class="btn" wx:if="{{!isEdit}}">

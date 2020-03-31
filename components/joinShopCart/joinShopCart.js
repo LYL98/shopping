@@ -46,7 +46,8 @@ Component({
     stepPricesIndex: -1,
     isShowInput: false, //手动输入
     keyHeight: 0,
-    inputNum: ''
+    inputNum: '',
+    stepPricesHint: '', //阶梯价格优惠提示
   },
 
   //监听
@@ -88,6 +89,8 @@ Component({
       that.setData({
         num: num,
         tempNum: num
+      }, ()=>{
+        this.setStepPricesHint();
       });
       let ww = app.globalData.ww;
       let x = ww - (ww / 4) - (ww / 4 / 2);
@@ -171,21 +174,21 @@ Component({
       let { itemData } = this.data;
       if(num < itemData.min_num_per_order){
         wx.showToast({
-          title: '件数小于最小订货数',
+          title: `该商品${itemData.min_num_per_order}件起售`,
           icon: 'none'
         });
         return false;
       }
       if(num > itemData.order_num_max){
         wx.showToast({
-          title: '件数超过最大订货数',
+          title: `该商品最大订货数${itemData.order_num_max}件`,
           icon: 'none'
         });
         return false;
       }
       if(num > itemData.item_stock){
         wx.showToast({
-          title: '库存只有' + itemData.item_stock + '件',
+          title: '该商品库存只有' + itemData.item_stock + '件',
           icon: 'none'
         });
         return false;
@@ -198,12 +201,12 @@ Component({
       let { itemData } = this.data;
       if (itemData.order_num_max >= itemData.item_stock){
         wx.showToast({
-          title: '库存只有' + itemData.item_stock + '件',
+          title: '该商品库存只有' + itemData.item_stock + '件',
           icon: 'none'
         });
       }else{
         wx.showToast({
-          title: '已超最大订货件数',
+          title: `该商品最大订货数${itemData.order_num_max}件`,
           icon: 'none'
         });
       }
@@ -220,8 +223,19 @@ Component({
     },
     //输入法弹起
     inputHeightChange(e){
-      let keyHeight = e.detail.height;
-      this.setData({ keyHeight });
+      let h = e.detail.height;
+      let systemInfo = wx.getSystemInfoSync();
+      // 状态栏的高度
+      let ktxStatusHeight = systemInfo.statusBarHeight;
+      // 导航栏的高度
+      let navigationHeight = 44;
+      // window的高度
+      let ktxWindowHeight = systemInfo.windowHeight;
+      // 屏幕的高度
+      let ktxScreentHeight = systemInfo.screenHeight;
+      // 底部tabBar的高度
+      let tabBarHeight = ktxScreentHeight - ktxStatusHeight - navigationHeight - ktxWindowHeight + 5;
+      this.setData({ keyHeight: h - tabBarHeight });
     },
     //失去焦点
     inputBlur(){
@@ -361,6 +375,33 @@ Component({
         fun();//调用内部方法
       }
       
+    },
+
+    //阶梯价提示
+    setStepPricesHint(){
+      let { num, itemData, stepPricesHint, sourcePage } = this.data;
+      //如不是详情页和购物车
+      if(sourcePage !== 'itemDetail' && sourcePage !== 'shoppingCart') return;
+
+      let d = itemData.step_prices;
+      if(d && d.length > 0){
+        stepPricesHint = '';
+        for(let i = 0; i < d.length; i++){
+          if(i === d.length - 1 && num >= d[i].num){
+            stepPricesHint = `已享￥${Util.returnPrice(d[i].discount)}/件`;
+            break;
+          }
+          if(i < d.length - 1 && num >= d[i].num && num <= d[i + 1].num){
+            stepPricesHint = `已享￥${Util.returnPrice(d[i].discount)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].discount)}/件`;
+            break;
+          }
+          if(i === 0 && num < d[i].num){
+            stepPricesHint = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].discount)}/件`;
+            break;
+          }
+        }
+        this.setData({ stepPricesHint });
+      }
     },
 
     /**

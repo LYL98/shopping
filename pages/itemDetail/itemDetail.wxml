@@ -28,11 +28,16 @@
   <view class="item-title">{{detail.title}}</view>
   <view class="repertory-price">
     <view class="price-unit" wx:if="{{detail.is_quoted}}">
-      ￥{{tools.returnPrice(detail.price_sale)}}
-      <text class="price-origin" wx:if="{{detail.price_origin > detail.price_sale}}">原价:￥{{tools.returnPrice(detail.price_origin)}}</text>
+      <view class="price-origin" wx:if="{{detail.price_origin > detail.price_sale}}">原价:￥{{tools.returnPrice(detail.price_origin)}}</view>
+      <view class="price">
+        <image class="icon" src="./../../assets/img/itemDetail/price.png" style="width: 30rpx; height: 30rpx;"/>
+        <text>￥{{tools.returnPrice(detail.price_sale)}}</text>
+        <text class="min-num" wx:if="{{detail.min_num_per_order}}">{{detail.min_num_per_order}}件起售</text>
+      </view>
     </view>
     <view class="price-unit" wx:else>
       <text>今日未报价</text>
+      <text class="min-num" wx:if="{{detail.min_num_per_order}}">{{detail.min_num_per_order}}件起售</text>
     </view>
     <view class="repertory">
       <text>{{tools.returnItemStock(detail)}}</text>
@@ -43,19 +48,16 @@
 
   <view class="border-across1"></view>
 
-  <!--满折start-->
-  <view class="input-item discount-item" wx:if="{{detail.promotion && detail.promotion.id}}">
+  <!--单品优惠start-->
+  <view class="input-item discount-item" wx:if="{{detail.step_prices && detail.step_prices.length > 0}}">
     <view class="title">
-      <text class="discount">满折</text>
+      <text class="discount">优惠</text>
     </view>
     <view class="content">
-      <!--单品满折start-->
-      <view wx:if="{{detail.promotion.promotion_type === 'type_discount'}}">
-        <text wx:for="{{detail.promotion.rules}}" wx:key="key">满{{item.full}}件价格降至{{tools.returnDiscount(item.reduction)}}折{{index < detail.promotion.rules.length - 1 ? '；' : ''}}</text>
-      </view>
+      <text wx:for="{{detail.step_prices}}" wx:key="key">满{{item.num}}件￥{{tools.returnPrice(item.price_sale)}}/件{{index < detail.step_prices.length - 1 ? '；' : ''}}</text>
     </view>
   </view>
-  <!--满折end-->
+  <!--单品优惠end-->
 
   <!--全场满减start-->
   <view class="input-item reduction-item" wx:if="{{promotionData.id && promotionData.promotion_type === 'type_reduction'}}">

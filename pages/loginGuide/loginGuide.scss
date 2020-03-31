@@ -35,9 +35,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 36rpx;
+  margin-top: 26rpx;
   >.img{
-      padding-right: 12rpx;
+      padding: 10rpx 12rpx 10rpx 0;
       >image{
           display: block;
           position: relative;
@@ -46,8 +46,10 @@
   }
   >.str{
       color: #808080;
+      padding: 10rpx 0;
   }
   >navigator{
       color: #529EE9;
+      padding: 10rpx 0;
   }
 }

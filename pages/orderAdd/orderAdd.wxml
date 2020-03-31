@@ -32,7 +32,7 @@
   <view class="bottom-border1"><image src="{{orderAddBgSrc}}"></image></view>
 
   <view class="item-view">
-    <view class="item" wx:for="{{dataItem.items}}" wx:key="item.id">
+    <view class="item" wx:for="{{dataItem.items}}" wx:key="index">
       <view class="no-nav">
         <view class="img">
           <view class="mark">
