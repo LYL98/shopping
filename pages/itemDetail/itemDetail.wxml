@@ -28,15 +28,15 @@
   <view class="item-title">{{detail.title}}</view>
   <view class="repertory-price">
     <view class="price-unit" wx:if="{{detail.is_quoted}}">
-      ￥{{tools.returnPrice(detail.price_sale)}}/件
-      <text class="price-origin" wx:if="{{detail.price_origin > detail.price_sale}}">原价:￥{{tools.returnPrice(detail.price_origin)}}/件</text>
+      ￥{{tools.returnPrice(detail.price_sale)}}
+      <text class="price-origin" wx:if="{{detail.price_origin > detail.price_sale}}">原价:￥{{tools.returnPrice(detail.price_origin)}}</text>
     </view>
     <view class="price-unit" wx:else>
       <text>今日未报价</text>
     </view>
     <view class="repertory">
-      <text>{{tools.returnItemStock(detail.item_stock)}}</text>
-      <text wx:if="{{tools.returnItemStock(detail.item_stock)}}" style="margin: 0 15rpx;">.</text>
+      <text>{{tools.returnItemStock(detail)}}</text>
+      <text wx:if="{{tools.returnItemStock(detail)}}" style="margin: 0 15rpx;">.</text>
       <text>最多下单{{detail.order_num_max}}件</text>
     </view>
   </view>
