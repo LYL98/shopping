@@ -314,6 +314,19 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
           text-decoration: line-through;
           display: block;
         }
+        .min-num{
+          font-size: 24rpx;
+          border: 1rpx solid #FF6868;
+          padding: 4rpx;
+          color: #FF6868;
+          line-height: 24rpx;
+          display: inline-block;
+          border-radius: 8rpx 8rpx 8rpx 0;
+          margin-left: 10rpx;
+          position: relative;
+          top: -3rpx;
+          font-weight: normal;
+        }
         .original{
           font-size: 20rpx;
           color: #C7C7C7;

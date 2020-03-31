@@ -18,7 +18,7 @@
       <view class="item">
         <view class="left">销售价</view>
         <view class="right">
-          <text class="new-piece">￥{{tools.returnPrice(itemData.price_sale)}}/件</text>
+          <text class="new-piece">￥{{tools.returnPrice(itemData.price_sale)}}</text>
         </view>
       </view>
       <view class="item">

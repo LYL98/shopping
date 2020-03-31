@@ -11,7 +11,7 @@
 </view>
 
 <view class="item-view">
-  <view class="item" wx:for="{{dataItem}}" wx:key="item.id">
+  <view class="item" wx:for="{{dataItem}}" wx:key="index">
     <view class="no-nav {{(item.is_on_sale && item.item_stock > 0 && item.is_quoted) ? '' : 'under_ground' }}">
       <view class="checked" bindtap="redioSelect" data-rs="{{item}}" >
         <image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
