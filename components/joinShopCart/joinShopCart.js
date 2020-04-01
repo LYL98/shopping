@@ -93,13 +93,13 @@ Component({
         this.setStepPricesHint();
       });
       let ww = app.globalData.ww;
-      let x = ww - (ww / 4) - (ww / 4 / 2);
+      let x = ww - (ww / 5) - (ww / 5 / 2);
       let y = app.globalData.hh;
       if (that.properties.sourcePage === 'itemLabel' || that.properties.sourcePage === 'search'){
         x = 20;
         y = app.globalData.hh - 55;
       }else if (that.properties.size === "large"){
-        x = ww / 4;
+        x = ww / 5;
       }
       that.busPos = {
         x: x,
@@ -304,11 +304,13 @@ Component({
 
       this.setData({
         num: num
+      }, ()=>{
+        this.setStepPricesHint();
       });
 
       app.shoppingCartNum();//计算购物车数量并显示角标
 
-      this.triggerEvent('callback');//触发回调事件
+      this.triggerEvent('callback', { num });//触发回调事件
     },
 
     /**
@@ -341,11 +343,13 @@ Component({
 
         this.setData({
           num: num
+        }, ()=>{
+          this.setStepPricesHint();
         });
 
         app.shoppingCartNum();//计算购物车数量并显示角标
 
-        this.triggerEvent('callback');//触发回调事件
+        this.triggerEvent('callback', { num });//触发回调事件
       }
 
       if (((itemData.min_num_per_order > 0 && num <= itemData.min_num_per_order) ||

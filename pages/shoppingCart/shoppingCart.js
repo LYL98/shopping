@@ -140,7 +140,9 @@ Page({
 
   //添加或减少回调
   upDownCallback(res) {
-    this.updateData();//更新本地数据
+    if(res.detail.num === 0){
+      this.updateData();//更新本地数据
+    }
   },
 
   //全选购物车
@@ -167,7 +169,7 @@ Page({
     let that = this;
     let id = e.currentTarget.dataset.rs.id;
     let rs = e.currentTarget.dataset.rs;
-    let status = rs.is_quoted && rs.is_on_sale && rs.item_stock > rs.min_num_per_order;
+    let status = rs.is_quoted && rs.is_on_sale && Util.judgeItemStock(rs);
     let d = wx.getStorageSync('shoppingCartData');
     //更新本地存储
 
@@ -231,7 +233,7 @@ Page({
       for (let i = 0; i < dataItem.length; i++) {
         for (let j = 0; j < d.length; j++) {
           if (dataItem[i].id === d[j].id) {
-            let status = dataItem[i].is_quoted && dataItem[i].is_on_sale && dataItem[i].item_stock > dataItem[i].min_num_per_order
+            let status = dataItem[i].is_quoted && dataItem[i].is_on_sale && Util.judgeItemStock(dataItem[i])
             //上架
             if (status) {
               dataItem[i].is_select = d[j].is_select;
@@ -341,7 +343,7 @@ Page({
 
             for (let j = 0; j < rd.length; j++) {
               let child = rd[j];
-              let status = child.is_quoted && child.is_on_sale && child.item_stock > child.min_num_per_order
+              let status = child.is_quoted && child.is_on_sale && Util.judgeItemStock(child)
               let n = child.id;
               if (n == dId) { //判断ID是否相等
                 if (obj.num < 1 && status) obj.num = 1;
