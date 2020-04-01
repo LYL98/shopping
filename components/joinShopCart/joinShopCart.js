@@ -198,18 +198,7 @@ Component({
 
     //库存不足
     upUnusable(){
-      let { itemData } = this.data;
-      if (itemData.order_num_max >= itemData.item_stock){
-        wx.showToast({
-          title: '该商品库存只有' + itemData.item_stock + '件',
-          icon: 'none'
-        });
-      }else{
-        wx.showToast({
-          title: `该商品最大订货数${itemData.order_num_max}件`,
-          icon: 'none'
-        });
-      }
+      this.isNumAbnormal(this.data.num + 1);
     },
 
     //显示输入
@@ -388,15 +377,15 @@ Component({
         stepPricesHint = '';
         for(let i = 0; i < d.length; i++){
           if(i === d.length - 1 && num >= d[i].num){
-            stepPricesHint = `已享￥${Util.returnPrice(d[i].discount)}/件`;
+            stepPricesHint = `已享￥${Util.returnPrice(d[i].price_sale)}/件`;
             break;
           }
-          if(i < d.length - 1 && num >= d[i].num && num <= d[i + 1].num){
-            stepPricesHint = `已享￥${Util.returnPrice(d[i].discount)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].discount)}/件`;
+          if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+            stepPricesHint = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
             break;
           }
           if(i === 0 && num < d[i].num){
-            stepPricesHint = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].discount)}/件`;
+            stepPricesHint = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件`;
             break;
           }
         }

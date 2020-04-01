@@ -116,12 +116,13 @@
     text-align: right;
     padding-right: 28rpx;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     > .hint{
       font-size: 20rpx;
       color: #a2a2a2;
       margin-right: 16rpx;
       flex: 1;
+      margin-top: 4rpx;
     }
     >.total-discounts{
       text-align: left;
@@ -133,10 +134,10 @@
         }
       }
       >.discounts{
-        margin-top: 10rpx;
-        font-size: 24rpx;
-        height: 24rpx;
-        line-height: 24rpx;
+        margin-top: 12rpx;
+        font-size: 26rpx;
+        height: 26rpx;
+        line-height: 26rpx;
       }
     }
     

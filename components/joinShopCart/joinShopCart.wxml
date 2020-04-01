@@ -54,7 +54,7 @@
       <text wx:if="{{!itemData.is_quoted}}">今日未报价</text>
       <text wx:elif="{{itemData.item_stock < itemData.min_num_per_order || itemData.item_stock === 0}}">库存不足</text>
       <text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
-      <view wx:elif="{{itemData.is_on_sale && itemData.item_stock > 0 && itemData.is_quoted}}">
+      <view wx:elif="{{itemData.is_on_sale && itemData.item_stock > itemData.min_num_per_order && itemData.is_quoted}}">
         <text class="price">￥{{tools.returnPrice(itemData.price_sale)}}</text>
         <text class="min-num" wx:if="{{itemData.min_num_per_order}}">{{itemData.min_num_per_order}}件起售</text>
       </view>
@@ -111,7 +111,7 @@
             <image src="./../../assets/img/checked_s.png" wx:if="{{stepPricesIndex=== index}}" style="width: 38rpx; height: 38rpx;"/>
             <image src="./../../assets/img/checked.png" wx:else style="width: 38rpx; height: 38rpx;"/>
           </view>
-          <view class="right">满{{item.num}}件￥{{tools.returnPrice(item.discount)}}/件</view>
+          <view class="right">满{{item.num}}件￥{{tools.returnPrice(item.price_sale)}}/件</view>
         </view>
       </view>
     </view>

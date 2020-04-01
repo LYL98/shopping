@@ -1,5 +1,5 @@
 // components/presale/presale.js
-import util from './../../utils/util';
+import { Util, Verification } from './../../utils/index';
 
 Component({
   /**
@@ -25,15 +25,20 @@ Component({
     deliveryDate: '', //配送日期
     presaleBeginTemp: '', //开始时间
     isCanPresale: false, //是否可预订
+    isShowInput: false, //手动输入
+    keyHeight: 0,
+    inputNum: '',
+    stepPricesHint: '',
+    discountsPrice: 0, //优惠价格
   },
 
   //组件生命周期函数，在组件实例进入页面节点树时执行
   attached(){
     let that = this;
     let { itemData } = this.data;
-    let nowDateTime = util.returnDateStr(); //返回今日日期时间
-    let nowDate = util.returnDateFormat(nowDateTime, 'yyyy-MM-dd'); //今日日期
-    let tomorrow = util.returnDateCalc(nowDate, 1); //明天
+    let nowDateTime = Util.returnDateStr(); //返回今日日期时间
+    let nowDate = Util.returnDateFormat(nowDateTime, 'yyyy-MM-dd'); //今日日期
+    let tomorrow = Util.returnDateCalc(nowDate, 1); //明天
     let pbt = ''; //临时日期
     //如果配送开始日期 >= 明天
     if(itemData.presale_begin >= tomorrow){
@@ -73,18 +78,25 @@ Component({
         if (data && data.length > 0 && data[0].id === itemData.id) {
           num = data[0].num;
         }else{
+          if(itemData.min_num_per_order > 0 && (num < itemData.min_num_per_order)){
+            num = itemData.min_num_per_order;
+          }else{
+            num = num + 1;
+          }
           data = [{
             id: itemData.id,
-            num: 1,
+            num: num,
             is_select: true
           }];
-          num = 1;
+          num = num;
           wx.setStorageSync('shoppingCartPresaleData', data);
         }
       }
       this.setData({
         isShow: !isShow,
         num: num
+      }, ()=>{
+        this.setStepPricesHint();
       });
     },
     //修改日期
@@ -94,44 +106,126 @@ Component({
         deliveryDate: v
       });
     },
-    /**
-     * 加入购物车
-     */
-    up() {
-      let that = this;
-      let { itemData, num } = that.data;
-      ++num;
+    //显示输入
+    showInput(){
+      this.setData({ isShowInput: true, inputNum: '' });
+    },
+    //隐藏输入
+    hideInput(){
+      this.setData({ isShowInput: false, inputNum: '' });
+    },
+    //输入法弹起
+    inputHeightChange(e){
+      let h = e.detail.height;
+      let systemInfo = wx.getSystemInfoSync();
+      // 状态栏的高度
+      let ktxStatusHeight = systemInfo.statusBarHeight;
+      // 导航栏的高度
+      let navigationHeight = 44;
+      // window的高度
+      let ktxWindowHeight = systemInfo.windowHeight;
+      // 屏幕的高度
+      let ktxScreentHeight = systemInfo.screenHeight;
+      // 底部tabBar的高度
+      let tabBarHeight = ktxScreentHeight - ktxStatusHeight - navigationHeight - ktxWindowHeight + 5;
+      this.setData({ keyHeight: h - tabBarHeight });
+    },
+    //失去焦点
+    inputBlur(){
+      this.setData({ keyHeight: 0 });
+    },
+    //输入
+    inputChange(e){
+      let value = e.detail.value;
+      this.setData({ inputNum: value });
+    },
+    //输入完成
+    inputConfirm(){
+      let { inputNum } = this.data;
+      if(!inputNum){
+        wx.showToast({
+          title: '请输入件数',
+          icon: 'none'
+        });
+        return;
+      }
+      if(!Verification.isNumber(inputNum)){
+        wx.showToast({
+          title: '请输入正确的件数',
+          icon: 'none'
+        });
+        return;
+      }
+      let num = Number(inputNum);
+      if(!this.isNumAbnormal(num)) return;
+      this.handleUp(num);
+      this.hideInput();
+    },
+
+    //处理增加购物车
+    handleUp(num){
+      let { itemData } = this.data;
       let data = wx.getStorageSync('shoppingCartPresaleData');
       if (data && data.length > 0) {
         data[0].num = num;
       } else {
         data = [{
           id: itemData.id,
-          num: 1,
+          num: num,
           is_select: true
         }];
       }
       wx.setStorageSync('shoppingCartPresaleData', data);
 
-      that.setData({
+      this.setData({
         num: num
+      }, ()=>{
+        this.setStepPricesHint();
       });
+    },
+    /**
+     * 加入购物车
+     */
+    up() {
+      let { itemData, num } = this.data;
+      if(itemData.min_num_per_order > 0 && (num < itemData.min_num_per_order)){
+        num = itemData.min_num_per_order;
+      }else{
+        num = num + 1;
+      }
+      this.handleUp(num);
+    },
+
+    //数量异常提示
+    isNumAbnormal(num){
+      let { itemData } = this.data;
+      if(num < itemData.min_num_per_order){
+        wx.showToast({
+          title: `该商品${itemData.min_num_per_order}件起售`,
+          icon: 'none'
+        });
+        return false;
+      }
+      if(num > itemData.order_num_max){
+        wx.showToast({
+          title: `该商品最大订货数${itemData.order_num_max}件`,
+          icon: 'none'
+        });
+        return false;
+      }
+      if(num > itemData.item_stock){
+        wx.showToast({
+          title: '该商品库存只有' + itemData.item_stock + '件',
+          icon: 'none'
+        });
+        return false;
+      }
+      return true;
     },
 
     //库存不足
     upUnusable(){
-      let { itemData } = this.data;
-      if (itemData.order_num_max >= itemData.item_stock){
-        wx.showToast({
-          title: '库存只有' + itemData.item_stock + '件',
-          icon: 'none'
-        });
-      }else{
-        wx.showToast({
-          title: '已超最大订货件数',
-          icon: 'none'
-        });
-      }
+      this.isNumAbnormal(this.data.num + 1);
     },
 
     /**
@@ -139,9 +233,10 @@ Component({
      */
     down() {
       let that = this;
-      let { num } = that.data;
+      let { num, itemData } = that.data;
 
-      if(num === 1) return false;//最小为1
+      if(itemData.min_num_per_order === 0 && num <= 1) return false;//最小为1
+      if(itemData.min_num_per_order > 0 && num <= itemData.min_num_per_order) return false;//最小为最小订货数
       
       let data = wx.getStorageSync('shoppingCartPresaleData');
       --num;
@@ -152,7 +247,36 @@ Component({
 
       that.setData({
         num: num
+      }, ()=>{
+        this.setStepPricesHint();
       });
+    },
+
+    //阶梯价提示
+    setStepPricesHint(){
+      let { num, itemData, stepPricesHint, discountsPrice } = this.data;
+      let d = itemData.step_prices;
+      if(d && d.length > 0){
+        stepPricesHint = '';
+        discountsPrice = 0;
+        for(let i = 0; i < d.length; i++){
+          if(i === d.length - 1 && num >= d[i].num){
+            stepPricesHint = `已享￥${Util.returnPrice(d[i].price_sale)}/件`;
+            discountsPrice = (itemData.price_sale - d[i].price_sale) * num;
+            break;
+          }
+          if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+            stepPricesHint = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
+            discountsPrice = (itemData.price_sale - d[i].price_sale) * num;
+            break;
+          }
+          if(i === 0 && num < d[i].num){
+            stepPricesHint = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件`;
+            break;
+          }
+        }
+        this.setData({ stepPricesHint, discountsPrice });
+      }
     },
     //提交订单
     submitOrder(){

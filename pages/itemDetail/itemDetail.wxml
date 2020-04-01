@@ -155,7 +155,7 @@
     <view class="btn-mini" wx:else bindtap="itemCollectionAdd">
       <image src="./../../assets/img/collect.png"></image>
     </view>
-    <view class="btn-join" style="padding-left: 16rpx;" wx:if="{{detail.item_stock > 0}}">
+    <view class="btn-join" style="padding-left: 16rpx;" wx:if="{{detail.item_stock > detail.min_num_per_order}}">
       <!--预售-->
       <presale wx:if="{{detail.is_presale && detail.id && detail.code}}" itemData="{{detail}}"/>
       <!--正常购买-->

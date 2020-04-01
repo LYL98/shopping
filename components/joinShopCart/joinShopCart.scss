@@ -191,6 +191,7 @@
   float: right;
 }
 .shopping-cart-page{
+  position: relative;
   >.price-unit{
     color: #FF6868;
     font-size: 30rpx;
@@ -218,8 +219,13 @@
     }
   }
   >.discount-repertory{
-    display: flex;
+    position: absolute;
     height: 0;
+    right: 0;
+    top: -30rpx;
+    z-index: 10;
+    width: 150rpx;
+    text-align: center;
     >.repertory{
       flex: initial;
       color:#A5A5A5;

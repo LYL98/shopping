@@ -85,7 +85,7 @@
             </view>
           </navigator>
 
-          <view class="join" wx:if="{{item.item_stock > 0}}">
+          <view class="join" wx:if="{{item.item_stock > item.min_num_per_order}}">
             <joinShopCart itemData="{{item}}" size="medium"/>
           </view>
           <view class="join" wx:else></view>

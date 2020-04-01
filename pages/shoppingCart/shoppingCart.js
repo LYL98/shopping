@@ -167,7 +167,7 @@ Page({
     let that = this;
     let id = e.currentTarget.dataset.rs.id;
     let rs = e.currentTarget.dataset.rs;
-    let status = rs.is_quoted && rs.is_on_sale && rs.item_stock > 0;
+    let status = rs.is_quoted && rs.is_on_sale && rs.item_stock > rs.min_num_per_order;
     let d = wx.getStorageSync('shoppingCartData');
     //更新本地存储
 
@@ -231,7 +231,7 @@ Page({
       for (let i = 0; i < dataItem.length; i++) {
         for (let j = 0; j < d.length; j++) {
           if (dataItem[i].id === d[j].id) {
-            let status = dataItem[i].is_quoted && dataItem[i].is_on_sale && dataItem[i].item_stock > 0
+            let status = dataItem[i].is_quoted && dataItem[i].is_on_sale && dataItem[i].item_stock > dataItem[i].min_num_per_order
             //上架
             if (status) {
               dataItem[i].is_select = d[j].is_select;
@@ -289,13 +289,13 @@ Page({
     if(d && d.length > 0){
       for(let i = 0; i < d.length; i++){
         if(i === d.length - 1 && num >= d[i].num){
-          totalPrice = d[i].discount * data.select_num;
-          discountsPrice = (data.price_sale - d[i].discount) * data.select_num;
+          totalPrice = d[i].price_sale * data.select_num;
+          discountsPrice = (data.price_sale - d[i].price_sale) * data.select_num;
           break;
         }
-        if(i < d.length - 1 && num >= d[i].num && num <= d[i + 1].num){
-          totalPrice = d[i].discount * data.select_num;
-          discountsPrice = (data.price_sale - d[i].discount) * data.select_num;
+        if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+          totalPrice = d[i].price_sale * data.select_num;
+          discountsPrice = (data.price_sale - d[i].price_sale) * data.select_num;
           break;
         }
       }
@@ -341,7 +341,7 @@ Page({
 
             for (let j = 0; j < rd.length; j++) {
               let child = rd[j];
-              let status = child.is_quoted && child.is_on_sale && child.item_stock > 0
+              let status = child.is_quoted && child.is_on_sale && child.item_stock > child.min_num_per_order
               let n = child.id;
               if (n == dId) { //判断ID是否相等
                 if (obj.num < 1 && status) obj.num = 1;
