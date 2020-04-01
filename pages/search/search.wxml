@@ -40,20 +40,24 @@
           <text class="frame" wx:if="{{item.frame_id}}">有筐</text>
         </view>
         <view class="price-unit" wx:if="{{item.is_quoted}}">
-          <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}/件</view>
-          <view class="price">￥{{tools.returnPrice(item.price_sale)}}/件</view>
+          <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</view>
+          <view class="price">
+            <text>￥{{tools.returnPrice(item.price_sale)}}</text>
+            <text class="min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+          </view>
         </view>
         <view class="price-unit" wx:else>
           <text>今日未报价</text>
+          <text class="min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
         </view>
       </view>
     </navigator>
-     <view class="join" style="{{tools.returnItemStock(item.item_stock) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
+     <view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
       <view style="min-height:36rpx;">
-        <joinShopCart wx:if="{{item.item_stock > 0}}" size="small" style="float:right;" bindcallback="joinShoppingCart" itemData="{{item}}" sourcePage="search"/>
+        <joinShopCart wx:if="{{item.item_stock > item.min_num_per_order}}" size="small" style="float:right;" bindcallback="joinShoppingCart" itemData="{{item}}" sourcePage="search"/>
       </view>
       <view style="clear: both;"></view>
-      <view class="repertory">{{tools.returnItemStock(item.item_stock)}}</view>
+      <view class="repertory">{{tools.returnItemStock(item)}}</view>
     </view>
   </view>
 

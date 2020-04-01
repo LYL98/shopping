@@ -45,7 +45,7 @@
         </view>
         <view class="price-unit">
           <view >
-            ￥{{tools.returnPrice(detail.item_price_sale)}} / 件<!--<text class="original" wx:if="{{0}}">原价/件</text>-->
+            ￥{{tools.returnPrice(detail.item_price_sale)}}
           </view>
         </view>
         <view class="num-price">

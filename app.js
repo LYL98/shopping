@@ -59,15 +59,7 @@ App({
     let resData = wx.getStorageSync('loginUserInfo');
     
     //如本地已有access_token
-    if(resData && resData.access_token && typeof resData.is_head === 'boolean'){
-      that.globalData.loginUserInfo = resData;
-      //gio设置userid
-      if(!that.globalData.gioIsSetUserId){
-        gio('setUserId', resData.id);
-        that.globalData.gioIsSetUserId = true;
-      }
-      typeof callBack == "function" && callBack(resData);
-    }else if (resData) {
+    if(resData && resData.access_token && resData.weapp_openid !== null) {
       wx.request({
         url: Config.api.signIsLogin,
         header: {
@@ -85,6 +77,7 @@ App({
             }
             typeof callBack == "function" && callBack(rd);
           } else {
+            that.updateLoginInfo({});
             wx.reLaunch({
               url: '/pages/loginGuide/loginGuide'
             });
@@ -98,6 +91,7 @@ App({
 
       });
     } else {
+      that.updateLoginInfo({});
       wx.reLaunch({
         url: '/pages/loginGuide/loginGuide'
       });

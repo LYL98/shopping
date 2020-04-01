@@ -1,5 +1,5 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<view class="show-select-btn" bindtap="showHideSelect" wx:if="{{itemData.is_quoted && itemData.item_stock > 0 && itemData.order_num_max > 0 && isCanPresale}}">预定</view>
+<view class="show-select-btn" bindtap="showHideSelect" wx:if="{{itemData.is_quoted && itemData.item_stock > itemData.min_num_per_order && itemData.order_num_max > 0 && isCanPresale}}">预定</view>
 <view class="show-select-btn unusable" wx:else>预定</view>
 
 <view class="select-body" wx:if="{{isShow}}" bindtap="showHideSelect">
@@ -18,7 +18,12 @@
       <view class="item">
         <view class="left">销售价</view>
         <view class="right">
-          <text class="new-piece">￥{{tools.returnPrice(itemData.price_sale)}}/件</text>
+          <text class="price-origin" wx:if="{{itemData.price_origin > itemData.price_sale}}">原价:￥{{tools.returnPrice(itemData.price_origin)}}</text>
+          <text class="new-piece">￥{{tools.returnPrice(itemData.price_sale)}}</text>
+          <!--阶梯优惠提示-->
+          <text class="step-prices-hint" wx:if="{{stepPricesHint}}">
+            {{stepPricesHint}}
+          </text>
         </view>
       </view>
       <view class="item">
@@ -27,7 +32,7 @@
           <view class="minus-add-view">
             <image class="add-img unusable" src="{{addSrc}}" bindtap="upUnusable" wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}"></image>
             <image class="add-img" src="{{addSrc}}" bindtap="up" wx:else></image>
-            <text class="num">{{num}}</text>
+            <text class="num" bind:tap="showInput">{{num}}</text>
             <image class="minus-img" src="{{minusSrc}}" bindtap="down"></image>
           </view>
         </view>
@@ -35,12 +40,33 @@
       <view class="item">
         <view class="left">小计<text style="color: #a5a5a5; font-size: 24rpx;">(不含运费)</text></view>
         <view class="right">
-          <text class="price">￥{{tools.returnPrice(itemData.price_sale * num)}}</text>
+          <text class="discounts" wx:if="{{discountsPrice}}">已优惠:￥{{tools.returnPrice(discountsPrice)}}</text>
+          <text class="price">￥{{tools.returnPrice(itemData.price_sale * num - discountsPrice)}}</text>
         </view>
       </view>
       <view class="btn-view">
         <button class="btn1" bindtap="submitOrder">提交订单</button>
       </view>
+    </view>
+  </view>
+</view>
+
+<!--输入-->
+<view class="input-body" wx:if="{{isShowInput}}" bind:tap="hideInput">
+  <view class="input-view" style="bottom: {{keyHeight}}px" catch:tap>
+    <view class="left">
+      <input
+        type="number"
+        placeholder="请输入件数"
+        focus
+        adjust-position="{{false}}"
+        bindinput="inputChange"
+        bindkeyboardheightchange="inputHeightChange"
+        bindblur="inputBlur"
+      />
+    </view>
+    <view class="right">
+      <view class="ok-btn" hover-class="link-active" bind:tap="inputConfirm">OK</view>
     </view>
   </view>
 </view>

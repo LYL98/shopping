@@ -33,7 +33,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 3;
   background: rgba(0, 0, 0, .3);
   >.select-view{
     position: fixed;
@@ -103,10 +103,32 @@
               margin: 0 1rpx;
               font-size: 26rpx;
             }
-            >.price{
-              color: #FF6868;
-              font-weight: bold;
-            }
+          }
+          >.discounts{
+            margin-right: 16rpx;
+            font-size: 26rpx;
+            margin-left: 10rpx;
+          }
+          >.price-origin{
+            text-decoration: line-through;
+            color: #AEAEAE;
+            font-size: 20rpx;
+            margin-right: 16rpx;
+          }
+          >.price{
+            color: #FF6868;
+            font-weight: bold;
+          }
+          >.step-prices-hint{
+            position: absolute;
+            color: #FF6868;
+            bottom: 28rpx;
+            left: 0;
+            right: 0;
+            height: 22rpx;
+            line-height: 22rpx;
+            font-size: 22rpx;
+            text-align: right;
           }
           > .discount-hint{
             color: #FF6868;
@@ -135,6 +157,49 @@
             border: 0;
           }
         }
+      }
+    }
+  }
+}
+
+/*输入*/
+.input-body{
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba($color: #000, $alpha: .4);
+  >.input-view{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 21;
+    background: #fff;
+    padding: 10rpx;
+    display: flex;
+    align-items: center;
+    >.left{
+      flex: 1;
+      >input{
+        text-align: left;
+        height: 82rpx;
+        line-height: 82rpx;
+        font-size: 32rpx;
+        padding-left: 10rpx;
+      }
+    }
+    >.right{
+      width: 120rpx;
+      >.ok-btn{
+        background: #00AE66;
+        color: #fff;
+        text-align: center;
+        height: 82rpx;
+        line-height: 82rpx;
+        border-radius: 8rpx;
       }
     }
   }
