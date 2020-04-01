@@ -241,12 +241,12 @@ App({
 
     if(num){
       wx.setTabBarBadge({
-        index: 2,
+        index: 3,
         text: num.toString()
       });
     }else{
       wx.removeTabBarBadge({
-        index: 2
+        index: 3
       });
     }
   },

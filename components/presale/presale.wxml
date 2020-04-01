@@ -1,5 +1,5 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<view class="show-select-btn" bindtap="showHideSelect" wx:if="{{itemData.is_quoted && itemData.item_stock > itemData.min_num_per_order && itemData.order_num_max > 0 && isCanPresale}}">预定</view>
+<view class="show-select-btn" bindtap="showHideSelect" wx:if="{{itemData.is_quoted && tools.judgeItemStock(itemData) && itemData.order_num_max > 0 && isCanPresale}}">预定</view>
 <view class="show-select-btn unusable" wx:else>预定</view>
 
 <view class="select-body" wx:if="{{isShow}}" bindtap="showHideSelect">
