@@ -68,7 +68,7 @@
     </navigator>
     <view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
       <view style="min-height:36rpx;">
-        <joinShopCart wx:if="{{item.item_stock > item.min_num_per_order}}" size="small" style="float:right;" itemData="{{item}}"/>
+        <joinShopCart wx:if="{{tools.judgeItemStock(item)}}" size="small" style="float:right;" itemData="{{item}}"/>
       </view>
       <view style="clear: both;"></view>
       <view class="repertory">{{tools.returnItemStock(item)}}</view>

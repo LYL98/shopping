@@ -135,6 +135,20 @@ function getUuid() {
   return uuid;
 }
 
+//判断库存是否够数
+var judgeItemStock = function(item){
+  if(item.min_num_per_order > 0){
+    if(item.item_stock < item.min_num_per_order){
+      return false;
+    }
+    return true;
+  }
+  if(item.item_stock > 0){
+    return true;
+  }
+  return false;
+}
+
 module.exports = {
   formatTime: formatTime,
   returnPrice: returnPrice,
@@ -143,5 +157,6 @@ module.exports = {
   returnSurplusNum: returnSurplusNum,
   returnDateFormat: returnDateFormat,
   returnDateCalc: returnDateCalc,
-  getUuid: getUuid
+  getUuid: getUuid,
+  judgeItemStock: judgeItemStock
 }
