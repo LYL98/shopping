@@ -27,6 +27,7 @@
           <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
           <text wx:if="{{item.weight_s || item.weight_e}}">{{tools.returnGrossWeight(item)}}</text>
           <text wx:if="{{item.frame_id}}" class="frame">有筐</text>
+          <text wx:if="{{item.min_num_per_order}}" class="min-num">{{item.min_num_per_order}}件起售</text>
         </view>
         <view class="join-shop-cart">
           <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" sourcePage="shoppingCart" isDeleteHint/>

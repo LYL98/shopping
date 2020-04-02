@@ -296,6 +296,12 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
               border: 1px solid #A5A5A5;
             }            
           }
+          &.min-num{
+            color: #FF6868;
+            &::after{
+              border: 1px solid #FF6868;
+            }  
+          }
         }
       }
       .price-unit{
@@ -313,19 +319,6 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
           font-size: 24rpx;
           text-decoration: line-through;
           display: block;
-        }
-        .min-num{
-          font-size: 20rpx;
-          border: 1rpx solid #FF6868;
-          padding: 4rpx;
-          color: #FF6868;
-          line-height: 20rpx;
-          display: inline-block;
-          border-radius: 8rpx 8rpx 8rpx 0;
-          margin-left: 6rpx;
-          position: relative;
-          top: -3rpx;
-          font-weight: normal;
         }
         .original{
           font-size: 20rpx;

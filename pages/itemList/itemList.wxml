@@ -52,17 +52,16 @@
           <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
           <text class="skeleton-rect" wx:if="{{item.weight_s || item.weight_e}}">{{tools.returnGrossWeight(item)}}</text>
           <text class="skeleton-rect frame" wx:if="{{item.frame_id}}">有筐</text>
+          <text class="skeleton-rect min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
         </view>
         <view class="price-unit skeleton-rect" wx:if="{{item.is_quoted}}">
           <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</view>
           <view class="price">
             <text>￥{{tools.returnPrice(item.price_sale)}}</text>
-            <text class="min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
           </view>
         </view>
         <view class="price-unit skeleton-rect" wx:else>
           <text>今日未报价</text>
-          <text class="min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
         </view>
       </view>
     </navigator>
