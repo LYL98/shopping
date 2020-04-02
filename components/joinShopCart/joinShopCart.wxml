@@ -56,7 +56,6 @@
       <text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
       <view wx:elif="{{itemData.is_on_sale && tools.judgeItemStock(itemData) && itemData.is_quoted}}">
         <text class="price">￥{{tools.returnPrice(itemData.price_sale)}}</text>
-        <text class="min-num" wx:if="{{itemData.min_num_per_order}}">{{itemData.min_num_per_order}}件起售</text>
       </view>
     </view>
     <view class="discount-repertory">
