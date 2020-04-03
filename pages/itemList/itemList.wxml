@@ -8,7 +8,7 @@
   <view class="link-active {{query.display_class_id == '' && 'active'}}" bindtap="selectCategory" data-category="" >全部</view>
   <view class="link-active {{query.display_class_id === item.id && 'active'}}"
     wx:for="{{categoryList}}"
-    wx:key="item.id"
+    wx:key="index"
     bindtap="selectCategory"
     data-category="{{item.id}}"
     wx:if="{{item.title}}" >{{item.title}}</view>
@@ -36,7 +36,7 @@
   </view>
 </view>
 <view class="item-view skeleton">
-  <view class="item" wx:for="{{dataItem.items}}" wx:key="item.id">
+  <view class="item" wx:for="{{dataItem.items}}" wx:key="index">
     <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-id="{{item.id}}">
       <view class="img">
         <view class="mark">
@@ -52,22 +52,25 @@
           <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
           <text class="skeleton-rect" wx:if="{{item.weight_s || item.weight_e}}">{{tools.returnGrossWeight(item)}}</text>
           <text class="skeleton-rect frame" wx:if="{{item.frame_id}}">有筐</text>
+          <text class="skeleton-rect min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
         </view>
         <view class="price-unit skeleton-rect" wx:if="{{item.is_quoted}}">
-          <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}/件</view>
-          <view class="price">￥{{tools.returnPrice(item.price_sale)}}/件</view>
+          <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</view>
+          <view class="price">
+            <text>￥{{tools.returnPrice(item.price_sale)}}</text>
+          </view>
         </view>
         <view class="price-unit skeleton-rect" wx:else>
           <text>今日未报价</text>
         </view>
       </view>
     </navigator>
-    <view class="join" style="{{tools.returnItemStock(item.item_stock) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
+    <view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
       <view style="min-height:36rpx;">
-        <joinShopCart wx:if="{{item.item_stock > 0}}" size="small" style="float:right;" itemData="{{item}}"/>
+        <joinShopCart wx:if="{{tools.judgeItemStock(item)}}" size="small" style="float:right;" itemData="{{item}}"/>
       </view>
       <view style="clear: both;"></view>
-      <view class="repertory">{{tools.returnItemStock(item.item_stock)}}</view>
+      <view class="repertory">{{tools.returnItemStock(item)}}</view>
     </view>
   </view>
 

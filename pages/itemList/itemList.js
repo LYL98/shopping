@@ -102,7 +102,6 @@ Page({
 
   //选择商品分类
   selectCategory(e, type){
-    console.log(e, type);
     let param = ''; 
     if(type === 'auto_select') {
       param = Number(e);

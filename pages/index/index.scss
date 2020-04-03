@@ -185,6 +185,12 @@
                   border: 1px solid #A5A5A5;
                 }
               }
+              &.min-num{
+                color: #FF6868;
+                &::after{
+                  border: 1px solid #FF6868;
+                }
+              }
             }
           }
           >.repertory-price{
@@ -199,28 +205,21 @@
               flex: 1;
               text-indent: -1rpx;
               color: #FF6868;
-              font-weight: bold;
-              > .rmb{
-                color: #FF6868;
-                margin-right: 2rpx;
-                font-size: 30rpx;
-              }
-              > .bias{
-                color: #FF6868;
-                margin: 0 2rpx;
-                font-size: 30rpx;
-              }
-              > text{
-                color: #999;
-                font-size: 20rpx;
-                font-weight: normal;
-              }
               >.price-origin{
                 color: #C7C7C7;
                 font-size: 24rpx;
                 text-decoration: line-through;
-                font-weight: normal;
                 display: block;
+              }
+              >.rmb{
+                color: #FF6868;
+                margin-right: 2rpx;
+                font-size: 30rpx;
+                font-weight: bold;
+              }
+              > text{
+                color: #999;
+                font-size: 20rpx;
               }
             }
           }

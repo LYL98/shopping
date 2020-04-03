@@ -36,10 +36,7 @@ Array.prototype.inArray = function (data) {
 
 App({
   globalData: {
-    windowWidth: wx.getSystemInfoSync().windowWidth,
-    userInfo: null, //微信用户信息
     loginUserInfo: {}, //系统登录信息
-    isLoginCallBack: null, //判断登录回调
     system: null,
     gio: gio,
     gioIsSetUserId: false,
@@ -56,37 +53,13 @@ App({
     return this.globalData.loginUserInfo.access_token || wx.getStorageSync('loginUserInfo').access_token;
   },
 
-  //登录页面回调（临时改动，可登录别的用户）
-  loginCallBack(loginData, data) {
-    let that = this;
-    if (loginData.code && data.encryptedData && data.iv) {
-      that.globalData.userInfo = data;
-      that.signWeappAuth(loginData.code, data.encryptedData, data.iv); //登录系统
-    }else{
-      wx.showModal({
-        title: "提示",
-        content: '授权失败，请重新授权',
-        confirmText: "我知道了",
-        confirmColor: "#00AE66",
-        showCancel: false
-      });
-    }
-  },
   //判断是否登录(登录成功后回调)
   signIsLogin(callBack) {
     let that = this;
     let resData = wx.getStorageSync('loginUserInfo');
     
     //如本地已有access_token
-    if(resData && resData.access_token && typeof resData.is_head === 'boolean'){
-      that.globalData.loginUserInfo = resData;
-      //gio设置userid
-      if(!that.globalData.gioIsSetUserId){
-        gio('setUserId', resData.id);
-        that.globalData.gioIsSetUserId = true;
-      }
-      typeof callBack == "function" && callBack(resData);
-    }else if (resData) {
+    if(resData && resData.access_token && resData.weapp_openid !== null) {
       wx.request({
         url: Config.api.signIsLogin,
         header: {
@@ -96,8 +69,7 @@ App({
         success: function (res) {
           if (res.statusCode == 200 && res.data.code == 0) {
             let rd = res.data.data;
-            wx.setStorageSync("loginUserInfo", rd);
-            that.globalData.loginUserInfo = rd;
+            that.updateLoginInfo(rd); //系统登录信息
             //gio设置userid
             if(!that.globalData.gioIsSetUserId){
               gio('setUserId', rd.id);
@@ -105,6 +77,7 @@ App({
             }
             typeof callBack == "function" && callBack(rd);
           } else {
+            that.updateLoginInfo({});
             wx.reLaunch({
               url: '/pages/loginGuide/loginGuide'
             });
@@ -118,11 +91,19 @@ App({
 
       });
     } else {
+      that.updateLoginInfo({});
       wx.reLaunch({
         url: '/pages/loginGuide/loginGuide'
       });
     }
   },
+
+  //更新登录信息
+  updateLoginInfo(data){
+    this.globalData.loginUserInfo = data;
+    wx.setStorageSync("loginUserInfo", data);
+  },
+
   //网络请求异常处理方法
   requestResultCode(res) {
     let that = this;
@@ -134,25 +115,8 @@ App({
         confirmColor: "#00AE66",
         showCancel: false
       });
-    }else if(res.data.code == 201) {
-      wx.showModal({
-        title: "提示",
-        content: res.data.message,
-        confirmText: "重新绑定",
-        confirmColor: "#00AE66",
-        showCancel: false,
-        success: function (resData) {
-          if (resData.confirm) {
-            wx.removeStorageSync('loginUserInfo');
-            that.globalData.userInfo = null; //微信用户信息
-            that.globalData.loginUserInfo = {}; //系统登录信息
-            wx.navigateTo({
-              url: '/pages/loginBind/loginBind'
-            });
-          }
-        }
-      });
-    }else if (res.data.code == 200) {
+    }else if (res.data.code == 200 || res.data.code == 201) {
+      //200 登录失效、201 重新绑定
       wx.showModal({
         title: "提示",
         content: res.data.message,
@@ -161,9 +125,7 @@ App({
         showCancel: false,
         success: function (resData) {
           if (resData.confirm) {
-            wx.removeStorageSync('loginUserInfo');
-            that.globalData.userInfo = null; //微信用户信息
-            that.globalData.loginUserInfo = {}; //系统登录信息
+            that.updateLoginInfo({}); //系统登录信息
             wx.reLaunch({
               url: '/pages/loginGuide/loginGuide'
             });
@@ -259,64 +221,6 @@ App({
     }
   },
 
-  //登录服务器
-  signWeappAuth(code, encryptedData, iv) {
-    let that = this;
-    wx.showLoading({
-      title: '登录中...',
-      mask: true,
-      success: function () {
-        wx.request({
-          url: Config.api.signWeappAuth,
-          header: {
-            'content-type': 'application/json'
-          },
-          data: {
-            code: code,
-            encryptedData: encryptedData,
-            iv: iv
-          },
-          success: function (res) {
-            if (res.statusCode == 200 && res.data.code === 0) {
-
-              // let d = wx.getStorageSync("loginUserInfo")
-              // if(rd.id !=d.id) {
-              //   wx.removeStorageSync("shoppingCartData")
-              //   wx.removeStorageSync('searchData')
-              // }
-              // wx.setStorageSync("loginUserInfo", rd);
-
-              let id = wx.getStorageSync("loginUserId");
-              if(res.data.data.id != id) {
-                wx.removeStorageSync("shoppingCartData");
-                wx.removeStorageSync('searchData');
-              }
-              wx.setStorageSync("loginUserInfo", res.data.data); //写登录信息
-              wx.setStorageSync('loginUserId', res.data.data.id);
-
-              that.globalData.loginUserInfo = res.data.data;
-              wx.reLaunch({
-                url: '/pages/index/index',
-              });
-            } else if (res.statusCode == 200 && res.data.code === 1){
-              let rd = res.data.data;
-              wx.navigateTo({
-                url: '/pages/loginBind/loginBind?weapp_openid=' + rd.weapp_openid + '&unionid=' + rd.unionid
-              });
-            } else {
-              that.requestResultCode(res);
-            }
-          },
-          complete: function (res) {
-            wx.hideLoading();
-            that.requestTimeout(res, ()=>{
-              that.signWeappAuth(code, encryptedData, iv);
-            });
-          }
-        })
-      }
-    });
-  },
   //获取购物车数量
   getShoppingCartNum(){
     let num = 0;
@@ -337,12 +241,12 @@ App({
 
     if(num){
       wx.setTabBarBadge({
-        index: 2,
+        index: 3,
         text: num.toString()
       });
     }else{
       wx.removeTabBarBadge({
-        index: 2
+        index: 3
       });
     }
   },

@@ -11,8 +11,8 @@
 </view>
 
 <view class="item-view">
-  <view class="item" wx:for="{{dataItem}}" wx:key="item.id">
-    <view class="no-nav {{(item.is_on_sale && item.item_stock > 0 && item.is_quoted) ? '' : 'under_ground' }}">
+  <view class="item" wx:for="{{dataItem}}" wx:key="index">
+    <view class="no-nav {{(item.is_on_sale && tools.judgeItemStock(item) && item.is_quoted) ? '' : 'under_ground' }}">
       <view class="checked" bindtap="redioSelect" data-rs="{{item}}" >
         <image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
       </view>
@@ -27,9 +27,10 @@
           <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
           <text wx:if="{{item.weight_s || item.weight_e}}">{{tools.returnGrossWeight(item)}}</text>
           <text wx:if="{{item.frame_id}}" class="frame">有筐</text>
+          <text wx:if="{{item.min_num_per_order}}" class="min-num">{{item.min_num_per_order}}件起售</text>
         </view>
         <view class="join-shop-cart">
-          <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" sourcePage="shoppingCart" isDeleteHint/>
+          <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" isDeleteHint/>
         </view>
       </view>
     </view>
@@ -58,7 +59,11 @@
     <image src="{{isAllSelect ? checkedSSrc : checkedSrc}}"></image>全选
   </view>
   <view class="total-price" wx:if="{{!isEdit}}">
-    <text class="hint">不含运费</text>合计:<text class="price"> ￥{{tools.returnPrice(totalPrice)}}</text>
+    <view class="hint">不含运费</view>
+    <view class="total-discounts">
+      <view class="total">合计:<text class="price"> ￥{{tools.returnPrice(totalPrice)}}</text></view>
+      <view class="discounts" wx:if="{{discountsPrice}}">已优惠:<text> ￥{{tools.returnPrice(discountsPrice)}}</text></view>
+    </view>
   </view>
   <view class="total-price" wx:else></view>
   <view class="btn" wx:if="{{!isEdit}}">

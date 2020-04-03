@@ -23,14 +23,14 @@
         wx:if="{{item.live_status == 103}}" 
         url="/pages/live-rep/live-rep?roomid={{item.roomid}}"
       >
-        <image src="{{item.cover_img}}" class="bg-img-container-banner"></image>
+        <image src="{{item.share_img}}" class="bg-img-container-banner"></image>
       </navigator>
       <navigator 
         class="prev-img" 
         wx:else
         url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomid}}"
       >
-        <image src="{{item.cover_img}}" class="bg-img-container-banner"></image>
+        <image src="{{item.share_img}}" class="bg-img-container-banner"></image>
       </navigator>
 
       <view class="footer">

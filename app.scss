@@ -1,3 +1,4 @@
+@import './theme.scss';
 /**app.wxss**/
 Page {
   font-size: 30rpx;
@@ -295,6 +296,12 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
               border: 1px solid #A5A5A5;
             }            
           }
+          &.min-num{
+            color: #FF6868;
+            &::after{
+              border: 1px solid #FF6868;
+            }  
+          }
         }
       }
       .price-unit{
@@ -520,6 +527,74 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
     border: 1rpx solid #FF6868;
     border-radius: 54rpx;
   }
+}
+
+/*==============按钮共用=================*/
+//共用
+.btn-primary, .btn-green, .btn-orange, .btn-red, .btn-white, .btn-white2{
+  text-align: center;
+  &[disabled]{
+    color: #fff !important;
+    background: #BCC4C0 !important;
+    &:active{
+      opacity: 1;
+    }
+  }
+  &:active{
+    opacity: 0.7;
+  }
+  &::after{
+    border: 0;
+  }
+}
+//主要的
+.btn-primary{
+  background: $--color-primary;
+  color: #fff;
+}
+//绿色的
+.btn-green{
+  background: #00AE66;
+  color: #fff;
+}
+//橙色的
+.btn-orange{
+  background: #f7881b;
+  color: #fff;
+}
+//红色的
+.btn-red{
+  color: #fff;
+  background: #FF6262;
+}
+//白色的
+.btn-white{
+  color: $--color-primary;
+  background: #fff;
+  border: 1rpx solid $--color-primary;
+}
+//白色的(无框线)
+.btn-white2{
+  color: $--color-primary;
+  background: #fff;
+}
+
+/*==============按钮大小=================*/
+.btn-size-circle-88{
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+}
+.btn-size-circle-60{
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+}
+/*================按钮阴影=================*/
+.btn-box-shadow1{
+  box-shadow: 0 4rpx 12rpx 0 rgba(65, 126, 255, 0.4);
 }
 
 /*共用input-item*/

@@ -22,4 +22,12 @@ module.exports = {
     var regu = /^[0-9]*\.*[0-9]{0,2}$/;
     return regu.test(str);
   },
+  /**
+   * 判断是否正整数
+   * @param str
+   */
+  isNumber: function (str) {
+    var regu = /^[0-9]+$/;
+    return regu.test(str);
+  },
 }

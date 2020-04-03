@@ -272,7 +272,11 @@ Page({
           msgBox('您所购买的商品有预售商品，请在购物车移除', ()=>{
             wx.navigateBack();
           });
-        }    else {
+        } else if (res.statusCode == 200 && res.data.code == 108) {
+          msgBox('您所购买的商品有少于最小订货数，请在购物车修改购买数量', ()=>{
+            wx.navigateBack();
+          });
+        } else {
           app.requestResultCode(res); //处理异常
         }
       },

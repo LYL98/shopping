@@ -115,15 +115,32 @@
   > .total-price{
     text-align: right;
     padding-right: 28rpx;
+    display: flex;
+    align-items: flex-start;
     > .hint{
       font-size: 20rpx;
       color: #a2a2a2;
       margin-right: 16rpx;
+      flex: 1;
+      margin-top: 4rpx;
     }
-    > .price{
-      font-size: 32rpx;
-      font-weight: bold;
+    >.total-discounts{
+      text-align: left;
+      >.total{
+        >.price{
+          font-size: 32rpx;
+          line-height: 32rpx;
+          font-weight: bold;
+        }
+      }
+      >.discounts{
+        margin-top: 12rpx;
+        font-size: 26rpx;
+        height: 26rpx;
+        line-height: 26rpx;
+      }
     }
+    
   }
   > .btn{
     flex: initial !important;

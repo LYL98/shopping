@@ -141,13 +141,27 @@ var returnDateFormat = function(dateStr, format) {
 }
 
 //返回库存提示
-var returnItemStock = function(itemStock) {
-  if (itemStock <= 0) {
+var returnItemStock = function(item) {
+  if (item.item_stock < item.min_num_per_order || item.item_stock === 0) {
     return '库存不足';
-  } else if (itemStock > 0 && itemStock <= 10) {
-    return '仅剩' + itemStock + '件';
+  } else if (item.item_stock > 0 && item.item_stock <= 10) {
+    return '仅剩' + item.item_stock + '件';
   }
   return '';
+}
+
+//判断库存是否够数
+var judgeItemStock = function(item){
+  if(item.min_num_per_order > 0){
+    if(item.item_stock < item.min_num_per_order){
+      return false;
+    }
+    return true;
+  }
+  if(item.item_stock > 0){
+    return true;
+  }
+  return false;
 }
 
 // 省略文本
@@ -168,6 +182,7 @@ module.exports = {
   returnPayType: returnPayType,
   returnDateFormat: returnDateFormat,
   returnItemStock: returnItemStock,
+  judgeItemStock: judgeItemStock,
   returnShowPayType: returnShowPayType,
   returnDiscount: returnDiscount,
   returnOmissionText: returnOmissionText

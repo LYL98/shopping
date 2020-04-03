@@ -8,7 +8,7 @@
         <image src="./../../assets/img/checked2.png" style="width: 24rpx; height: 24rpx;" wx:else/>
     </view>
     <view class="str" hover-class="link-active" bind:tap="checkConsent">我已阅读并同意</view>
-    <navigator url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/gb_protocol.html">《用户协议》</navigator>
+    <navigator url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/protocol.html">《用户协议》</navigator>
     <view class="str">和</view>
-    <navigator url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/gb_privacy_policy.html">《隐私政策》</navigator>
+    <navigator url="/pages/browser/browser?url=https://www.pgyscm.com/legal-agreement/privacy_policy.html">《隐私政策》</navigator>
 </view>
