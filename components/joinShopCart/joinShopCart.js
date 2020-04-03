@@ -261,6 +261,10 @@ Component({
     //处理点击或输入数量、不使用优惠数量
     handleNum(){
       let { itemData, num} = this.data;
+      // 如果库存不足
+      if(itemData.item_stock === 0 || itemData.item_stock < itemData.min_num_per_order){
+        return;
+      }
       // 如果是购物车页面，并且该商品未报价，则禁止增加计数
       if (!itemData.is_quoted && this.properties.sourcePage === 'shoppingCart') {
         return;
@@ -275,6 +279,7 @@ Component({
     //处理增加购物车
     handleUp(num){
       let { itemData } = this.data;
+      let tempData = {};
       this.touchOnGoods(this.thatEvent);
       let data = wx.getStorageSync('shoppingCartData');
 
@@ -282,23 +287,26 @@ Component({
         for (let i = 0; i < data.length; i++) {
           if (itemData.id === data[i].id) {
             data[i].num = num;
+            tempData = data[i];
             break;
           }
           if (i === data.length - 1){
-            data.unshift({
+            tempData = {
               id: itemData.id,
               num: num,
               is_select: true
-            });
+            };
+            data.unshift(tempData);
             break;
           }
         }
       } else {
-        data = [{
+        tempData = {
           id: itemData.id,
           num: num,
           is_select: true
-        }];
+        };
+        data = [tempData];
       }
       wx.setStorageSync('shoppingCartData', data);
 
@@ -310,7 +318,7 @@ Component({
 
       app.shoppingCartNum();//计算购物车数量并显示角标
 
-      this.triggerEvent('callback', { num });//触发回调事件
+      this.triggerEvent('callback', tempData);//触发回调事件
     },
 
     /**
@@ -318,7 +326,7 @@ Component({
      */
     down() {
       let { itemData, num, isDeleteHint } = this.data;
-      
+      let tempData = {};
       //内部方法
       let fun = () => {
         let data = wx.getStorageSync('shoppingCartData');
@@ -332,9 +340,11 @@ Component({
             if (itemData.id === data[i].id) {
               if (num <= 0) {
                 data.remove(i);
+                tempData = { num: 0, is_select: false };
                 break;
               }
               data[i].num = num;
+              tempData = data[i];
               break;
             }
           }
@@ -349,7 +359,7 @@ Component({
 
         app.shoppingCartNum();//计算购物车数量并显示角标
 
-        this.triggerEvent('callback', { num });//触发回调事件
+        this.triggerEvent('callback', tempData);//触发回调事件
       }
 
       if (((itemData.min_num_per_order > 0 && num <= itemData.min_num_per_order) ||

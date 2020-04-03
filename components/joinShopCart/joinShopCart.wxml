@@ -58,7 +58,7 @@
         <text class="price">￥{{tools.returnPrice(itemData.price_sale)}}</text>
       </view>
     </view>
-    <view class="discount-repertory">
+    <view class="discount-repertory" wx:if="{{itemData.item_stock > 0 && itemData.item_stock >= itemData.min_num_per_order}}">
       <view class="repertory">{{tools.returnItemStock(itemData)}}</view>
     </view>
   </view>

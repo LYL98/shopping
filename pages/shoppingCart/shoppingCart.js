@@ -140,7 +140,7 @@ Page({
 
   //添加或减少回调
   upDownCallback(res) {
-    if(res.detail.num === 0){
+    if(res.detail.num === 0 || res.detail.is_select){
       this.updateData();//更新本地数据
     }
   },
@@ -343,10 +343,10 @@ Page({
 
             for (let j = 0; j < rd.length; j++) {
               let child = rd[j];
-              let status = child.is_quoted && child.is_on_sale && Util.judgeItemStock(child)
+              let status = child.is_quoted && child.is_on_sale && Util.judgeItemStock(child);
               let n = child.id;
               if (n == dId) { //判断ID是否相等
-                if (obj.num < 1 && status) obj.num = 1;
+                if (obj.num < 1 && status) obj.num = child.min_num_per_order || 1;
                 isExist = true;
                 break;
               }

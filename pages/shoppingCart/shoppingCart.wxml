@@ -30,7 +30,7 @@
           <text wx:if="{{item.min_num_per_order}}" class="min-num">{{item.min_num_per_order}}件起售</text>
         </view>
         <view class="join-shop-cart">
-          <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" sourcePage="shoppingCart" isDeleteHint/>
+          <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" isDeleteHint/>
         </view>
       </view>
     </view>
