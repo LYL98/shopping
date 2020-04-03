@@ -386,25 +386,25 @@ Component({
       //如不是详情页和购物车
       if(sourcePage !== 'itemDetail' && sourcePage !== 'shoppingCart') return;
 
+      let sph = '';
       let d = itemData.step_prices;
       if(d && d.length > 0){
-        stepPricesHint = '';
         for(let i = 0; i < d.length; i++){
           if(i === d.length - 1 && num >= d[i].num){
-            stepPricesHint = `已享￥${Util.returnPrice(d[i].price_sale)}/件`;
+            sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件`;
             break;
           }
           if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
-            stepPricesHint = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
+            sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
             break;
           }
           if(i === 0 && num < d[i].num){
-            stepPricesHint = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件`;
+            sph = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件`;
             break;
           }
         }
-        this.setData({ stepPricesHint });
       }
+      if(sph !== stepPricesHint) this.setData({ stepPricesHint: sph });
     },
 
     /**
