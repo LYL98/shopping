@@ -36,17 +36,19 @@ Page({
     couponNum: 0, //今日可用优惠券数量
     isShowCouponHint: true,
     activity: {},
+    query: {
+      fail_num: 0, //失效数量
+      page: 1,
+      page_size: 5
+    }
   },
   onLoad() {
     this.address = {}; //当前选择地址
-    this.setData({
-      system: app.globalData.system
-    })
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow() {
     this.address = app.getSelectStore(); //当前选择地址
     this.relatedKey = Util.getUuid(); //生成uuid
     wx.setStorageSync('actionRecordShopCartId', this.relatedKey); //生成供埋点系列用
@@ -55,8 +57,13 @@ Page({
     app.signIsLogin(() => {
       this.activity();
       this.getWorkTime();
-      this.getShoppingCartData();
       this.couponList(); //获取优惠券列表
+      let { query } = this.data;
+      query.page = 1;
+      query.fail_num = 0;
+      this.setData({ query }, ()=>{
+        this.getShoppingCartData();
+      });
     });
   },
   //点击页面底下的tab
@@ -129,7 +136,6 @@ Page({
           }
           wx.setStorageSync('shoppingCartData', d);
           that.updateData();//更新本地数据
-          app.shoppingCartNum();//计算购物车数量并显示角标
           that.setData({
             isEdit: false
           });
@@ -278,7 +284,7 @@ Page({
         discountsPrice: 0
       });
     }
-    app.shoppingCartNum();
+    app.shoppingCartNum(); //计算购物车数量并显示角标
 
   },
 
@@ -311,6 +317,7 @@ Page({
   //获取购物车数据
   getShoppingCartData() {
     let that = this;
+    let { query, dataItem } = that.data;
     let d = wx.getStorageSync('shoppingCartData');
     let item = [];
     if (d && d.length > 0) {
@@ -322,49 +329,55 @@ Page({
           num: d[i].num
         })
       }
-      let { initLoad, dataItem } = that.data;
-      if (initLoad || dataItem.length === 0) {
-        that.setData({ loading: true });
-      }
 
-      Http.get(Config.api.itemCartQuery, {
-        ids: ids.join(),
-        store_id: this.address.id || ''
-      }).then((res) => {
-        let rd = res.data;
-        if (rd.length <= 0) {
-          wx.removeStorageSync('shoppingCartData')
+      wx.showNavigationBarLoading();
+      that.setData({ loading: true }, ()=>{
+        let ids_temp = ids.filter((item, index) => index === 0 || index < 3);
+        console.log(ids_temp, ids);
+        Http.get(Config.api.itemCartQuery, {
+          ids: ids_temp.join(),
+          store_id: this.address.id || ''
+        }).then((res) => {
+          let rd = res.data;
+          if (rd.length === 0) {
+            wx.removeStorageSync('shoppingCartData');
+          } else {
+            for (let i = 0; i < d.length; i++) {
+              let obj = d[i];
+              let dId = obj.id;
+              let isExist = false;
 
-        } else {
-          for (let i = 0; i < d.length; i++) {
-            let obj = d[i];
-            let dId = obj.id;
-            let isExist = false;
-
-            for (let j = 0; j < rd.length; j++) {
-              let child = rd[j];
-              let status = child.is_quoted && child.is_on_sale && Util.judgeItemStock(child);
-              let n = child.id;
-              if (n == dId) { //判断ID是否相等
-                if (obj.num < 1 && status) obj.num = child.min_num_per_order || 1;
-                isExist = true;
-                break;
+              for (let j = 0; j < rd.length; j++) {
+                let child = rd[j];
+                let status = child.is_quoted && child.is_on_sale && Util.judgeItemStock(child);
+                let n = child.id;
+                if (n == dId) { //判断ID是否相等
+                  if (obj.num < 1 && status) obj.num = child.min_num_per_order || 1;
+                  isExist = true;
+                  break;
+                }
+              }
+              if (!isExist) {
+                query.fail_num = query.fail_num + 1;
+                d.remove(i);
               }
             }
-            if (!isExist) {
-              d.remove(i)
-            }
+            wx.setStorageSync('shoppingCartData', d);
           }
-          wx.setStorageSync('shoppingCartData', d);
-        }
-        that.updateData(rd);//更新本地数据
-        that.setData({ loading: false, initLoad: false });
-      }).catch(() => {
-        that.setData({ loading: false, initLoad: false });
+          that.updateData(rd);//更新本地数据
+          wx.hideNavigationBarLoading();
+          that.setData({ loading: false, query });
+        }).catch(() => {
+          wx.hideNavigationBarLoading();
+          that.setData({ loading: false, 'query.page': query.page - 1 });
+        });
       });
     } else {
+      query.page = 1;
+      query.fail_num = 0;
       that.setData({
-        dataItem: []
+        dataItem: [],
+        query,
       });
     }
     /*===== 埋点 start ======*/
@@ -434,4 +447,18 @@ Page({
       });
     }
   },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+    let { query, dataItem } = this.data;
+    if (dataItem.length / query.page_size > query.page) {
+      query.page = query.page + 1;
+      this.setData({
+        query: query
+      }, () => {
+        this.getShoppingCartData();
+      });
+    }
+  }
 })
