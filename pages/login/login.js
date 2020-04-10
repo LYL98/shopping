@@ -5,9 +5,8 @@ Page({
   //获取手机号后
   getPhoneNumberCallBack(resData){
     let rd = resData.detail;
-    app.globalData.loginUserInfo = rd; //系统登录信息（特殊情况，不能存Storage，只存globalData）
-    //app.updateLoginInfo(rd); //系统登录信息
     if(rd.weapp_openid){
+      app.updateLoginInfo(rd); //系统登录信息
       let id = wx.getStorageSync("loginUserId");
       if(rd.id != id) {
         wx.removeStorageSync("shoppingCartData");
@@ -24,6 +23,7 @@ Page({
         url: '/pages/index/index',
       });
     }else{
+      app.globalData.loginUserInfo = rd; //系统登录信息（特殊情况，不能存Storage，只存globalData）
       wx.redirectTo({
         url: '/pages/loginBind/loginBind'
       });
