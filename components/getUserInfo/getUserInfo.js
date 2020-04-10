@@ -52,6 +52,8 @@ Component({
 					code: code,
 					encryptedData: ed,
 					iv: iv,
+				}, {
+					handleError: false
 				}).then((res)=>{
 					that.setData({ loading: false});
 					that.triggerEvent('callback', res.data);
