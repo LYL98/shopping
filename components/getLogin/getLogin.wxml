@@ -1,1 +1,0 @@
-<button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="btn-primary btn-size-circle-88">绑定微信</button>
