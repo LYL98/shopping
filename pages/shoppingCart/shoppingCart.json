@@ -1,7 +1,6 @@
 {
   "navigationBarTitleText": "购物车",
   "usingComponents": {
-    "loading": "/components/loading/loading",
     "joinShopCart": "/components/joinShopCart/joinShopCart",
     "defaultPage": "/components/defaultPage/defaultPage"
   }

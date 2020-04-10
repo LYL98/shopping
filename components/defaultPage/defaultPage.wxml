@@ -2,5 +2,5 @@
 
 <view class="default-page">
   <image src="{{ default.imgSrc }}" class="icon"></image>
-  <text class="title">{{ default.title }}</text>
+  <text class="title">{{ loading ? '加载中...' : default.title }}</text>
 </view>
