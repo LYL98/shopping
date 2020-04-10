@@ -1,6 +1,6 @@
 {
+  "navigationBarTitleText": "授权手机号",
   "usingComponents": {
-    "getLogin": "/components/getLogin/getLogin",
     "getPhoneNumber": "/components/getPhoneNumber/getPhoneNumber"
   }
 }
