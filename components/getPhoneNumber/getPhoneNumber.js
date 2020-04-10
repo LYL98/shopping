@@ -69,9 +69,31 @@ Component({
 				}).then((res) => {
 					that.setData({ loading: false });
 					that.triggerEvent('callback', res.data);
-				}).catch(() => {
+				}).catch((error) => {
 					that.setData({ loading: false });
-					that.getError();
+					let er = error.data;
+					if(er && er.code === 201){
+						that.getError();
+					}else if(er && er.code === 211){
+						//没有用户，提示 很抱歉， 您还不是平台用户， 请联系客服电话19970193909【后续优化可打电话】
+						that.getLoginCode(); //重新取code
+						wx.showModal({
+							title: "提示",
+							content: er.message,
+							confirmText: "我知道了",
+							confirmColor: "#00AE66",
+							showCancel: false
+						});
+					}else{
+						that.getLoginCode(); //重新取code
+						wx.showModal({
+							title: "提示",
+							content: er.message,
+							confirmText: "我知道了",
+							confirmColor: "#00AE66",
+							showCancel: false
+						});
+					}
 				});
 			});
 		},
@@ -97,9 +119,21 @@ Component({
 				}).then((res) => {
 					that.setData({ loading: false });
 					that.triggerEvent('callback', res.data);
-				}).catch(() => {
+				}).catch((error) => {
 					that.setData({ loading: false });
-					that.getError();
+					let er = error.data;
+					if(er && er.code === 201){
+						that.getError();
+					}else{
+						that.getLoginCode(); //重新取code
+						wx.showModal({
+							title: "提示",
+							content: er.message,
+							confirmText: "我知道了",
+							confirmColor: "#00AE66",
+							showCancel: false
+						});
+					}
 				});
 			});
 		},
