@@ -9,13 +9,12 @@ Component({
 	},
 	data: {
 		loading: false,
+		loginRes: {}
 	},
 
 	//组件生命周期
 	lifetimes: {
 		attached() {
-			//记录loginRes
-			this.loginRes = {};
 			this.getLoginCode();
 		}
 	},
@@ -26,7 +25,7 @@ Component({
 			//调用登录接口
 			wx.login({
 				success: function (loginRes) {
-					that.loginRes = loginRes;
+					that.setData({ loginRes });
 				},
 				fail: function (res) {
 					wx.showModal({
@@ -51,14 +50,13 @@ Component({
 		//商户登录
 		signLogin(e){
 			let that = this;
-			let code = that.loginRes.code;
-			if(!code){
+			let code = that.data.loginRes.code;
+			let ed = e.detail.encryptedData;
+			let iv = e.detail.iv;
+			if(!code || !ed || !iv){
 				that.getError();
 				return;
 			}
-			let ed = e.detail.encryptedData;
-			let iv = e.detail.iv;
-			if (!ed || !iv) return;
 			that.setData({
 				loading: true
 			}, ()=>{
@@ -78,14 +76,13 @@ Component({
 		//获取手机号
 		getPhome(e){
 			let that = this;
-			let code = that.loginRes.code;
-			if(!code){
+			let code = that.data.loginRes.code;
+			let ed = e.detail.encryptedData;
+			let iv = e.detail.iv;
+			if(!code || !ed || !iv){
 				that.getError();
 				return;
 			}
-			let ed = e.detail.encryptedData;
-			let iv = e.detail.iv;
-			if (!ed || !iv) return;
 			that.setData({
 				loading: true
 			}, ()=>{
