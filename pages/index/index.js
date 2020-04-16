@@ -43,7 +43,8 @@ Page({
       tag: '今日主推',
       sort: '-tags_edited',
       page: 1,
-      page_size: Constant.PAGE_SIZE
+      page_size: Constant.PAGE_SIZE,
+      item_tag_id: 51 //运营专区ID
     },
     dataItem: {
       items: []
@@ -298,7 +299,7 @@ Page({
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;
           let { tencentPath } = that.data;
-          if(rd.length > 6) rd.length = 6; //限制最长6个
+          if(rd.length > 8) rd.length = 8; //限制最长8个
           let rdTemp = [];
           rd.forEach(item => {
             if(item.image){
@@ -434,6 +435,8 @@ Page({
   //点击tags
   clickTags(e){
     let tag = e.currentTarget.dataset.tag;
+    app.globalData.indexTagId = tag.id
+    app.globalData.indexTagIndex = e.currentTarget.dataset.index
     /*===== 埋点 start ======*/
     app.actionRecordAdd({
       action: Constant.ACTION_RECORD.HOME_TAG,

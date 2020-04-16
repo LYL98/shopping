@@ -4,6 +4,8 @@
     "joinShopCart": "/components/joinShopCart/joinShopCart",
     "search": "/components/search/search",
     "skeleton": "/components/skeleton/skeleton",
-    "defaultPage": "/components/defaultPage/defaultPage"
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "navbar": "/components/navbar/navbar"
+
   }
 }

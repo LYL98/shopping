@@ -24,7 +24,11 @@
         <view class="image skeleton-rect bg-img-container-item" wx:else></view>
       </view>
       <view class="content">
-        <view class="title skeleton-rect">{{item.title}}</view>
+        <view class="title skeleton-rect">
+          <view class="icon-tag" wx:if="{{item.tags[0]}}">
+            {{item.tags[0]}}
+          </view>
+          <text>{{item.title}}</text></view>
         <view class="label">
           <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
           <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>

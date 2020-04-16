@@ -13,13 +13,15 @@ Page({
     rankSSrc: './../../assets/img/rank_s.png',
     rankSl: './../../assets/img/rank_l.png',
     screenSrc: './../../assets/img/screen.png',
+    downSrc:'./../../assets/img/down.png',
     categoryList: [],
     query: {
       store_id: 0,
       sort: '-other',
       display_class_id: '',
       page: 1,
-      page_size: Constant.PAGE_SIZE
+      page_size: Constant.PAGE_SIZE,
+      item_tag_id: '',//运营专区ID
     },
     urlJumpId:0,
     dataItem: {
@@ -47,9 +49,15 @@ Page({
       })()
     },
     initLoad: true,
-    showSkeleton: true
+    showSkeleton: true,
+    activeIndex: '',//选中运营专区显示的样式
+    x: '',//选中运营专区后滑动的距离
+    tagsList:[],
+    changedown:true,
+    indextagid:'',
+    indextagindex: ''
   },
-  onLoad() {
+  onLoad(option) {
     this.address = {}; //当前选择的地址
     this.setData({
       system:  app.globalData.system
@@ -59,15 +67,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this
     this.address = app.getSelectStore(); //当前选择的地址
     let value = app.globalData.urlJump < 10 ? '0' + app.globalData.urlJump : app.globalData.urlJump
     this.setData({
       urlJumpId: value || 0,
     })
+    // indexTagId
+     
     //判断登录
     app.signIsLogin(() => {
       let { query } = this.data;
-      query.store_id = this.address.id || '';
+      query.store_id = this.address.id || ''; 
       if(query.page !== 1){
         query.page_size = query.page_size * query.page;
         query.page = 1;
@@ -84,6 +95,10 @@ Page({
         });
       }
       this.displayClassQuery();//获取商品分类
+      this.getTagsList()//得到运营专区分类
+      if(app.globalData.indexTagId){
+        this.getClickTag()
+      }
     });
     if(this.data.urlJumpId) {
       this.selectCategory(this.data.urlJumpId, 'auto_select')
@@ -256,5 +271,141 @@ Page({
         that.itemListDisplayClass();
       });
     }
-  }
+  },
+
+
+  //点击运营专区
+  clickTag(e){
+    
+    let that = this;
+    that.setData({
+      changedown: true
+    })
+    console.log(v,that.data.activeIndex);
+    let v = e.currentTarget.dataset.index 
+    let id = e.currentTarget.dataset.tagid
+    if(that.data.activeIndex !== v){
+      console.log(that.data.activeIndex );
+      let { query } = this.data;
+      query.item_tag_id = id
+      that.setData({
+        query:query,
+        activeIndex: v,
+      })
+      //点击运营标签滑动
+      let screenWidth = wx.getSystemInfoSync().windowWidth;
+      let itemWidth = screenWidth/4;
+      let index = e.currentTarget.dataset.index
+      const { tagsList } = that.data;
+      let scrollX = itemWidth * index - itemWidth*2;
+      let maxScrollX = (tagsList.length+1) * itemWidth;
+      if(scrollX<0){
+        scrollX = 0;
+      } else if (scrollX >= maxScrollX){
+        scrollX = maxScrollX;
+      }
+      this.setData({
+        x: scrollX
+      },()=>{
+        that.itemListDisplayClass()
+      })
+    }else{
+      let { query } = this.data;
+      query.item_tag_id = ''
+      that.setData({
+        query: query,
+        activeIndex: '',
+      },()=>{
+        that.itemListDisplayClass()
+      })
+    }
+  },
+
+  //点击下拉按钮
+  clickdown(){
+    let that = this
+    
+    // console.log(that.data.changedown);
+    
+    this.setData({
+      changedown: !that.data.changedown
+    })
+  },
+  //获取商品运营专区
+  getTagsList(){
+
+    let that = this;
+    let { query } = that.data;
+    
+    wx.request({
+      url: Config.api.itemTagsList,
+      header: {
+        'content-type': 'application/json',
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        //query.province_code
+        //that.address.province_code
+        province_code: that.address.province_code
+      },
+      success: function(res) {
+        if (res.statusCode == 200 && res.data.code == 0) {
+          let rd = res.data.data;
+          let { tagsList } = that.data;
+          if(rd.length > 16) rd.length = 16 //长度限制16个
+          that.setData({
+            tagsList: rd
+          });
+        } else {
+          app.requestResultCode(res); //处理异常
+        }
+      },
+      complete: function(res) {
+        //判断是否网络超时
+        app.requestTimeout(res, () => {
+          that.getTagsList();
+        });
+      }
+    });
+  },
+  //从首页点击运营标签进入页面触发事件
+  getClickTag(){
+    let that = this
+    let { query } = that.data;
+    query.item_tag_id = app.globalData.indexTagId
+      console.log(app.globalData.indexTagIndex);
+    let screenWidth = wx.getSystemInfoSync().windowWidth;
+    let itemWidth = screenWidth/4;
+    let index = app.globalData.indexTagIndex
+    const { tagsList } = that.data;
+    let scrollX = itemWidth * index - itemWidth*2;
+    let maxScrollX = (tagsList.length+1) * itemWidth;
+    if(scrollX<0){
+      scrollX = 0;
+    } else if (scrollX >= maxScrollX){
+      scrollX = maxScrollX;
+    }
+    this.setData({
+      x: scrollX
+    })
+    this.setData({
+      activeIndex: app.globalData.indexTagIndex,
+      query: query,
+     },()=>{
+      this.itemListDisplayClass()
+     })
+  },
+  //页面隐藏时
+  onHide: function(){
+    let that =this
+    let { query } = that.data;
+    query.item_tag_id = ''
+    this.setData({
+      activeIndex: '',
+      x: '',
+      query: query
+    })
+    app.globalData.indexTagId = null
+    app.globalData.indexTagIndex = null
+  },
 })
