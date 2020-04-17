@@ -150,6 +150,12 @@
 					"pathName": "pages/updateSystem/updateSystem",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/itemLabel/itemLabel",
+					"pathName": "pages/itemLabel/itemLabel",
+					"scene": null
 				}
 			]
 		}

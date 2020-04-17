@@ -7,10 +7,10 @@
 <!--搜索组件end-->
 
 <!--分类start-->
-<view class="category-view">
+<!-- <view class="category-view">
   <view class="link-active {{query.tag === item.title && 'active'}}" wx:for="{{tagsList}}" wx:key="item.title" bindtap="selectTags" data-tag="{{item}}" wx:if="{{item.title}}">{{item.title}}</view>
   <view style="margin-bottom: 180rpx;"></view>
-</view>
+</view> -->
 <!--分类end-->
 
 <view class="item-view skeleton">
@@ -61,7 +61,7 @@
   <defaultPage wx:elif="{{!showSkeleton}}" currentPage="itemLabel"></defaultPage>
 </view>
 
-<navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="shopping-btn">
+<!-- <navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="shopping-btn">
   <image src="{{cart}}"></image>
   <span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
-</navigator>
+</navigator> -->

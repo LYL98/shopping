@@ -26,6 +26,7 @@
     </view>
     
     <view class="tags-list">
+    <!-- 点击跳转到商品列表页面 -->
     <!-- url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" -->
       <navigator wx:for="{{tagsList}}" wx:key="index" url="/pages/itemList/itemList"  bind:tap="clickTags" data-tag="{{item}}" data-index="{{index}}" open-type="switchTab" >
         <image class="skeleton-rect" wx:if="{{item.image}}" src="{{item.image}}"></image>
@@ -64,7 +65,8 @@
               <view class="goods-decs">
                 <view class="title skeleton-rect">
                   <view class="icon-tag" wx:if="{{item.tags[0]}}">
-                    {{item.tags[0]}}
+                    <!-- {{item.tags[0]}} -->
+                    今日
                   </view>
                   <text>{{item.title}}</text>
                   </view>

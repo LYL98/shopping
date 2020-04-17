@@ -54,8 +54,9 @@ Page({
     x: '',//选中运营专区后滑动的距离
     tagsList:[],
     changedown:true,
-    indextagid:'',
-    indextagindex: ''
+    // indextagid:'',
+    // indextagindex: ''
+    flag:false//防止快速点击运营专区
   },
   onLoad(option) {
     this.address = {}; //当前选择的地址
@@ -73,32 +74,43 @@ Page({
     this.setData({
       urlJumpId: value || 0,
     })
-    // indexTagId
      
     //判断登录
     app.signIsLogin(() => {
       let { query } = this.data;
       query.store_id = this.address.id || ''; 
       if(query.page !== 1){
+        console.log(909);
+        
         query.page_size = query.page_size * query.page;
         query.page = 1;
         this.setData({
           query: query
         }, ()=>{
+          // if(app.globalData.indexTagId){
+          //   this.getClickTag()
+          // }else{
+          //   this.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
+          // }
           this.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
         });
       }else{
         this.setData({
           query: query
         }, ()=>{
-          this.itemListDisplayClass();
+          //如果是从首页点击专区进来
+          console.log(111);
+          
+          if(app.globalData.indexTagId){
+            this.getClickTag()
+          }else{
+            this.itemListDisplayClass();
+          }
         });
       }
       this.displayClassQuery();//获取商品分类
       this.getTagsList()//得到运营专区分类
-      if(app.globalData.indexTagId){
-        this.getClickTag()
-      }
+      
     });
     if(this.data.urlJumpId) {
       this.selectCategory(this.data.urlJumpId, 'auto_select')
@@ -279,13 +291,20 @@ Page({
     
     let that = this;
     that.setData({
-      changedown: true
+      changedown: true,
     })
-    console.log(v,that.data.activeIndex);
+    console.log(that.data.flag);
+    
+    // if(that.data.flag) return
+    // console.log(v,that.data.activeIndex);
+    // that.setData({
+    //   flag: true
+    // })
     let v = e.currentTarget.dataset.index 
     let id = e.currentTarget.dataset.tagid
+    //判断是否选中运营专区
     if(that.data.activeIndex !== v){
-      console.log(that.data.activeIndex );
+      // console.log(that.data.activeIndex );
       let { query } = this.data;
       query.item_tag_id = id
       that.setData({
@@ -308,6 +327,7 @@ Page({
         x: scrollX
       },()=>{
         that.itemListDisplayClass()
+        that.data.flag = false
       })
     }else{
       let { query } = this.data;
@@ -319,6 +339,7 @@ Page({
         that.itemListDisplayClass()
       })
     }
+    
   },
 
   //点击下拉按钮
@@ -397,9 +418,12 @@ Page({
   },
   //页面隐藏时
   onHide: function(){
+    
     let that =this
     let { query } = that.data;
     query.item_tag_id = ''
+    query.page = 1
+    query.page_size = Constant.PAGE_SIZE
     this.setData({
       activeIndex: '',
       x: '',
@@ -407,5 +431,23 @@ Page({
     })
     app.globalData.indexTagId = null
     app.globalData.indexTagIndex = null
+    that.goTop()
   },
+
+   // 回到顶部
+  goTop: function (e) { 
+    console.log(111);
+    
+    
+  if (wx.pageScrollTo) {
+    wx.pageScrollTo({
+      scrollTop: 0
+    })
+  } else {
+    wx.showModal({
+      title: '提示',
+      content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+    })
+  }
+  }
 })
