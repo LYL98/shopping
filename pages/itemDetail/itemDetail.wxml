@@ -25,7 +25,12 @@
       <view class="dotwrap">{{currentSwiper + 1}}/{{detail.images.length}}</view>
     </view>
   </view>
-  <view class="item-title">{{detail.title}}</view>
+  <view class="item-title">
+    <view class="icon-tag" wx:if="{{detail.tags[0]}}">
+        {{detail.tags[0]}}
+    </view>
+    <text >{{detail.title}}</text> 
+    </view>
   <view class="repertory-price">
     <view class="price-unit" wx:if="{{detail.is_quoted}}">
       <view class="price-origin" wx:if="{{detail.price_origin > detail.price_sale}}">原价:￥{{tools.returnPrice(detail.price_origin)}}</view>

@@ -26,19 +26,21 @@
     </view>
     
     <view class="tags-list">
-      <navigator wx:for="{{tagsList}}" wx:key="index" url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" bind:tap="clickTags" data-tag="{{item}}">
+    <!-- 点击跳转到商品列表页面 -->
+    <!-- url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" -->
+      <navigator wx:for="{{tagsList}}" wx:key="index" url="/pages/itemList/itemList"  bind:tap="clickTags" data-tag="{{item}}" data-index="{{index}}" open-type="switchTab" >
         <image class="skeleton-rect" wx:if="{{item.image}}" src="{{item.image}}"></image>
         <image class="img-none skeleton-rect" wx:else></image>
         <view><text class="skeleton-rect">{{item.title}}</text></view>
       </navigator>
-      <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[0].title}}" bind:tap="clickTags" data-tag="{{tagsList2[0]}}">
+      <!-- <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[0].title}}" bind:tap="clickTags" data-tag="{{tagsList2[0]}}">
         <image class="skeleton-rect" src="{{tagsImg[6]}}"></image>
         <view><text class="skeleton-rect">{{tagsList2[0].title}}</text></view>
       </navigator>
       <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[1].title}}" bind:tap="clickTags" data-tag="{{tagsList2[1]}}">
         <image class="skeleton-rect" src="{{tagsImg[7]}}"></image>
         <view><text class="skeleton-rect">{{tagsList2[1].title}}</text></view>
-      </navigator>
+      </navigator> -->
     </view>
     <view class="pannel-line"></view>
     <view class="recently-collect-title">
@@ -61,7 +63,13 @@
             </view>
             <view class="content">
               <view class="goods-decs">
-                <view class="title skeleton-rect">{{item.title}}</view>
+                <view class="title skeleton-rect">
+                  <view class="icon-tag" wx:if="{{item.tags[0]}}">
+                    <!-- {{item.tags[0]}} -->
+                    今日
+                  </view>
+                  <text>{{item.title}}</text>
+                  </view>
                 <view class="label">
                   <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
                   <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>

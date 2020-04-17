@@ -66,6 +66,10 @@
               <image src="{{optionSrc[1]}}"></image>
               <text>账号管理</text>
             </navigator>
+             <navigator class="item" url="/pages/itemLabel/itemLabel?tag=收藏商品">
+              <image src="{{optionSrc[8]}}"></image>
+              <text>我的收藏</text>
+            </navigator>
             <navigator class="item" url="/pages/afterSaleRecord/afterSaleRecord">
               <image src="{{optionSrc[4]}}"></image>
               <text>售后</text>

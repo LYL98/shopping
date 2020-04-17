@@ -3,6 +3,17 @@
 
 <!--搜索组件start-->
 <search style="position: fixed; top: 0; left: 0; right: 0; z-index: 2;"/>
+
+<scroll-view class="{{changedown?'scroll-view':'scroll-view-down' }}" scroll-x="{{changedown}}" scroll-left="{{x}}" scroll-with-animation="{{true}}">
+  <view class="tags-view-item {{activeIndex === index && 'tagActive'}}" wx:for="{{tagsList}}" wx:key='index' bindtap="clickTag" data-index="{{index}}" data-tagid="{{item.id}}" >
+        <text >{{item.title}}</text>
+    </view>
+<!-- 遮罩层 -->
+<view class="tags-item" wx:if="{{!changedown}}" catchtouchmove="true"></view>
+</scroll-view>
+<!-- 下拉按钮 -->
+  <view class="down-img" bindtap="clickdown"><image src="{{downSrc}}"></image></view>
+
 <!--搜索组件end-->
 <view class="category-view">
   <view class="link-active {{query.display_class_id == '' && 'active'}}" bindtap="selectCategory" data-category="" >全部</view>
@@ -46,7 +57,10 @@
         <view class="image bg-img-container-item" wx:else></view>
       </view>
       <view class="content">
-        <view class="title skeleton-rect">{{item.title}}</view>
+        <view class="title skeleton-rect">
+           <view class="icon-tag" wx:if="{{item.tags[0]}}">{{item.tags[0]}}</view>
+          <text>{{item.title}}</text>
+          </view>
         <view class="label">
           <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
           <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
