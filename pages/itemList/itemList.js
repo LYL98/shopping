@@ -95,6 +95,7 @@ Page({
           this.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
         });
       }else{
+        //如果搜索页是1
         this.setData({
           query: query
         }, ()=>{
@@ -233,13 +234,15 @@ Page({
           if (query.page === 1){
             that.setData({
               dataItem: rd,
-              showSkeleton: false
+              showSkeleton: false,
+              flag:false
             });
           }else{
             dataItem.items = dataItem.items.concat(rd.items);
             that.setData({
               dataItem: dataItem,
-              showSkeleton: false
+              showSkeleton: false,
+              flag:false
             });
           }
         } else {
@@ -291,15 +294,17 @@ Page({
     
     let that = this;
     that.setData({
-      changedown: true,
+      changedown: true
+
     })
     console.log(that.data.flag);
     
-    // if(that.data.flag) return
+    if(that.data.flag) return
+
     // console.log(v,that.data.activeIndex);
-    // that.setData({
-    //   flag: true
-    // })
+    that.setData({
+      flag: true
+    })
     let v = e.currentTarget.dataset.index 
     let id = e.currentTarget.dataset.tagid
     //判断是否选中运营专区
@@ -327,7 +332,7 @@ Page({
         x: scrollX
       },()=>{
         that.itemListDisplayClass()
-        that.data.flag = false
+        //
       })
     }else{
       let { query } = this.data;
@@ -421,6 +426,7 @@ Page({
     
     let that =this
     let { query } = that.data;
+    query.display_class_id = '';
     query.item_tag_id = ''
     query.page = 1
     query.page_size = Constant.PAGE_SIZE
