@@ -87,9 +87,13 @@ Page({
         this.setData({
           query: query
         }, ()=>{
-          // if(app.globalData.indexTagId){
+          // if(app.globalData.indexTagId || query.item_tag_id){
+          //   console.log(9091);
+            
           //   this.getClickTag()
           // }else{
+          //   console.log(9092);
+            
           //   this.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
           // }
           this.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
@@ -312,6 +316,8 @@ Page({
       // console.log(that.data.activeIndex );
       let { query } = this.data;
       query.item_tag_id = id
+      query.page = 1
+      query.page_size = Constant.PAGE_SIZE
       that.setData({
         query:query,
         activeIndex: v,
@@ -332,16 +338,20 @@ Page({
         x: scrollX
       },()=>{
         that.itemListDisplayClass()
+        that.goTop()
         //
       })
     }else{
       let { query } = this.data;
       query.item_tag_id = ''
+      query.page = 1
+      query.page_size = Constant.PAGE_SIZE
       that.setData({
         query: query,
         activeIndex: '',
       },()=>{
         that.itemListDisplayClass()
+        that.goTop()
       })
     }
     
@@ -394,15 +404,22 @@ Page({
       }
     });
   },
-  //从首页点击运营标签进入页面触发事件
+  //非点击tarBar栏进入页面时触发事件，如果需要记住之前的状态，需要分从首页点击进来还是从itemDetail后退进来
   getClickTag(){
     let that = this
     let { query } = that.data;
-    query.item_tag_id = app.globalData.indexTagId
-      console.log(app.globalData.indexTagIndex);
+    //当需要保存选择专区时 多了 query.item_tag_id
+    // query.item_tag_id = app.globalData.indexTagId || query.item_tag_id
+    query.item_tag_id = app.globalData.indexTagId 
+
+      // console.log(app.globalData.indexTagIndex);
     let screenWidth = wx.getSystemInfoSync().windowWidth;
     let itemWidth = screenWidth/4;
+
+    // let index = app.globalData.indexTagId ? app.globalData.indexTagIndex : that.data.activeIndex
     let index = app.globalData.indexTagIndex
+
+    
     const { tagsList } = that.data;
     let scrollX = itemWidth * index - itemWidth*2;
     let maxScrollX = (tagsList.length+1) * itemWidth;
@@ -415,7 +432,9 @@ Page({
       x: scrollX
     })
     this.setData({
-      activeIndex: app.globalData.indexTagIndex,
+      //当需要记住选择时
+      //activeIndex: app.globalData.indexTagId?app.globalData.indexTagIndex : that.data.activeIndex,
+      activeIndex:app.globalData.indexTagIndex,
       query: query,
      },()=>{
       this.itemListDisplayClass()
@@ -442,9 +461,6 @@ Page({
 
    // 回到顶部
   goTop: function (e) { 
-    console.log(111);
-    
-    
   if (wx.pageScrollTo) {
     wx.pageScrollTo({
       scrollTop: 0
