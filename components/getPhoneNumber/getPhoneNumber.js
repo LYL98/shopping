@@ -106,15 +106,15 @@ Component({
 					code: that.loginRes.code,
 					encryptedData: ed,
 					iv: iv,
-				}).then((res) => {
-					that.setData({ loading: false, myInfo: myInfo });
-					clearInterval(that.loginTime);
-					that.triggerEvent('callback', res.data);
+				}).then((res) => {		
+						that.setData({ loading: false, myInfo: myInfo });
+						clearInterval(that.loginTime);
+						that.triggerEvent('callback', res.data);
 				}).catch(() => {
-					that.setData({ loading: false });
-					that.getLoginCode(); //重新获取code
+						that.setData({ loading: false });
+						that.getLoginCode(); //重新获取code
 				});
-			});
+			});	
 		},
 		//获取手机号
 		getPhome(e){
