@@ -80,7 +80,7 @@ Page({
       let { query } = this.data;
       query.store_id = this.address.id || ''; 
       if(query.page !== 1){
-        console.log(909);
+        // console.log(909);
         
         query.page_size = query.page_size * query.page;
         query.page = 1;
@@ -104,7 +104,7 @@ Page({
           query: query
         }, ()=>{
           //如果是从首页点击专区进来
-          console.log(111);
+          // console.log(111);
           
           if(app.globalData.indexTagId){
             this.getClickTag()
@@ -301,7 +301,7 @@ Page({
       changedown: true
 
     })
-    console.log(that.data.flag);
+    // console.log(that.data.flag);
     
     if(that.data.flag) return
 

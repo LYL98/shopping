@@ -124,6 +124,8 @@ Page({
         userInfo: res
       });
       let { query, address } = that.data;
+      console.log(query.item_tag_id);
+
       if(address && address.id){
         let ad = app.getSelectStore(); //当前选择的地址
         query.store_id = ad.id;
@@ -144,6 +146,7 @@ Page({
             query: query,
             address: ad
           }, () => {
+            
             that.getTagsList();
             that.itemQuery();
             that.getWorkTime();
@@ -315,7 +318,7 @@ Page({
             }
           });
           //默认选择运营专区第一个
-          query.item_tag_id = rdTemp[0].id
+          // query.item_tag_id = rdTemp[0].id
           that.setData({
             tagsList: rdTemp,
             query:query
