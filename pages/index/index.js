@@ -40,11 +40,13 @@ Page({
     }],
     query: {
       store_id: 0,
-      tag: '今日主推',
+      // tag: '今日主推',
       sort: '-tags_edited',
       page: 1,
       page_size: Constant.PAGE_SIZE,
-      item_tag_id: 51 //运营专区ID
+      item_tag_id: 51, //运营专区中今日主推ID
+      // item_tag_id: this.data.tagsList[0].id //运营专区中今日主推ID
+
     },
     dataItem: {
       items: []
@@ -122,6 +124,8 @@ Page({
         userInfo: res
       });
       let { query, address } = that.data;
+      console.log(query.item_tag_id);
+
       if(address && address.id){
         let ad = app.getSelectStore(); //当前选择的地址
         query.store_id = ad.id;
@@ -142,6 +146,7 @@ Page({
             query: query,
             address: ad
           }, () => {
+            
             that.getTagsList();
             that.itemQuery();
             that.getWorkTime();
@@ -285,7 +290,7 @@ Page({
   //获取商品标签
   getTagsList(){
     let that = this;
-    let { address } = that.data;
+    let { query,address } = that.data;
     wx.request({
       url: Config.api.itemTagsList,
       header: {
@@ -299,7 +304,8 @@ Page({
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;
           let { tencentPath } = that.data;
-          if(rd.length > 8) rd.length = 8; //限制最长8个
+          
+          if(rd.length > 9) rd.length = 9; //限制最长8个,但是第一个不显示
           let rdTemp = [];
           rd.forEach(item => {
             if(item.image){
@@ -311,8 +317,11 @@ Page({
               rdTemp.push(item);
             }
           });
+          //默认选择运营专区第一个
+          // query.item_tag_id = rdTemp[0].id
           that.setData({
-            tagsList: rdTemp
+            tagsList: rdTemp,
+            query:query
           });
         } else {
           app.requestResultCode(res); //处理异常

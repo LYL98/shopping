@@ -63,6 +63,8 @@ Page({
    */
   onLoad: function(options) {
     let that = this;
+    
+    
     //判断登录
     app.signIsLogin(() => {
       let address = app.getSelectStore(); //当前选择的地址
@@ -70,7 +72,7 @@ Page({
       query.province_code = address.province_code || '';
       query.store_id = address.id || '';
       query.sort = options.sort || '';
-      query.tag = options.tag || '';
+      query.tag = options.tag || '收藏商品';
 
       let num = app.getShoppingCartNum(); //获取购物车数量
       that.setData({
@@ -78,10 +80,14 @@ Page({
         shoppingCartNum: num,
         system: app.globalData.system
       }, () => {
-        that.getTagsList(); //获取标签
+        // that.getTagsList(); //获取标签
         that.itemQuery();
       });
     });
+  },
+  onShow(){
+    let that = this
+    that.itemQuery();
   },
   //页面卸载时触发
   onUnload() {
