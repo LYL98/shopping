@@ -78,10 +78,9 @@ Page({
     //判断登录
     app.signIsLogin(() => {
       let { query } = this.data;
-      query.store_id = this.address.id || ''; 
+      console.log(that.address.id);
+      query.store_id = that.address.id || ''; 
       if(query.page !== 1){
-        // console.log(909);
-        
         query.page_size = query.page_size * query.page;
         query.page = 1;
         this.setData({
