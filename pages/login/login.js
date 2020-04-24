@@ -6,6 +6,8 @@ Page({
   getPhoneNumberCallBack(resData){
     let rd = resData.detail;
     if(rd.weapp_openid){
+      console.log(111);
+      
       app.updateLoginInfo(rd); //系统登录信息
       let id = wx.getStorageSync("loginUserId");
       if(rd.id != id) {
