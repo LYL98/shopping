@@ -134,29 +134,7 @@ App({
           }
         }
       });
-    } else if(res.data.code == 211){
-      wx.showModal({
-        title: "提示",
-        content: "很抱歉,您还不是平台客户,请联系客服电话 400 825 8522",
-        confirmText: "免费咨询",
-        confirmColor: "#00AE66",
-        // showCancel: false,
-        success: function (resData) {
-          if (resData.confirm) {
-            that.updateLoginInfo({}); //系统登录信息
-            wx.makePhoneCall({
-              phoneNumber: '4008258522', //客服电话,
-              success: function(){
-                console.log('拨打成功');
-              },
-              fail:function(){
-                console.log('拨打失败');
-              }
-            })
-          }
-        }
-      });
-    }else {
+    } else {
       wx.showModal({
         title: "提示",
         content: res.data.message,
