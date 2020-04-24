@@ -44,7 +44,7 @@ Page({
       sort: '-tags_edited',
       page: 1,
       page_size: Constant.PAGE_SIZE,
-      item_tag_id: 51, //运营专区中今日主推ID
+      item_tag_id: '', //运营专区中今日主推ID
       // item_tag_id: this.data.tagsList[0].id //运营专区中今日主推ID
 
     },
@@ -121,11 +121,9 @@ Page({
     app.signIsLogin((res) => {
       //保存登录用户信息
       that.setData({
-        userInfo: res
+        userInfo: res,
       });
       let { query, address } = that.data;
-      console.log(query.item_tag_id);
-
       if(address && address.id){
         let ad = app.getSelectStore(); //当前选择的地址
         query.store_id = ad.id;
@@ -136,8 +134,8 @@ Page({
             query: query,
             address: ad
           }, () => {
-            that.getTagsList();
-            that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
+            that.getTagsList(true);//里面包含获取商品列表
+            // that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
             that.getWorkTime();
             that.getBanner(); //显示ad
           });
@@ -146,11 +144,11 @@ Page({
             query: query,
             address: ad
           }, () => {
-            
-            that.getTagsList();
-            that.itemQuery();
+            that.getTagsList()//里面包含获取商品列表
+            // that.itemQuery();
             that.getWorkTime();
             that.getBanner(); //显示ad
+            
           });
         }
       }
@@ -183,6 +181,8 @@ Page({
     let that = this;
     let rd = res.detail;
     if(rd && rd.id){
+      console.log(2221);
+      
       let { query } = that.data;
       query.page = 1;
       query.page_size = Constant.PAGE_SIZE;
@@ -192,7 +192,7 @@ Page({
         address: rd
       }, ()=>{
         that.getTagsList();
-        that.itemQuery();
+        // that.itemQuery();
         that.getBanner(); //显示ad
         that.getWorkTime();
       });
@@ -288,7 +288,7 @@ Page({
     });
   },
   //获取商品标签
-  getTagsList(){
+  getTagsList(isInit){
     let that = this;
     let { query,address } = that.data;
     wx.request({
@@ -318,11 +318,13 @@ Page({
             }
           });
           //默认选择运营专区第一个
-          // query.item_tag_id = rdTemp[0].id
+          query.item_tag_id = rdTemp[0].id
           that.setData({
             tagsList: rdTemp,
             query:query
           });
+         //先取得item_tag_id,再请求获得商品 
+          that.itemQuery(isInit);
         } else {
           app.requestResultCode(res); //处理异常
         }
