@@ -58,12 +58,7 @@ Page({
       this.activity();
       this.getWorkTime();
       this.couponList(); //获取优惠券列表
-      let { query } = this.data;
-      query.page = 1;
-      query.fail_num = 0;
-      this.setData({ query }, ()=>{
-        this.getShoppingCartData();
-      });
+      this.getShoppingCartData();
     });
   },
   //点击页面底下的tab
@@ -317,7 +312,6 @@ Page({
   //获取购物车数据
   getShoppingCartData() {
     let that = this;
-    let { query, dataItem } = that.data;
     let d = wx.getStorageSync('shoppingCartData');
     let item = [];
     if (d && d.length > 0) {
@@ -334,8 +328,8 @@ Page({
       that.setData({ loading: true }, ()=>{
         let ids_temp = ids.filter((item, index) => index === 0 || index < 3);
         console.log(ids_temp, ids);
-        Http.get(Config.api.itemCartQuery, {
-          ids: ids_temp.join(),
+        Http.post(Config.api.itemCartQuery, {
+          ids: ids,
           store_id: this.address.id || ''
         }).then((res) => {
           let rd = res.data;
@@ -358,7 +352,6 @@ Page({
                 }
               }
               if (!isExist) {
-                query.fail_num = query.fail_num + 1;
                 d.remove(i);
               }
             }
@@ -366,18 +359,15 @@ Page({
           }
           that.updateData(rd);//更新本地数据
           wx.hideNavigationBarLoading();
-          that.setData({ loading: false, query });
+          that.setData({ loading: false });
         }).catch(() => {
           wx.hideNavigationBarLoading();
-          that.setData({ loading: false, 'query.page': query.page - 1 });
+          that.setData({ loading: false });
         });
       });
     } else {
-      query.page = 1;
-      query.fail_num = 0;
       that.setData({
-        dataItem: [],
-        query,
+        dataItem: []
       });
     }
     /*===== 埋点 start ======*/
