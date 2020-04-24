@@ -57,8 +57,8 @@ Page({
     app.signIsLogin(() => {
       this.activity();
       this.getWorkTime();
-      this.couponList(); //获取优惠券列表
       this.getShoppingCartData();
+      this.couponList(); //获取优惠券列表
     });
   },
   //点击页面底下的tab
@@ -441,7 +441,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom() {
-    let { query, dataItem } = this.data;
+    /*let { query, dataItem } = this.data;
     if (dataItem.length / query.page_size > query.page) {
       query.page = query.page + 1;
       this.setData({
@@ -449,6 +449,6 @@ Page({
       }, () => {
         this.getShoppingCartData();
       });
-    }
+    }*/
   }
 })
