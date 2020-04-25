@@ -91,7 +91,9 @@
 
   .tagActive{
     background-color: #D9F7EB;
-    color: #00AE66;
+    text{
+      color: #00AE66;
+    }
   }
 }
 .content {
@@ -170,7 +172,9 @@
  
   .tagActive{
     background-color: #D9F7EB;
-    color: #00AE66;
+    text{
+      color: #00AE66;
+    }
   }
 }
 
