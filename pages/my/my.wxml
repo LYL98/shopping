@@ -95,7 +95,7 @@
               <text>团购</text>
             </view>
             <view class="item" wx:else></view>
-
+            <view class="item"></view>
             <view class="item"></view>
             <view class="item"></view>
           </view>
