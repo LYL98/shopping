@@ -61,6 +61,10 @@
   <view class="left" >申请原因</view>
   <view class="right">{{detail.reason}}</view>
 </view>
+<view class="cause my-input">
+  <view class="left" >售后重量(斤)</view>
+  <view class="right">{{detail.weight_at_created / 10}}</view>
+</view>
 
 <view class="interact">商家互动</view>
 <view>

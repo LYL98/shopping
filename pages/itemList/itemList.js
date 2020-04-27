@@ -54,9 +54,8 @@ Page({
     x: '',//选中运营专区后滑动的距离
     tagsList:[],
     changedown:true,
-    // indextagid:'',
-    // indextagindex: ''
-    flag:false//防止快速点击运营专区
+    flag:false,//防止快速点击运营专区
+    // isDetail:false//判断是否清空搜索数据
   },
   onLoad(option) {
     this.address = {}; //当前选择的地址
@@ -129,6 +128,9 @@ Page({
       content: { store_id: this.address.id }
     });
     /*===== 埋点 end ======*/
+    // this.setData({
+    //   isDetail:false
+    // })
   },
 
   //选择商品分类
@@ -182,6 +184,10 @@ Page({
       content: { item_id: id, store_id: this.data.query.store_id }
     });
     /*===== 埋点 end ======*/
+
+    // this.setData({
+    //   isDetail:true
+    // })
   },
 
   //排序
@@ -417,8 +423,6 @@ Page({
 
     // let index = app.globalData.indexTagId ? app.globalData.indexTagIndex : that.data.activeIndex
     let index = app.globalData.indexTagIndex
-
-    
     const { tagsList } = that.data;
     let scrollX = itemWidth * index - itemWidth*2;
     let maxScrollX = (tagsList.length+1) * itemWidth;
@@ -443,6 +447,8 @@ Page({
   onHide: function(){
     
     let that =this
+    // if(that.data.isDetail) return
+    
     let { query } = that.data;
     query.display_class_id = '';
     query.item_tag_id = ''

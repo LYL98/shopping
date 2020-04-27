@@ -39,7 +39,8 @@
     "pages/playVideo/playVideo",
     "pages/live/live",
     "pages/live-rep/live-rep",
-    "pages/updateSystem/updateSystem"
+    "pages/updateSystem/updateSystem",
+    "pages/suggestions/suggestions"
   ],
   "plugins": {
     "live-player-plugin": {
