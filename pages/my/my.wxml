@@ -85,7 +85,11 @@
             </navigator>
           </view>
           <view class="option-tiem">
-            <navigator class="item" url="/pages/complain/complain">
+            <navigator class="item" url="/pages/suggestions/suggestions">
+              <image src="{{optionSrc[9]}}"></image>
+              <text>反馈建议</text>
+            </navigator>
+             <navigator class="item" url="/pages/complain/complain">
               <image src="{{optionSrc[6]}}"></image>
               <text>投诉建议</text>
             </navigator>
@@ -95,7 +99,6 @@
               <text>团购</text>
             </view>
             <view class="item" wx:else></view>
-            <view class="item"></view>
             <view class="item"></view>
             <view class="item"></view>
           </view>

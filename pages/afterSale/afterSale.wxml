@@ -40,6 +40,14 @@
       </view>
     </view>
 </view>
+<view class="cause-view my-input" >
+    <view class="cause">
+      <view class="left" >售后重量(斤)</view>
+      <view class="right">
+        <input type="digit" placeholder="请输入售后重量" bindinput="bindValueInput"/>
+      </view>
+    </view>
+</view>
 <view class="issue-desc">
   <view class="title">问题描述</view>
   <view class="content">
