@@ -119,9 +119,12 @@ Page({
   //选择类型显示
   selectDisplay() {
     let that = this;
+    let {detail} = that.data
+    detail.remark = ' '
     this.setData({
       isShow: true,
-      selectReasonName: that.data.detail.title
+      selectReasonName: that.data.detail.title,
+      detail:detail
     });
   },
   //选择分类的回调
@@ -141,8 +144,12 @@ Page({
   },
   //点击关闭的回调
   storeShowHide() {
+    let that = this;
+    let {detail} = that.data
+    detail.remark = ''
     this.setData({
-      isShow: false
+      isShow: false,
+      detail:detail
     })
   },
   //获取商品名称
@@ -189,9 +196,12 @@ Page({
   inputChange(e) {
     let that = this;
     let fieldkey = e.target.dataset.fieldkey;
+    
     let { detail } = that.data;
     let value = e.detail.value;
+    
     detail[fieldkey] = value;
+    
     this.setData({
       detail: detail
     });
@@ -314,7 +324,7 @@ Page({
       return false;
     }
     // detail.content.trim() &&
-    if (detail.content && detail.content.length > 200) {
+    if (detail.remark && detail.remark.length > 200) {
       wx.showToast({
         title: '描述不能超过200个字符',
         icon: 'none'
@@ -337,13 +347,10 @@ Page({
       // showCancel: false,
       success: function (resData) {
         if (resData.confirm) {
-          that.setData({
-            
-          }, () => {
             Http.post(config.api.adviceItem, {
               store_id: detail.store_id,
               display_class_id: detail.display_class_id,
-              remark: detail.content,
+              remark: detail.remark,
               images: detail.images,
               title: detail.title,
               brand: detail.brand,
@@ -365,7 +372,7 @@ Page({
             }).catch(err => {
               
             });
-          });
+          
         }
       }
       });
