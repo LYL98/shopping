@@ -91,5 +91,5 @@
   <!--类型-->
 <actionCategory categoryList="{{categoryList}}" currentDisplay="{{currentDisplay}}" wx:if="{{isShow}}"  bind:callback="selectStoreCallBack" bindtoggle="storeShowHide"/>
 
-<loading loading="{{loading}}"/>
+
 </view>

@@ -17,7 +17,6 @@ Page({
     tencentPath: config.tencentPath,
     photographSrc: './../../assets/img/photograph.png',
     closeSrc: './../../assets/img/close.png',
-    loading: false,
     isShowSelectMedia: false,
     detail: {
       images: [],
@@ -339,7 +338,7 @@ Page({
       success: function (resData) {
         if (resData.confirm) {
           that.setData({
-            loading: true
+            
           }, () => {
             Http.post(config.api.adviceItem, {
               store_id: detail.store_id,
@@ -355,7 +354,7 @@ Page({
                 url: '/pages/suggestionsResult/suggestionsResult' ,
                 complete: () => {
                   that.setData({
-                    loading: false
+                    
                   });
                 }
               });
@@ -364,15 +363,12 @@ Page({
                 icon: 'none'
               });
             }).catch(err => {
-              that.setData({
-                loading: false
-              });
+              
             });
           });
         }
       }
       });
-    if (that.data.loading) return;
    
   },
 })

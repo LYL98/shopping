@@ -1,7 +1,6 @@
 {
   "navigationBarTitleText": "反馈建议",
   "usingComponents": {
-    "loading": "/components/loading/loading",
     "actionCategory": "/components/actionCategory/actionCategory"
   }
 }
