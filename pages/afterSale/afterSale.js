@@ -250,14 +250,13 @@ Page({
       })
       return false;
     }
-    if (!detail.content.trim()){
+    if (!detail.content  || !detail.content.trim()){
       wx.showToast({
         title: '描述不能为空',
         icon: 'none'
       });
       return false;
     }
-
     if (detail.content.trim() && detail.content.length > 200){
       wx.showToast({
         title: '描述不能超过200个字符',
