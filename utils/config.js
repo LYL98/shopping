@@ -89,6 +89,8 @@ module.exports = {
     liveRoomMark: apiC + '/room/mark',        //  直播间订阅
     liveRoomUnMark: apiC + '/room/un_mark',   //  直播间取消订阅
 
+    adviceItem:apiC + '/advice_item',
+
   },
   //腾讯Bucket、Region
   tencentBucket: Conn === 'pro' ? TencentBucketPro : TencentBucketDev, //Bucket

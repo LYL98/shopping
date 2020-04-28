@@ -1,7 +1,27 @@
 
-// .suggestions{
-    
-// }
+.suggestions{
+  padding: 0 30rpx;
+  background: #F9FAF9;
+  padding-top: 200rpx;
+  position: relative;
+  .top-image {
+      width: 100vw;
+      height: 460rpx;
+      position: absolute;
+      top: 0;
+      left: 0;
+      image {
+        display: block;
+        width: 100vw;
+        height: 460rpx;
+      }
+  }
+.content-view {
+  position: relative;
+  // margin-top: 200rpx;
+  z-index: 1;
+}
+}
 .option-bottom{
     height: 80rpx;
     line-height: 80rpx;
@@ -16,8 +36,10 @@
   }
 .cause-view{
     padding: 30rpx;
-    border-top: 20rpx solid #f3f4f6;
+    // border-top: 20rpx solid #f3f4f6;
     // border-bottom: 20rpx solid #f3f4f6;
+    background-color: #fff;
+    
   }
   .cause-view > .cause{
     display: flex;
