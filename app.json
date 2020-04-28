@@ -40,7 +40,8 @@
     "pages/live/live",
     "pages/live-rep/live-rep",
     "pages/updateSystem/updateSystem",
-    "pages/suggestions/suggestions"
+    "pages/suggestions/suggestions",
+    "pages/suggestionsResult/suggestionsResult"
   ],
   "plugins": {
     "live-player-plugin": {

@@ -1,0 +1,29 @@
+
+.suggestions-result{
+    width: 100vw;
+    padding-top: 100rpx;
+    .imag{
+        width: 240rpx;
+        height: 240rpx;
+        margin-bottom: 40rpx;
+    }
+    view {
+        margin: 0 auto;
+        text-align: center;
+        color: #242424;
+        line-height: 42rpx;
+    }    
+}
+.my-button{
+    padding-top: 80rpx ;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    .btn{
+        width: 240rpx;
+        height: 80rpx;
+        border-radius: 51rpx;
+        line-height: 80rpx;
+    }
+   
+}

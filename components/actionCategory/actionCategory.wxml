@@ -1,0 +1,33 @@
+
+<!--选择门分类start-->
+<view class="store-body"  bindtap="cancelSelect">
+  <view class="store" catchtap>
+    <view class="title">
+      <view class="str">选择商品分类</view>
+      <view class="close-btn link-active" bindtap="cancelSelect" >
+        <image src="{{closeSrc}}"></image>
+      </view>
+    </view>
+    <view class="content">
+      <view class="link-active" wx:for="{{dataItem}}" wx:key="id" data-index="{{index}}" bindtap="selectStore">
+        <view class="item">
+          <view class="left add-dot">
+            <view class="store-title add-dot">{{item.title}}</view>
+            <view class="store-address add-dot">{{item.address}}</view>
+          </view>
+          <view class="right">
+            <image src="{{checkedSrc}}" wx:if="{{item.id === addressTemp.id}}"/>
+            <image src="{{checkSrc}}" wx:else/>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="btn">
+      <button class="btn1" bindtap="affirmSelectStore">确认</button>
+    </view>
+  </view>
+
+</view>
+<!--选择分类主体end-->
+
+
