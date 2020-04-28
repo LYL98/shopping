@@ -275,7 +275,7 @@ Page({
         let tempFilePaths = res.tempFilePaths;
         for (let i = 0; i < tempFilePaths.length; i++) {
           UpCos.upload({
-            module: 'after_sale',
+            module: 'suggestions',
             filePath: tempFilePaths[i]
           }).then((resData) => {
             let {
