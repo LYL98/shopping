@@ -22,7 +22,10 @@ Page({
       './../../assets/img/after_sale.png',
       './../../assets/img/customer_manager.png',
       './../../assets/img/complain.png',
-      './../../assets/img/group_buy.png'
+      './../../assets/img/group_buy.png',
+      './../../assets/img/tags_icon7.png',
+      './../../assets/img/icon_suggestions.png'
+
     ],
     has_unread:'',
     initLoad: true,

@@ -40,10 +40,13 @@ Page({
     }],
     query: {
       store_id: 0,
-      tag: '今日主推',
+      // tag: '今日主推',
       sort: '-tags_edited',
       page: 1,
-      page_size: Constant.PAGE_SIZE
+      page_size: Constant.PAGE_SIZE,
+      item_tag_id: '', //运营专区中今日主推ID
+      // item_tag_id: this.data.tagsList[0].id //运营专区中今日主推ID
+
     },
     dataItem: {
       items: []
@@ -118,7 +121,7 @@ Page({
     app.signIsLogin((res) => {
       //保存登录用户信息
       that.setData({
-        userInfo: res
+        userInfo: res,
       });
       let { query, address } = that.data;
       if(address && address.id){
@@ -131,8 +134,8 @@ Page({
             query: query,
             address: ad
           }, () => {
-            that.getTagsList();
-            that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
+            that.getTagsList(true);//里面包含获取商品列表
+            // that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
             that.getWorkTime();
             that.getBanner(); //显示ad
           });
@@ -141,10 +144,11 @@ Page({
             query: query,
             address: ad
           }, () => {
-            that.getTagsList();
-            that.itemQuery();
+            that.getTagsList()//里面包含获取商品列表
+            // that.itemQuery();
             that.getWorkTime();
             that.getBanner(); //显示ad
+            
           });
         }
       }
@@ -177,6 +181,8 @@ Page({
     let that = this;
     let rd = res.detail;
     if(rd && rd.id){
+      console.log(2221);
+      
       let { query } = that.data;
       query.page = 1;
       query.page_size = Constant.PAGE_SIZE;
@@ -186,7 +192,7 @@ Page({
         address: rd
       }, ()=>{
         that.getTagsList();
-        that.itemQuery();
+        // that.itemQuery();
         that.getBanner(); //显示ad
         that.getWorkTime();
       });
@@ -282,9 +288,9 @@ Page({
     });
   },
   //获取商品标签
-  getTagsList(){
+  getTagsList(isInit){
     let that = this;
-    let { address } = that.data;
+    let { query,address } = that.data;
     wx.request({
       url: Config.api.itemTagsList,
       header: {
@@ -298,7 +304,8 @@ Page({
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;
           let { tencentPath } = that.data;
-          if(rd.length > 6) rd.length = 6; //限制最长6个
+          
+          if(rd.length > 9) rd.length = 9; //限制最长8个,但是第一个不显示
           let rdTemp = [];
           rd.forEach(item => {
             if(item.image){
@@ -310,9 +317,14 @@ Page({
               rdTemp.push(item);
             }
           });
+          //默认选择运营专区第一个
+          query.item_tag_id = rdTemp[0].id
           that.setData({
-            tagsList: rdTemp
+            tagsList: rdTemp,
+            query:query
           });
+         //先取得item_tag_id,再请求获得商品 
+          that.itemQuery(isInit);
         } else {
           app.requestResultCode(res); //处理异常
         }
@@ -434,6 +446,8 @@ Page({
   //点击tags
   clickTags(e){
     let tag = e.currentTarget.dataset.tag;
+    app.globalData.indexTagId = tag.id
+    app.globalData.indexTagIndex = e.currentTarget.dataset.index
     /*===== 埋点 start ======*/
     app.actionRecordAdd({
       action: Constant.ACTION_RECORD.HOME_TAG,

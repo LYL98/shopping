@@ -51,7 +51,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -141,6 +141,20 @@
 					"id": -1,
 					"name": "购物车",
 					"pathName": "pages/shoppingCart/shoppingCart",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 13,
+					"name": "更新系统",
+					"pathName": "pages/updateSystem/updateSystem",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/itemLabel/itemLabel",
+					"pathName": "pages/itemLabel/itemLabel",
 					"query": "",
 					"scene": null
 				}

@@ -67,7 +67,7 @@ module.exports = {
     isOrderTime: apiC + '/order/info', //是否可下单
     aftersaleCandidate: apiC + '/aftersale/candidate', //获取可申请售后的订单
     aftersaleQuery: apiC + '/aftersale/query', //获取售后单列表
-    aftersaleAddData: apiC + '/aftersale/add', //获取提交售后页面信息(get)
+    aftersaleAddData: apiC + '/aftersale/get_order_item', //获取提交售后页面信息(get)
     aftersaleAdd: apiC + '/aftersale/add', //提交售后页面信息(post)
     aftersaleDetail: apiC + '/aftersale/detail', //获取售后单详情
     aftersaleComment: apiC + '/aftersale/append', //售后消息追加
@@ -88,6 +88,8 @@ module.exports = {
     liveRepQuery: apiC + '/live_rep/query',   //  重播查询
     liveRoomMark: apiC + '/room/mark',        //  直播间订阅
     liveRoomUnMark: apiC + '/room/un_mark',   //  直播间取消订阅
+
+    adviceItem:apiC + '/advice_item',
 
   },
   //腾讯Bucket、Region

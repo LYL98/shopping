@@ -1,0 +1,95 @@
+<!-- pages/suggestions/suggestions.wxml -->
+<!-- 反馈建议页面 -->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<view class="suggestions">
+  <view class="top-image">
+    <image src="./../../assets/img/bg_suggestion.png" />
+  </view>
+  <view class="content-view">
+  <view class="cause-view">
+    <view class="cause">
+      <view class="left">商品分类</view>
+      <view class="right" bindtap="selectDisplay">
+        <!-- selectReasonName ||  -->
+        {{selectReasonName ||'请选择商品的分类'}}
+        <image src="./../../assets/img/right.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="cause-view my-input">
+    <view class="cause">
+      <view class="left">商品名称</view>
+      <view class="right">
+        <input type="text" placeholder="请输入商品名称" bindinput="bindTitleInput" />
+      </view>
+    </view>
+  </view>
+  <view class="cause-view my-input">
+    <view class="cause">
+      <view class="left">商品的其他信息</view>
+      <view class="right"></view>
+    </view>
+  </view>
+  <view class="cause-view my-input">
+    <view class="cause">
+      <view class="left">品牌</view>
+      <view class="right">
+        <input type="text" placeholder="请输入商品品牌" bindinput="bindBrandInput" />
+      </view>
+    </view>
+  </view>
+  <view class="cause-view my-input">
+    <view class="cause">
+      <view class="left">规格</view>
+      <view class="right">
+        <input type="text" placeholder="请输入商品规格" bindinput="bindSpecInput" />
+      </view>
+    </view>
+  </view>
+  <view class="cause-view my-input">
+    <view class="cause">
+      <view class="left">原进货渠道</view>
+      <view class="right">
+        <input type="text" placeholder="如有则填写" bindinput="bindChannelInput" />
+      </view>
+    </view>
+  </view>
+  <view class="issue-desc">
+    <view class="title">您对商品的描述</view>
+    <view class="content">
+      <textarea placeholder-class="placeholder"  placeholder="请您在此处描述商品和上传照片(最多200个字和5张照片）" value="{{detail.remark}}" bindinput="inputChange" data-fieldkey="remark" maxlength="200" />
+    </view>
+    <view style="display:flex;flex-wrap:wrap;" class="images">
+      <!-- 上传照片按钮 -->
+      <view class="photograph" bind:tap="showHideSelectMedia">
+        <image src="{{photographSrc}}"></image>
+        <text>上传照片</text>
+      </view>
+      <!-- 图片 -->
+      <view wx:for="{{detail.images}}" wx:key="item" class="img-item right">
+        <image src="{{tencentPath + item}}_watermark200x200" bindtap="showImg" data-index="{{index}}"></image>
+        <view class="close" bindtap="deletelImg" data-index="{{index}}">×</view>
+      </view>
+    </view>
+    <!-- 照片/视频弹层 -->
+    <view class="photograph-video-body" wx:if="{{isShowSelectMedia}}" bind:tap="showHideSelectMedia">
+      <view class="photograph-video">
+        <view class="item" bindtap="clickPic">拍摄照片</view>
+        <!-- <navigator class="item" url="/pages/shootVideo/shootVideo?event=afterSale">拍摄视频</navigator> -->
+        <view class="item cancel">取消</view>
+      </view>
+    </view>
+  </view>
+  </view>
+  <view style="height: 160rpx;"></view>
+  <view class="option-bottom">
+    <button class="option-btn" bind:tap="adviceItemAdd" disabled="{{loading}}" loading="{{loading}}">
+      确认提交
+    </button>
+  </view>
+
+  <!--类型-->
+<actionCategory categoryList="{{categoryList}}" currentDisplay="{{currentDisplay}}" wx:if="{{isShow}}"  bind:callback="selectStoreCallBack" bindtoggle="storeShowHide"/>
+
+
+</view>

@@ -36,7 +36,7 @@
     </view>
   </view>
   <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view>
-  <defaultPage wx:else currentPage="shoppingCart"></defaultPage>
+  <defaultPage wx:else currentPage="shoppingCart" loading="{{loading}}"></defaultPage>
 </view>
 
 <block wx:if="{{couponNum > 0 && isShowCouponHint}}">
@@ -73,5 +73,3 @@
     <button bindtap="removeItem" type="warn" >删除</button>
   </view>
 </view>
-
-<loading loading="{{loading}}"/>

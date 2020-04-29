@@ -4,7 +4,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    currentPage: { type: String, value: '' }
+    currentPage: { type: String, value: '' },
+    loading: { type: Boolean, value: false },
   },
 
   /**

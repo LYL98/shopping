@@ -243,15 +243,20 @@ Page({
       })
       return false;
     }
-
-    if (!detail.content.trim()){
+    if (!detail.weight_at_created || !/^-?\d+\.?\d{0,1}$/.test(detail.weight_at_created)) {
+      wx.showToast({
+        title: '请输入售后重量,并检查格式(不能超过一位小数)',
+        icon: 'none'
+      })
+      return false;
+    }
+    if (!detail.content  || !detail.content.trim()){
       wx.showToast({
         title: '描述不能为空',
         icon: 'none'
       });
       return false;
     }
-
     if (detail.content.trim() && detail.content.length > 200){
       wx.showToast({
         title: '描述不能超过200个字符',
@@ -267,7 +272,7 @@ Page({
       });
       return false;
     }
-
+    
     if (that.data.loading) return;
     that.setData({ loading: true }, () => {
       Http.post(config.api.aftersaleAdd, {
@@ -275,7 +280,8 @@ Page({
         reason: detail.reason,
         content: detail.content,
         media_urls: detail.media_urls,
-        images: detail.images
+        images: detail.images,
+        weight_at_created:detail.weight_at_created
       }).then(res => {
         wx.redirectTo({
           url: '/pages/afterSaleDetail/afterSaleDetail?id=' + res.data.id,
@@ -291,6 +297,29 @@ Page({
         that.setData({ loading: false });
       });
     });
+  },
+  //输入售后重量
+  bindValueInput(e){
+    let that = this;
+    let { detail } = that.data;
+    let weight_at_created = e.detail.value;
+    if(!/^-?\d+\.?\d{0,1}$/.test(weight_at_created)){
+      wx.showToast({
+        title: '请输入重量(不能超过一位小数)',
+        icon: 'none'
+      });
+      detail.weight_at_created = 0
+      that.setData({
+        detail:detail
+      })
+      return 
+    }
+    weight_at_created = Number(weight_at_created) * 10
+    console.log(weight_at_created);
+    detail.weight_at_created = weight_at_created
+    that.setData({
+      detail:detail
+    })
   }
 
 })
