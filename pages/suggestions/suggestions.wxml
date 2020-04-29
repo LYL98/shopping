@@ -3,7 +3,7 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <view class="suggestions">
   <view class="top-image">
-    <image src="./../../assets/img/right.png" />
+    <image src="./../../assets/img/bg_suggestion.png" />
   </view>
   <view class="content-view">
   <view class="cause-view">
@@ -57,7 +57,7 @@
   <view class="issue-desc">
     <view class="title">您对商品的描述</view>
     <view class="content">
-      <textarea placeholder-class="placeholder" auto-focus placeholder="请您在此处描述商品和上传照片(最多200个字和5张照片）" value="{{detail.remark}}" bindinput="inputChange" data-fieldkey="remark" maxlength="200" />
+      <textarea placeholder-class="placeholder"  placeholder="请您在此处描述商品和上传照片(最多200个字和5张照片）" value="{{detail.remark}}" bindinput="inputChange" data-fieldkey="remark" maxlength="200" />
     </view>
     <view style="display:flex;flex-wrap:wrap;" class="images">
       <!-- 上传照片按钮 -->
