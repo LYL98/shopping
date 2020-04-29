@@ -2,7 +2,7 @@
 
 <view class="suggestions-result">
     <view class="imag">
-        <icon type="success" size="120"/>
+        <image  src="./../../assets/img/bg_suggestion_re.png" alt="" />
     </view>
     <view >感谢您的反馈建议</view>
     <view >您的建议是我们最大的动力</view>

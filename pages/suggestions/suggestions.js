@@ -120,10 +120,10 @@ Page({
   selectDisplay() {
     let that = this;
     let {detail} = that.data
-    detail.remark = ' '
+    detail.remark = detail.remark || ' '
     this.setData({
       isShow: true,
-      selectReasonName: that.data.detail.title,
+      selectReasonName: that.data.selectReasonName,
       detail:detail
     });
   },
@@ -135,7 +135,6 @@ Page({
       currentDisplay
     } = this.data
     detail.display_class_id = res.detail.id
-    detail.title = res.detail.title
     this.setData({
       selectReasonName: res.detail.title,
       detail: detail,
@@ -158,6 +157,8 @@ Page({
     let { detail } = that.data;
     let title = e.detail.value;
     detail.title = title
+    console.log(title);
+    
     that.setData({
       detail:detail
     })
@@ -201,6 +202,7 @@ Page({
     let value = e.detail.value;
     
     detail[fieldkey] = value;
+    console.log(detail.remark.length);
     
     this.setData({
       detail: detail
@@ -270,7 +272,7 @@ Page({
     wx.chooseImage({
       count: 5,
       sizeType: ['original', 'compressed'],
-      sourceType: ['camera'],
+      sourceType: ['album','camera'],
       success: function (res) {
         let tempFilePaths = res.tempFilePaths;
         for (let i = 0; i < tempFilePaths.length; i++) {
@@ -316,7 +318,8 @@ Page({
       })
       return false;
     }
-    if (!detail.title.trim()) {
+    // && !detail.title.trim()
+    if (!detail.title ) {
       wx.showToast({
         title: '商品名称不能为空',
         icon: 'none'
@@ -341,7 +344,7 @@ Page({
     // }
     wx.showModal({
       title: "提示",
-      content: "请您确认信息无误,确认后将提交您的反馈",
+      content: "请您确认信息无误\r\n确认后将提交您的反馈",
       confirmText: "确认提交",
       confirmColor: "#00AE66",
       // showCancel: false,
@@ -365,10 +368,10 @@ Page({
                   });
                 }
               });
-              wx.showToast({
-                title: '反馈建议已提交',
-                icon: 'none'
-              });
+              // wx.showToast({
+              //   title: '反馈建议已提交',
+              //   icon: 'none'
+              // });
             }).catch(err => {
               
             });
