@@ -120,7 +120,7 @@ Page({
   selectDisplay() {
     let that = this;
     let {detail} = that.data
-    detail.remark = detail.remark || ' '
+    detail.remark = ' '
     this.setData({
       isShow: true,
       selectReasonName: that.data.selectReasonName,
@@ -269,8 +269,15 @@ Page({
   //点击上传图片
   clickPic() {
     let that = this;
+    let len = 0;
+    let {
+      detail
+    } = that.data;
+    if(detail.images != null){
+      len = detail.images.length
+    }
     wx.chooseImage({
-      count: 5,
+      count: 5-len,
       sizeType: ['original', 'compressed'],
       sourceType: ['album','camera'],
       success: function (res) {

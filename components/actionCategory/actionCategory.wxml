@@ -1,7 +1,7 @@
 
 <!--选择门分类start-->
-<view class="store-body"  bindtap="cancelSelect">
-  <view class="store" catchtap>
+<view class="store-body"  bindtap="cancelSelect" >
+  <view class="store" catchtap >
     <view class="title">
       <view class="str">选择商品分类</view>
       <view class="close-btn link-active" bindtap="cancelSelect" >
