@@ -181,7 +181,6 @@ Page({
     let that = this;
     let rd = res.detail;
     if(rd && rd.id){
-      console.log(2221);
       
       let { query } = that.data;
       query.page = 1;
