@@ -85,9 +85,8 @@ Component({
 							// showCancel: false,
 							success: function (resData) {
 							  if (resData.confirm) {
-								that.updateLoginInfo({}); //系统登录信息
 								wx.makePhoneCall({
-								  phoneNumber: '4008258522', //客服电话,
+								  phoneNumber: Config.serviceTel, //客服电话,
 								  success: function(){
 									console.log('拨打成功');
 								  },
