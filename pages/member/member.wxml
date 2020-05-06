@@ -32,14 +32,14 @@
     </view>
   </view>
 </view>
-<navigator url="/pages/password/password" class="input-view">
+<!-- <navigator url="/pages/password/password" class="input-view">
   <view class="input-item">
     <view class="title">修改登录密码</view>
     <view class="content">
       <image class="right-img" src="{{rightSrc}}"></image>
     </view>
   </view>
-</navigator>
+</navigator> -->
 <view wx:if="{{myInfo.weapp_openid}}">
   <view class="input-item">
     <view class="title">绑定微信</view>
