@@ -412,7 +412,7 @@ Page({
     query.display_class_id = '';
     query.item_tag_id = ''
     query.page = 1
-    query.page_size = Constant.PAGE_SIZEm
+    query.page_size = Constant.PAGE_SIZE
     query.sort = '-other'
     this.setData({
       activeIndex: '',
