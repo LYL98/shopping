@@ -16,6 +16,12 @@
         </view>
       </picker>
       <view class="item">
+        <view class="left">单价</view>
+        <view class="right">
+          <text class="new-piece">￥{{tools.returnPrice(itemData.price_sale  / (itemData.gross_weight / 10))}}/斤</text>
+        </view>
+      </view>
+      <view class="item">
         <view class="left">销售价</view>
         <view class="right">
           <text class="price-origin" wx:if="{{itemData.price_origin > itemData.price_sale}}">原价:￥{{tools.returnPrice(itemData.price_origin)}}</text>
