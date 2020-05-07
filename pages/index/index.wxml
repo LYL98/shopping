@@ -108,3 +108,5 @@
     <defaultPage wx:else currentPage="itemList"></defaultPage>
   </view>
 </view>
+
+<gio-marketing />

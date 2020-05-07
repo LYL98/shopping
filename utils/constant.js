@@ -80,7 +80,6 @@ module.exports = {
   //埋点action
   ACTION_RECORD: {
     LOGIN: 'login_in', //登录
-    LOGIN_AUTH: 'login_in_auth', //授权登录
     SHOW_HOME: 'homepage_in', //进入首页
     HIDE_HOME: 'homepage_out', //离开首页
     SEARCH: 'search', //点击搜索
