@@ -181,6 +181,7 @@ Page({
     let that = this;
     let rd = res.detail;
     if(rd && rd.id){
+      
       let { query } = that.data;
       query.page = 1;
       query.page_size = Constant.PAGE_SIZE;
