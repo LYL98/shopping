@@ -14,13 +14,14 @@ var returnPriceAbs = function(price) {
 }
 //返回毛重
 var returnGrossWeight = function(data) {
-  var s = 0, e = 0;
+  /*var s = 0, e = 0;
   if(data.weight_s) s = data.weight_s / 10;
   if(data.weight_e) e = data.weight_e / 10;
   if(s > 0 && e > 0) return s + '-' + e + '斤';
   if(s > 0) return s + '斤';
   if(e > 0) return e + '斤';
-  return '-';
+  return '-';*/
+  return data / 10;
 }
 
 //返回五舍五入

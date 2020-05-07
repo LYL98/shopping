@@ -32,7 +32,7 @@ Page({
           let d = {
             code: "123456",
             frame_id: "20",
-            gross_weight: 123,
+            gross_weight: 0,
             id: i + 1,
             images: [],
             is_quoted: false,
