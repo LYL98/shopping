@@ -1,7 +1,22 @@
 /***
  * 导入配置
  */
-import { Conn, RequestHttpDev, RequestHttpPre, RequestHttpPro, TencentBucketDev, TencentRegionDev, TencentBucketPro, TencentRegionPro, TencentPathDev, TencentPathPro, ServiceTel, WeiXinAppIds, Version } from './../config';
+import {
+  Conn,
+  RequestHttpDev,
+  RequestHttpPre,
+  RequestHttpPro,
+  TencentBucketDev,
+  TencentRegionDev,
+  TencentBucketPro,
+  TencentRegionPro,
+  TencentPathDev,
+  TencentPathPro,
+  ServiceTel,
+  WeiXinAppIds,
+  Version,
+  GioConfig
+} from './../config';
 
 //config
 let requestHttp = '';
@@ -93,12 +108,13 @@ module.exports = {
 
   },
   //腾讯Bucket、Region
-  tencentBucket: Conn === 'pro' ? TencentBucketPro : TencentBucketDev, //Bucket
-  tencentRegion: Conn === 'pro' ? TencentRegionPro : TencentRegionDev, //Region
+  tencentBucket: Conn === 'dev' ? TencentBucketDev : TencentBucketPro, //Bucket
+  tencentRegion: Conn === 'dev' ? TencentRegionDev : TencentRegionPro, //Region
 
-  tencentPath: Conn === 'pro' ? TencentPathPro : TencentPathDev, //腾讯下载地址
+  tencentPath: Conn === 'dev' ? TencentPathDev : TencentPathPro, //腾讯下载地址
   serviceTel: ServiceTel, //服务电话
   weiXinAppIds: WeiXinAppIds, //要打开的微信appids
   conn: Conn,
-  version: Version
+  version: Version,
+  gioConfig: GioConfig
 }

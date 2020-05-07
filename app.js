@@ -2,7 +2,7 @@
 import { Config, Http, Constant } from './utils/index';
 
 var gio = require("utils/gio-minp/index.js").default;
-gio('init', 'a2dac281ef3539e4', 'wx70a3bf5f7a69987d', { version: Config.version });
+gio('setConfig', Config.gioConfig);
 
 
 /**
@@ -75,6 +75,14 @@ App({
             //gio设置userid
             if(!that.globalData.gioIsSetUserId){
               gio('setUserId', rd.id);
+              let con = rd.stores.filter(item => item.id === rd.store_id);
+              gio('setUser', {
+                id: rd.id,
+                loginUserStoreId: rd.store_id,
+                loginUserStoreTitle: con.length === 0 ? '' : con[0].title,
+                loginUserStoreTags: '',
+                loginUserRealname: rd.realname
+              });
               that.globalData.gioIsSetUserId = true;
             }
             typeof callBack == "function" && callBack(rd);
@@ -261,23 +269,6 @@ App({
     this.actionRecordAdd({
       action: Constant.ACTION_RECORD.LOGIN
     });
-
-    //监听网络
-    /*wx.onNetworkStatusChange(function (res) {
-      if(!res.isConnected){
-        wx.showToast({
-          title: '网络不见了~',
-          duration: 20000000,
-          icon: 'none'
-        });
-      }else{
-        wx.showToast({
-          title: '网络已恢复',
-          duration: 1500,
-          icon: 'none'
-        });
-      }
-    });*/
   },
 
   //全局显示时
@@ -402,11 +393,19 @@ App({
     let memberSto = wx.getStorageSync('loginUserInfo');
     let sys = this.getSystemInfo();
     if((member && member.id) || (memberSto && memberSto.id)){
+      //系统 收集
       Http.post(Config.api.actionRecordAdd, {
         member_id: member.id || memberSto.id || '',
         phone_model: `机型：${sys.model}；系统：${sys.system}；微信版本：${sys.version}`,
         ...data,
       }, { throttle: false, handleError: false });
+
+      //gio 收集
+      /*gio('track', data.action, { 
+        member_id: member.id || memberSto.id || '',
+        phone_model: `机型：${sys.model}；系统：${sys.system}；微信版本：${sys.version}`,
+        ...data,
+      });*/
     }
   },
   //贝塞尔曲线

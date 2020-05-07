@@ -36,3 +36,10 @@ export const WeiXinAppIds = ['wxxxxxxxxxxxxxxx'];
 
 //版本
 export const Version = 'Vx.x.x';
+
+//growingio配置
+export const GioConfig = {
+    projectId: 'xxxxxxxxxx', //'你的 GrowingIO 项目ID',
+    appId: 'wxxxxxxxxxxxxxxx', //'你的小程序AppID',
+    version: Version //'小程序版本'
+};
