@@ -83,7 +83,7 @@
   </view>
   <view style="height: 160rpx;"></view>
   <view class="option-bottom">
-    <button class="option-btn" bind:tap="adviceItemAdd" disabled="{{loading}}" loading="{{loading}}">
+    <button class="option-btn" bind:tap="adviceItemAdd" disabled="{{subLoading}}" loading="{{subLoading}}">
       确认提交
     </button>
   </view>
