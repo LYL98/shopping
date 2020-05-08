@@ -205,7 +205,7 @@ Page({
       let { globalData } = app;
       globalData.gio('setUser', {
         id: globalData.loginUserInfo.id,
-        loginUserStoreId: rd.store_id,
+        loginUserStoreId: rd.id,
         loginUserStoreTitle: rd.title,
         loginUserStoreTags: '',
         loginUserRealname: globalData.loginUserInfo.realname
