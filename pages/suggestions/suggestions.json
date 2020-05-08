@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "反馈建议",
+  "navigationBarTitleText": "需求提报",
   "usingComponents": {
     "actionCategory": "/components/actionCategory/actionCategory"
   }
