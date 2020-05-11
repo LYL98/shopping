@@ -117,10 +117,10 @@
 					"scene": null
 				},
 				{
-					"id": 11,
+					"id": 9,
 					"name": "申请售后服务",
 					"pathName": "pages/afterSale/afterSale",
-					"query": "id=3205658",
+					"query": "id=702537",
 					"scene": null
 				},
 				{
@@ -156,6 +156,13 @@
 					"name": "pages/itemLabel/itemLabel",
 					"pathName": "pages/itemLabel/itemLabel",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后发送信息",
+					"pathName": "pages/reply/reply",
+					"query": "id=702537",
 					"scene": null
 				}
 			]
