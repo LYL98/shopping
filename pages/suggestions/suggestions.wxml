@@ -10,7 +10,6 @@
     <view class="cause">
       <view class="left">商品分类</view>
       <view class="right" bindtap="selectDisplay">
-        <!-- selectReasonName ||  -->
         {{selectReasonName ||'请选择商品的分类'}}
         <image src="./../../assets/img/right.png"></image>
       </view>
