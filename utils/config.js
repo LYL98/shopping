@@ -64,6 +64,7 @@ module.exports = {
     merchantBalance: apiC + '/merchant/balance',//商户余额
     merchantStoreList: apiC + '/merchant/store/list',//商户门店列表
     merchantStoreDetail: apiC + '/store/detail',//商户门店详情
+    getStoreTags: apiC + '/store/tags', //获取门店tags
     editStore: apiC + '/store/edit', //编辑门店
     memberList: apiC + '/merchant/member/list', //用户所在商户的用户列表信息查询
     upavatar: apiC +'/profile/modify',  //头像上传

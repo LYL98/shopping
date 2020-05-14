@@ -40,6 +40,7 @@ App({
     system: null,
     gio: gio,
     gioIsSetUserId: false,
+    gioIsSetUser: false,
     indexTagId: null,//首页点击运营专区时的id
     indexTagIndex:null//首页点击运营专区时的index
   },
@@ -75,15 +76,10 @@ App({
             //gio设置userid
             if(!that.globalData.gioIsSetUserId){
               gio('setUserId', rd.id);
-              let con = rd.stores.filter(item => item.id === rd.store_id);
-              gio('setUser', {
-                id: rd.id,
-                loginUserStoreId: rd.store_id,
-                loginUserStoreTitle: con.length === 0 ? '' : con[0].title,
-                loginUserStoreTags: '',
-                loginUserRealname: rd.realname
-              });
               that.globalData.gioIsSetUserId = true;
+            }
+            if(!that.globalData.gioIsSetUser){
+              that.gioSetUser(rd.store_id);
             }
             typeof callBack == "function" && callBack(rd);
           } else {
@@ -112,6 +108,30 @@ App({
   updateLoginInfo(data){
     this.globalData.loginUserInfo = data;
     wx.setStorageSync("loginUserInfo", data);
+  },
+
+  //gio设置用户变量
+  gioSetUser(storeId){
+    let that = this;
+    Http.get(Config.api.getStoreTags, {
+      id: storeId
+    }, {
+      handleError: false
+    }).then(res => {
+      let rd = res.data;
+      let tags = '';
+      rd.tags.forEach(item => {
+        tags = `${tags}${tags ? ',' : ''}[${item}]`;
+      });
+      gio('setUser', {
+        id: that.globalData.loginUserInfo.id,
+        loginUserStoreId: rd.id,
+        loginUserStoreTitle: rd.title,
+        loginUserStoreTags: tags,
+        loginUserRealname: that.globalData.loginUserInfo.realname
+      });
+      that.globalData.gioIsSetUser = true;
+    });
   },
 
   //网络请求异常处理方法
