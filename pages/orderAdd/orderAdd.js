@@ -35,7 +35,7 @@ Page({
           let d = {
             code: "123456",
             frame_id: "20",
-            gross_weight: 123,
+            gross_weight: 0,
             id: i + 1,
             images: [],
             is_quoted: false,
@@ -123,7 +123,7 @@ Page({
   //获取优惠券列表
   getCoupon(){
     let that = this;
-    let { orderType } = that.data;
+    let { orderType, address } = that.data;
     
     //判断是预售或正常订单
     let d = wx.getStorageSync(orderType === 'presale' ? 'shoppingCartPresaleData' : 'shoppingCartData');
@@ -145,6 +145,7 @@ Page({
         }
       }, () => {
         Http.post(Config.api.orderCouponList, {
+          store_id: address.id,
           items: data
         }, { throttle: false }).then((res)=>{
           let cou = wx.getStorageSync('orderCouponSelectData');

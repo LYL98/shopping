@@ -1,12 +1,6 @@
-// pages/suggestions/suggestions.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
-import {
-  Constant,
-  Config,
-  Http
-} from './../../utils/index';
+import { Config, Http } from './../../utils/index';
 import UpCos from './../../utils/upload-tencent-cos';
 Page({
 
@@ -14,10 +8,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     photographSrc: './../../assets/img/photograph.png',
     closeSrc: './../../assets/img/close.png',
     isShowSelectMedia: false,
+    subLoading: false,
     detail: {
       images: [],
       remark:'',
@@ -39,24 +34,13 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
     let that = this
     this.address = app.getSelectStore(); //当前选择的地址
-    let data = wx.getStorageSync('addOrderSelectAddress');
-    console.log(data);
-
     app.signIsLogin(() => {
       this.displayClassQuery(); //获取商品分类
-      console.log(this.address);
       let data = wx.getStorageSync('addOrderSelectAddress');
       let {
         detail
@@ -68,52 +52,19 @@ Page({
     })
 
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   //获取商品分类
   displayClassQuery() {
     let that = this;
+    wx.showNavigationBarLoading();
     Http.get(Config.api.displayClassQuery, {
       province_code: that.address.province_code
     }).then((res) => {
+      wx.hideNavigationBarLoading();
       that.setData({
         categoryList: res.data
       });
     }).catch(() => {
-
+      wx.hideNavigationBarLoading();
     })
   },
   //选择类型显示
@@ -342,22 +293,15 @@ Page({
       return false;
     }
 
-    // if (detail.images.length === 0 && !detail.media_urls.length === 0) {
-    //   wx.showToast({
-    //     title: '请至少上传一张图片或视频',
-    //     icon: 'none'
-    //   });
-    //   return false;
-    // }
     wx.showModal({
       title: "提示",
-      content: "请您确认信息无误\r\n确认后将提交您的反馈",
+      content: "请您确认信息无误\r\n确认后将提交您的提报",
       confirmText: "确认提交",
       confirmColor: "#00AE66",
-      // showCancel: false,
       success: function (resData) {
         if (resData.confirm) {
-            Http.post(config.api.adviceItem, {
+          that.setData({ subLoading: true }, ()=>{
+            Http.post(Config.api.adviceItem, {
               store_id: detail.store_id,
               display_class_id: detail.display_class_id,
               remark: detail.remark,
@@ -367,25 +311,16 @@ Page({
               item_spec: detail.item_spec,
               purchase_channel: detail.purchase_channel,
             }).then(res => {
+              that.setData({ subLoading: false });
               wx.redirectTo({
-                url: '/pages/suggestionsResult/suggestionsResult' ,
-                complete: () => {
-                  that.setData({
-                    
-                  });
-                }
+                url: '/pages/suggestionsResult/suggestionsResult'
               });
-              // wx.showToast({
-              //   title: '反馈建议已提交',
-              //   icon: 'none'
-              // });
             }).catch(err => {
-              
+              that.setData({ subLoading: false });
             });
-          
+          });
         }
       }
-      });
-   
+    });
   },
 })

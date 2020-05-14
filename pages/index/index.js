@@ -201,15 +201,7 @@ Page({
         content: { store_id: rd.id }
       });
       /*===== 埋点 end ======*/
-
-      let { globalData } = app;
-      globalData.gio('setUser', {
-        id: globalData.loginUserInfo.id,
-        loginUserStoreId: rd.store_id,
-        loginUserStoreTitle: rd.title,
-        loginUserStoreTags: '',
-        loginUserRealname: globalData.loginUserInfo.realname
-      });
+      app.gioSetUser(rd.id);
     }
   },
   //是否可下单

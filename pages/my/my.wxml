@@ -87,7 +87,7 @@
           <view class="option-tiem">
             <navigator class="item" url="/pages/suggestions/suggestions">
               <image src="{{optionSrc[9]}}"></image>
-              <text>反馈建议</text>
+              <text>需求提报</text>
             </navigator>
              <navigator class="item" url="/pages/complain/complain">
               <image src="{{optionSrc[6]}}"></image>

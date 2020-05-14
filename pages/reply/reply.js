@@ -16,7 +16,8 @@ Page({
     id:'',
     detail:{
         images: [],
-        media_urls: []
+        media_urls: [],
+        remark: ''
     },
   },
   onLoad(option) {
