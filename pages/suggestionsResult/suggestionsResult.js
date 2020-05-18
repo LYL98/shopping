@@ -1,6 +1,3 @@
-import { WeiXinAppIds } from "../../config"
-
-// pages/suggestionsResult/suggestionsResult.js
 Page({
 
   /**
