@@ -113,10 +113,7 @@ Page({
   //点击页面底下的tab
   onTabItemTap(e){
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.TAB_ITEM,
-      content: { store_id: this.address.id }
-    });
+    app.gioActionRecordAdd('tabbar', { tabType_var: '商品' });
     /*===== 埋点 end ======*/
   },
 
@@ -144,34 +141,10 @@ Page({
       scrollTop: 0,
       duration: 0
     });
-
-    /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.ITEM_CLASS,
-      content: { display_class_id: param, store_id: query.store_id }
-    });
-    /*===== 埋点 end ======*/
-
-    let keyWords = this.data.categoryList.filter(item => item.id === param);
-    if(keyWords.length > 0){
-      app.globalData.gio('track', 'searchSuccess', { 
-        searchKeywords: keyWords[0].title, 
-        searchEntrance: '分类-搜索', 
-        storeID: query.store_id
-      });
-    }
   },
 
   //点击商品
   clickItem(e){
-    let id = e.currentTarget.dataset.id;
-    /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.ITEM_DETAIL_LIST,
-      content: { item_id: id, store_id: this.data.query.store_id }
-    });
-    /*===== 埋点 end ======*/
-
     this.data.isDetail = true
   },
 

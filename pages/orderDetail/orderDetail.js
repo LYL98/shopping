@@ -346,10 +346,6 @@ Page({
         });
         if (res === 'success') {
           /*===== 埋点 start ======*/
-          app.actionRecordAdd({
-            action: Constant.ACTION_RECORD.ORDER_PAY_SUBMIT,
-            content: { store_id: detail.store_id, order_id: id }
-          });
           /*===== 埋点 end ======*/
           wx.navigateTo({
             url: `/pages/payResult/payResult?id=${id}&source=orderDetail`

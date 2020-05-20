@@ -14,9 +14,6 @@ Page({
     }
     
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.LOGIN
-    });
     /*===== 埋点 end ======*/
     wx.reLaunch({
       url: '/pages/index/index',

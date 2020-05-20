@@ -9,7 +9,7 @@
     <!--选择门店组件-->
     <view class="skeleton-rect"><selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="storeShowHide"/></view>
     <!--搜索组件-->
-    <view class="skeleton-rect"><search bind:tap="clickSearch" /></view>
+    <view class="skeleton-rect"><search /></view>
     
     <view class="skeleton-rect" style="position:relative; background: #f3f4f6;">
       <swiper autoplay style="{{'height:33.33vw; width:100%;'}}" class="bg-img-container-banner" bindchange="swiperChange">
@@ -36,14 +36,6 @@
         <view><text class="skeleton-rect">{{item.title}}</text></view>
       </navigator>
       </block>
-      <!-- <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[0].title}}" bind:tap="clickTags" data-tag="{{tagsList2[0]}}">
-        <image class="skeleton-rect" src="{{tagsImg[6]}}"></image>
-        <view><text class="skeleton-rect">{{tagsList2[0].title}}</text></view>
-      </navigator>
-      <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[1].title}}" bind:tap="clickTags" data-tag="{{tagsList2[1]}}">
-        <image class="skeleton-rect" src="{{tagsImg[7]}}"></image>
-        <view><text class="skeleton-rect">{{tagsList2[1].title}}</text></view>
-      </navigator> -->
     </view>
     <view class="pannel-line"></view>
     <view class="recently-collect-title">

@@ -249,10 +249,6 @@ Page({
       payCallBack: function(res){
         if(res === 'success'){
           /*===== 埋点 start ======*/
-          app.actionRecordAdd({
-            action: Constant.ACTION_RECORD.ORDER_PAY_SUBMIT,
-            content: { store_id: storeId, order_id: orderId }
-          });
           /*===== 埋点 end ======*/
           that.setData({
             isShowPay: false

@@ -21,7 +21,7 @@ Page({
     tagsList: (()=>{
       //初始化骨架数据
       let items = [];
-      for(let i = 0; i < 6; i++){
+      for(let i = 0; i < 9; i++){
         let d = {
           id: i + 1,
           image: '',
@@ -31,13 +31,6 @@ Page({
       }
       return items;
     })(),
-    tagsList2: [{
-      id: 'collect',
-      title: '收藏商品'
-    }, {
-      id: 'lately_buy',
-      title: '最近购买'
-    }],
     query: {
       store_id: 0,
       // tag: '今日主推',
@@ -154,22 +147,6 @@ Page({
       }
     });
   },
-  //页面隐藏
-  onHide(){
-    /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.HIDE_HOME,
-      content: { store_id: this.data.address.id }
-    });
-    /*===== 埋点 end ======*/
-  },
-  //点击搜索
-  clickSearch(){
-    app.globalData.gio('track', 'searchClick', { 
-      searchEntrance: '分类-搜索', 
-      storeID: this.data.query.store_id
-    });
-  },
   //显示选择收货地址
   storeShowHide(e){
     this.setData({
@@ -196,10 +173,7 @@ Page({
         that.getWorkTime();
       });
       /*===== 埋点 start ======*/
-      app.actionRecordAdd({
-        action: Constant.ACTION_RECORD.SHOW_HOME,
-        content: { store_id: rd.id }
-      });
+      
       /*===== 埋点 end ======*/
       app.gioSetUser(rd.id);
     }
@@ -420,10 +394,7 @@ Page({
   urlJump(e){
     let item = e.target.dataset.item;
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.BANNER,
-      content: { banner_id: item.id, store_id: this.data.query.store_id }
-    });
+    
     /*===== 埋点 end ======*/
     
     let url = e.target.dataset.url;
@@ -449,29 +420,18 @@ Page({
     app.globalData.indexTagId = tag.id
     app.globalData.indexTagIndex = e.currentTarget.dataset.index
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.HOME_TAG,
-      content: { tag_id: tag.id, tag_title: tag.title, store_id: this.data.query.store_id }
-    });
     /*===== 埋点 end ======*/
   },
   //点击商品
   clickItem(e){
     let id = e.currentTarget.dataset.id;
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.ITEM_DETAIL_HOME,
-      content: { item_id: id, store_id: this.data.query.store_id }
-    });
     /*===== 埋点 end ======*/
   },
   //点击页面底下的tab
   onTabItemTap(e){
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.TAB_HOME,
-      content: { store_id: this.data.query.store_id }
-    });
+    app.gioActionRecordAdd('tabbar', { tabType_var: '首页' });
     /*===== 埋点 end ======*/
   },
   /**

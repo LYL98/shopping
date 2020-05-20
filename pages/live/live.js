@@ -124,9 +124,11 @@ Page({
     }
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {}
+  //点击页面底下的tab
+  onTabItemTap(e){
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('tabbar', { tabType_var: '直播' });
+    /*===== 埋点 end ======*/
+  },
 
 });

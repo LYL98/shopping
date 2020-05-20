@@ -64,10 +64,7 @@ Page({
   //点击页面底下的tab
   onTabItemTap(e) {
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.TAB_SHOP_CART,
-      content: { store_id: this.address.id }
-    });
+    app.gioActionRecordAdd('tabbar', { tabType_var: '购物车' });
     /*===== 埋点 end ======*/
   },
   //获取工作时间
@@ -326,8 +323,6 @@ Page({
 
       wx.showNavigationBarLoading();
       that.setData({ loading: true }, ()=>{
-        let ids_temp = ids.filter((item, index) => index === 0 || index < 3);
-        console.log(ids_temp, ids);
         Http.post(Config.api.itemCartQuery, {
           ids: ids,
           store_id: this.address.id || ''
@@ -371,11 +366,6 @@ Page({
       });
     }
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.SHOP_CART,
-      content: { store_id: this.address.id, item: item },
-      related_key: this.relatedKey
-    });
     /*===== 埋点 end ======*/
   },
   //邮费优惠
@@ -426,11 +416,6 @@ Page({
       });
     } else {
       /*===== 埋点 start ======*/
-      app.actionRecordAdd({
-        action: Constant.ACTION_RECORD.SHOP_CART_CLEARING,
-        content: { store_id: this.address.id },
-        related_key: this.relatedKey
-      });
       /*===== 埋点 end ======*/
       wx.navigateTo({
         url: '/pages/orderAdd/orderAdd',
