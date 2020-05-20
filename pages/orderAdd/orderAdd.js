@@ -9,7 +9,7 @@
  */
 //获取应用实例
 const app = getApp();
-import { Config, Http, Constant } from './../../utils/index';
+import { Config, Http, Util } from './../../utils/index';
 
 Page({
 
@@ -71,7 +71,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.relatedKey = ''; //生成供埋点系列用
     this.setData({
       orderType: options.type || 'normal',
       deliveryDate: options.delivery_date || ''
@@ -82,7 +81,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.relatedKey = wx.getStorageSync('actionRecordShopCartId'); //生成供埋点系列用
     let that = this;
     //判断登录
     app.signIsLogin(() => {
@@ -102,8 +100,6 @@ Page({
       wx.navigateTo({
         url: '/pages/orderCoupon/orderCoupon'
       });
-      /*===== 埋点 start ======*/
-      /*===== 埋点 end ======*/
     }
   },
   
@@ -291,7 +287,7 @@ Page({
    */
   submitOrder() {
     let that = this;
-    let { orderAddData, address, orderType, deliveryDate, couponSelectData } = that.data;
+    let { orderAddData, dataItem, address, orderType, deliveryDate, couponSelectData } = that.data;
     if (!address.id) {
       wx.showToast({
         title: '请选择门店地址',
@@ -314,6 +310,28 @@ Page({
       Http.post(Config.api.orderAdd, d).then((res)=>{
         let rd = res.data;
         /*===== 埋点 start ======*/
+        app.gioActionRecordAdd('sumitOrder', {
+          orderID_var: rd.id, //订单ID
+          orderType_var: orderType === 'presale' ? '预售订单' : '正常订单', //订单类型
+          productAmount_var: Util.returnPrice(rd.order_price), //商品金额
+          quantity_var: rd.item_num, //商品数量
+        });
+        dataItem.items.forEach(item => {
+          let tags = '';
+          item.tags.forEach(tag => {
+            tags = `${tags}${tags ? ',' : ''}[${tag}]`;
+          });
+          app.gioActionRecordAdd('sumitProductOrder', {
+            orderID_var: rd.id, //订单ID
+            productID_var: item.id, //商品ID
+            productName: item.title, //商品名称
+            primarySort_var: `一级类目ID${item.display_class_id || '0'}`, //一级类目
+            productArea_var: tags, //商品专区
+            productSpec_var: rd.item_spec, //商品规格
+            productAmount_var: Util.returnPrice(rd.order_price), //商品金额
+            quantity_var: rd.item_num, //商品数量
+          });
+        });
         /*===== 埋点 end ======*/
         
         //下单成功，待支付。如果为协议客户
@@ -323,7 +341,7 @@ Page({
             that.setData({
               payWarning: ['您未支付的订单累计金额已超授信额度，需支付该订单！', '否则订单将在30分钟后取消']
             })
-            that.orderPay(rd.id, rd.order_price); //去支付
+            that.orderPay(rd); //去支付
           } else {
             // 如果未超过授信额度
             that.clearShoppingCart(); //清除购买的购物车
@@ -335,7 +353,7 @@ Page({
             });
           }
         }else{
-          that.orderPay(rd.id, rd.order_price); //去支付
+          that.orderPay(rd); //去支付
         }
       }).catch(()=>{
         that.setData({
@@ -346,22 +364,48 @@ Page({
   },
 
   //订单支付
-  orderPay(id, price) {
+  orderPay(rd) {
     let that = this;
-    let { address } = that.data;
+    let { dataItem, orderType } = that.data;
     that.setData({
       payData: {
-        order_id: id,
-        price: price
+        order_id: rd.id,
+        price: rd.order_price
       },
       isShowPay: true,
       payCallBack: function(res) {
         that.clearShoppingCart(); //清除购买的购物车
         if (res === 'success') {
           /*===== 埋点 start ======*/
+          app.gioActionRecordAdd('payOrderSuccess', {
+            orderID_var: rd.id, //订单ID
+            orderType_var: orderType === 'presale' ? '预售订单' : '正常订单', //订单类型
+            productAmount_var: Util.returnPrice(rd.order_price), //商品金额
+            quantity_var: rd.item_num, //商品数量
+            payAmount_var: '', //实际支付金额
+            coupon_var: '', //优惠券名称
+            couponType_var: '', //优惠券类型
+            promoteRule_var: '', //促销规则
+          });
+          dataItem.items.forEach(item => {
+            let tags = '';
+            item.tags.forEach(tag => {
+              tags = `${tags}${tags ? ',' : ''}[${tag}]`;
+            });
+            app.gioActionRecordAdd('payProductSuccess', {
+              orderID_var: rd.id, //订单ID
+              productID_var: item.id, //商品ID
+              productName: item.title, //商品名称
+              primarySort_var: `一级类目ID${item.display_class_id || '0'}`, //一级类目
+              productArea_var: tags, //商品专区
+              productSpec_var: rd.item_spec, //商品规格
+              productAmount_var: Util.returnPrice(rd.order_price), //商品金额
+              quantity_var: rd.item_num, //商品数量
+            });
+          });
           /*===== 埋点 end ======*/
           wx.redirectTo({
-            url: `/pages/payResult/payResult?id=${id}&source=orderAdd`,
+            url: `/pages/payResult/payResult?id=${rd.id}&source=orderAdd`,
             complete: () => {
               that.setData({
                 isShowPay: false,
@@ -371,7 +415,7 @@ Page({
           });
         } else {
           wx.redirectTo({
-            url: '/pages/orderDetail/orderDetail?id=' + id,
+            url: '/pages/orderDetail/orderDetail?id=' + rd.id,
             complete: () => {
               that.setData({
                 isShowPay: false,
@@ -380,7 +424,6 @@ Page({
             }
           });
         }
-        wx.removeStorageSync('actionRecordShopCartId'); //删除系列号
       },
     });
   },
