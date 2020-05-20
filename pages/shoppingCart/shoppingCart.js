@@ -49,10 +49,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.address = app.getSelectStore(); //当前选择地址
-    this.relatedKey = Util.getUuid(); //生成uuid
-    wx.setStorageSync('actionRecordShopCartId', this.relatedKey); //生成供埋点系列用
-    
+    this.address = app.getSelectStore(); //当前选择地址    
     //判断登录
     app.signIsLogin(() => {
       this.activity();
