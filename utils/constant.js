@@ -76,32 +76,5 @@ module.exports = {
     type_reduction: '订单满减券',
     type_discount: '订单满折券',
     type_gift: '订单满赠券'
-  },
-  //埋点action
-  ACTION_RECORD: {
-    LOGIN: 'login_in', //登录
-    SHOW_HOME: 'homepage_in', //进入首页
-    HIDE_HOME: 'homepage_out', //离开首页
-    SEARCH: 'search', //点击搜索
-    BANNER: 'banner', //点击banner
-    HOME_TAG: 'tag_lv1', //点击首页标签
-    LABEL_TAG: 'tag_lv2', //点击标签页标签
-    TAB_HOME: 'home_tab', //点击首页tab
-    TAB_ITEM: 'item_tab', //点击商品列表
-    TAB_SHOP_CART: 'shop_cart_tab', //点击购物车tab
-    TAB_MY: 'mine_tab', //点击我的tab
-    ITEM_CLASS: 'item_class', //商品列表页点击类型
-    ITEM_DETAIL_HOME: 'item_detail_from_homepage', //商品详情（首页点击过来）
-    ITEM_DETAIL_SEARCH: 'item_detail_from_search', //商品详情（搜索点击过来）
-    ITEM_DETAIL_LABEL: 'item_detail_from_tag', //商品详情（标签页点击过来）
-    ITEM_DETAIL_LIST: 'item_dtail_from_list', //商品详情（商品列表点击过来）
-    SHOP_CART: 'shop_cart', //进入购物车
-    SHOP_CART_CLEARING: 'go_to_checkout', //购物车去结算
-    ORDER_ADD_COUPON: 'select_coupon_in_order_page', //订单页面点击优惠券
-    ORDER_ADD_SUBMIT: 'sbumit_order', //订单页面提交订单
-    ORDER_ADD_PAY_TYPE: 'sel_pay_type_in_order_page', //订单页面支付选择方式
-    ORDER_ADD_PAY_SUBMIT: 'pay_success', //订单页面支付成功
-    ORDER_PAY_TYPE: 'sel_pay_type_in_odetail_olist', //订单列表或详情支付选择方式
-    ORDER_PAY_SUBMIT: 'pay_suc_odetail_olist', //订单列表或详情支付成功
   }
 }

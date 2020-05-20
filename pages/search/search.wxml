@@ -22,8 +22,8 @@
   </view>
 </view>
 <view class="item-view">
-  <view class="item" wx:for="{{dataItem.items}}" wx:key="item.id" bindtap="confirm">
-    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-id="{{item.id}}">
+  <view class="item" wx:for="{{dataItem.items}}" wx:key="index">
+    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-item="{{item}}">
       <view class="img">
         <view class="mark">
           <text wx:if="{{item.is_presale}}" class="is-presale">预</text>

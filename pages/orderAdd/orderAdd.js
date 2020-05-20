@@ -103,11 +103,6 @@ Page({
         url: '/pages/orderCoupon/orderCoupon'
       });
       /*===== 埋点 start ======*/
-      app.actionRecordAdd({
-        action: Constant.ACTION_RECORD.ORDER_ADD_COUPON,
-        content: { store_id: address.id},
-        related_key: this.relatedKey
-      });
       /*===== 埋点 end ======*/
     }
   },
@@ -319,11 +314,6 @@ Page({
       Http.post(Config.api.orderAdd, d).then((res)=>{
         let rd = res.data;
         /*===== 埋点 start ======*/
-        app.actionRecordAdd({
-          action: Constant.ACTION_RECORD.ORDER_ADD_SUBMIT,
-          content: { store_id: address.id, order_id: rd.id},
-          related_key: that.relatedKey
-        });
         /*===== 埋点 end ======*/
         
         //下单成功，待支付。如果为协议客户
@@ -369,11 +359,6 @@ Page({
         that.clearShoppingCart(); //清除购买的购物车
         if (res === 'success') {
           /*===== 埋点 start ======*/
-          app.actionRecordAdd({
-            action: Constant.ACTION_RECORD.ORDER_ADD_PAY_SUBMIT,
-            content: { store_id: address.id, order_id: id},
-            related_key: that.relatedKey
-          });
           /*===== 埋点 end ======*/
           wx.redirectTo({
             url: `/pages/payResult/payResult?id=${id}&source=orderAdd`,
