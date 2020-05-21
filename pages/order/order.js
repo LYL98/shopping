@@ -1,7 +1,7 @@
 // pages/order/order.js
 //获取应用实例
 const app = getApp();
-import { Config, Constant, Http } from './../../utils/index';
+import { Config, Constant, Http, Util } from './../../utils/index';
 
 Page({
 
@@ -238,23 +238,44 @@ Page({
     let that = this;
     let { dataItem } = that.data;
     let index = e.target.dataset.index;
-    let orderId = dataItem.items[index].id;
-    let price = dataItem.items[index].remain_pay;
-    let storeId = dataItem.items[index].store_id;
+    let data = dataItem.items[index];
+    console.log(data);
     that.setData({
       payData: {
-        order_id: orderId,
-        price: price
+        order_id: data.id,
+        price: data.remain_pay
       },
       payCallBack: function(res){
         if(res === 'success'){
           /*===== 埋点 start ======*/
+          app.gioActionRecordAdd('payOrderSuccess', {
+            orderID_var: data.id, //订单ID
+            orderType_var: data.is_presale ? '预售订单' : '正常订单', //订单类型
+            productAmount_var: Util.returnPrice(data.item_total_price), //商品金额
+            quantity_var: data.item_num, //商品数量
+            payAmount_var: Util.returnPrice(data.order_price), //实际支付金额
+            coupon_var: `-￥${Util.returnPrice(data.coupon_reduction)}`, //优惠券名称
+            couponType_var: `-￥${Util.returnPrice(data.coupon_reduction)}`, //优惠券类型
+            promoteRule_var: `-￥${Util.returnPrice(data.coupon_reduction)}`, //促销规则
+          });
+          data.items.forEach(item => {
+            app.gioActionRecordAdd('payProductSuccess', {
+              orderID_var: data.id, //订单ID
+              productID_var: item.id, //商品ID
+              productName: item.title, //商品名称
+              primarySort_var: item.item_display_class, //一级类目
+              productArea_var: '订单支付', //商品专区
+              productSpec_var: item.item_attrs[0], //商品规格
+              productAmount_var: Util.returnPrice(item.item_price_sale * item.count_real), //商品金额
+              quantity_var: item.count_real, //商品数量
+            });
+          });
           /*===== 埋点 end ======*/
           that.setData({
             isShowPay: false
           });
           wx.navigateTo({
-            url: `/pages/payResult/payResult?id=${orderId}&source=orderList`
+            url: `/pages/payResult/payResult?id=${data.id}&source=orderList`
           });
         }
         that.setData({

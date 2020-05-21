@@ -9,7 +9,7 @@
  */
 //获取应用实例
 const app = getApp();
-import { Config, Http, Util } from './../../utils/index';
+import { Config, Http, Util, Constant } from './../../utils/index';
 
 Page({
 
@@ -234,6 +234,30 @@ Page({
             dataItem: rd,
             showSkeleton: false
           });
+          /*===== 埋点 start ======*/
+          app.gioActionRecordAdd('createOrder', {
+            orderID_var: 0, //订单ID
+            orderType_var: orderType === 'presale' ? '预售订单' : '正常订单', //订单类型
+            productAmount_var: Util.returnPrice(rd.item_total_price), //商品金额
+            quantity_var: rd.item_num, //商品数量
+          });
+          rd.items.forEach(item => {
+            let tags = '';
+            item.tags.forEach(tag => {
+              tags = `${tags}${tags ? ',' : ''}[${tag}]`;
+            });
+            app.gioActionRecordAdd('createProductOrder', {
+              orderID_var: rd.id, //订单ID
+              productID_var: item.id, //商品ID
+              productName: item.title, //商品名称
+              primarySort_var: `一级类目ID${item.display_class_id || '0'}`, //一级类目
+              productArea_var: tags, //商品专区
+              productSpec_var: item.item_spec, //商品规格
+              productAmount_var: Util.returnPrice(item.price_sale * item.number), //商品金额
+              quantity_var: item.number, //商品数量
+            });
+          });
+          /*===== 埋点 end ======*/
         } else if (res.statusCode == 200 && res.data.code == 101) {
           msgBox('现为非下单时间', ()=>{
             wx.navigateBack();
@@ -313,7 +337,7 @@ Page({
         app.gioActionRecordAdd('sumitOrder', {
           orderID_var: rd.id, //订单ID
           orderType_var: orderType === 'presale' ? '预售订单' : '正常订单', //订单类型
-          productAmount_var: Util.returnPrice(rd.order_price), //商品金额
+          productAmount_var: Util.returnPrice(rd.item_total_price), //商品金额
           quantity_var: rd.item_num, //商品数量
         });
         dataItem.items.forEach(item => {
@@ -327,9 +351,9 @@ Page({
             productName: item.title, //商品名称
             primarySort_var: `一级类目ID${item.display_class_id || '0'}`, //一级类目
             productArea_var: tags, //商品专区
-            productSpec_var: rd.item_spec, //商品规格
-            productAmount_var: Util.returnPrice(rd.order_price), //商品金额
-            quantity_var: rd.item_num, //商品数量
+            productSpec_var: item.item_spec, //商品规格
+            productAmount_var: Util.returnPrice(item.price_sale * item.number), //商品金额
+            quantity_var: item.number, //商品数量
           });
         });
         /*===== 埋点 end ======*/
@@ -366,7 +390,7 @@ Page({
   //订单支付
   orderPay(rd) {
     let that = this;
-    let { dataItem, orderType } = that.data;
+    let { dataItem, orderType, couponSelectData } = that.data;
     that.setData({
       payData: {
         order_id: rd.id,
@@ -377,15 +401,28 @@ Page({
         that.clearShoppingCart(); //清除购买的购物车
         if (res === 'success') {
           /*===== 埋点 start ======*/
+          let coupon_var = '', couponType_var = '', promoteRule_var = '';
+          if(couponSelectData.id && couponSelectData.coupon){
+            let ct = Constant.COUPON_TYPE;
+            coupon_var = couponSelectData.coupon.title;
+            couponType_var = ct[couponSelectData.coupon.coupon_type];
+            if(couponSelectData.coupon.coupon_type === 'type_reduction'){
+              promoteRule_var = `￥${Util.returnPrice(couponSelectData.coupon.benefit)}`;
+            }else if(couponSelectData.coupon.coupon_type === 'type_discount'){
+              promoteRule_var = `${Util.returnDiscount(couponSelectData.coupon.benefit)}折`;
+            }else{
+              promoteRule_var = `送${item.coupon.benefit}件`;
+            }
+          }
           app.gioActionRecordAdd('payOrderSuccess', {
             orderID_var: rd.id, //订单ID
             orderType_var: orderType === 'presale' ? '预售订单' : '正常订单', //订单类型
-            productAmount_var: Util.returnPrice(rd.order_price), //商品金额
+            productAmount_var: Util.returnPrice(rd.item_total_price), //商品金额
             quantity_var: rd.item_num, //商品数量
-            payAmount_var: '', //实际支付金额
-            coupon_var: '', //优惠券名称
-            couponType_var: '', //优惠券类型
-            promoteRule_var: '', //促销规则
+            payAmount_var: Util.returnPrice(rd.order_price), //实际支付金额
+            coupon_var: coupon_var, //优惠券名称
+            couponType_var: couponType_var, //优惠券类型
+            promoteRule_var: promoteRule_var, //促销规则
           });
           dataItem.items.forEach(item => {
             let tags = '';
@@ -398,9 +435,9 @@ Page({
               productName: item.title, //商品名称
               primarySort_var: `一级类目ID${item.display_class_id || '0'}`, //一级类目
               productArea_var: tags, //商品专区
-              productSpec_var: rd.item_spec, //商品规格
-              productAmount_var: Util.returnPrice(rd.order_price), //商品金额
-              quantity_var: rd.item_num, //商品数量
+              productSpec_var: item.item_spec, //商品规格
+              productAmount_var: Util.returnPrice(item.price_sale * item.number), //商品金额
+              quantity_var: item.number, //商品数量
             });
           });
           /*===== 埋点 end ======*/
