@@ -14,7 +14,7 @@
 </view>
 <view style="height: 80rpx;"></view>
 
-<view wx:for="{{dataItem.items}}" wx:key="item.id" class="order-item">
+<view wx:for="{{dataItem.items}}" wx:key="index" class="order-item">
   <navigator url="/pages/orderDetail/orderDetail?id={{item.id}}">
     <view class="store-status">
       <view class="store" data-id="{{item.store_id}}">
@@ -25,7 +25,7 @@
     </view>
     <view class="order-content">
       <view class="item-view">
-        <view class="item" wx:for-item="d" wx:for="{{item.items}}" wx:key="d.id" wx:for-index="i" >
+        <view class="item" wx:for-item="d" wx:for="{{item.items}}" wx:key="i" wx:for-index="i" >
           <view class="no-nav" wx:if="{{!openMap[index] && i >= 3 ? false : true}}">
             <view class="img">
               <view class="mark">

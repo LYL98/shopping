@@ -32,6 +32,16 @@ const handlePrice = (price) =>{
   return Math.round(v);
 }
 
+//返回折扣
+var returnDiscount = function(data){
+  var d = data ? parseFloat(data / 10).toString() : '0';
+  var index = d.indexOf(".");
+  if (index > 0) {
+    d = d.substring(0, index + 2);
+  }
+  return d;
+}
+
 //数字前面自动补零(num传入的数字，n需要的字符长度)
 const prefixInteger = (num, n) => {
   return (Array(n).join(0) + num).slice(-n);

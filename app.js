@@ -398,34 +398,31 @@ App({
   },
   //gio数据埋点(event事件，data数据)
   gioActionRecordAdd(event, data){
-    let sys = wx.getSystemInfoSync();
-    if(sys.platform !== 'devtools'){
-      let events = {
-        'setUserId': { type: '', data: data },
-        'setUser': { type: '', data: data },
-        'setPage': { type: '', data: data },
-        
-        'registSuccess': { type: 'track', data: data }, // 注册成功
-        'positionClick': { type: 'track', data: data }, // 流量位点击
-        'positionView': { type: 'track', data: data }, // 流量位曝光
-        'searchSuccess': { type: 'track', data: data }, // 搜索成功
-        'searchResultClick': { type: 'track', data: data }, // 搜索结果点击
-        'productDetailPageView': { type: 'track', data: data }, // 浏览商品详情页
-        'addToCart': { type: 'track', data: data }, // 加入购物车
-        'createOrder': { type: 'track', data: data }, // 生成订单
-        'createProductOrder': { type: 'track', data: data }, // 生成商品订单
-        'sumitOrder': { type: 'track', data: data }, // 提交订单
-        'sumitProductOrder': { type: 'track', data: data }, // 提交商品订单
-        'payOrderSuccess': { type: 'track', data: data }, // 订单支付成功
-        'payProductSuccess': { type: 'track', data: data }, // 商品支付成功
-        'collectClick': { type: 'track', data: data }, // 收藏按钮点击
-        'tabbar': { type: 'track', data: data }, // 底部导航栏
-      };
-      if(events[event].type === ''){
-        gio(event, events[event].data);
-      }else{
-        gio(events[event].type, event, events[event].data);
-      }
+    let events = {
+      'setUserId': { type: '', data: data },
+      'setUser': { type: '', data: data },
+      'setPage': { type: '', data: data },
+      
+      'registSuccess': { type: 'track', data: data }, // 注册成功
+      'positionClick': { type: 'track', data: data }, // 流量位点击
+      'positionView': { type: 'track', data: data }, // 流量位曝光
+      'searchSuccess': { type: 'track', data: data }, // 搜索成功
+      'searchResultClick': { type: 'track', data: data }, // 搜索结果点击
+      'productDetailPageView': { type: 'track', data: data }, // 浏览商品详情页
+      'addToCart': { type: 'track', data: data }, // 加入购物车
+      'createOrder': { type: 'track', data: data }, // 生成订单
+      'createProductOrder': { type: 'track', data: data }, // 生成商品订单
+      'sumitOrder': { type: 'track', data: data }, // 提交订单
+      'sumitProductOrder': { type: 'track', data: data }, // 提交商品订单
+      'payOrderSuccess': { type: 'track', data: data }, // 订单支付成功
+      'payProductSuccess': { type: 'track', data: data }, // 商品支付成功
+      'collectClick': { type: 'track', data: data }, // 收藏按钮点击
+      'tabbar': { type: 'track', data: data }, // 底部导航栏
+    };
+    if(events[event].type === ''){
+      gio(event, events[event].data);
+    }else{
+      gio(events[event].type, event, events[event].data);
     }
   },
   //贝塞尔曲线

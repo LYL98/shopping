@@ -98,7 +98,7 @@
   <!--配送日期end-->
 
   <view class="item-view">
-    <view class="item" wx:for-item="d" wx:for="{{detail.items}}" wx:key="d.id" >
+    <view class="item" wx:for-item="d" wx:for="{{detail.items}}" wx:key="index" >
       <view class="no-nav">
         <view class="img">
           <view class="mark">
@@ -235,7 +235,7 @@
 
   <!--付款历史start-->
   <view class="pay-log" wx:if="{{isShowPayRecord}}">
-    <view wx:for="{{detail.pay_record}}" wx:for-item="l" wx:key="l.id" class="pay-log-item">
+    <view wx:for="{{detail.pay_record}}" wx:for-item="l" wx:key="index" class="pay-log-item">
       <view>
         <view class="left">支付金额</view>
         <view class="right">￥{{tools.returnPrice(l.total_fee)}}</view>
@@ -269,7 +269,7 @@
     </view>
   </view>
   <view class="pay-log" wx:if="{{isShowLogRecord}}">
-    <view wx:for="{{detail.refund_record}}" wx:for-item="l" wx:key="l.id" class="pay-log-item">
+    <view wx:for="{{detail.refund_record}}" wx:for-item="l" wx:key="index" class="pay-log-item">
       <view>
         <view class="left">退款金额</view>
         <view class="right">￥{{tools.returnPrice(l.amount)}}</view>
@@ -298,7 +298,7 @@
     <view class="row">
       <view class="skeleton-rect">订单编号：{{detail.code}}</view>
       <view class="skeleton-rect">创建时间：{{detail.created}}</view>
-      <view  wx:for="{{detail.action_log}}" wx:for-item="l" wx:key="l.id" >
+      <view  wx:for="{{detail.action_log}}" wx:for-item="l" wx:key="index" >
         <view class="skeleton-rect" wx:if="{{l.action == 'pay' }}">支付时间：{{l.created}}</view>
         <view class="skeleton-rect" wx:if="{{l.action == 'delivery' }}">发货时间：{{l.created}}</view>
         <view class="skeleton-rect" wx:if="{{l.action == 'receive' }}">完成时间：{{l.created}}</view>
