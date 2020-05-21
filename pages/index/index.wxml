@@ -9,13 +9,13 @@
     <!--选择门店组件-->
     <view class="skeleton-rect"><selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="storeShowHide"/></view>
     <!--搜索组件-->
-    <view class="skeleton-rect"><search bind:tap="clickSearch" /></view>
+    <view class="skeleton-rect"><search /></view>
     
     <view class="skeleton-rect" style="position:relative; background: #f3f4f6;">
       <swiper autoplay style="{{'height:33.33vw; width:100%;'}}" class="bg-img-container-banner" bindchange="swiperChange">
         <swiper-item wx:for="{{bannerList}}" wx:key="index">
-          <image wx:if="{{item.url}}" data-url="{{item.url}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 33.33vw;"></image>
-          <image wx:else data-url="none" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 33.33vw;"></image>
+          <image wx:if="{{item.url}}" data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 33.33vw;"></image>
+          <image wx:else data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 33.33vw;"></image>
         </swiper-item>
       </swiper>
       <view class="dotwrap">
@@ -29,21 +29,13 @@
     <!-- 点击跳转到商品列表页面 -->
     <!-- url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" -->
       <block wx:for="{{tagsList}}" wx:key="index">
-      <!-- 第一个为今日主推，但是不需要显示 -->
-      <navigator wx:if="{{index !== 0}}"  url="/pages/itemList/itemList"  bind:tap="clickTags" data-tag="{{item}}" data-index="{{index}}" open-type="switchTab" >
-        <image class="skeleton-rect" wx:if="{{item.image}}" src="{{item.image}}"></image>
-        <image class="img-none skeleton-rect" wx:else></image>
-        <view><text class="skeleton-rect">{{item.title}}</text></view>
-      </navigator>
+        <!-- 第一个为今日主推，但是不需要显示 -->
+        <navigator wx:if="{{index !== 0}}"  url="/pages/itemList/itemList"  bind:tap="clickTags" data-item="{{item}}" data-index="{{index}}" open-type="switchTab" >
+          <image class="skeleton-rect" wx:if="{{item.image}}" src="{{item.image}}"></image>
+          <image class="img-none skeleton-rect" wx:else></image>
+          <view><text class="skeleton-rect">{{item.title}}</text></view>
+        </navigator>
       </block>
-      <!-- <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[0].title}}" bind:tap="clickTags" data-tag="{{tagsList2[0]}}">
-        <image class="skeleton-rect" src="{{tagsImg[6]}}"></image>
-        <view><text class="skeleton-rect">{{tagsList2[0].title}}</text></view>
-      </navigator>
-      <navigator url="/pages/itemLabel/itemLabel?tag={{tagsList2[1].title}}" bind:tap="clickTags" data-tag="{{tagsList2[1]}}">
-        <image class="skeleton-rect" src="{{tagsImg[7]}}"></image>
-        <view><text class="skeleton-rect">{{tagsList2[1].title}}</text></view>
-      </navigator> -->
     </view>
     <view class="pannel-line"></view>
     <view class="recently-collect-title">
@@ -55,8 +47,8 @@
     </view>
     <view class="recently-collect-content">
       <view wx:for="{{dataMap}}" wx:for-item="dataMapItem" wx:key="index" class="{{index === 0 ? 'left' : 'right'}}">
-        <view class="content-item" wx:for="{{dataMapItem}}" wx:key="index">
-          <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-id="{{item.id}}">
+        <view class="content-item" wx:for="{{dataMapItem}}" wx:for-index="i" wx:key="i">
+          <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-item="{{item}}">
             <view class="img">
               <view class="mark">
                 <text wx:if="{{item.is_presale}}" class="is-presale">预</text>

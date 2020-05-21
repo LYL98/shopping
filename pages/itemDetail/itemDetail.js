@@ -1,14 +1,13 @@
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
-import { Http } from './../../utils/index';
+import { Http, Config } from './../../utils/index';
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    tencentPath: config.tencentPath,
+    tencentPath: Config.tencentPath,
     id: 0,
     tempOneImg: '', //第一张图片，临时
     detail: {},
@@ -67,10 +66,6 @@ Page({
       }
       //==============================
 
-      app.globalData.gio('setPage', {
-        storeID: address.id
-      });
-
       that.setData({ 
         id: id,
         tempOneImg: tempOneImg,
@@ -92,127 +87,95 @@ Page({
   //获取商品详情
   getItemDetail() {
     let that = this;
-    let { id, address, tencentPath } = that.data;
+    let { id, address } = that.data;
     wx.showNavigationBarLoading();
-    wx.request({
-      url: config.api.itemDetail,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        id: id,
-        store_id: address.id || ''
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          let vidoes= [];
-          if(rd.content){
-            let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] : '';
-            vidoes = m ? m.match(/https:[\'\"]?([^\'\"]*)[\'\"]?/ig) : [];
-            for(let i =0; i < vidoes.length; i++) {
-              vidoes[i] = vidoes[i].replace(/"/g,'')
-            }
-            rd.content = rd.content.replace(/<img/g, '<img style="width:100%;height:auto" ');
-          }
-          
-          that.setData({
-            detail: rd,
-            vidoes: vidoes
-          });
-          that.unifiedDescription(); //统一描述
-        } else {
-          app.requestResultCode(res); //处理异常
+    Http.get(Config.api.itemDetail, {
+      id: id,
+      store_id: address.id || ''
+    }).then(res => {
+      wx.hideNavigationBarLoading();
+      let rd = res.data;
+      let vidoes= [];
+      if(rd.content){
+        let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] : '';
+        vidoes = m ? m.match(/https:[\'\"]?([^\'\"]*)[\'\"]?/ig) : [];
+        for(let i =0; i < vidoes.length; i++) {
+          vidoes[i] = vidoes[i].replace(/"/g,'')
         }
-      },
-      complete: function(res) {
-        wx.hideNavigationBarLoading();
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.getItemDetail();
-        });
+        rd.content = rd.content.replace(/<img/g, '<img style="width:100%;height:auto" ');
       }
+      
+      that.setData({
+        detail: rd,
+        vidoes: vidoes
+      });
+      that.unifiedDescription(); //统一描述
+      /*===== 埋点 start ======*/
+      let tags = '';
+      rd.tags.forEach(item => {
+        tags = `${tags}${tags ? ',' : ''}[${item}]`;
+      });
+      app.gioActionRecordAdd('productDetailPageView', {
+        productID_var: rd.id, //商品ID
+        productName: rd.title, //商品名称
+        primarySort_var: `一级类目ID${rd.display_class_id || ''}`, //一级类目
+        productArea_var: tags, //商品专区
+        productSpec_var: rd.item_spec, //商品规格
+      });
+      /*===== 埋点 end ======*/
+    }).catch(error => {
+      wx.hideNavigationBarLoading();
     });
   },
   //全场活动
   promotion(){
     let that = this;
-    wx.request({
-      url: config.api.promotion,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          that.setData({
-            promotionData: rd || {}
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function(res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.promotion();
-        });
-      }
+    Http.get(Config.api.promotion, {}).then(res => {
+      let rd = res.data;
+      that.setData({
+        promotionData: rd || {}
+      });
     });
   },
   //获取统一描述
   unifiedDescription(){
     let that = this;
     let { address } = that.data;
-    wx.request({
-      url: config.api.unifiedDescription,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        province_code: address.province_code
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          if(rd){
-            rd = rd.replace(/<img/g, '<img style="width:100%;height:auto" ');
-          }
-          that.setData({
-            description: rd
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function(res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.promotion();
-        });
+    Http.get(Config.api.unifiedDescription, {
+      province_code: address.province_code
+    }).then(res => {
+      let rd = res.data;
+      if(rd){
+        rd = rd.replace(/<img/g, '<img style="width:100%;height:auto" ');
       }
+      that.setData({
+        description: rd
+      });
     });
   },
   //收藏
   itemCollectionAdd(){
     let that = this;
-    let { id } = that.data;
-    Http.post(config.api.itemCollectionAdd, {id: id}, {throttle: false}).then(res => {
+    let { id, detail } = that.data;
+    Http.post(Config.api.itemCollectionAdd, {id: id}, {throttle: false}).then(res => {
       that.getItemDetail();
       wx.showToast({
         title: '已收藏',
         icon: 'none'
       });
+      /*===== 埋点 start ======*/
+      app.gioActionRecordAdd('collectClick', {
+        productID_var: detail.id, //商品ID
+        productName: detail.title, //商品名称
+      });
+      /*===== 埋点 end ======*/
     });
   },
   //取消收藏
   itemCollectionCancel() {
     let that = this;
     let { id } = that.data;
-    Http.post(config.api.itemCollectionCancel, {id: id}, {throttle: false}).then(res => {
+    Http.post(Config.api.itemCollectionCancel, {id: id}, {throttle: false}).then(res => {
       that.getItemDetail();
       wx.showToast({
         title: '已取消收藏',

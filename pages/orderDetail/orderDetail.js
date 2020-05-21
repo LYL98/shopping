@@ -154,9 +154,11 @@ Page({
       });
     });
   },
-
   //页面卸载时触发
   onUnload() {
+    if(this.countDownTime){
+      clearInterval(this.countDownTime);
+    }
     app.shoppingCartNum();//计算购物车数量并显示角标
   },
   showArrow(e) {
@@ -282,7 +284,7 @@ Page({
     //结束时间
     let endDate = new Date(cTime.replace(/-/g, '/'));
     let d = Util.returnDateStr(new Date(endDate.getTime() + 10000 * 60)); //创建10分钟后
-    let time = setInterval(()=>{
+    this.countDownTime = setInterval(()=>{
       let data = Util.returnSurplusNum(d); //返回剩余时间
       let minutes = data.minutes; //分
       let seconds = data.seconds; //秒
@@ -290,7 +292,7 @@ Page({
         that.setData({
           countDownStr: '即将自动取消订单'
         });
-        clearInterval(time);
+        clearInterval(this.countDownTime);
         that.getOrderDetail(); //重新获取详情
       }else{
         that.setData({
@@ -298,7 +300,7 @@ Page({
         });
       }
       if (minutes === 0 && seconds === 0){
-        clearInterval(time);
+        clearInterval(this.countDownTime);
         that.getOrderDetail(); //重新获取详情
       }
     }, 1000);
@@ -345,10 +347,28 @@ Page({
           isShowPay: false
         });
         if (res === 'success') {
-          /*===== 埋点 start ======*/
-          app.actionRecordAdd({
-            action: Constant.ACTION_RECORD.ORDER_PAY_SUBMIT,
-            content: { store_id: detail.store_id, order_id: id }
+           /*===== 埋点 start ======*/
+           app.gioActionRecordAdd('payOrderSuccess', {
+            orderID_var: detail.id, //订单ID
+            orderType_var: detail.is_presale ? '预售订单' : '正常订单', //订单类型
+            productAmount_var: Util.returnPrice(detail.item_total_price), //商品金额
+            quantity_var: detail.item_num, //商品数量
+            payAmount_var: Util.returnPrice(detail.order_price), //实际支付金额
+            coupon_var: `-￥${Util.returnPrice(detail.coupon_reduction)}`, //优惠券名称
+            couponType_var: `-￥${Util.returnPrice(detail.coupon_reduction)}`, //优惠券类型
+            promoteRule_var: `-￥${Util.returnPrice(detail.coupon_reduction)}`, //促销规则
+          });
+          detail.items.forEach(item => {
+            app.gioActionRecordAdd('payProductSuccess', {
+              orderID_var: detail.id, //订单ID
+              productID_var: item.id, //商品ID
+              productName: item.title, //商品名称
+              primarySort_var: item.item_display_class, //一级类目
+              productArea_var: '订单支付', //商品专区
+              productSpec_var: item.item_attrs[0], //商品规格
+              productAmount_var: Util.returnPrice(item.item_price_sale * item.count_real), //商品金额
+              quantity_var: item.count_real, //商品数量
+            });
           });
           /*===== 埋点 end ======*/
           wx.navigateTo({
