@@ -415,7 +415,7 @@ Page({
     if(item.url.indexOf('itemDetail') >= 0){
       productName = `商品ID${tab[4]}`;
     }else if(item.url.indexOf('itemLabel') >= 0){
-      tab = item.url.match(/(?<=\=).+(?=[^.]*)/g);
+      tab = item.url.match(/([^\=]+)$/g);
       productName = `跳转商品标签-标签-${tab[0]}`;
     }else if(item.url.indexOf('itemList') >= 0){
       productName = `跳转商品列表-分类-${tab[3]}`;
