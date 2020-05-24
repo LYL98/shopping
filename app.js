@@ -129,7 +129,7 @@ App({
         loginUserStoreTags: tags,
         loginUserRealname: loginUserInfo.realname,
 
-        memberId_ppl: loginUserInfo.id, //登录用户ID
+        memberId_ppl: rd.id, //登录用户ID（取门店id）
         storeArea_ppl: '', //门店面积
         storePosition_ppl: '', //门店位置
         ownerCharacter_ppl: '', //店主性格
@@ -418,11 +418,18 @@ App({
       'payProductSuccess': { type: 'track', data: data }, // 商品支付成功
       'collectClick': { type: 'track', data: data }, // 收藏按钮点击
       'tabbar': { type: 'track', data: data }, // 底部导航栏
+      'selectSort': { type: 'track', data: data }, // 商品排序
+
+      'searchWord_evar': { type: 'setEvar', data: data }, // 搜索效果评估(搜索词（转化变量）)
+      'firstBuyEntrance_evar': { type: 'setEvar', data: data }, // 核心购买转化(一级购买入口（转化变量）)
+      'secBuyEntrance_evar': { type: 'setEvar', data: data }, // 核心购买转化(二级购买大入口（转化变量）)
     };
-    if(events[event].type === ''){
-      gio(event, events[event].data);
+    if(events[event].type === 'track'){
+      gio('track', event, events[event].data);
+    }else if(events[event].type === 'setEvar'){
+      gio('setEvar', { [event]: events[event].data });
     }else{
-      gio(events[event].type, event, events[event].data);
+      gio(event, events[event].data);
     }
   },
   //贝塞尔曲线

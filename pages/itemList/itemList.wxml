@@ -2,7 +2,7 @@
 <skeleton selector="skeleton" bgcolor="transparent" wx:if="{{showSkeleton}}"></skeleton>
 
 <!--搜索组件start-->
-<search style="position: fixed; top: 0; left: 0; right: 0; z-index: 2;"/>
+<search style="position: fixed; top: 0; left: 0; right: 0; z-index: 2;" bind:tap="clickSearch"/>
 
 <scroll-view class="{{changedown?'scroll-view':'scroll-view-down' }}" scroll-x="{{changedown}}" scroll-left="{{x}}" scroll-with-animation="{{true}}">
   <view class="tags-view-item {{activeIndex === index && 'tagActive'}}" wx:for="{{tagsList}}" wx:key='index' bindtap="clickTag" data-index="{{index}}" data-tagid="{{item.id}}" >

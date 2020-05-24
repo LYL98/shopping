@@ -104,6 +104,13 @@ Page({
     app.gioActionRecordAdd('tabbar', { tabType_var: '我的' });
     /*===== 埋点 end ======*/
   },
+  //点击我的收藏
+  clickMyCollect(){
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '我的');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '我的收藏');
+    /*===== 埋点 end ======*/
+  },
   //获取是否有售后信息
   afterMsg: function() {
     let that = this;

@@ -362,8 +362,6 @@ Page({
         dataItem: []
       });
     }
-    /*===== 埋点 start ======*/
-    /*===== 埋点 end ======*/
   },
   //邮费优惠
   activity() {
@@ -413,6 +411,8 @@ Page({
       });
     } else {
       /*===== 埋点 start ======*/
+      app.gioActionRecordAdd('firstBuyEntrance_evar', '购物车');
+      app.gioActionRecordAdd('secBuyEntrance_evar', '-');
       /*===== 埋点 end ======*/
       wx.navigateTo({
         url: '/pages/orderAdd/orderAdd',
