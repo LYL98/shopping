@@ -147,6 +147,13 @@ Page({
       }
     });
   },
+  //点击搜索
+  clickSearch(){
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '搜索');
+    /*===== 埋点 end ======*/
+  },
   //显示选择收货地址
   storeShowHide(e){
     this.setData({
@@ -245,6 +252,28 @@ Page({
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;
+          /*===== 埋点 start ======*/
+          for(let i = 0; i < rd.length; i++){
+            let item = rd[i];
+            let productName = '', tab = item.url.match(/\/\/|(\w+)/g);
+            if(item.url.indexOf('itemDetail') >= 0){
+              productName = `商品ID${tab[4]}`;
+            }else if(item.url.indexOf('itemLabel') >= 0){
+              tab = item.url.match(/([^\=]+)$/g);
+              productName = `跳转商品标签-标签-${tab[0]}`;
+            }else if(item.url.indexOf('itemList') >= 0){
+              productName = `跳转商品列表-分类-${tab[3]}`;
+            }else{
+              productName = '没有链接';
+            }
+            app.gioActionRecordAdd('positionView', {
+              moduleTitle_var: '首页banner', //楼层
+              position_var: i + 1, //坑位
+              positonName_var: `bannerID${item.id}`, //流量位名称(暂取banner_id)
+              productName: productName, //商品名称
+            });
+          }
+          /*===== 埋点 end ======*/
           that.setData({
             bannerList: rd
           });
@@ -280,7 +309,7 @@ Page({
           
           if(rd.length > 9) rd.length = 9; //限制最长8个,但是第一个不显示
           let rdTemp = [];
-          rd.forEach(item => {
+          rd.forEach((item, index) => {
             if(item.image){
               rdTemp.push({
                 ...item,
@@ -289,9 +318,19 @@ Page({
             }else{
               rdTemp.push(item);
             }
+            /*===== 埋点 start ======*/
+            if(index > 0){
+              app.gioActionRecordAdd('positionView', {
+                moduleTitle_var: 'icon区', //楼层
+                position_var: index + 1, //坑位
+                positonName_var: item.title, //流量位名称
+                productName: `跳转商品列表-展示分类-${item.title}`, //商品名称
+              });
+            }
+            /*===== 埋点 end ======*/
           });
           //默认选择运营专区第一个
-          query.item_tag_id = rdTemp[0].id
+          query.item_tag_id = rdTemp[0].id;
           that.setData({
             tagsList: rdTemp,
             query:query
@@ -332,6 +371,16 @@ Page({
       data: query,
       success: function(res) {
         if (res.statusCode == 200 && res.data.code == 0) {
+          /*===== 埋点 start ======*/
+          let dotFun = (item, index) => {
+            app.gioActionRecordAdd('positionView', {
+              moduleTitle_var: '今日主推', //楼层
+              position_var: index + 1, //坑位
+              positonName_var: item.title, //流量位名称
+              productName: item.title, //商品名称
+            });
+          }
+          /*===== 埋点 end ======*/
           let rd = res.data.data;
           if (query.page === 1) {
             dataMap = [[], []];
@@ -341,6 +390,7 @@ Page({
               }else{
                 dataMap[1].push(rd.items[i]);
               }
+              dotFun(rd.items[i], i); //埋点
             }
             that.setData({
               dataItem: rd,
@@ -354,6 +404,7 @@ Page({
               } else {
                 dataMap[1] = dataMap[1].concat(rd.items[i]);
               }
+              dotFun(rd.items[i], i); //埋点
             }
             that.setData({
               dataItem: dataItem,
@@ -428,6 +479,9 @@ Page({
       positonName_var: `bannerID${item.id}`, //流量位名称(暂取banner_id)
       productName: productName, //商品名称
     });
+
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '首页banner');
     /*===== 埋点 end ======*/
   },
   //点击tags
@@ -443,12 +497,15 @@ Page({
       positonName_var: item.title, //流量位名称
       productName: `跳转商品列表-展示分类-${item.title}`, //商品名称
     });
+
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', 'icon');
     /*===== 埋点 end ======*/
   },
   //点击商品
   clickItem(e){
     let item = e.currentTarget.dataset.item;
-     /*===== 埋点 start ======*/
+    /*===== 埋点 start ======*/
     let index = 0;
     let { dataItem } = this.data;
     for(let i = 0; i < dataItem.items.length; i++){
@@ -463,6 +520,8 @@ Page({
       positonName_var: item.title, //流量位名称
       productName: item.title, //商品名称
     });
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '今日主推');
     /*===== 埋点 end ======*/
   },
   //点击页面底下的tab

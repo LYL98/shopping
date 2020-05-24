@@ -134,6 +134,7 @@ Page({
             ifSearchResult_var: rd.length > 0 ? '是' : '否', //搜索词是否有结果
             searchSource_var: that.searchSource_var //搜索词来源
           });
+          app.gioActionRecordAdd('searchWord_evar', query.condition);
           /*===== 埋点 end ======*/
         } else {
           dataItem.items = dataItem.items.concat(rd.items);
