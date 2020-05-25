@@ -9,7 +9,7 @@
     <!--选择门店组件-->
     <view class="skeleton-rect"><selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="storeShowHide"/></view>
     <!--搜索组件-->
-    <view class="skeleton-rect"><search /></view>
+    <view class="skeleton-rect"><search bind:tap="clickSearch"/></view>
     
     <view class="skeleton-rect" style="position:relative; background: #f3f4f6;">
       <swiper autoplay style="{{'height:33.33vw; width:100%;'}}" class="bg-img-container-banner" bindchange="swiperChange">

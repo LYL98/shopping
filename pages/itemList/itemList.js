@@ -102,12 +102,18 @@ Page({
           }
         });
       }
-
-      
     });
     if(this.data.urlJumpId) {
       this.selectCategory(this.data.urlJumpId, 'auto_select')
     }
+  },
+
+  //点击搜索
+  clickSearch(){
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '商品');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '搜索');
+    /*===== 埋点 end ======*/
   },
 
   //点击页面底下的tab
@@ -127,7 +133,7 @@ Page({
       delete app.globalData.urlJump;
       param = e.target.dataset.category;
     }
-    let { query } = this.data;
+    let { query, categoryList } = this.data;
 
     query.display_class_id = param;
     query.page = 1;
@@ -141,6 +147,12 @@ Page({
       scrollTop: 0,
       duration: 0
     });
+
+    /*===== 埋点 start ======*/
+    let con = categoryList.filter(item => item.id === param);
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '商品');
+    app.gioActionRecordAdd('secBuyEntrance_evar', con.length > 0 ? con[0].title : '全部');
+    /*===== 埋点 end ======*/
   },
 
   //点击商品
@@ -164,6 +176,17 @@ Page({
       scrollTop: 0,
       duration: 0
     });
+
+    /*===== 埋点 start ======*/
+    let sorts = {
+      other: '综合',
+      price: '单价',
+      count: '销售'
+    };
+    app.gioActionRecordAdd('selectSort', {
+      sortType_var: sorts[query.sort]
+    });
+    /*===== 埋点 end ======*/
 
   },
 
