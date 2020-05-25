@@ -334,11 +334,24 @@ Page({
   //点击下拉按钮
   clickdown(){
     let that = this
-    
-    // console.log(that.data.changedown);
-    
     this.setData({
       changedown: !that.data.changedown
+    })
+    
+    if(!that.data.changedown) return
+    let screenWidth = wx.getSystemInfoSync().windowWidth;
+    let itemWidth = screenWidth/4;
+    let index = that.data.activeIndex
+    const { tagsList } = that.data;
+    let scrollX = itemWidth * index - itemWidth*2;
+    let maxScrollX = (tagsList.length+1) * itemWidth;
+    if(scrollX<0){
+      scrollX = 0;
+    } else if (scrollX >= maxScrollX){
+      scrollX = maxScrollX;
+    }
+    this.setData({
+      x: scrollX
     })
   },
   //获取商品运营专区
