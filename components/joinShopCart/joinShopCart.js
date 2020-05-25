@@ -319,6 +319,16 @@ Component({
       app.shoppingCartNum();//计算购物车数量并显示角标
 
       this.triggerEvent('callback', tempData);//触发回调事件
+
+      /*===== 埋点 start ======*/
+      app.gioActionRecordAdd('addToCart', {
+        productID_var: itemData.id, //商品ID
+        productName: itemData.title, //商品名称
+        primarySort_var: `一级类目ID${itemData.display_class_id || '0'}`, //一级类目
+        productAmount_var: Util.returnPrice(itemData.price_sale * num), //商品金额
+        quantity_var: num, //商品数量
+      });
+      /*===== 埋点 end ======*/
     },
 
     /**

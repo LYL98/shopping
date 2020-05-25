@@ -2,14 +2,14 @@
 <skeleton selector="skeleton" bgcolor="transparent" wx:if="{{showSkeleton}}"></skeleton>
 
 <!--搜索组件start-->
-<search style="position: fixed; top: 0; left: 0; right: 0; z-index: 2;"/>
+<search style="position: fixed; top: 0; left: 0; right: 0; z-index: 2;" bind:tap="clickSearch"/>
 
-<scroll-view class="{{changedown?'scroll-view':'scroll-view-down' }}" scroll-x="{{changedown}}" scroll-left="{{x}}" scroll-with-animation="{{true}}">
+<scroll-view catchtouchmove="true" class="{{changedown?'scroll-view':'scroll-view-down' }}" scroll-x="{{changedown}}" scroll-left="{{x}}" scroll-with-animation="{{true}}">
   <view class="tags-view-item {{activeIndex === index && 'tagActive'}}" wx:for="{{tagsList}}" wx:key='index' bindtap="clickTag" data-index="{{index}}" data-tagid="{{item.id}}" >
         <text >{{item.title}}</text>
     </view>
 <!-- 遮罩层 -->
-<view class="tags-item" wx:if="{{!changedown}}" catchtouchmove="true"></view>
+<view class="tags-item" wx:if="{{!changedown}}" catchtouchmove="true" bindtap="clickdown"></view>
 </scroll-view>
 <!-- 下拉按钮 -->
   <view class="down-img" bindtap="clickdown"><image src="{{downSrc}}"></image></view>
@@ -48,7 +48,7 @@
 </view>
 <view class="item-view skeleton">
   <view class="item" wx:for="{{dataItem.items}}" wx:key="index">
-    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-id="{{item.id}}">
+    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem">
       <view class="img">
         <view class="mark">
           <text wx:if="{{item.is_presale}}" class="is-presale">预</text>

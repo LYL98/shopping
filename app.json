@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/browser/browser",
     "pages/order/order",
     "pages/my/my",
     "pages/about/about",
@@ -56,7 +57,7 @@
     "navigationBarTextStyle": "black"
   },
   "navigateToMiniProgramAppIdList": [
-    "wxd71d35efcb08acc8"
+    "wx1653f76966571193"
   ],
   "tabBar": {
     "color": "#A5A5A5",

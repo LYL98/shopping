@@ -1,9 +1,8 @@
 //app.js
-import { Config, Http, Constant } from './utils/index';
+import { Config, Http } from './utils/index';
 
-var gio = require("utils/gio-minp/index.js").default;
+let gio = require("utils/gio-minp/index.js").default;
 gio('setConfig', Config.gioConfig);
-
 
 /**
  * 初始化删除数组；删除数组重组数组
@@ -38,11 +37,10 @@ App({
   globalData: {
     loginUserInfo: {}, //系统登录信息
     system: null,
-    gio: gio,
     gioIsSetUserId: false,
     gioIsSetUser: false,
-    indexTagId: null,//首页点击运营专区时的id
-    indexTagIndex:null//首页点击运营专区时的index
+    indexTagId: null, //首页点击运营专区时的id
+    indexTagIndex:null //首页点击运营专区时的index
   },
 
   /**
@@ -75,7 +73,7 @@ App({
             that.updateLoginInfo(rd); //系统登录信息
             //gio设置userid
             if(!that.globalData.gioIsSetUserId){
-              gio('setUserId', rd.id);
+              that.gioActionRecordAdd('setUserId', rd.id);
               that.globalData.gioIsSetUserId = true;
             }
             if(!that.globalData.gioIsSetUser){
@@ -113,6 +111,7 @@ App({
   //gio设置用户变量
   gioSetUser(storeId){
     let that = this;
+    let { loginUserInfo } = that.globalData;
     Http.get(Config.api.getStoreTags, {
       id: storeId
     }, {
@@ -123,12 +122,20 @@ App({
       rd.tags.forEach(item => {
         tags = `${tags}${tags ? ',' : ''}[${item}]`;
       });
-      gio('setUser', {
-        id: that.globalData.loginUserInfo.id,
+      that.gioActionRecordAdd('setUser', {
+        id: loginUserInfo.id,
         loginUserStoreId: rd.id,
         loginUserStoreTitle: rd.title,
         loginUserStoreTags: tags,
-        loginUserRealname: that.globalData.loginUserInfo.realname
+        loginUserRealname: loginUserInfo.realname,
+
+        memberId_ppl: rd.id, //登录用户ID（取门店id）
+        storeArea_ppl: '', //门店面积
+        storePosition_ppl: '', //门店位置
+        ownerCharacter_ppl: '', //店主性格
+        ownerStyle_ppl: '', //店主风格
+        customerPriceType_ppl: '', //客户价格类型
+        buyTime_ppl: '' //购买次数
       });
       that.globalData.gioIsSetUser = true;
     });
@@ -285,10 +292,6 @@ App({
   onLaunch() {
     this.screenSize();//获取屏宽高
     this.getBrand();
-    //埋点
-    this.actionRecordAdd({
-      action: Constant.ACTION_RECORD.LOGIN
-    });
   },
 
   //全局显示时
@@ -368,20 +371,6 @@ App({
         }
     });
   },
-  //获取系统信息
-  getSystemInfo(){
-    const sysInfo = wx.getSystemInfoSync();
-    const screenWidth = sysInfo.screenWidth;
-    let factor = screenWidth / 750;       // 获取比例
-    const toPx = (rpx) => Math.round(rpx * factor);   // rpx转px
-    const toRpx = (px) => Math.round(px / factor);    // px转rpx
-    return {
-      ...sysInfo,
-      factor: factor,
-      toPx: toPx,
-      toRpx: toRpx
-    }
-  },
   //获取页面（页面路由）
   getPage(route){
     if(!route) return null;
@@ -407,25 +396,40 @@ App({
     }
     return address;
   },
-  //埋点请求数据（map数据）
-  actionRecordAdd(data){
-    let member = this.globalData.loginUserInfo;
-    let memberSto = wx.getStorageSync('loginUserInfo');
-    let sys = this.getSystemInfo();
-    if((member && member.id) || (memberSto && memberSto.id)){
-      //系统 收集
-      Http.post(Config.api.actionRecordAdd, {
-        member_id: member.id || memberSto.id || '',
-        phone_model: `机型：${sys.model}；系统：${sys.system}；微信版本：${sys.version}`,
-        ...data,
-      }, { throttle: false, handleError: false });
+  //gio数据埋点(event事件，data数据)
+  gioActionRecordAdd(event, data){
+    let events = {
+      'setUserId': { type: '', data: data },
+      'setUser': { type: '', data: data },
+      'setPage': { type: '', data: data },
+      
+      'registSuccess': { type: 'track', data: data }, // 注册成功
+      'positionClick': { type: 'track', data: data }, // 流量位点击
+      'positionView': { type: 'track', data: data }, // 流量位曝光
+      'searchSuccess': { type: 'track', data: data }, // 搜索成功
+      'searchResultClick': { type: 'track', data: data }, // 搜索结果点击
+      'productDetailPageView': { type: 'track', data: data }, // 浏览商品详情页
+      'addToCart': { type: 'track', data: data }, // 加入购物车
+      'createOrder': { type: 'track', data: data }, // 生成订单
+      'createProductOrder': { type: 'track', data: data }, // 生成商品订单
+      'sumitOrder': { type: 'track', data: data }, // 提交订单
+      'sumitProductOrder': { type: 'track', data: data }, // 提交商品订单
+      'payOrderSuccess': { type: 'track', data: data }, // 订单支付成功
+      'payProductSuccess': { type: 'track', data: data }, // 商品支付成功
+      'collectClick': { type: 'track', data: data }, // 收藏按钮点击
+      'tabbar': { type: 'track', data: data }, // 底部导航栏
+      'selectSort': { type: 'track', data: data }, // 商品排序
 
-      //gio 收集
-      /*gio('track', data.action, { 
-        member_id: member.id || memberSto.id || '',
-        phone_model: `机型：${sys.model}；系统：${sys.system}；微信版本：${sys.version}`,
-        ...data,
-      });*/
+      'searchWord_evar': { type: 'setEvar', data: data }, // 搜索效果评估(搜索词（转化变量）)
+      'firstBuyEntrance_evar': { type: 'setEvar', data: data }, // 核心购买转化(一级购买入口（转化变量）)
+      'secBuyEntrance_evar': { type: 'setEvar', data: data }, // 核心购买转化(二级购买大入口（转化变量）)
+    };
+    if(events[event].type === 'track'){
+      gio('track', event, events[event].data);
+    }else if(events[event].type === 'setEvar'){
+      gio('setEvar', { [event]: events[event].data });
+    }else{
+      gio(event, events[event].data);
     }
   },
   //贝塞尔曲线

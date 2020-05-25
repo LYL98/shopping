@@ -90,10 +90,8 @@ Page({
     this.address = app.getSelectStore(); //当前选择地址
     //判断登录
     app.signIsLogin((res) => {
-      let sys = app.getSystemInfo();
       this.setData({
-        loginInfo: res,
-        sys: sys
+        loginInfo: res
       });
       this.profile();//获取用户信息
       this.afterMsg();
@@ -103,10 +101,14 @@ Page({
   //点击页面底下的tab
   onTabItemTap(e){
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.TAB_MY,
-      content: { store_id: this.address.id }
-    });
+    app.gioActionRecordAdd('tabbar', { tabType_var: '我的' });
+    /*===== 埋点 end ======*/
+  },
+  //点击我的收藏
+  clickMyCollect(){
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '我的');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '我的收藏');
     /*===== 埋点 end ======*/
   },
   //获取是否有售后信息
@@ -232,7 +234,7 @@ Page({
   openMiniApp(){
     wx.navigateToMiniProgram({
       appId: Config.weiXinAppIds[0],
-      path: '/pages/head/head?access_token=' + this.data.loginInfo.access_token,
+      path: '/pages/index/index?access_token=' + this.data.loginInfo.access_token,
       envVersion: 'trial'
     });
   }

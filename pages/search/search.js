@@ -1,7 +1,7 @@
 // pages/search/search.js
 //获取应用实例
 const app = getApp();
-import { Constant, Config } from './../../utils/index';
+import { Constant, Config, Http } from './../../utils/index';
 
 Page({
 
@@ -77,6 +77,7 @@ Page({
   //点击搜索历史
   labelEvent(e) {
     let { key } = e.target.dataset;
+    this.searchSource_var = '历史搜索词'; //埋点用
     this.setSearchData(key);
   },
   //完成
@@ -91,6 +92,7 @@ Page({
       list.length = 10
     }
     wx.setStorageSync('searchData', list);
+    this.searchSource_var = '手动搜索词'; //埋点用
     this.setSearchData(value);
   },
   //设置搜索数据
@@ -111,11 +113,6 @@ Page({
         });
       }else{
         this.itemQuery();
-        app.globalData.gio('track', 'searchSuccess', { 
-          searchKeywords: condition, 
-          searchEntrance: '分类-搜索', 
-          storeID: query.store_id
-        });
       }
     });
   },
@@ -123,54 +120,45 @@ Page({
   itemQuery() {
     let that = this;
     let { query, dataItem } = that.data;
-    this.setData({ loading: true });
-    wx.request({
-      url: Config.api.itemQuery,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: query,
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          if (query.page === 1) {
-            that.setData({
-              dataItem: rd
-            });
-          } else {
-            dataItem.items = dataItem.items.concat(rd.items);
-            that.setData({
-              dataItem: dataItem
-            });
-          }
-          /*===== 埋点 start ======*/
-          app.actionRecordAdd({
-            action: Constant.ACTION_RECORD.SEARCH,
-            content: { store_id: query.store_id, condition: query.condition }
+    that.setData({ loading: true }, ()=>{
+      Http.get(Config.api.itemQuery, query).then(res => {
+        let rd = res.data;
+        if (query.page === 1) {
+          that.setData({
+            dataItem: rd,
+            loading: false
           });
+          /*===== 埋点 start ======*/
+          app.gioActionRecordAdd('searchSuccess', { 
+            searchWord_var: query.condition, //搜索词
+            ifSearchResult_var: rd.length > 0 ? '是' : '否', //搜索词是否有结果
+            searchSource_var: that.searchSource_var //搜索词来源
+          });
+          app.gioActionRecordAdd('searchWord_evar', query.condition);
           /*===== 埋点 end ======*/
         } else {
-          app.requestResultCode(res); //处理异常
+          dataItem.items = dataItem.items.concat(rd.items);
+          that.setData({
+            dataItem: dataItem,
+            loading: false
+          });
         }
-      },
-      complete: function (res) {
+      }).catch(error => {
         that.setData({ loading: false });
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.itemQuery();
-        });
-      }
+      });
     });
   },
 
   //点击商品
   clickItem(e){
-    let id = e.currentTarget.dataset.id;
+    let item = e.currentTarget.dataset.item;
+    let { query } = this.data;
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.ITEM_DETAIL_SEARCH,
-      content: { item_id: id, store_id: this.data.query.store_id }
+    app.gioActionRecordAdd('searchResultClick', { 
+      searchWord_var: query.condition, //搜索词
+      searchSource_var: this.searchSource_var, //搜索词来源
+      productID_var: item.id, //商品ID
+      productName: item.title, //商品ID
     });
     /*===== 埋点 end ======*/
   },

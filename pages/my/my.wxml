@@ -66,7 +66,7 @@
               <image src="{{optionSrc[1]}}"></image>
               <text>账号管理</text>
             </navigator>
-             <navigator class="item" url="/pages/itemLabel/itemLabel?tag=收藏商品">
+             <navigator class="item" url="/pages/itemLabel/itemLabel?tag=收藏商品" bind:tap="clickMyCollect">
               <image src="{{optionSrc[8]}}"></image>
               <text>我的收藏</text>
             </navigator>

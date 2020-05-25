@@ -32,16 +32,20 @@ Component({
     }
   },
 
+
   pageLifetimes: {
     // 页面被展示
     show() {
-      let ad = app.getSelectStore(); //当前选择的地址
-      let { address } = this.data;
-      if(ad.id !== address.id){
-        this.setData({
-          address: ad
-        });
-      }
+      // show时更新门店列表，防止后台更改子账号门店，小程序端存在缓存
+      this.merchantStoreList(true); //获取获取地址列表
+
+      // let ad = app.getSelectStore(); //当前选择的地址
+      // let { address } = this.data;
+      // if(ad.id !== address.id){
+      //   this.setData({
+      //     address: ad
+      //   });
+      // }
     },
   },
 
@@ -50,7 +54,7 @@ Component({
    */
   methods: {
     //获取地址列表
-    merchantStoreList() {
+    merchantStoreList(isNotCallback) {
       let that = this;
       wx.request({
         url: config.api.merchantStoreList,
@@ -69,12 +73,19 @@ Component({
             if (rd.length === 1){
               address = rd[0];
               wx.setStorageSync('addOrderSelectAddress', rd[0]);
+            } else if(rd.length === 0){
+              // 无地址列表，则清除本地缓存门店数据
+              address = {}
+              wx.removeStorageSync('addOrderSelectAddress')
             }
             //如果没有选择地址
             if(!address.id){
               that.showSelect(); //显示选择地址
             }else{
-              that.triggerEvent('callback', address);//触发回调事件
+              if(!isNotCallback) {
+                that.triggerEvent('callback', address);//触发回调事件
+              }
+              
             }
             
             that.setData({

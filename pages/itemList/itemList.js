@@ -102,21 +102,24 @@ Page({
           }
         });
       }
-
-      
     });
     if(this.data.urlJumpId) {
       this.selectCategory(this.data.urlJumpId, 'auto_select')
     }
   },
 
+  //点击搜索
+  clickSearch(){
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '商品');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '搜索');
+    /*===== 埋点 end ======*/
+  },
+
   //点击页面底下的tab
   onTabItemTap(e){
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.TAB_ITEM,
-      content: { store_id: this.address.id }
-    });
+    app.gioActionRecordAdd('tabbar', { tabType_var: '商品' });
     /*===== 埋点 end ======*/
   },
 
@@ -130,7 +133,7 @@ Page({
       delete app.globalData.urlJump;
       param = e.target.dataset.category;
     }
-    let { query } = this.data;
+    let { query, categoryList } = this.data;
 
     query.display_class_id = param;
     query.page = 1;
@@ -146,32 +149,14 @@ Page({
     });
 
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.ITEM_CLASS,
-      content: { display_class_id: param, store_id: query.store_id }
-    });
+    let con = categoryList.filter(item => item.id === param);
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '商品');
+    app.gioActionRecordAdd('secBuyEntrance_evar', con.length > 0 ? con[0].title : '全部');
     /*===== 埋点 end ======*/
-
-    let keyWords = this.data.categoryList.filter(item => item.id === param);
-    if(keyWords.length > 0){
-      app.globalData.gio('track', 'searchSuccess', { 
-        searchKeywords: keyWords[0].title, 
-        searchEntrance: '分类-搜索', 
-        storeID: query.store_id
-      });
-    }
   },
 
   //点击商品
   clickItem(e){
-    let id = e.currentTarget.dataset.id;
-    /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.ITEM_DETAIL_LIST,
-      content: { item_id: id, store_id: this.data.query.store_id }
-    });
-    /*===== 埋点 end ======*/
-
     this.data.isDetail = true
   },
 
@@ -191,6 +176,17 @@ Page({
       scrollTop: 0,
       duration: 0
     });
+
+    /*===== 埋点 start ======*/
+    let sorts = {
+      other: '综合',
+      price: '单价',
+      count: '销售'
+    };
+    app.gioActionRecordAdd('selectSort', {
+      sortType_var: sorts[query.sort]
+    });
+    /*===== 埋点 end ======*/
 
   },
 
@@ -338,11 +334,24 @@ Page({
   //点击下拉按钮
   clickdown(){
     let that = this
-    
-    // console.log(that.data.changedown);
-    
     this.setData({
       changedown: !that.data.changedown
+    })
+    
+    if(!that.data.changedown) return
+    let screenWidth = wx.getSystemInfoSync().windowWidth;
+    let itemWidth = screenWidth/4;
+    let index = that.data.activeIndex
+    const { tagsList } = that.data;
+    let scrollX = itemWidth * index - itemWidth*2;
+    let maxScrollX = (tagsList.length+1) * itemWidth;
+    if(scrollX<0){
+      scrollX = 0;
+    } else if (scrollX >= maxScrollX){
+      scrollX = maxScrollX;
+    }
+    this.setData({
+      x: scrollX
     })
   },
   //获取商品运营专区

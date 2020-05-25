@@ -49,10 +49,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.address = app.getSelectStore(); //当前选择地址
-    this.relatedKey = Util.getUuid(); //生成uuid
-    wx.setStorageSync('actionRecordShopCartId', this.relatedKey); //生成供埋点系列用
-    
+    this.address = app.getSelectStore(); //当前选择地址    
     //判断登录
     app.signIsLogin(() => {
       this.activity();
@@ -64,10 +61,7 @@ Page({
   //点击页面底下的tab
   onTabItemTap(e) {
     /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.TAB_SHOP_CART,
-      content: { store_id: this.address.id }
-    });
+    app.gioActionRecordAdd('tabbar', { tabType_var: '购物车' });
     /*===== 埋点 end ======*/
   },
   //获取工作时间
@@ -326,8 +320,6 @@ Page({
 
       wx.showNavigationBarLoading();
       that.setData({ loading: true }, ()=>{
-        let ids_temp = ids.filter((item, index) => index === 0 || index < 3);
-        console.log(ids_temp, ids);
         Http.post(Config.api.itemCartQuery, {
           ids: ids,
           store_id: this.address.id || ''
@@ -370,13 +362,6 @@ Page({
         dataItem: []
       });
     }
-    /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.SHOP_CART,
-      content: { store_id: this.address.id, item: item },
-      related_key: this.relatedKey
-    });
-    /*===== 埋点 end ======*/
   },
   //邮费优惠
   activity() {
@@ -426,11 +411,8 @@ Page({
       });
     } else {
       /*===== 埋点 start ======*/
-      app.actionRecordAdd({
-        action: Constant.ACTION_RECORD.SHOP_CART_CLEARING,
-        content: { store_id: this.address.id },
-        related_key: this.relatedKey
-      });
+      app.gioActionRecordAdd('firstBuyEntrance_evar', '购物车');
+      app.gioActionRecordAdd('secBuyEntrance_evar', '-');
       /*===== 埋点 end ======*/
       wx.navigateTo({
         url: '/pages/orderAdd/orderAdd',

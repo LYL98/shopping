@@ -149,31 +149,10 @@ Page({
       scrollTop: 0,
       duration: 0
     });
-
-    /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.LABEL_TAG,
-      content: { tag_id: tag.id, tag_title: tag.title, store_id: query.store_id }
-    });
-    /*===== 埋点 end ======*/
-
-    app.globalData.gio('track', 'searchSuccess', { 
-      searchKeywords: tag.title, 
-      searchEntrance: '分类-搜索', 
-      storeID: query.store_id
-    });
-
   },
 
   //点击商品
   clickItem(e){
-    let id = e.currentTarget.dataset.id;
-    /*===== 埋点 start ======*/
-    app.actionRecordAdd({
-      action: Constant.ACTION_RECORD.ITEM_DETAIL_LABEL,
-      content: { item_id: id, store_id: this.data.query.store_id }
-    });
-    /*===== 埋点 end ======*/
   },
 
   //获取商品列表
