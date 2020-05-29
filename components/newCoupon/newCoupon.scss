@@ -1,0 +1,51 @@
+/* components/loading/loading.wxss */
+.coupon-body{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba($color: #000, $alpha: .5);
+  z-index: 10;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+.coupon{
+  width: 650rpx;
+  height: auto;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  >.title{
+    font-size: 42rpx;
+  }
+  >.coupon-list{
+    max-height: 420rpx;
+    overflow-y: auto;
+    margin-bottom: 20rpx;
+    >.item{
+      display: flex;
+      margin-bottom: 10rpx;
+      >.left{
+        text-align: center;
+        margin-right: 20rpx;
+      }
+      >.right{
+
+      }
+    }
+  }
+  >.btn{
+    
+  }
+  //animation: loadingRotate 1s linear infinite;
+}
+
+/* 旋转效果  */
+@keyframes loadingRotate{
+  0% {transform: rotate(0deg);}
+  50% {transform: rotate(180deg);}
+  100% {transform: rotate(360deg);}
+}

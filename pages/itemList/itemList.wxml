@@ -58,7 +58,9 @@
       </view>
       <view class="content">
         <view class="title skeleton-rect">
-           <view class="icon-tag" wx:if="{{item.tags[0]}}">{{item.tags[0]}}</view>
+          <view class="icon-tag" wx:for="{{item.tags}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+            {{t}}
+          </view>
           <text>{{item.title}}</text>
           </view>
         <view class="label">

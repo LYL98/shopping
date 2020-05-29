@@ -72,7 +72,15 @@ Component({
 				}).catch((error) => {
 					that.setData({ loading: false });
 					let er = error.data;
-					if(er && er.code === 201){
+					if (error.statusCode >= 500){
+						wx.showModal({
+							title: "提示",
+							content: "服务器异常，请重试",
+							confirmText: "我知道了",
+							confirmColor: "#00AE66",
+							showCancel: false
+						});
+					}else if(er && er.code === 201){
 						that.getError();
 					}else if(er && er.code === 211){
 						//没有用户，提示 很抱歉， 您还不是平台用户， 请联系客服电话19970193909【后续优化可打电话】
