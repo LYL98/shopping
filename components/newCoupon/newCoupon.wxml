@@ -1,0 +1,20 @@
+<view class="coupon-body" wx:if="{{isShow}}">
+  <view class="coupon">
+    <view class="title">新人优惠专享</view>
+    <view class="coupon-list">
+      <view class="item" wx:for="{{dataItems}}" wx:key="index">
+        <view class="left">
+          <view class="price">30元</view>
+          <view class="hint">满500元可用</view>
+        </view>
+        <view class="right">
+          <view class="">订单满减卷</view>
+          <view class="">有效期至2020-01-12 10:12:12</view>
+        </view>
+      </view>
+    </view>
+    <view class="btn">
+      <button class="btn1">好的</button>
+    </view>
+  </view>
+</view>

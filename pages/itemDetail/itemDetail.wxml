@@ -26,8 +26,8 @@
     </view>
   </view>
   <view class="item-title">
-    <view class="icon-tag" wx:if="{{detail.tags[0]}}">
-        {{detail.tags[0]}}
+    <view class="icon-tag" wx:for="{{detail.tags}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+      {{t}}
     </view>
     <text >{{detail.title}}</text> 
     </view>

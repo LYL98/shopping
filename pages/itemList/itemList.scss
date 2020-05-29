@@ -96,35 +96,6 @@
     }
   }
 }
-.content {
-  >.title{
-    // font-size: 30rpx;
-    margin-bottom: 14rpx;
-    // display: inline-block;
-
-    > text{
-      // height: 30rpx;
-      // margin-left: 4rpx;
-      font-size: 30rpx;
-      vertical-align: middle;
-    }
-    > .icon-tag{
-      vertical-align: middle;
-      box-sizing: border-box;
-      padding-left: 6rpx;
-      overflow: hidden;
-      font-size: 26rpx;
-      line-height: 34rpx;
-      color: #FF6571;
-      display: inline-block;
-      width: 71rpx;
-      height: 34rpx;
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAiCAYAAAANicT2AAAAAXNSR0IArs4c6QAAAlpJREFUaAXtmr9OG0EQxmfuEHJDkCgwhbGhoUiRJwgPAEpPkQohIdFRgJI8QRRBQRcpBemQeAB4geQJkJImUhL/KXCDZGgsS77JN7veOy+xxbV4d6W7m5kbF/PTN9670bG021sk8gVHjWZzbXKj8V1arW+o8XXJEn9Smr5NZhyMsvhggDB/LAlG017ScHiqcGZVMY7FNrrjFa+uXhPzjQuWuEpSIun5p4i8N0UwfypdDPM5S7MppX/wXBOZh+iQDarXm9Rq/UIZ60+U8hu5G6EoJ0VLHbFCYj55Agwh51Rzw1COpdGnSmWNlpd7UM9fhKpTIHWhmjXA6YehHEuhQoPBoRYN92wKGA2fjXIoJOVo4fe0sFBXgx4emjgvGrs49XC/wUtLPQ2FpByt9wWgHJjik+SzBryFmAOj8dDgaM2HIlKh+XltLW0xt/qjmPODhFOldnuXq9UudqWvOQnYJpYHwlQO4ZnnGOpJoZQTANLtfWjsMTBqhthWWvc6dTo7vLLyB/alHiNb7+VrLrdCM0TeoeQLqGbqK0VoW7kvgTR9w7XalR8svFDbyhLIMvtCWvDwrLDhYPiFF++pA7Cw4Vid2GGYpxnrRDhEZhg2gU2wW7nPwu5cfgxeVI5FsiO3t/8NwCIchaNPy4PBseVUnCMcx0JkV7pdbwAW4Tg4RGYYVrjxP2ecBVGWHcjdXT4Ai8rx8SzqMMyFIhxHorjaYRj8CKeA4iwzDFMnwnFIxq+jYVjYI4txII/tJMFXFnFNJpBlewkmYZ3Jd4OP4isL5v0I6JEQmH/g46Wjf34VtH7htbilAAAAAElFTkSuQmCC');
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-  }
-}
 
 //点击下拉按钮出现的样式
 .scroll-view-down {
