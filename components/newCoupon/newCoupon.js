@@ -6,9 +6,9 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    loading: {
-      type: Boolean,
-      value: false
+    storeId: {
+      type: String | Number,
+      value: ''
     },
   },
 
@@ -22,8 +22,19 @@ Component({
 
   lifetimes: {
     attached(){
-      this.getNewCoupon();
+      this.storeId = '';
     },
+  },
+
+  //监听
+  observers: {
+    //数据
+    storeId(a){
+      if(this.storeId !== a){
+        this.getNewCoupon();
+        this.storeId = a;
+      }
+    }
   },
 
   /**
@@ -32,13 +43,22 @@ Component({
   methods: {
     getNewCoupon(){
       let that = this;
-      Http.get(Config.api.getNewCoupon, {}, {
+      Http.get(Config.api.getNewCoupon, {
+        store_id: this.properties.storeId
+      }, {
         handleError: false
       }).then(res => {
         if(res.data.length > 0){
-          that.setData({ dataItems: res.data, isShow: true });
+          let rd = res.data;
+          that.setData({
+            dataItems: rd,
+            isShow: rd.length > 0 ? true : false
+          });
         }
       })
+    },
+    hideCoupon(){
+      this.setData({ isShow: false });
     }
   }
 })

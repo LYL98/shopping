@@ -72,7 +72,7 @@ module.exports = {
     itemCartQuery: apiC + '/item/cart/list',//商品库存查询(购物车用)
     itemRecoentlyBuy: apiC + '/item/list/recent_buy',//最近购买商品
     activity: apiC + '/order/delivery/info',//邮费优惠
-    getNewCoupon: apiC + '', //获取新人优惠券
+    getNewCoupon: apiC + '/promotion/new_store_coupon/query', //获取新人优惠券
 
     promotion: apiC + '/promotion', //全场的活动
 

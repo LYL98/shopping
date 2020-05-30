@@ -80,7 +80,12 @@ Page({
   //获取优惠券列表
   couponList() {
     let that = this;
-    Http.get(Config.api.couponList, { avaiable: 1, avaiable_now: 1, is_no_prompt: true }, { handleError: false }).then((res) => {
+    Http.get(Config.api.couponList, {
+      avaiable: 1,
+      avaiable_now: 1,
+      is_no_prompt: true,
+      store_id: that.address.id
+    }, { handleError: false }).then((res) => {
       that.setData({ couponNum: res.data.num, isShowCouponHint: true });
     });
   },
