@@ -85,6 +85,7 @@ Page({
   //获取下单优惠券列表
   couponList(){
     let that = this;
+    let address = app.getSelectStore(); //当前选择地址
     let { query, dataItem } = that.data;
     wx.showNavigationBarLoading();
     wx.request({
@@ -93,7 +94,10 @@ Page({
         'content-type': 'application/json',
         'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
-      data: query,
+      data: {
+        ...query,
+        store_id: address.id
+      },
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;

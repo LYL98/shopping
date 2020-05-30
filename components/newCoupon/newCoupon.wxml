@@ -1,20 +1,38 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
 <view class="coupon-body" wx:if="{{isShow}}">
   <view class="coupon">
-    <view class="title">新人优惠专享</view>
+    <view class="title">
+      <image src="./img/top.png" style="width: 470rpx; height: 192rpx;" />
+    </view>
     <view class="coupon-list">
       <view class="item" wx:for="{{dataItems}}" wx:key="index">
         <view class="left">
-          <view class="price">30元</view>
-          <view class="hint">满500元可用</view>
+          <block wx:if="{{item.coupon.coupon_type === 'type_reduction'}}">
+            <text class="symbol">￥</text>
+            <text class="price">{{tools.returnPrice(item.coupon.benefit)}}</text>
+          </block>
+          <block wx:if="{{item.coupon.coupon_type === 'type_discount'}}">
+            <text class="price">{{tools.returnDiscount(item.coupon.benefit)}}</text>
+            <text class="symbol">折</text>
+          </block>
+          <block wx:else>
+            <text class="symbol">送</text>
+            <text class="price">{{item.coupon.benefit}}</text>
+            <text class="symbol">件</text>
+          </block>
         </view>
         <view class="right">
-          <view class="">订单满减卷</view>
-          <view class="">有效期至2020-01-12 10:12:12</view>
+          <view class="title">满{{tools.returnPrice(item.coupon.amount_full)}}元可用</view>
+          <view class="date">{{tools.returnDateFormat(item.coupon.time_start, 'yyyy-MM-dd')}}至{{tools.returnDateFormat(item.coupon.time_end, 'yyyy-MM-dd')}}</view>
         </view>
       </view>
     </view>
-    <view class="btn">
-      <button class="btn1">好的</button>
+    <view class="bottom">
+      <image class="bg" src="./img/bottom.png" style="width: 470rpx; height: 89rpx;" />
+      <image class="money" src="./img/money.png" style="width: 164rpx; height: 110rpx;" />
+    </view>
+    <view class="close-btn" hover-class="link-hover" bind:tap="hideCoupon">
+      <image src="./img/close.png" style="width: 64rpx; height: 64rpx;" />
     </view>
   </view>
 </view>

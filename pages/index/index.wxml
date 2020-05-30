@@ -101,6 +101,6 @@
   </view>
 </view>
 
-<newCoupon wx:if="{{userInfo.id}}"/>
+<newCoupon wx:if="{{userInfo.id && address.id}}" storeId="{{address.id}}"/>
 
 <gio-marketing />
