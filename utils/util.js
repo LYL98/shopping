@@ -168,5 +168,6 @@ module.exports = {
   returnDateFormat: returnDateFormat,
   returnDateCalc: returnDateCalc,
   getUuid: getUuid,
-  judgeItemStock: judgeItemStock
+  judgeItemStock: judgeItemStock,
+  returnDiscount: returnDiscount
 }

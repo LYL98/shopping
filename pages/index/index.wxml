@@ -1,13 +1,13 @@
 <!--index.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<view  class="{{isShowSelectStore ? 'show-select-store' : ''}}">
+<view  class="{{isShowSelect ? 'show-select' : ''}}">
   <skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
   <view class="closeStore" wx:if="{{!closeStore}}"> 
     营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
   </view>
   <view class="skeleton" style="{{!closeStore && 'margin-top:60rpx'}}">
     <!--选择门店组件-->
-    <view class="skeleton-rect"><selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="storeShowHide"/></view>
+    <view class="skeleton-rect"><selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="showHideToggle"/></view>
     <!--搜索组件-->
     <view class="skeleton-rect"><search bind:tap="clickSearch"/></view>
     
@@ -101,6 +101,6 @@
   </view>
 </view>
 
-<newCoupon wx:if="{{userInfo.id && address.id}}" storeId="{{address.id}}"/>
+<newCoupon wx:if="{{userInfo.id && address.id}}" storeId="{{address.id}}" bindtoggle="showHideToggle"/>
 
 <gio-marketing />

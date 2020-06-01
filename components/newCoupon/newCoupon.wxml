@@ -7,23 +7,23 @@
     <view class="coupon-list">
       <view class="item" wx:for="{{dataItems}}" wx:key="index">
         <view class="left">
-          <block wx:if="{{item.coupon.coupon_type === 'type_reduction'}}">
+          <block wx:if="{{item.coupon_type === 'type_reduction'}}">
             <text class="symbol">￥</text>
-            <text class="price">{{tools.returnPrice(item.coupon.benefit)}}</text>
+            <text class="price">{{tools.returnPrice(item.benefit)}}</text>
           </block>
-          <block wx:if="{{item.coupon.coupon_type === 'type_discount'}}">
-            <text class="price">{{tools.returnDiscount(item.coupon.benefit)}}</text>
+          <block wx:if="{{item.coupon_type === 'type_discount'}}">
+            <text class="price">{{tools.returnDiscount(item.benefit)}}</text>
             <text class="symbol">折</text>
           </block>
           <block wx:else>
             <text class="symbol">送</text>
-            <text class="price">{{item.coupon.benefit}}</text>
+            <text class="price">{{item.benefit}}</text>
             <text class="symbol">件</text>
           </block>
         </view>
         <view class="right">
-          <view class="title">满{{tools.returnPrice(item.coupon.amount_full)}}元可用</view>
-          <view class="date">{{tools.returnDateFormat(item.coupon.time_start, 'yyyy-MM-dd')}}至{{tools.returnDateFormat(item.coupon.time_end, 'yyyy-MM-dd')}}</view>
+          <view class="title">满{{tools.returnPrice(item.amount_full)}}元可用</view>
+          <view class="date">{{tools.returnDateFormat(item.time_start, 'yyyy-MM-dd')}}至{{tools.returnDateFormat(item.time_end, 'yyyy-MM-dd')}}</view>
         </view>
       </view>
     </view>

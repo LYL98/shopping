@@ -54,10 +54,12 @@ Component({
             dataItems: rd,
             isShow: rd.length > 0 ? true : false
           });
+          this.triggerEvent('toggle', true);
         }
       })
     },
     hideCoupon(){
+      this.triggerEvent('toggle', false);
       this.setData({ isShow: false });
     }
   }
