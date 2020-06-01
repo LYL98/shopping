@@ -173,6 +173,9 @@ Page({
         'content-type': 'application/json',
         'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
+      data: {
+        store_id: this.address.id
+      },
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;
