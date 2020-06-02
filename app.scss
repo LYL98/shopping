@@ -275,7 +275,7 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
           overflow: hidden;
           font-size: 22rpx;
           line-height: 28rpx;
-          color: #FF6571;
+          color: #FF6868;
           display: inline-block;
           // border: 1rpx solid #FF6571;
           // width: 56rpx;
@@ -283,22 +283,22 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
           text-align: center;
           border-radius: 4rpx;
           padding: 2rpx 6rpx;
-
+          background-color: #FFE2E2;
           position: relative;
-          &::after{
-            transform: scale(0.5);
-            border: 1px solid #FF6571;
-            transform-origin: 0 0;
-            display: flex;
-            box-sizing: border-box;
-            content:' ';
-            position: absolute;
-            top:0;
-            left: 0;
-            width: 200%;
-            height: 200%;
-            border-radius: 12rpx;
-          }
+          // &::after{
+          //   transform: scale(0.5);
+          //   border: 1px solid #FF6571;
+          //   transform-origin: 0 0;
+          //   display: flex;
+          //   box-sizing: border-box;
+          //   content:' ';
+          //   position: absolute;
+          //   top:0;
+          //   left: 0;
+          //   width: 200%;
+          //   height: 200%;
+          //   border-radius: 12rpx;
+          // }
           
         }
       }
