@@ -76,7 +76,7 @@ Page({
     showSkeleton: true,
     userInfo: {}, //当前登录用户
     address: {},
-    isShowSelectStore: false
+    isShowSelect: false
   },
   swiperChange: function(e) {
     this.setData({
@@ -154,10 +154,10 @@ Page({
     app.gioActionRecordAdd('secBuyEntrance_evar', '搜索');
     /*===== 埋点 end ======*/
   },
-  //显示选择收货地址
-  storeShowHide(e){
+  //显示选择收货地址、新人优惠券时，锁列表不能滑动
+  showHideToggle(e){
     this.setData({
-      isShowSelectStore: e.detail
+      isShowSelect: e.detail
     });
   },
   //选择门店后回调

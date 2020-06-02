@@ -25,10 +25,11 @@
       </view>
       <view class="content">
         <view class="title skeleton-rect">
-          <view class="icon-tag" wx:if="{{item.tags[0]}}">
-            {{item.tags[0]}}
+          <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+            {{t}}
           </view>
-          <text>{{item.title}}</text></view>
+          <text>{{item.title}}</text>
+        </view>
         <view class="label">
           <text class="skeleton-rect tips-price" wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
           <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>

@@ -4,6 +4,7 @@
 import {
   Conn,
   RequestHttpDev,
+  RequestHttpTest,
   RequestHttpPre,
   RequestHttpPro,
   TencentBucketDev,
@@ -19,13 +20,31 @@ import {
 } from './../config';
 
 //config
-let requestHttp = '';
-if(Conn === 'dev'){
-  requestHttp = RequestHttpDev;
-}else if(Conn === 'pre'){
-  requestHttp = RequestHttpPre;
-}else{
-  requestHttp = RequestHttpPro;
+let requestHttp = '', tencentBucket = '', tencentRegion = '', tencentPath = '';
+switch(Conn){
+  case 'dev':
+    requestHttp = RequestHttpDev;
+    tencentBucket = TencentBucketDev;
+    tencentRegion = TencentRegionDev;
+    tencentPath = TencentPathDev;
+    break;
+  case 'test':
+    requestHttp = RequestHttpTest;
+    tencentBucket = TencentBucketDev;
+    tencentRegion = TencentRegionDev;
+    tencentPath = TencentPathDev;
+    break;
+  case 'test':
+    requestHttp = RequestHttpPre;
+    tencentBucket = TencentBucketPro;
+    tencentRegion = TencentRegionPro;
+    tencentPath = TencentPathPro;
+    break;
+  default:
+    requestHttp = RequestHttpPro;
+    tencentBucket = TencentBucketPro;
+    tencentRegion = TencentRegionPro;
+    tencentPath = TencentPathPro;
 }
 let apiC = requestHttp + '/c';
 let apiCommon = requestHttp + '/common';
@@ -53,6 +72,7 @@ module.exports = {
     itemCartQuery: apiC + '/item/cart/list',//商品库存查询(购物车用)
     itemRecoentlyBuy: apiC + '/item/list/recent_buy',//最近购买商品
     activity: apiC + '/order/delivery/info',//邮费优惠
+    getNewCoupon: apiC + '/promotion/new_store_coupon/query', //获取新人优惠券
 
     promotion: apiC + '/promotion', //全场的活动
 
@@ -108,10 +128,10 @@ module.exports = {
 
   },
   //腾讯Bucket、Region
-  tencentBucket: Conn === 'dev' ? TencentBucketDev : TencentBucketPro, //Bucket
-  tencentRegion: Conn === 'dev' ? TencentRegionDev : TencentRegionPro, //Region
+  tencentBucket: tencentBucket, //Bucket
+  tencentRegion: tencentRegion, //Region
 
-  tencentPath: Conn === 'dev' ? TencentPathDev : TencentPathPro, //腾讯下载地址
+  tencentPath: tencentPath, //腾讯下载地址
   serviceTel: ServiceTel, //服务电话
   weiXinAppIds: WeiXinAppIds, //要打开的微信appids
   conn: Conn,

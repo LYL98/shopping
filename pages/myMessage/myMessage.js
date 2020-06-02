@@ -69,15 +69,14 @@ Page({
    * 生命周期函数
    */
   onLoad: function (options) {
-
+    //判断登录
+    app.signIsLogin(() => {
+      this.messageQuery();
+    });
   },
 
   onShow: function () {
-    let that = this;
-    //判断登录
-    app.signIsLogin(() => {
-      that.messageQuery();
-    });
+    
   },
 
   dateDiff(sDate1, sDate2) {  //sDate1和sDate2是yyyy-MM-dd格式
@@ -109,7 +108,7 @@ Page({
 
   messageQuery() {
     let that = this;
-    let { initLoad } = that.data;
+    let { initLoad, query } = that.data;
     if (initLoad){
       wx.showNavigationBarLoading();
     }
@@ -120,9 +119,7 @@ Page({
         'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
       },
       method: 'GET',
-      data: {
-        query: this.data.query
-      },
+      data: query,
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
           that.setData({

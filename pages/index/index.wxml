@@ -1,13 +1,13 @@
 <!--index.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<view  class="{{isShowSelectStore ? 'show-select-store' : ''}}">
+<view  class="{{isShowSelect ? 'show-select' : ''}}">
   <skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
   <view class="closeStore" wx:if="{{!closeStore}}"> 
     营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
   </view>
   <view class="skeleton" style="{{!closeStore && 'margin-top:60rpx'}}">
     <!--选择门店组件-->
-    <view class="skeleton-rect"><selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="storeShowHide"/></view>
+    <view class="skeleton-rect"><selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="showHideToggle"/></view>
     <!--搜索组件-->
     <view class="skeleton-rect"><search bind:tap="clickSearch"/></view>
     
@@ -59,12 +59,11 @@
             <view class="content">
               <view class="goods-decs">
                 <view class="title skeleton-rect">
-                  <view class="icon-tag" wx:if="{{item.tags[0]}}">
-                    <!-- {{item.tags[0]}} -->
-                    {{item.tags[0]}}
+                  <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+                    {{t}}
                   </view>
                   <text>{{item.title}}</text>
-                  </view>
+                </view>
                 <view class="label">
                   <text class="skeleton-rect" wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
                   <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
@@ -101,5 +100,7 @@
     <defaultPage wx:else currentPage="itemList"></defaultPage>
   </view>
 </view>
+
+<newCoupon wx:if="{{userInfo.id && address.id}}" storeId="{{address.id}}" bindtoggle="showHideToggle"/>
 
 <gio-marketing />

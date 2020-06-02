@@ -171,7 +171,13 @@ var returnOmissionText = function (text, maxLength) {
   maxLength = maxLength || 5;
   return text.length >= maxLength ? text.slice(0, maxLength) + '...' : text;
 }
-
+//截取运营专区前两个标签
+var returnTags = function(tags){
+  if(tags && tags.length > 2){
+    tags.length = 2
+  }
+  return tags
+}
 module.exports = {
   returnPrice: returnPrice,
   returnPriceAbs: returnPriceAbs,
@@ -186,5 +192,6 @@ module.exports = {
   judgeItemStock: judgeItemStock,
   returnShowPayType: returnShowPayType,
   returnDiscount: returnDiscount,
-  returnOmissionText: returnOmissionText
+  returnOmissionText: returnOmissionText,
+  returnTags:returnTags
 }

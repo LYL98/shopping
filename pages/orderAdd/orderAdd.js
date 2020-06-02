@@ -411,7 +411,7 @@ Page({
             }else if(couponSelectData.coupon.coupon_type === 'type_discount'){
               promoteRule_var = `${Util.returnDiscount(couponSelectData.coupon.benefit)}折`;
             }else{
-              promoteRule_var = `送${item.coupon.benefit}件`;
+              promoteRule_var = `送${couponSelectData.coupon.benefit}件`;
             }
           }
           app.gioActionRecordAdd('payOrderSuccess', {

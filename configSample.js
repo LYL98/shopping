@@ -2,11 +2,14 @@
  * 修改基础配置（在根目录新增config.js，写入以下内容，并修改成实际的地址）
  */
 
-//是否开发(dev开发、测试；test预发布；pro生产)
+//是否开发(dev开发；test测试；pre预发布；pro生产)
 export const Conn = 'dev';
 
-//测试环境api地址
+//开发环境api地址
 export const RequestHttpDev = 'https://xxx.xxx.xxx';
+
+//测试环境api地址
+export const RequestHttpTest = 'https://xxx.xxx.xxx';
 
 //预发布环境api地址
 export const RequestHttpPre = 'https://xxx.xxx.xxx';
