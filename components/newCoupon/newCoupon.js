@@ -54,7 +54,7 @@ Component({
             dataItems: rd,
             isShow: rd.length > 0 ? true : false
           });
-          this.triggerEvent('toggle', true);
+          that.triggerEvent('toggle', true);
         }
       })
     },
