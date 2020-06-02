@@ -33,7 +33,7 @@
       </view>
       <view class="content">
         <view class="title">
-          <view class="icon-tag" wx:for="{{item.tags}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+          <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
             {{t}}
           </view>
           <text>{{item.title}}</text>

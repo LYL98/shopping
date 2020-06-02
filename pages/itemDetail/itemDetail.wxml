@@ -26,7 +26,7 @@
     </view>
   </view>
   <view class="item-title">
-    <view class="icon-tag" wx:for="{{detail.tags}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+    <view class="icon-tag" wx:for="{{tools.returnTags(detail.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
       {{t}}
     </view>
     <text >{{detail.title}}</text> 
