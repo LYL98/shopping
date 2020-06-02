@@ -11,7 +11,7 @@
             <text class="symbol">￥</text>
             <text class="price">{{tools.returnPrice(item.benefit)}}</text>
           </block>
-          <block wx:if="{{item.coupon_type === 'type_discount'}}">
+          <block wx:elif="{{item.coupon_type === 'type_discount'}}">
             <text class="price">{{tools.returnDiscount(item.benefit)}}</text>
             <text class="symbol">折</text>
           </block>
