@@ -34,7 +34,7 @@ switch(Conn){
     tencentRegion = TencentRegionDev;
     tencentPath = TencentPathDev;
     break;
-  case 'test':
+  case 'pre':
     requestHttp = RequestHttpPre;
     tencentBucket = TencentBucketPro;
     tencentRegion = TencentRegionPro;
