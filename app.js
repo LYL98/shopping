@@ -277,14 +277,20 @@ App({
     let num = this.getShoppingCartNum();
 
     if(num){
-      wx.setTabBarBadge({
-        index: 3,
-        text: num.toString()
-      });
+      //防止直播进入时报错，要判断
+      if(wx && wx.setTabBarBadge){
+        wx.setTabBarBadge({
+          index: 3,
+          text: num.toString()
+        });
+      }
     }else{
-      wx.removeTabBarBadge({
-        index: 3
-      });
+      //防止直播进入时报错，要判断
+      if(wx && wx.removeTabBarBadge){
+        wx.removeTabBarBadge({
+          index: 3
+        });
+      }
     }
   },
 
