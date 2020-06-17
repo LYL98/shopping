@@ -275,22 +275,15 @@ App({
   //计算购物车数量
   shoppingCartNum(){
     let num = this.getShoppingCartNum();
-
     if(num){
-      //防止直播进入时报错，要判断
-      if(wx && wx.setTabBarBadge){
-        wx.setTabBarBadge({
-          index: 3,
-          text: num.toString()
-        });
-      }
+      wx.setTabBarBadge({
+        index: 3,
+        text: num.toString()
+      });
     }else{
-      //防止直播进入时报错，要判断
-      if(wx && wx.removeTabBarBadge){
-        wx.removeTabBarBadge({
-          index: 3
-        });
-      }
+      wx.removeTabBarBadge({
+        index: 3
+      });
     }
   },
 

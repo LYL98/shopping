@@ -59,10 +59,6 @@ Page({
     });
   },
 
-  //页面卸载时触发
-  onUnload() {
-    app.shoppingCartNum();//计算购物车数量并显示角标
-  },
   joinShoppingCart() {
     let that = this;
     let num = app.getShoppingCartNum();//获取购物车数量

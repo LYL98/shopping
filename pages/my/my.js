@@ -87,6 +87,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    app.shoppingCartNum();
     this.address = app.getSelectStore(); //当前选择地址
     //判断登录
     app.signIsLogin((res) => {

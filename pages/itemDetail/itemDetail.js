@@ -79,11 +79,6 @@ Page({
     });
   },
 
-  //页面卸载时触发
-  onUnload(){
-    app.shoppingCartNum();//计算购物车数量并显示角标
-  },
-
   //获取商品详情
   getItemDetail() {
     let that = this;

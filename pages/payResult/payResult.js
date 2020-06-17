@@ -13,11 +13,6 @@ Page({
     source: 'orderAdd'
   },
 
-  //页面卸载时触发
-  onUnload() {
-    app.shoppingCartNum();//计算购物车数量并显示角标
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */

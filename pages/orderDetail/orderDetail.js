@@ -159,7 +159,6 @@ Page({
     if(this.countDownTime){
       clearInterval(this.countDownTime);
     }
-    app.shoppingCartNum();//计算购物车数量并显示角标
   },
   showArrow(e) {
     let index = e.currentTarget.dataset.index;
@@ -230,7 +229,6 @@ Page({
           wx.switchTab({
             url: '/pages/shoppingCart/shoppingCart'
           });
-          app.shoppingCartNum();//计算购物车数量并显示角标
         }
       }
     })
