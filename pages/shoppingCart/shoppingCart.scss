@@ -145,11 +145,12 @@
   > .btn{
     flex: initial !important;
     width: 198rpx;
-    > button{
+    > button, >navigator{
       border-radius: 88rpx;
       font-size: 32rpx;
       height: 88rpx;
       line-height: 88rpx;
+      text-align: center;
     }
   }
 }

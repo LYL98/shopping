@@ -68,7 +68,8 @@
   </view>
   <view class="total-price" wx:else></view>
   <view class="btn" wx:if="{{!isEdit}}">
-    <button bindtap="submitClearing" class="btn2" disabled="{{totalNum <= 0 || !closeStore}}">去结算</button>
+    <button class="btn2" wx:if="{{totalNum <= 0 || !closeStore}}" disabled>去结算</button>
+    <navigator class="btn2" bindtap="submitClearing" wx:else url="/pages/orderAdd/orderAdd">去结算</navigator>
   </view>
   <view class="btn" wx:else>
     <button bindtap="removeItem" type="warn" >删除</button>

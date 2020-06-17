@@ -89,10 +89,6 @@ Page({
     let that = this
     that.itemQuery();
   },
-  //页面卸载时触发
-  onUnload() {
-    app.shoppingCartNum(); //计算购物车数量并显示角标
-  },
   //加入购物车
   joinShoppingCart() {
     let that = this;
