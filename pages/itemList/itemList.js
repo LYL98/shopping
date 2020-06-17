@@ -68,7 +68,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this
+    app.shoppingCartNum();
+    let that = this;
     this.address = app.getSelectStore(); //当前选择的地址
     let value = app.globalData.urlJump < 10 ? '0' + app.globalData.urlJump : app.globalData.urlJump
     this.setData({

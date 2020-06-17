@@ -98,11 +98,9 @@ Page({
         });
       });
     }
-    app.shoppingCartNum();
     that.setData({
       system: system
-    })
-    
+    });
   },
   /**
    * 生命周期函数--监听页面显示
@@ -144,6 +142,7 @@ Page({
             
           });
         }
+        app.shoppingCartNum();
       }
     });
   },
@@ -162,6 +161,7 @@ Page({
   },
   //选择门店后回调
   selectStoreCallBack(res){
+    app.shoppingCartNum();
     let that = this;
     let rd = res.detail;
     if(rd && rd.id){

@@ -49,6 +49,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    app.shoppingCartNum(); //计算购物车数量并显示角标
     this.address = app.getSelectStore(); //当前选择地址    
     //判断登录
     app.signIsLogin(() => {
@@ -279,7 +280,6 @@ Page({
       });
     }
     app.shoppingCartNum(); //计算购物车数量并显示角标
-
   },
 
   //阶梯价
@@ -379,50 +379,10 @@ Page({
   },
   //结算
   submitClearing() {
-    let { dataItem } = this.data;
-    let notallow = {
-
-    };
-    for (let i = 0; i < dataItem.length; i++) {
-      if (dataItem[i].is_select && dataItem[i].item_status === 'under_ground') {
-        notallow.code = 1;
-        break;
-      } else if (dataItem[i].is_select && dataItem[i].price_status == 0) {
-        notallow.code = 2;
-        break;
-      }
-    }
-    if (notallow.code == 1) {
-      wx.showModal({
-        title: "提示",
-        content: "您所购买的商品有未上架，请在购物车移除",
-        confirmText: "我知道了",
-        confirmColor: "#00AE66",
-        showCancel: false,
-        success: function () {
-          //wx.navigateBack();
-        }
-      });
-    } else if (notallow.code == 2) {
-      wx.showModal({
-        title: "提示",
-        content: "您所购买的商品有未报价，请在购物车移除或等待报价",
-        confirmText: "我知道了",
-        confirmColor: "#00AE66",
-        showCancel: false,
-        success: function () {
-          // wx.navigateBack();
-        }
-      });
-    } else {
-      /*===== 埋点 start ======*/
-      app.gioActionRecordAdd('firstBuyEntrance_evar', '购物车');
-      app.gioActionRecordAdd('secBuyEntrance_evar', '-');
-      /*===== 埋点 end ======*/
-      wx.navigateTo({
-        url: '/pages/orderAdd/orderAdd',
-      });
-    }
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '购物车');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '-');
+    /*===== 埋点 end ======*/
   },
   /**
    * 页面上拉触底事件的处理函数
