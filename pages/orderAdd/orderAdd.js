@@ -485,7 +485,6 @@ Page({
 
   //页面卸载时
   onUnload: function() {
-    app.shoppingCartNum(); //计算购物车数量并显示角标
     wx.removeStorageSync('orderCouponListData');
     wx.removeStorageSync('orderCouponSelectData');
   }
