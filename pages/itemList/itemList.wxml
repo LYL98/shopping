@@ -12,17 +12,17 @@
 <view class="tags-item" wx:if="{{!changedown}}" catchtouchmove="true" bindtap="clickdown"></view>
 </scroll-view>
 <!-- 下拉按钮 -->
-  <view class="down-img" bindtap="clickdown"><image src="{{downSrc}}"></image></view>
+<view class="down-img" bindtap="clickdown"><image src="{{downSrc}}"></image></view>
 
 <!--搜索组件end-->
 <view class="category-view">
-  <view class="link-active {{query.display_class_id == '' && 'active'}}" bindtap="selectCategory" data-category="" >全部</view>
+  <view class="link-active {{query.display_class_id == '' && 'active'}}" bindtap="selectCategory" data-category="">全部</view>
   <view class="link-active {{query.display_class_id === item.id && 'active'}}"
     wx:for="{{categoryList}}"
     wx:key="index"
     bindtap="selectCategory"
     data-category="{{item.id}}"
-    wx:if="{{item.title}}" >{{item.title}}</view>
+    wx:if="{{item.title}}">{{item.title}}</view>
 </view>
 <view class="head-view">
   <view bindtap="changeSort" data-sort="{{query.sort === 'other' ? '-other' : 'other'}}">
@@ -48,7 +48,7 @@
 </view>
 <view class="item-view skeleton">
   <view class="item" wx:for="{{dataItem.items}}" wx:key="index">
-    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem">
+    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}">
       <view class="img">
         <view class="mark">
           <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
