@@ -39,8 +39,6 @@ App({
     system: null,
     gioIsSetUserId: false,
     gioIsSetUser: false,
-    indexTagId: null, //首页点击运营专区时的id
-    indexTagIndex:null //首页点击运营专区时的index
   },
 
   /**
