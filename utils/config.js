@@ -107,6 +107,7 @@ module.exports = {
     aftersaleDetail: apiC + '/aftersale/detail', //获取售后单详情
     aftersaleComment: apiC + '/aftersale/append', //售后消息追加
     afterMsg: apiC + '/aftersale/dialog/read/info', //售后消息
+    salebackDetail: apiC + '/saleback/detail', //退货单详情
 
     balanceTopup: apiC + '/balance/topup',//余额充值
     balanceTopupConfirm: apiC + '/balance/topup/confirm',//余额充值确认

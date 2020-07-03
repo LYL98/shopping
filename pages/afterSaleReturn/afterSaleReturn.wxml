@@ -1,0 +1,51 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+
+<view class="top">
+    <image src="{{status['init'].bg}}"></image>
+    <view class="title">{{status['init'].title}}</view>
+    <view class="describe">{{status['init'].describe}}</view>
+</view>
+
+<view class="return-item">
+    <view class="item">
+        <view class="left">退货数量</view>
+        <view class="right">2件</view>
+    </view>
+    <view class="item">
+        <view class="left">退款金额</view>
+        <view class="right price">¥{{tools.returnPrice(detail.amount_refund)}}</view>
+    </view>
+</view>
+
+<view class="item-view">
+  <view class="item">
+    <view class="no-nav">
+      <view class="img">
+        <view class="mark">
+          <text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
+          <text wx:if="{{detail.is_gb_order}}" class="is-gb-order">团</text>
+        </view>
+        <image wx:if="{{detail.item_image}}" src="{{tencentPath + detail.item_image}}_watermark200x200"></image>
+        <view class="image bg-img-container-item" wx:else></view>
+      </view>
+      <view class="content">
+        <view class="title">{{detail.item_title}}</view>
+        <view class="label">
+          <text wx:for="{{detail.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
+          <text class="frame" wx:if="{{detail.frame_id}}">有筐</text>
+        </view>
+        <view class="price-unit">
+          <view >
+            ￥{{tools.returnPrice(detail.item_price_sale)}}
+          </view>
+        </view>
+        <view class="num-price">
+          <text class="num-str skeleton-rect">× {{detail.count_real}}</text>
+          <text class="price-str skeleton-rect">￥{{tools.returnPrice(detail.amount_real)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="created">{{detail.created}}</view>
