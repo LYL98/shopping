@@ -1,0 +1,56 @@
+
+  .top{
+    width: 100vw;
+    height: 194rpx;
+    position: relative;
+    overflow: hidden;
+    > image{
+        width: 100vw;
+        height: 194rpx;
+        position: absolute;
+    }
+    >.title, >.describe{
+        color: #fff;
+        position: relative;
+        z-index: 1;
+        margin-left: 60rpx;
+        &.title{
+            font-size: 32rpx;
+            line-height: 32rpx;
+            margin-top: 56rpx;
+            margin-bottom: 14rpx;
+            font-weight: bold;
+        }
+        &.describe{
+            font-size: 24rpx;
+        }
+    }
+  }
+
+  .return-item{
+      border-top: 20rpx solid #F7F7F8;
+      border-bottom: 20rpx solid #F7F7F8;
+      >.item{
+        display: flex;
+        color: #242424;
+        padding: 32rpx 0;
+        margin: 0 30rpx;
+        &:first-child{
+            border-bottom: 1rpx solid #eee;
+        }
+        >.left{
+            flex: 1;
+        }
+        >.right{
+            font-weight: bold;
+        }
+      }
+  }
+  
+  .created{
+      color: #A5A5A5;
+      margin: 0 30rpx;
+      font-size: 24rpx;
+      border-top: 1rpx solid #eee;
+      padding: 30rpx 0;
+  }

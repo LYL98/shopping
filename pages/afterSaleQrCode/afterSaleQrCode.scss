@@ -1,0 +1,33 @@
+.bg{
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.qr-code-body{
+    background: #fff;
+    width: 646rpx;
+    height: 738rpx;
+    position: relative;
+    z-index: 1;
+    border-radius: 8rpx;
+    text-align: center;
+    margin: 156rpx auto 0;
+    overflow: hidden;
+    >.title{
+        color: #242424;
+        font-size: 40rpx;
+        margin: 42rpx 0;
+    }
+    >.qr-code{
+        margin: 0 auto 40rpx;
+        width: 480rpx;
+        >image{
+            display: block;
+        }
+    }
+    >.hint{
+        color: #808080;
+        font-size: 24rpx;
+    }
+}

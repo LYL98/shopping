@@ -104,6 +104,17 @@ Page({
         detail: rd,
         vidoes: vidoes
       });
+      //不是不本省商品，提示
+      if(rd.province_code !== address.province_code){
+        wx.showModal({
+          title: '提示',
+          content: '该商品非本省商品',
+          confirmText: "我知道了",
+          confirmColor: "#00AE66",
+          showCancel: false
+        });
+      }
+
       that.unifiedDescription(); //统一描述
       /*===== 埋点 start ======*/
       let tags = '';

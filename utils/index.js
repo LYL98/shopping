@@ -6,5 +6,6 @@ import Md5 from './md5';
 import Verification from './verification';
 import CosWxSdkV5 from './cos-wx-sdk-v5';
 import UploadTencentCos from './upload-tencent-cos';
+import QrCode from './weapp.qrcode.min';
 
-export { Config, Constant, Http, Util, Md5, Verification, CosWxSdkV5, UploadTencentCos }
+export { Config, Constant, Http, Util, Md5, Verification, CosWxSdkV5, UploadTencentCos, QrCode }
