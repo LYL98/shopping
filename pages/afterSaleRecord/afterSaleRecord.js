@@ -50,7 +50,7 @@ Page({
   //获取伙数据
   getData(isInit){
     let that = this;
-    let { initLoad, tabIndex, dataItem } = that.data;
+    let { initLoad, tabIndex, dataItem, query } = that.data;
 
     //判断是否第一次加载，或没数据；如果是：显示loading   否则静默更新数据
     if (initLoad || !dataItem.num) {

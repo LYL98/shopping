@@ -193,7 +193,7 @@
 					"id": 19,
 					"name": "退货单",
 					"pathName": "pages/afterSaleReturn/afterSaleReturn",
-					"query": "id=183419",
+					"query": "id=1",
 					"scene": null
 				}
 			]

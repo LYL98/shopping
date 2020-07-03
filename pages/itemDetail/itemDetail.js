@@ -105,6 +105,7 @@ Page({
         vidoes: vidoes
       });
       //不是不本省商品，提示
+      console.log(rd.province_code, address.province_code);
       if(rd.province_code !== address.province_code){
         wx.showModal({
           title: '提示',
@@ -216,5 +217,15 @@ Page({
       this.setData({ tempOneImg: '' });
     }
   },
-
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    let { tencentPath, detail } = this.data;
+    return {
+      title: detail.title,
+      path: `/pages/itemDetail/itemDetail?id=${detail.id}`,
+      imageUrl: tencentPath + detail.images[0] + '_min750x600',
+    }
+  },
 })

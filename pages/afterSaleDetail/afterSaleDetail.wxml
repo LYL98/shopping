@@ -4,7 +4,7 @@
 <view class="brief">
   <view class="top t-c"  wx:if="{{detail.status != 'close'}}">
     <image src="{{checkedSrc}}"></image>
-    <text class="text1" wx:if="{{afterSaleResult[detail.result]}}">{{afterSaleResult[detail.result]}}</text>
+    <text class="text1" style="font-size: 32rpx;" wx:if="{{afterSaleResult[detail.result]}}">{{afterSaleResult[detail.result]}}</text>
     <view class="afterdoing" wx:else>
         <text >商家正在处理中</text>
         <text >商家正在处理中,请您稍等</text>
@@ -14,7 +14,7 @@
     <image src="{{checkedDone}}"></image>
     <view class="afterdone">
       <view class="title">
-        <text >已完成售后服务</text>
+        <text style="font-size: 32rpx;">已完成售后服务</text>
       </view>
       <view class="type" wx:if="{{detail.opt_type}}">处理类型：{{opt_type[detail.opt_type]}}</view>
       <view class="dic" wx:if="{{detail.opt_detail}}">处理时间：{{detail.done_time}}</view>

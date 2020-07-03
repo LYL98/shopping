@@ -65,8 +65,8 @@
 
 <!--申请记录start-->
 <view wx:elif="{{tabIndex === 'record'}}">
-  <block wx:for="{{dataItem.items}}">
-    <navigator url="/pages/afterSaleDetail/afterSaleDetail?id={{item.id}}" wx:key="index" class="order-item" style="border-bottom: 0;">
+  <block wx:for="{{dataItem.items}}" wx:key="index">
+    <navigator url="/pages/afterSaleDetail/afterSaleDetail?id={{item.id}}" class="order-item" style="border-bottom: 0;">
       <view class="order-title">
         <view class="order-code"><text class="jh"></text>{{item.store_title}}
           <text class="reply" wx:if="{{!item.is_read}}">新消息</text>

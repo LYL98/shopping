@@ -31,8 +31,12 @@ Page({
       }
     },
     detail: {
-      images: []
-    }
+      item: {
+        item_title: '_',
+        item_attrs: ['_', '_', '_']
+      }
+    },
+    showSkeleton: true, //骨架屏
   },
 
   /**
@@ -49,10 +53,11 @@ Page({
   salebackDetail(id) {
     let that = this;
     wx.showNavigationBarLoading();
-    Http.post(Config.api.salebackDetail, { id }).then(res => {
+    Http.get(Config.api.salebackDetail, { id }).then(res => {
       wx.hideNavigationBarLoading();
       that.setData({
-        detail: res.data
+        detail: res.data,
+        showSkeleton: false
       });
     }).catch(error => {
       wx.hideNavigationBarLoading();
