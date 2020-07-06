@@ -68,7 +68,7 @@
 
 <view class="interact">商家互动</view>
 <view>
-  <view class="comment-item" wx:for="{{detail.comment}}" wx:key="index" wx:if="{{item.content}}">
+  <view class="comment-item" wx:for="{{detail.comment}}" wx:key="index">
     <!--撤回信息-->
     <view wx:if="{{item.is_revoke}}" class="revoke">“客服”撤回了一条消息</view>
     <!--正常信息-->
