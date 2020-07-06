@@ -104,6 +104,18 @@ Page({
         detail: rd,
         vidoes: vidoes
       });
+      //不是不本省商品，提示
+      console.log(rd.province_code, address.province_code);
+      if(rd.province_code !== address.province_code){
+        wx.showModal({
+          title: '提示',
+          content: '该商品非本省商品',
+          confirmText: "我知道了",
+          confirmColor: "#00AE66",
+          showCancel: false
+        });
+      }
+
       that.unifiedDescription(); //统一描述
       /*===== 埋点 start ======*/
       let tags = '';
@@ -205,5 +217,15 @@ Page({
       this.setData({ tempOneImg: '' });
     }
   },
-
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    let { tencentPath, detail } = this.data;
+    return {
+      title: detail.title,
+      path: `/pages/itemDetail/itemDetail?id=${detail.id}`,
+      imageUrl: tencentPath + detail.images[0] + '_min750x600',
+    }
+  },
 })

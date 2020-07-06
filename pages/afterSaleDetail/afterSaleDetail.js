@@ -47,15 +47,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this;
     //判断登录
     app.signIsLogin(() => {
-      let id = options.id || 2;
-      that.setData({
-        id: id,
-        system: app.globalData.system
+      let id = options.id || '';
+      this.setData({
+        id: id
       }, () => {
-        that.aftersaleDetail();
+        this.aftersaleDetail();
       });
     });
   },

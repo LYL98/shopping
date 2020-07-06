@@ -26,11 +26,14 @@
     </view>
   </view>
   <view class="item-title">
-    <view class="icon-tag" wx:for="{{tools.returnTags(detail.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
-      {{t}}
+    <view class="tags">
+      <view class="tag" wx:for="{{tools.returnTags(detail.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">{{t}}</view>
     </view>
-    <text >{{detail.title}}</text> 
+    <view class="title">{{detail.title}}</view>
+    <view class="share">
+      <button open-type="share"><image src="./../../assets/img/share.png" style="width: 24rpx; height: 23rpx;" />分享</button>
     </view>
+  </view>
   <view class="repertory-price">
     <view class="price-unit" wx:if="{{detail.is_quoted}}">
       <view class="price-origin" wx:if="{{detail.price_origin > detail.price_sale}}">原价:￥{{tools.returnPrice(detail.price_origin)}}</view>
