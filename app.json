@@ -31,6 +31,8 @@
     "pages/afterSale/afterSale",
     "pages/afterSaleRecord/afterSaleRecord",
     "pages/afterSaleDetail/afterSaleDetail",
+    "pages/afterSaleQrCode/afterSaleQrCode",
+    "pages/afterSaleReturn/afterSaleReturn",
     "pages/shopDetail/shopDetail",
     "pages/commercial/commercial",
     "pages/myCsm/myCsm",

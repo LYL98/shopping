@@ -4,7 +4,7 @@
 <view class="brief">
   <view class="top t-c"  wx:if="{{detail.status != 'close'}}">
     <image src="{{checkedSrc}}"></image>
-    <text class="text1" wx:if="{{afterSaleResult[detail.result]}}">{{afterSaleResult[detail.result]}}</text>
+    <text class="text1" style="font-size: 32rpx;" wx:if="{{afterSaleResult[detail.result]}}">{{afterSaleResult[detail.result]}}</text>
     <view class="afterdoing" wx:else>
         <text >商家正在处理中</text>
         <text >商家正在处理中,请您稍等</text>
@@ -14,7 +14,7 @@
     <image src="{{checkedDone}}"></image>
     <view class="afterdone">
       <view class="title">
-        <text >已完成售后服务</text>
+        <text style="font-size: 32rpx;">已完成售后服务</text>
       </view>
       <view class="type" wx:if="{{detail.opt_type}}">处理类型：{{opt_type[detail.opt_type]}}</view>
       <view class="dic" wx:if="{{detail.opt_detail}}">处理时间：{{detail.done_time}}</view>
@@ -39,7 +39,7 @@
       </view>
       <view class="content">
         <view class="title">{{detail.item_title}}</view>
-        <view class="label {{system}}">
+        <view class="label">
           <text wx:for="{{detail.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
           <text class="frame" wx:if="{{detail.frame_id}}">有筐</text>
         </view>
@@ -69,10 +69,13 @@
 <view class="interact">商家互动</view>
 <view>
   <view class="comment-item" wx:for="{{detail.comment}}" wx:key="index" wx:if="{{item.content}}">
-    <view class="{{commentName[item.operator_class] == '客服' ? 'sys': 'usr'}}">
+    <!--撤回信息-->
+    <view wx:if="{{item.is_revoke}}" class="revoke">“客服”撤回了一条消息</view>
+    <!--正常信息-->
+    <view wx:else class="{{commentName[item.operator_class] == '客服' ? 'sys': 'usr'}}">
         <view class="dialog">
           <view class="content">{{item.content}}</view>
-          <view class="imgs" wx:if="{{item.images.length>0}}" >
+          <view class="imgs" wx:if="{{item.images.length > 0}}" >
             <image wx:key="index" wx:for="{{item.images}}" data-src="{{item.images}}" data-index="{{index}}" bindtap="previewImage" wx:for-item="cell" src="{{tencentPath + cell + '_watermark200x200'}}"></image>
           </view>
           <view class="videos" wx:if="{{item.media_urls.length > 0}}">
@@ -85,7 +88,6 @@
         </view>
         <view class="name" wx:if="{{item.operator_class=='member'}}" ><image src="{{item.avatar ? (tencentPath  + item.avatar + '_min200x200') : defImg}}"></image></view>
         <view class="name" wx:else><image src="{{item.avatar ? (tencentPath  + item.avatar + '_min200x200') : defcustImg}}"></image></view>
-       
     </view>
   </view>
 </view>
