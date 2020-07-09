@@ -42,7 +42,7 @@
             </view>
           </view>
         </view>
-        <view class="btn">
+        <view class="btn" wx:if="{{d.count_real}}">
           <navigator wx:if="{{d.aftersale_id}}" url="/pages/afterSaleDetail/afterSaleDetail?id={{d.aftersale_id}}">
             <button size="mini" class="btn3">查看售后</button>
           </navigator>

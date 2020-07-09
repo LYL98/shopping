@@ -13,7 +13,7 @@
           <view class="left skeleton-rect">退货数量</view>
           <view class="right skeleton-rect">{{detail.back_num || '-'}}件</view>
       </view>
-      <view class="item">
+      <view class="item" wx:if="{{detail.status !== 'close'}}">
           <view class="left skeleton-rect">退款金额</view>
           <view class="right price skeleton-rect">¥{{tools.returnPrice(detail.refund_amount)}}</view>
       </view>
