@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "退货单",
+  "navigationBarTitleText": "退货单详情",
   "usingComponents": {
     "skeleton": "/components/skeleton/skeleton"
   }
