@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    address: {}
   },
 
   /**
@@ -21,6 +21,7 @@ Page({
   drawQrCode(){
     const systemInfo = wx.getSystemInfoSync();
     let address = app.getSelectStore(); //当前选择的地址
+    this.setData({ address });
     QrCode({
       width: systemInfo.windowWidth / 750 * 480,
       height: systemInfo.windowWidth / 750 * 480,
