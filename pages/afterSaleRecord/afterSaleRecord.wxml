@@ -125,12 +125,7 @@
 
 <loading loading="{{loading}}"/>
 
-<block wx:if="{{ dataItem.num > 0 && tabIndex === 'record' }}">
-  <view style="height:120rpx;"></view>
-  <view class="option-bottom">
-    <navigator class="option-btn" url="/pages/afterSaleQrCode/afterSaleQrCode">
-      <image src="./../../assets/img/qrcode.png" style="width: 32rpx; height: 32rpx;" />
-      <view class="str">退货码</view>
-    </navigator>
-  </view>
-</block>
+<navigator class="return-btn" url="/pages/afterSaleQrCode/afterSaleQrCode" wx:if="{{ dataItem.num > 0 && tabIndex === 'record' }}">
+  <image src="./../../assets/img/qrcode.png" style="width: 32rpx; height: 32rpx;" />
+  <view class="str">退货码</view>
+</navigator>
