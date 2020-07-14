@@ -1,7 +1,7 @@
 
 <image class="bg" src="./../../assets/img/after_sale_qr_code.png" style="width: 100vw; height: 100vh;" />
 <view class="qr-code-body">
-    <view class="title">蒲公英商品退货码</view>
+    <view class="title add-dot">{{address.title}}</view>
     <view class="qr-code">
         <canvas canvas-id="myQrcode" bindtap="refreshQrCode" style="width: 480rpx; height: 480rpx;"></canvas>
     </view>

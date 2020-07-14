@@ -71,7 +71,9 @@
         <view class="order-code"><text class="jh"></text>{{item.store_title}}
           <text class="reply" wx:if="{{!item.is_read}}">新消息</text>
         </view>
-        <view class="order-date data_{{item.status}}" >{{afterSaleStatus[item.status]}}</view>
+        <!--如果有退货并在退货中-->
+        <view class="order-date data_waiting_response" wx:if="{{item.saleback.id && (item.saleback.status === 'init' || item.saleback.status === 'pick')}}">退货中</view>
+        <view class="order-date data_{{item.status}}" wx:else>{{afterSaleStatus[item.status]}}</view>
       </view>
       <view class="item-view">
         <view class="item">
@@ -107,10 +109,7 @@
     <view class="after-result">
         <view class="left">{{item.created}}</view>
         <view class="right" wx:if="{{item.saleback.id}}">
-          <navigator wx:if="{{item.saleback.status === 'init' || item.saleback.status === 'pick'}}" url="/pages/afterSaleReturn/afterSaleReturn?id={{item.saleback.id}}">
-            <button size="mini" class="btn3">退货中</button>
-          </navigator>
-          <navigator wx:else url="/pages/afterSaleReturn/afterSaleReturn?id={{item.saleback.id}}">
+          <navigator url="/pages/afterSaleReturn/afterSaleReturn?id={{item.saleback.id}}">
             <button size="mini" class="btn3">查看退货</button>
           </navigator>
         </view>

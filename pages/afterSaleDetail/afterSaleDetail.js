@@ -41,7 +41,8 @@ Page({
     },
     id: 0,
     detail: {
-      images: []
+      images: [],
+      saleback: {}
     }
   },
 
