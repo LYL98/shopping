@@ -24,8 +24,8 @@ Page({
       './../../assets/img/complain.png',
       './../../assets/img/group_buy.png',
       './../../assets/img/tags_icon7.png',
-      './../../assets/img/icon_suggestions.png'
-
+      './../../assets/img/icon_suggestions.png',
+      './../../assets/img/return_qrcode.png'
     ],
     has_unread:'',
     initLoad: true,
