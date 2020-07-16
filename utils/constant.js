@@ -31,8 +31,10 @@ module.exports = {
   },
   //售后单状态
   AFTER_SALE_STATUS: {
-    waiting_response: '待处理',//之前为待响应，后续会删除
-    waiting_dispose: '待处理',
+    init: '处理中',
+    waiting_response: '处理中',//之前为待响应，后续会删除
+    waiting_dispose: '处理中',
+    handling: '处理中',
     close: '已完成',
   },
   //售后单处理结果
