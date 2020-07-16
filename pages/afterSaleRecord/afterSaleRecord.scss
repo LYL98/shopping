@@ -41,7 +41,7 @@
     > view{
       flex: 1;
     }
-    > .order-date{
+    >.order-date{
       text-align: right;
       flex: initial !important;
       font-size: 24rpx;
@@ -51,7 +51,7 @@
       color: #00AE66 ;
       font-size: 28rpx;
     }
-    .data_waiting_response, .data_waiting_dispose{
+    .data_handling{
       color: #70ACF0 ;
       font-size: 28rpx;
     }

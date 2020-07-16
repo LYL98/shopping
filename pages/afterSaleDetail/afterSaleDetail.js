@@ -19,7 +19,6 @@ Page({
     hintBlackSrc: './../../assets/img/hint_black.png',
     defImg:'./../../assets/img/default_avatar.png',
     defcustImg: './../../assets/img/defcustImg.png',
-    afterSaleStatus: constant.AFTER_SALE_STATUS,
     afterSaleResult: constant.AFTER_SALE_RESULT,
     commentName:{
       member: "你",

@@ -72,8 +72,9 @@
           <text class="reply" wx:if="{{!item.is_read}}">新消息</text>
         </view>
         <!--如果有退货并在退货中-->
-        <view class="order-date data_waiting_response" wx:if="{{item.saleback.id && (item.saleback.status === 'init' || item.saleback.status === 'pick')}}">退货中</view>
-        <view class="order-date data_{{item.status}}" wx:else>{{afterSaleStatus[item.status]}}</view>
+        <view class="order-date data_handling" wx:if="{{item.saleback.id && (item.saleback.status === 'init' || item.saleback.status === 'pick')}}">退货中</view>
+        <view class="order-date data_close" wx:elif="{{item.status === 'close'}}">已完成</view>
+        <view class="order-date data_handling" wx:else>处理中</view>
       </view>
       <view class="item-view">
         <view class="item">

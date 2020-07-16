@@ -13,8 +13,6 @@ Page({
     tabIndex: 'await',
     checkedSSrc: './../../assets/img/checked_s.png',
     prefecture8Src: './../../assets/img/checkedTIng.png',
-    afterSaleStatus: constant.AFTER_SALE_STATUS,
-    afterSaleResult: constant.AFTER_SALE_RESULT,
     query: {
       page: 1,
       page_size: constant.PAGE_SIZE
