@@ -544,7 +544,7 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
   color: #A5A5A5;
   border-radius: 54rpx;
   height: 54rpx;
-  line-height: 54rpx;
+  line-height: 54rpx !important;
   &:active{
     opacity: 0.7;
   }
@@ -558,7 +558,7 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
   color: #fff;
   border-radius: 54rpx;
   height: 54rpx;
-  line-height: 54rpx;
+  line-height: 54rpx !important;
   &:active{
     opacity: 0.7;
   }
