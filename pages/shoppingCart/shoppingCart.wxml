@@ -30,6 +30,7 @@
           <text wx:if="{{item.frame_id}}" class="frame">有筐</text>
           <text wx:if="{{item.min_num_per_order}}" class="min-num">{{item.min_num_per_order}}件起售</text>
         </view>
+        <view style="height: 30rpx;"></view>
       </view>
     </navigator>
     <view class="join" style="bottom: 30rpx; left: 266rpx;">
