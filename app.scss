@@ -4,6 +4,65 @@ Page {
   font-size: 30rpx;
 }
 
+
+
+/*flex布局*/
+.flex {
+	display: flex;
+}
+.flex1 {
+	flex: 1;
+}
+.flex-column{
+	display: flex;
+	flex-direction: column;
+}
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.flex-wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+.justify-center {
+	display: flex;
+	justify-content: center;
+}
+.justify-end {
+	display: flex;
+	justify-content: flex-end;
+}
+.flex-shrink-zero{
+	flex-shrink: 0;
+}
+.justify-between {
+	display: flex;
+	justify-content: space-between;
+}
+.align-center {
+	display: flex;
+	align-items: center;
+}
+.align-end {
+	display: flex;
+	align-items: flex-end;
+}
+.align-between{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.text-align-center{
+	text-align: center;
+}
+
+.text-align-right{
+	text-align: right;
+}
+
 /*线共用*/
 .border-across1{
   margin: 0 30rpx;

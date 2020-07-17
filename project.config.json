@@ -103,7 +103,7 @@
 					"id": 6,
 					"name": "商品详情",
 					"pathName": "pages/itemDetail/itemDetail",
-					"query": "id=16542",
+					"query": "id=16688",
 					"scene": null
 				},
 				{
