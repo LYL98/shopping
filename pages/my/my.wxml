@@ -75,16 +75,20 @@
               <text>售后</text>
               <text class="reply" wx:if="{{has_unread.has_unread}}">有新消息</text>
             </navigator>
+            <navigator class="item" url="/pages/afterSaleQrCode/afterSaleQrCode">
+              <image src="{{optionSrc[10]}}"></image>
+              <text>退货码</text>
+            </navigator>
             <navigator class="item " url="/pages/shop/shop?name=my">
               <image src="{{optionSrc[3]}}"></image>
               <text>查看门店</text>
             </navigator>
-            <navigator class="item" url="/pages/myCsm/myCsm">
-              <image src="{{optionSrc[5]}}"></image>
-              <text>我的客户经理</text>
-            </navigator>
           </view>
           <view class="option-tiem">
+            <navigator class="item" url="/pages/myCsm/myCsm">
+              <image src="{{optionSrc[5]}}"></image>
+              <text>客户经理</text>
+            </navigator>
             <navigator class="item" url="/pages/suggestions/suggestions">
               <image src="{{optionSrc[9]}}"></image>
               <text>需求提报</text>
@@ -99,7 +103,6 @@
               <text>团购</text>
             </view>
             <view class="item" wx:else></view>
-            <view class="item"></view>
             <view class="item"></view>
           </view>
         </view>

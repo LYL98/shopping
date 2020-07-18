@@ -179,6 +179,12 @@
   padding:10rpx 30rpx;
   font-size:24rpx;
   text-align: left;
+  >.revoke{
+    color: #A5A5A5;
+    font-size: 24rpx;
+    text-align: center;
+    margin: 42rpx 0;
+  }
 }
 .comment-item:nth-child(n+2) {
   padding:20rpx 30rpx;
@@ -293,7 +299,7 @@
     }
   }
 }
-.audit-reply{
+.audit-reply, .sale-return{
   height:80rpx;
   line-height:80rpx;
   text-align:center;
@@ -302,11 +308,19 @@
   width:94vw;
   padding:20rpx 3vw;
   background: #fff;
-}
-.audit-reply navigator{
-  background:#00AE66;
-  color: #fff;
-  border-radius: 40rpx;
+  >navigator{
+    background:#00AE66;
+    color: #fff;
+    border-radius: 40rpx;
+  }
+  &.sale-return{
+    >navigator{
+      background:#fff;
+      color: #00AE66;
+      border-radius: 40rpx;
+      border: 1rpx solid #00AE66;
+    }
+  }
 }
 .audit-content{
   color: #999;

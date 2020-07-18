@@ -12,8 +12,8 @@
 
 <view class="item-view">
   <view class="item" wx:for="{{dataItem}}" wx:key="index">
-    <view class="no-nav {{(item.is_on_sale && tools.judgeItemStock(item) && item.is_quoted) ? '' : 'under_ground' }}">
-      <view class="checked" bindtap="redioSelect" data-rs="{{item}}" >
+    <navigator class="{{(item.is_on_sale && tools.judgeItemStock(item) && item.is_quoted) ? '' : 'under_ground' }}" url="/pages/itemDetail/itemDetail?id={{item.id}}">
+      <view class="checked" catch:tap="redioSelect" data-rs="{{item}}">
         <image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
       </view>
       <view class="img">
@@ -30,11 +30,15 @@
           <text wx:if="{{item.frame_id}}" class="frame">有筐</text>
           <text wx:if="{{item.min_num_per_order}}" class="min-num">{{item.min_num_per_order}}件起售</text>
         </view>
-        <view class="join-shop-cart">
-          <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" isDeleteHint/>
-        </view>
+        <view style="height: 30rpx;"></view>
+      </view>
+    </navigator>
+    <view class="join" style="bottom: 30rpx; left: 266rpx;">
+      <view style="min-height:36rpx;">
+        <joinShopCart size="small" sourcePage="shoppingCart" itemData="{{item}}" bindcallback="upDownCallback" isDeleteHint/>
       </view>
     </view>
+
   </view>
   <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view>
   <defaultPage wx:else currentPage="shoppingCart" loading="{{loading}}"></defaultPage>

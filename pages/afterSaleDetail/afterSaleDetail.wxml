@@ -4,17 +4,31 @@
 <view class="brief">
   <view class="top t-c"  wx:if="{{detail.status != 'close'}}">
     <image src="{{checkedSrc}}"></image>
-    <text class="text1" wx:if="{{afterSaleResult[detail.result]}}">{{afterSaleResult[detail.result]}}</text>
+    <text class="text1" style="font-size: 32rpx;" wx:if="{{afterSaleResult[detail.result]}}">{{afterSaleResult[detail.result]}}</text>
     <view class="afterdoing" wx:else>
-        <text >商家正在处理中</text>
-        <text >商家正在处理中,请您稍等</text>
+        <text>商家正在处理中</text>
+        <text>商家正在处理中,请您稍等</text>
     </view>
   </view>
-  <view class="top t-c done"  wx:else>
+  <view class="top t-c done" wx:else>
     <image src="{{checkedDone}}"></image>
-    <view class="afterdone">
+    <!--如果有退货-->
+    <view class="afterdone" wx:if="{{detail.saleback.id}}">
       <view class="title">
-        <text >已完成售后服务</text>
+        <!--退货中-->
+        <text style="font-size: 32rpx;" wx:if="{{detail.saleback.status === 'init' || detail.saleback.status === 'pick'}}">售后完成，商品退货处理中</text>
+        <!--退货完成-->
+        <text style="font-size: 32rpx;" wx:elif="{{detail.saleback.status === 'finish'}}">售后完成，退货已完成</text>
+        <!--退货关闭-->
+        <text style="font-size: 32rpx;" wx:else>售后完成，商品退货已关闭</text>
+      </view>
+      <view class="type" wx:if="{{detail.opt_type}}">处理类型：{{opt_type[detail.opt_type]}}</view>
+      <view class="dic" wx:if="{{detail.opt_detail}}">处理时间：{{detail.done_time}}</view>
+    </view>
+    <!--否则-->
+    <view class="afterdone" wx:else>
+      <view class="title">
+        <text style="font-size: 32rpx;">已完成售后服务</text>
       </view>
       <view class="type" wx:if="{{detail.opt_type}}">处理类型：{{opt_type[detail.opt_type]}}</view>
       <view class="dic" wx:if="{{detail.opt_detail}}">处理时间：{{detail.done_time}}</view>
@@ -39,7 +53,7 @@
       </view>
       <view class="content">
         <view class="title">{{detail.item_title}}</view>
-        <view class="label {{system}}">
+        <view class="label">
           <text wx:for="{{detail.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
           <text class="frame" wx:if="{{detail.frame_id}}">有筐</text>
         </view>
@@ -68,11 +82,14 @@
 
 <view class="interact">商家互动</view>
 <view>
-  <view class="comment-item" wx:for="{{detail.comment}}" wx:key="index" wx:if="{{item.content}}">
-    <view class="{{commentName[item.operator_class] == '客服' ? 'sys': 'usr'}}">
+  <view class="comment-item" wx:for="{{detail.comment}}" wx:key="index">
+    <!--撤回信息-->
+    <view wx:if="{{item.is_revoke}}" class="revoke">“客服”撤回了一条消息</view>
+    <!--正常信息-->
+    <view wx:else class="{{commentName[item.operator_class] == '客服' ? 'sys': 'usr'}}">
         <view class="dialog">
           <view class="content">{{item.content}}</view>
-          <view class="imgs" wx:if="{{item.images.length>0}}" >
+          <view class="imgs" wx:if="{{item.images.length > 0}}" >
             <image wx:key="index" wx:for="{{item.images}}" data-src="{{item.images}}" data-index="{{index}}" bindtap="previewImage" wx:for-item="cell" src="{{tencentPath + cell + '_watermark200x200'}}"></image>
           </view>
           <view class="videos" wx:if="{{item.media_urls.length > 0}}">
@@ -85,16 +102,22 @@
         </view>
         <view class="name" wx:if="{{item.operator_class=='member'}}" ><image src="{{item.avatar ? (tencentPath  + item.avatar + '_min200x200') : defImg}}"></image></view>
         <view class="name" wx:else><image src="{{item.avatar ? (tencentPath  + item.avatar + '_min200x200') : defcustImg}}"></image></view>
-       
     </view>
   </view>
 </view>
 
-<view style="height:90px;" wx:if="{{detail.status!='close'}}"></view>
-<view  class="audit-reply"  wx:if="{{detail.status!='close'}}">
-  <navigator url="/pages/reply/reply?id={{detail.id}}"  wx:if="{{detail.status!='close'}}">
-      发送消息
-  </navigator>
-</view>
+<block wx:if="{{detail.status && detail.status !== 'close'}}">
+  <view style="height:90px;"></view>
+  <view  class="audit-reply">
+    <navigator url="/pages/reply/reply?id={{detail.id}}">发送消息</navigator>
+  </view>
+</block>
+
+<block wx:elif="{{detail.saleback.id}}">
+  <view style="height:90px;"></view>
+  <view class="sale-return">
+    <navigator url="/pages/afterSaleReturn/afterSaleReturn?id={{detail.saleback.id}}">查看退货</navigator>
+  </view>
+</block>
 
 <loading loading="{{loading}}"/>

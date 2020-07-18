@@ -141,6 +141,7 @@ App({
 
   //网络请求异常处理方法
   requestResultCode(res) {
+    console.log(res);
     let that = this;
     if (res.statusCode >= 500){
       wx.showModal({
@@ -150,7 +151,15 @@ App({
         confirmColor: "#00AE66",
         showCancel: false
       });
-    }else if (res.data.code == 200 || res.data.code == 201) {
+    } else if (res.statusCode >= 400) {
+      wx.showModal({
+        title: '提示',
+        content: '请求出错啦',
+        confirmText: '我知道了',
+        confirmColor: '#00ADE7',
+        showCancel: false
+      });
+    } else if (res.data.code == 200 || res.data.code == 201) {
       //200 登录失效、201 重新绑定
       wx.showModal({
         title: "提示",

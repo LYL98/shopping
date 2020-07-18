@@ -16,11 +16,13 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
+		"useIsolateContext": true,
 		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
@@ -133,10 +135,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 11,
 					"name": "售后详情",
 					"pathName": "pages/afterSaleDetail/afterSaleDetail",
-					"query": "id=75",
+					"query": "id=183419",
 					"scene": null
 				},
 				{
@@ -172,6 +174,27 @@
 					"name": "搜索",
 					"pathName": "pages/search/search",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后二维码",
+					"pathName": "pages/afterSaleQrCode/afterSaleQrCode",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后列表",
+					"pathName": "pages/afterSaleRecord/afterSaleRecord",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 19,
+					"name": "退货单",
+					"pathName": "pages/afterSaleReturn/afterSaleReturn",
+					"query": "id=1",
 					"scene": null
 				}
 			]

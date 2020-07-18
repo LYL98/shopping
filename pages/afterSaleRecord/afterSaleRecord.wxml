@@ -9,7 +9,7 @@
 
 <!--售后申请start-->
 <view wx:if="{{tabIndex === 'await'}}">
-  <view wx:for="{{dataItem.items}}" wx:key="item.id" class="order-item">
+  <view wx:for="{{dataItem.items}}" wx:key="index" class="order-item">
     <view class="order-title">
       <view class="order-code"><text class="jh"></text>{{item.store_title}}</view>
       <view class="order-date">{{item.created}}</view>
@@ -42,7 +42,7 @@
             </view>
           </view>
         </view>
-        <view class="btn">
+        <view class="btn" wx:if="{{d.count_real}}">
           <navigator wx:if="{{d.aftersale_id}}" url="/pages/afterSaleDetail/afterSaleDetail?id={{d.aftersale_id}}">
             <button size="mini" class="btn3">查看售后</button>
           </navigator>
@@ -65,52 +65,57 @@
 
 <!--申请记录start-->
 <view wx:elif="{{tabIndex === 'record'}}">
-  <navigator url="/pages/afterSaleDetail/afterSaleDetail?id={{item.id}}" wx:for="{{dataItem.items}}" wx:key="item.id" class="order-item">
-    <view class="order-title">
-      <view class="order-code"><text class="jh"></text>{{item.store_title}}
-        <text class="reply" wx:if="{{!item.is_read}}">新消息</text>
+  <block wx:for="{{dataItem.items}}" wx:key="index">
+    <navigator url="/pages/afterSaleDetail/afterSaleDetail?id={{item.id}}" class="order-item" style="border-bottom: 0;">
+      <view class="order-title">
+        <view class="order-code"><text class="jh"></text>{{item.store_title}}
+          <text class="reply" wx:if="{{!item.is_read}}">新消息</text>
+        </view>
+        <!--如果有退货并在退货中-->
+        <view class="order-date data_handling" wx:if="{{item.saleback.id && (item.saleback.status === 'init' || item.saleback.status === 'pick')}}">退货中</view>
+        <view class="order-date data_close" wx:elif="{{item.status === 'close'}}">已完成</view>
+        <view class="order-date data_handling" wx:else>处理中</view>
       </view>
-      <view class="order-date data_{{item.status}}" >{{afterSaleStatus[item.status]}}</view>
-    </view>
-    <view class="item-view">
-      <view class="item">
-        <view class="no-nav">
-          <view class="img">
-            <view class="mark">
-              <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
-              <text wx:if="{{item.is_gb_order}}" class="is-gb-order">团</text>
-            </view>
-            <image wx:if="{{item.item_image}}" src="{{tencentPath + item.item_image}}_watermark200x200"></image>
-            <view class="image" wx:else></view>
-          </view>
-          <view class="content">
-            <view class="title">{{item.item_title}}</view>
-            <view class="label {{system}}">
-              <text wx:for="{{item.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-              <text class="frame" wx:if="{{item.frame_id}}">有筐</text>
-            </view>
-            <view class="price-unit">
-              <view>
-                ￥{{tools.returnPrice(item.item_price_sale)}}
+      <view class="item-view">
+        <view class="item">
+          <view class="no-nav">
+            <view class="img">
+              <view class="mark">
+                <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+                <text wx:if="{{item.is_gb_order}}" class="is-gb-order">团</text>
               </view>
+              <image wx:if="{{item.item_image}}" src="{{tencentPath + item.item_image}}_watermark200x200"></image>
+              <view class="image" wx:else></view>
             </view>
-            <view class="num-price">
-              <text class="num-str skeleton-rect">× {{item.count_real}}</text>
-              <text class="price-str skeleton-rect">￥{{tools.returnPrice(item.amount_real)}}</text>
+            <view class="content">
+              <view class="title">{{item.item_title}}</view>
+              <view class="label {{system}}">
+                <text wx:for="{{item.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
+                <text class="frame" wx:if="{{item.frame_id}}">有筐</text>
+              </view>
+              <view class="price-unit">
+                <view>
+                  ￥{{tools.returnPrice(item.item_price_sale)}}
+                </view>
+              </view>
+              <view class="num-price">
+                <text class="num-str skeleton-rect">× {{item.count_real}}</text>
+                <text class="price-str skeleton-rect">￥{{tools.returnPrice(item.amount_real)}}</text>
+              </view>
             </view>
           </view>
         </view>
       </view>
-      <view class="after-result">
-        <!-- <image src="{{checkedSSrc}}" wx:if="{{item.status === 'close'}}"></image>
-        <image src="{{prefecture8Src}}" wx:else></image>
-        <text>{{afterSaleStatus[item.status]}}</text> 
-        <text class="interval"></text>
-        <text>{{afterSaleResult[item.result]}}</text> -->
-        {{item.created}}
+    </navigator>
+    <view class="after-result">
+        <view class="left">{{item.created}}</view>
+        <view class="right" wx:if="{{item.saleback.id}}">
+          <navigator url="/pages/afterSaleReturn/afterSaleReturn?id={{item.saleback.id}}">
+            <button size="mini" class="btn3">查看退货</button>
+          </navigator>
+        </view>
       </view>
-    </view>
-  </navigator>
+  </block>
 </view>
 <!--申请记录end-->
 
@@ -119,3 +124,8 @@
 <defaultPage wx:if="{{ dataItem.num <= 0 && tabIndex === 'record' }}" currentPage="afterSaleRecord"></defaultPage>
 
 <loading loading="{{loading}}"/>
+
+<navigator class="return-btn" url="/pages/afterSaleQrCode/afterSaleQrCode" wx:if="{{ dataItem.num > 0 && tabIndex === 'record' }}">
+  <image src="./../../assets/img/qrcode.png" style="width: 32rpx; height: 32rpx;" />
+  <view class="str">退货码</view>
+</navigator>

@@ -13,8 +13,6 @@ Page({
     tabIndex: 'await',
     checkedSSrc: './../../assets/img/checked_s.png',
     prefecture8Src: './../../assets/img/checkedTIng.png',
-    afterSaleStatus: constant.AFTER_SALE_STATUS,
-    afterSaleResult: constant.AFTER_SALE_RESULT,
     query: {
       page: 1,
       page_size: constant.PAGE_SIZE
@@ -50,7 +48,7 @@ Page({
   //获取伙数据
   getData(isInit){
     let that = this;
-    let { initLoad, tabIndex, dataItem } = that.data;
+    let { initLoad, tabIndex, dataItem, query } = that.data;
 
     //判断是否第一次加载，或没数据；如果是：显示loading   否则静默更新数据
     if (initLoad || !dataItem.num) {

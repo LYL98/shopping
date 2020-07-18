@@ -1,0 +1,54 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
+
+<view class="skeleton">
+  <view class="top skeleton-rect">
+      <image src="{{status[detail.status].bg}}"></image>
+      <view class="title">{{status[detail.status].title}}</view>
+      <view class="describe">{{status[detail.status].describe}}</view>
+  </view>
+
+  <view class="return-item">
+      <view class="item">
+          <view class="left skeleton-rect">退货数量</view>
+          <view class="right skeleton-rect">{{detail.back_num || '-'}}件</view>
+      </view>
+      <view class="item" wx:if="{{detail.status !== 'close'}}">
+          <view class="left skeleton-rect">退款金额</view>
+          <view class="right price skeleton-rect">¥{{tools.returnPrice(detail.refund_amount)}}</view>
+      </view>
+  </view>
+
+  <view class="item-view">
+    <view class="item">
+      <view class="no-nav">
+        <view class="img">
+          <view class="mark">
+            <text wx:if="{{detail.item.is_presale}}" class="is-presale">预</text>
+            <text wx:if="{{detail.item.is_gb_order}}" class="is-gb-order">团</text>
+          </view>
+          <image wx:if="{{detail.item.item_image}}" src="{{tencentPath + detail.item.item_image}}_watermark200x200"></image>
+          <view class="image bg-img-container-item skeleton-rect" wx:else></view>
+        </view>
+        <view class="content">
+          <view class="title skeleton-rect">{{detail.item.item_title}}</view>
+          <view class="label">
+            <text wx:for="{{detail.item.item_attrs}}" wx:for-item="a" wx:key="a" class="skeleton-rect">{{a}}</text>
+            <text class="frame skeleton-rect" wx:if="{{detail.item.frame_id}}">有筐</text>
+          </view>
+          <view class="price-unit">
+            <view class="skeleton-rect">
+              ￥{{tools.returnPrice(detail.item.item_price_sale)}}
+            </view>
+          </view>
+          <view class="num-price">
+            <text class="num-str">× {{detail.item.count_real}}</text>
+            <text class="price-str">￥{{tools.returnPrice(detail.item.amount_real)}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="created">{{detail.created}}</view>
+</view>

@@ -16,96 +16,68 @@
 }
 .order-item{
   border-bottom: 20rpx solid #f3f4f6;
-}
-
-.order-item .order-title{
-  border-bottom: 1rpx solid #f3f4f6;
-  display: flex;
-  align-items: center;
-  margin:  0 24rpx;
-  padding: 24rpx 0 24rpx 0;
-  font-size: 28rpx;
-  color: #242424;
-}
-.order-item .order-title  .order-code .jh{
-  position: relative;
-  margin-right: 30rpx;
-}
-.order-item .order-title  .order-code .jh::after{
-  content: '';
-  width: 8rpx;
-  height: 8rpx;
-  border:4rpx solid #A7A7A7;
-  position: absolute;
-  border-radius: 12rpx;
-  top: 50%;
-  margin-top: -6rpx;
-}
-.order-item .order-title > view{
-  flex: 1;
-}
-.order-item .order-title > .order-date{
-  text-align: right;
-  flex: initial !important;
-  font-size: 24rpx;
-  color: #a5a5a5;
-}
-.order-item .date-total {
-  height: 72rpx;
-  text-align: right;
-  font-size: 24rpx;
-  line-height: 72rpx;
-  margin: 0 30rpx;
-}
-.order-item .date-total .price-str text{
-  font-size: 30rpx; font-weight: 500;
-}
-
-.order-item .order-title {
-  .data_close{
-    color: #00AE66 ;
-    font-size: 28rpx;
-  }
-  .data_waiting_response, .data_waiting_dispose{
-    color: #70ACF0 ;
-    font-size: 28rpx;
-  }
-} 
-
-
-.item-view{
-  .item{
-    border-bottom: 1rpx solid #eee;
-    > .btn{
-      display:flex;
-      justify-content:flex-end;
-      margin: 0 30rpx 25rpx;
-      >navigator{
-        height: 54rpx;
-        border-radius: 54rpx;
-      }
-    }
-  }
-}
-
-.order-item{
-  .order-bottom{
-    border-top: 1rpx solid #f3f4f6;
+  .order-title{
+    border-bottom: 1rpx solid #f3f4f6;
     display: flex;
     align-items: center;
-    padding: 15rpx 30rpx;
+    margin:  0 24rpx;
+    padding: 24rpx 0 24rpx 0;
+    font-size: 28rpx;
+    color: #242424;
+    .order-code .jh{
+      position: relative;
+      margin-right: 30rpx;
+      &::after{
+        content: '';
+        width: 8rpx;
+        height: 8rpx;
+        border:4rpx solid #A7A7A7;
+        position: absolute;
+        border-radius: 12rpx;
+        top: 50%;
+        margin-top: -6rpx;
+      }
+    }
     > view{
       flex: 1;
     }
-    > .order-date{
-      color: #999;
-      font-size: 24rpx;
-      flex: initial !important;
-    }
-    > .order-option{
+    >.order-date{
       text-align: right;
-      > button{
-        margin-left: 10rpx;
+      flex: initial !important;
+      font-size: 24rpx;
+      color: #a5a5a5;
+    }
+    .data_close{
+      color: #00AE66 ;
+      font-size: 28rpx;
+    }
+    .data_handling{
+      color: #70ACF0 ;
+      font-size: 28rpx;
+    }
+  }
+  .date-total {
+    height: 72rpx;
+    text-align: right;
+    font-size: 24rpx;
+    line-height: 72rpx;
+    margin: 0 30rpx;
+    .price-str text{
+      font-size: 30rpx; font-weight: 500;
+    }
+  }
+
+  .item-view{
+    .item{
+      border-bottom: 1rpx solid #eee;
+      > .btn{
+        display:flex;
+        justify-content:flex-end;
+        margin: 0 30rpx 25rpx;
+        >navigator{
+          height: 54rpx;
+          border-radius: 54rpx;
+        }
       }
     }
   }
@@ -113,23 +85,47 @@
 
 .after-result{
   overflow: hidden;
-  padding: 15rpx 30rpx;
-  font-size: 24rpx;
-  color: #999;
-  text-align: right;
-  > image{
-    width: 30rpx;
-    height: 30rpx;
-    float: left;
-    margin-right: 5rpx;
-    position: relative;
-    top: 1rpx;
+  height: 54rpx;
+  padding: 5rpx 30rpx 15rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 20rpx solid #f3f4f6;
+  >.left{
+    font-size: 24rpx;
+    color: #999;
+    flex: 1;
   }
-  > .interval{
-    display: inline-block;
-    width: 1rpx;
-    background: #f3f4f6;
-    margin: 0 10rpx;
-    height: 18rpx;
+  >.right{
+    >navigator{
+      height: 54rpx;
+      border-radius: 54rpx;
+      >button{
+        color: #00AE66;
+        &::after{
+          border: 1rpx solid #00AE66;
+        }
+      }
+    }
+  }
+}
+
+.return-btn{
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  bottom: 280rpx;
+  background-image: linear-gradient(180deg, #00D79F 0%, #00AE66 100%);
+  box-shadow: 0 -8rpx 4rpx 0 rgba(0,0,0,0.04);
+  border-radius: 0 8rpx 8rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 152rpx;
+  height: 74rpx;
+  font-size: 26rpx;
+  color: #fff;
+  >image{
+    display: block;
+    margin-right: 10rpx;
   }
 }

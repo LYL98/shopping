@@ -19,7 +19,6 @@ Page({
     hintBlackSrc: './../../assets/img/hint_black.png',
     defImg:'./../../assets/img/default_avatar.png',
     defcustImg: './../../assets/img/defcustImg.png',
-    afterSaleStatus: constant.AFTER_SALE_STATUS,
     afterSaleResult: constant.AFTER_SALE_RESULT,
     commentName:{
       member: "你",
@@ -31,15 +30,18 @@ Page({
       delivery: '物流异常',
       amount_delivery: '运费退还',
       weight: '少称',
+      not_match: '与SKU描述不相符',
       num: '缺货/错货',
       num_short: '缺货',
       num_error: '错货',
       big_order_bonus: '大单优惠',
+      betray_low_price: '违反低价承诺',
       other: '其他',
     },
     id: 0,
     detail: {
-      images: []
+      images: [],
+      saleback: {}
     }
   },
 
@@ -47,15 +49,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this;
     //判断登录
     app.signIsLogin(() => {
-      let id = options.id || 2;
-      that.setData({
-        id: id,
-        system: app.globalData.system
+      let id = options.id || '';
+      this.setData({
+        id: id
       }, () => {
-        that.aftersaleDetail();
+        this.aftersaleDetail();
       });
     });
   },
