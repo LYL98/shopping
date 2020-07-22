@@ -196,6 +196,13 @@
 					"pathName": "pages/afterSaleReturn/afterSaleReturn",
 					"query": "id=1",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "热销榜单",
+					"pathName": "pages/hotSaleList/hotSaleList",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

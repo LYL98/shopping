@@ -27,6 +27,10 @@ Component({
     sourcePage: {
       type: String,
       value: ''
+    },
+    showFlyball: {
+      type: Boolean,
+      value: true
     }
   },
 

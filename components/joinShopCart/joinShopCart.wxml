@@ -36,15 +36,15 @@
 
       <!--数量等于0的情况start-->
       <view class="plus-minus {{size}}" wx:else>
-        <view class="join-btn" bindtap="up">加入购物车</view>
-        <view class="add-cart-icon" bindtap="up">
+        <view class="join-btn" catchtap="up">加入购物车</view>
+        <view class="add-cart-icon" catchtap="up">
           <image src="./../../assets/img/cart_icon.png"/>
         </view>
       </view>
       <!--数量等于0的情况end-->
 
       <!--小飞球-->
-      <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
+      <view wx:if="{{showFlyball}}" class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
     </view>
   </view>
 

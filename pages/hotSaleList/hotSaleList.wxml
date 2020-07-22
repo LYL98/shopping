@@ -1,0 +1,52 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<view class="hot-sale-page">
+  <view class="ph-head-bg"></view>
+  <view class="ph-body-bg"></view>
+  <view class="hot-sale-header">
+    <view class="title">商品热销榜</view>
+    <view class="desc-box">
+      <text wx:for="{{['官方销售数据', '每日更新', '覆盖在售商品']}}" wx:key="index" class="desc-item">{{item}}</text>
+    </view>
+  </view>
+  <view class="hot-sale-body">
+    <view class="hot-sale-title">
+        <view class="title">热销商品</view>
+    </view>
+    <view class="hot-sale-list">
+          <view class="hot-sale-item" wx:for="{{goods}}" wx:key="index" bindtap="clickItem" data-id="{{item.id}}">
+            <view class="hot-sale-item-left">
+              <image src="{{tencentPath + item.images[0]}}"></image>
+              <view class="ranking {{index<3?'top'+(index+1):'top-normal'}}">TOP{{index+1}}</view>
+            </view>
+            <view class="hot-sale-item-right">
+              <view class="title">{{item.title}}</view>
+              <view class="sku">
+                <text wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 | </text>
+                <text> {{item.package_spec}} | {{item.origin_place}}</text>
+              </view>
+              <view class="price-box">
+                <block wx:if="{{item.is_quoted}}">
+                  <view class="sale-price">¥{{tools.returnPrice(item.price_sale)}}</view>
+                  <view class="original-price">¥{{tools.returnPrice(item.price_origin)}}</view>
+                </block>
+                <block wx:else>
+                  <text>今日未报价</text>
+                </block>
+              </view>
+              <view class="join" catchtap="return ture" style="{{tools.returnItemStock(item) ? 'bottom: 32rpx' : 'bottom: 0rpx'}}">
+                <view style="min-height:36rpx;">
+                  <joinShopCart wx:if="{{tools.judgeItemStock(item)}}" showFlyball="{{false}}" size="small" style="float:right;" itemData="{{item}}"/>
+                </view>
+                <view style="clear: both;"></view>
+                <view class="repertory">{{tools.returnItemStock(item)}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+  </view>
+  <view class="hot-sale-footer">
+    <view class="h-line"></view>
+    <view class="title">蒲公英农产品商城</view>
+    <view class="h-line"></view>
+  </view>
+</view>
