@@ -127,6 +127,10 @@ module.exports = {
 
     adviceItem:apiC + '/advice_item',
 
+    // 热销榜单
+    hotSaleItems: apiC + '/item/top',
+
+
   },
   //腾讯Bucket、Region
   tencentBucket: tencentBucket, //Bucket

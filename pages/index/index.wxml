@@ -12,10 +12,10 @@
     <view class="skeleton-rect"><search bind:tap="clickSearch"/></view>
     
     <view class="skeleton-rect" style="position:relative; background: #f3f4f6;">
-      <swiper autoplay style="{{'height:33.33vw; width:100%;'}}" class="bg-img-container-banner" bindchange="swiperChange">
+      <swiper autoplay style="{{'height: 280rpx; width:100%;'}}" class="bg-img-container-banner" bindchange="swiperChange">
         <swiper-item wx:for="{{bannerList}}" wx:key="index">
-          <image wx:if="{{item.url}}" data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 33.33vw;"></image>
-          <image wx:else data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 33.33vw;"></image>
+          <image wx:if="{{item.url}}" mode="widthFix" data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 280rpx;"></image>
+          <image wx:else data-index="{{index}}" mode="widthFix" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 280rpx;"></image>
         </swiper-item>
       </swiper>
       <view class="dotwrap">
@@ -37,6 +37,10 @@
         </navigator>
       </block>
     </view>
+    <view class="pannel-line"></view>
+    <navigator class="hot-sale-entry skeleton-rect" url="/pages/hotSaleList/hotSaleList">
+      <image src="/assets/img/hotSale/hot_sale_entry.png"></image>
+    </navigator>
     <view class="pannel-line"></view>
     <view class="recently-collect-title">
       <text class="interval"></text>
