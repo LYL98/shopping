@@ -15,19 +15,19 @@
     <view class="hot-sale-list">
           <view class="hot-sale-item" wx:for="{{goods}}" wx:key="index" bindtap="clickItem" data-id="{{item.id}}">
             <view class="hot-sale-item-left">
-              <image src="{{tencentPath + item.images[0]}}"></image>
+              <image src="{{tencentPath + item.images[0]}}_watermark200x200"></image>
               <view class="ranking {{index<3?'top'+(index+1):'top-normal'}}">TOP{{index+1}}</view>
             </view>
             <view class="hot-sale-item-right">
               <view class="title">{{item.title}}</view>
               <view class="sku">
-                <text wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 | </text>
-                <text> {{item.package_spec}} | {{item.origin_place}}</text>
+                <text decode="{{true}}" wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤&nbsp;|&nbsp;</text>
+                <text decode="{{true}}"> {{item.package_spec}}&nbsp;|&nbsp;{{item.origin_place}}</text>
               </view>
               <view class="price-box">
                 <block wx:if="{{item.is_quoted}}">
                   <view class="sale-price">¥{{tools.returnPrice(item.price_sale)}}</view>
-                  <view class="original-price">¥{{tools.returnPrice(item.price_origin)}}</view>
+                  <view class="original-price" wx:if="{{item.price_origin}}">¥{{tools.returnPrice(item.price_origin)}}</view>
                 </block>
                 <block wx:else>
                   <text>今日未报价</text>
