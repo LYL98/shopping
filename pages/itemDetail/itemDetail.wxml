@@ -56,7 +56,7 @@
 				<text class="goods_top--symbol">￥</text>
 				<text class="goods_top--money">{{tools.returnPrice(detail.price_sale)}}</text>
 				<text class="goods_top--symbol">/件</text>
-				<text class="goods_top--weight">约10.1/斤</text>
+				<text class="goods_top--weight" wx:if="{{detail.is_quoted}}">约{{tools.returnPrice(detail.price_sale  / (detail.gross_weight / 10))}}/斤</text>
 			</view>
 			<view class="goods_top--share align-center">
 				<button class="share_btn align-center" open-type="share">
