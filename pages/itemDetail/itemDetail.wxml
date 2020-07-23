@@ -69,7 +69,7 @@
 			{{detail.title}}
 		</view>
 		<view class="goods_info--tag justify-between align-center">
-			<view>
+			<view class="align-center">
 				<view
 				 class="tag_item align-center"
 				 wx:for="{{tools.returnTags(detail.tags)}}"
