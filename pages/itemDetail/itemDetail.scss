@@ -423,6 +423,7 @@ margin-left: 16rpx;
   font-size: 24rpx;
   color: #989797;
   width:118rpx;
+  flex-shrink: 0;
 }
 .goods_info--label--top{
   width:80rpx;
@@ -503,6 +504,10 @@ margin-left: 16rpx;
 }
 .goods_attr--box{
   height: 82rpx;
+}
+.goods_info--label--max {
+  min-height: 82rpx;
+  padding: 4rpx 0;
 }
 .goods_attr--box--gray{
   background: #FAFCFD;
