@@ -45,7 +45,8 @@
     "pages/updateSystem/updateSystem",
     "pages/suggestions/suggestions",
     "pages/suggestionsResult/suggestionsResult",
-    "pages/hotSaleList/hotSaleList"
+    "pages/hotSaleList/hotSaleList",
+    "pages/applyStore/applyStore"
   ],
   "plugins": {
     "live-player-plugin": {
