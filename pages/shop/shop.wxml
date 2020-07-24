@@ -14,6 +14,9 @@
   <view class="address">
     收货地址: {{item.address}}
   </view>
+  <view class="location" hover-stop-propagation="{{true}}">
+    <locationAuth openMap="{{false}}" bind:getlocation="getLocationCB"></locationAuth>
+  </view>
 </view>
 <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view>
 <defaultPage wx:else currentPage="shop"></defaultPage>

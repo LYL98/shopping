@@ -47,6 +47,12 @@
   </view>
   <view wx:else class="right">{{edit.address}}</view>
 </view>
+<view class="content" wx:if="{{isedit}}">
+  <view class="left"></view>
+  <view class="right">
+    <locationAuth openMap="{{true}}" bind:getlocation="getLocationCB"></locationAuth>
+  </view>
+</view>
   <view class="btn-view">
     <!--<button wx:if="{{!editInofName}}" class="btn1"  bindtap="cancel">-->
       <!--取消-->

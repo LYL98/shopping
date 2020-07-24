@@ -83,5 +83,9 @@ Page({
         });
       }
     }
-  }
+  },
+  // 修改门店geo
+  getLocationCB(e) {
+    const {lat, lng,} = e.detail
+  },
 })

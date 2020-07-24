@@ -5,62 +5,55 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    area:[
+      {key:'lt_50', name: '< 50平米'},
+      {key:'in_50_100', name: '50<100平米'},
+      {key:'gt_100', name: '> 100平米'}
+    ],
+    areaIndex:-1,
+    ages: [
+      { key:'before_70', name: '70前' },
+      { key:'after_70', name: '70后' },
+      { key:'after_80', name: '80后' },
+      { key:'after_90', name: '90后' }
+    ],
+    agesIndex:-1,
+    facility:[{key:'freeze', name: '冰柜'}, {key:"colfd", name:"冷藏"}],
+    facilityIndex: 0,
+    address: "",
+    detailAddress: "",
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+ 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  bindPickerChange(e) {
+    const index = e.detail.value
+    const { type } = e.currentTarget.dataset
+    console.log(index, type)
+    this.setData({
+      [`${type}Index`]: index
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  changeFacility(e) {
+    const {index} = e.currentTarget.dataset
+    this.setData({
+      facilityIndex: index
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  getLocationCB(e) {
+    console.log(e)
   }
+
 })

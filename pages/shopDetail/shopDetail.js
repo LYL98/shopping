@@ -50,6 +50,11 @@ Page({
       });
     });
   },
+  //
+  getLocationCB(e) {
+    console.log(e)
+    const {lat, lng, address } = e.detail
+  },
 //点击上传图片
   clickPic() {
     let that = this;
