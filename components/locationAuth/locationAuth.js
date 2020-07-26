@@ -7,14 +7,18 @@ let systemAuthMsg =
 Component({
 
   properties: {
-		openMap: {
+	openMap: {
 			type: Boolean,
 			value: true
     },
     showText: {
       type: Boolean,
       value: true
-    }
+	},
+	itemIndex: {
+		type: Number,
+		value: -1,
+	}
   },
 
   data: {
@@ -35,7 +39,8 @@ Component({
     },
     // 地址更新
   switchAddress() {
-		const { lat, lng } = this.data.location;
+	  	const { location } = this.data
+		const { lat, lng } = location;
 		wx.chooseLocation({
 			latitude: lat,
 			longitude: lng,
@@ -48,6 +53,7 @@ Component({
 						lat: latitude,
 						lng: longitude,
 						address,
+						
 					})
 				}
 			}
@@ -56,9 +62,8 @@ Component({
 
     // 自动定位 获取经纬度
     initLocation(notSystemAuthMsg = false) {
-      console.log('111111');
-      debugger
-      let that = this
+	  let that = this
+	  
       wx.getLocation({
 				type: 'gcj02', //wgs84
 				success: function(res){
@@ -70,7 +75,8 @@ Component({
 						that.switchAddress()
 					} else {
 						that.triggerEvent('getlocation', {
-							...that.data.location
+							...that.data.location,
+							itemIndex: that.data.itemIndex
 						})
 					}
 					return;
@@ -78,10 +84,8 @@ Component({
 				fail: (res) => {
 					console.log('wx.getLocation fail 的 res');
 					console.log(res);
-          // 显示授权弹窗
-          this.setData({ showLocationAuthDialog: true });
-
-					//
+					// 显示授权弹窗
+					this.setData({ showLocationAuthDialog: true });
 					wx.getSetting({
 						complete: (res) => {
 							console.log('wx.getSetting complete 的 res');
@@ -91,15 +95,15 @@ Component({
 								this.setData({ showSystemLocationAuth: false });
 							} else {
 								this.setData({ showSystemLocationAuth: true });
-                //  手机系统定位未开启
-                if (!notSystemAuthMsg) {
-                  wx.showModal({
+								//  手机系统定位未开启
+								if (!notSystemAuthMsg) {
+									wx.showModal({
 										content: systemAuthMsg,
 										confirmText: '好的',
 										confirmColor: '#00AE66',
 										showCancel: false
 									});
-                }
+                				}
 							}
 						}
 					});

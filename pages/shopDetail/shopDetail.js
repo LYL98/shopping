@@ -50,10 +50,14 @@ Page({
       });
     });
   },
-  //
+  // 点击自动定位回调
   getLocationCB(e) {
     console.log(e)
     const {lat, lng, address } = e.detail
+    this.data.location = {lat, lng}
+    this.setData({
+      ['edit.address']: address
+    })
   },
 //点击上传图片
   clickPic() {
@@ -253,7 +257,7 @@ Page({
 
     if (that.data.loading) return;
     that.setData({ loading: true }, () => {
-      Http.post(config.api.editStore, that.data.edit)
+      Http.post(config.api.editStore, {...that.data.edit, geo: this.data.location})
         .then(res => {
           wx.navigateTo({
             url: '/pages/shop/shop',
@@ -299,6 +303,8 @@ Page({
             phone: rd.phone,
             id: rd.id,
           };
+          const {lat, lng} = rd.geo
+          that.data.location = {lat:lat, lng:lng}
           that.setData({
             detail: rd,
             edit:rs

@@ -1,4 +1,4 @@
-<view class="" wx:if="{{true}}">
+<view class="" wx:if="{{applyStatus == 'uncommitted'}}">
     <view class="header-box">
         <image src="/assets/img/applyStore/apply_store_logo.png"></image>
     </view>
@@ -37,7 +37,7 @@
                 <view class="form-item" style="padding-right:0rpx;">
                     <text class="label">门店地址：</text>
                     <view class="border align-center">
-                        <input style="flex:1;"  placeholder="请选择所在的区域" placeholder-class="plhd" value="{{address}}"></input>
+                        <input style="flex:1;"  placeholder="请选择所在的区域" placeholder-class="plhd" value="{{address}}" data-type="address" bindinput="changeInput"></input>
                         <view class="">
                             <locationAuth showText="{{false}}" bind:getlocation="getLocationCB"></locationAuth>
                         </view>
@@ -46,11 +46,11 @@
                 <view class="form-item">
                     <text class="label">详细地址：</text>
                     <view class="border align-center">
-                        <input style="flex:1;" placeholder="街道、楼号、房号等" placeholder-class="plhd" value="{{detailAddress}}"></input>
+                        <input style="flex:1;" placeholder="街道、楼号、房号等" placeholder-class="plhd" value="{{detailAddress}}" data-type="detailAddress" bindinput="changeInput"></input>
                     </view>
                 </view>
                 <view class="apply-box">
-                    <view class="apply-btn" hover-class="view-hover" bindtap="tapApplyBtn">立即申请</view>
+                    <view class="apply-btn" hover-class="view-hover" bindtap="applyStore">立即申请</view>
                 </view>
                 
             </view>
@@ -61,11 +61,18 @@
     </view>
 </view>
 
-<view class="apply-store-result" wx:else>
+<view class="apply-store-result" wx:if="{{applyStatus == 'pass'}}">
     <view class="result flex-column align-center">
         <image src="/assets/img/applyStore/apply_store_success.png" style="width:300rpx;height:260rpx"></image>
         <text class="apply-status" decode="{{true}}">·&nbsp;申请成功&nbsp;·</text>
         <view class="apply-msg">您的自提点申请已通过审核，请及时联系您的客户经理～</view>
-    </view>
-    
+    </view>  
+</view>
+
+<view class="apply-store-result" wx:if="{{applyStatus == 'wait_audit'}}">
+    <view class="result flex-column align-center">
+        <image src="/assets/img/applyStore/apply_store_success.png" style="width:300rpx;height:260rpx"></image>
+        <text class="apply-status" decode="{{true}}">·&nbsp;审核中&nbsp;·</text>
+        <view class="apply-msg">您的自提点申请已提交审核，1～3个工作日内，会有申请结果。请您耐心等待～</view>
+    </view>  
 </view>

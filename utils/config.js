@@ -3,6 +3,7 @@
  */
 import {
   Conn,
+  // LSRequestHttpDev,
   RequestHttpDev,
   RequestHttpTest,
   RequestHttpPre,
@@ -29,6 +30,7 @@ switch(Conn){
     tencentPath = TencentPathDev;
     break;
   case 'test':
+    // lsRequestHttp = LSRequestHttpDev,
     requestHttp = RequestHttpTest;
     tencentBucket = TencentBucketDev;
     tencentRegion = TencentRegionDev;
@@ -46,8 +48,10 @@ switch(Conn){
     tencentRegion = TencentRegionPro;
     tencentPath = TencentPathPro;
 }
+
 let apiC = requestHttp + '/c';
 let apiCommon = requestHttp + '/common';
+
 
 module.exports = {
   api: {
@@ -127,8 +131,11 @@ module.exports = {
 
     adviceItem:apiC + '/advice_item',
 
-    // 热销榜单
-    hotSaleItems: apiC + '/item/top',
+    
+    hotSaleItems: apiC + '/item/top', // 热销榜单
+    storeApply: 'https://vestatestls.pgyscm.com' + '/c/included/apply', // 门店自提点申请
+    storeApplyStatus: 'https://vestatestls.pgyscm.com' + '/c/included/apply/status', // 自提点申请状态
+
 
 
   },

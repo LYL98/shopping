@@ -7,6 +7,7 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
@@ -16,12 +17,12 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
+		"compileHotReLoad": false,
 		"useIsolateContext": true,
 		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
