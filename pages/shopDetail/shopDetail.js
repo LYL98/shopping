@@ -257,8 +257,10 @@ Page({
 
     if (that.data.loading) return;
     that.setData({ loading: true }, () => {
-      Http.post(config.api.editStore, {...that.data.edit, geo: this.data.location})
-        .then(res => {
+      Http.post(config.api.editStore, {
+        ...that.data.edit,
+        geo: {...that.pregeo, ...this.data.location} 
+      }).then(res => {
           wx.navigateTo({
             url: '/pages/shop/shop',
             complete: () => {
@@ -303,8 +305,8 @@ Page({
             phone: rd.phone,
             id: rd.id,
           };
-          const {lat, lng} = rd.geo
-          that.data.location = {lat:lat, lng:lng}
+          // const {lat, lng} = rd.geo
+          that.pregeo = rd.geo || {}
           that.setData({
             detail: rd,
             edit:rs

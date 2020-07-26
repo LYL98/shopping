@@ -23,8 +23,7 @@ Page({
       { key:'after_90', name: '90后' }
     ],
     agesIndex:-1,
-    facility:[{key:'freeze', name: '冰柜'}, {key:"colfd", name:"冷藏"}],
-    facilityIndex: 0,
+    facility:[{key:'freeze', name: '冰柜', checked: false}, {key:"colfd", name:"冷藏", checked: false}],
     address: "",
     detailAddress: "",
   },
@@ -54,7 +53,7 @@ Page({
   changeFacility(e) {
     const {index} = e.currentTarget.dataset
     this.setData({
-      facilityIndex: index
+      [`facility[${index}].checked`]: !this.data.facility[index].checked
     })
   },
 
@@ -82,11 +81,11 @@ Page({
       console.log(res)
       const { business_ares, kp_age, address, geo, status} = res.data
       if(status == 'uncommitted') {
-        this.location = geo
+        this.pregeo = geo || {}
         //TODO: 年龄 经营面积处理
-        this.setData({
-          address: address,
-        })
+        // this.setData({
+        //   address: address,
+        // })
       }
       this.setData({
         applyStatus: status,
@@ -99,7 +98,13 @@ Page({
     console.log(this.data)
     console.log(this.ad)
     // const {business_ares, geo, id} = this.ad
-    const {ages, agesIndex, area, areaIndex, address, detailAddress, facility, facilityIndex, location} = this.data
+    const {ages, agesIndex, area, areaIndex, address, detailAddress, facility } = this.data
+    let selectFacility = []
+    facility.forEach(item => {
+      if(item.checked) {
+        selectFacility.push(item.name)
+      }
+    })
     if(areaIndex < 0) {
       wx.showToast({ title: '经营面积不能为空', icon: 'none' })
       return
@@ -121,11 +126,13 @@ Page({
       store_id: this.ad.id,
       business_ares: area[areaIndex].name,
       kp_age: ages[agesIndex].name,
-      facility: facility[facilityIndex].name,
+      facility: selectFacility,
       address: address,
-      geo: this.location,
+      detail_address: detailAddress,
+      geo: {...this.pregeo, ...this.data.location}, //目前只更新经纬度
     }).then(res => {
-
+      // 更新状态
+      this.getApplyStatus()
     })
     
     

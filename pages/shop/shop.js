@@ -87,8 +87,8 @@ Page({
   // 修改门店geo
   getLocationCB(e) {
     const {lat, lng, itemIndex} = e.detail
-    console.log(lat, lng, itemIndex)
     let selectedStore = this.data.dataItem[itemIndex]
+    console.log(lat, lng, itemIndex)
     console.log(selectedStore)
     this.data.location = {lat, lng}
     this.updateStoreInfo(selectedStore)
@@ -96,7 +96,7 @@ Page({
   },
 
   updateStoreInfo(selectedStore) {
-    const {address, id, images, linkman, phone, title} = selectedStore
+    const {address, id, images, linkman, phone, title, geo={} } = selectedStore
     Http.post(config.api.editStore, {
       address,
       id,
@@ -104,7 +104,7 @@ Page({
       linkman,
       phone,
       title,
-      geo:this.data.location, //更新geo
+      geo:{...geo, ...this.data.location}, //更新geo
     }).then(res => {
       wx.showToast({
         title: '更新定位成功',

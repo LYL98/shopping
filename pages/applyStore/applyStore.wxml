@@ -28,7 +28,7 @@
                     <text class="label">店内设施：</text>
                     <view class="align-center facility">
                         <view class="align-center" style="margin-right:40rpx;" wx:for="{{facility}}" wx:key="id" data-index="{{index}}" bindtap="changeFacility">
-                            <image wx:if="{{facilityIndex == index}}" src="/assets/img/applyStore/radio_s.jpg"></image>
+                            <image wx:if="{{item.checked}}" src="/assets/img/applyStore/radio_s.jpg"></image>
                             <image wx:else src="/assets/img/applyStore/radio.jpg"></image>
                             <text>{{item.name}}</text>
                         </view>
