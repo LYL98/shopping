@@ -98,7 +98,7 @@
               <text>投诉建议</text>
             </navigator>
             <!--是否显示团购入口-->
-            <view class="item" bindtap="openMiniApp" wx:if="{{myInfo.is_header}}">
+            <view class="item" bindtap="openMiniApp" wx:if="{{myInfo.store.gb_included}}">
               <image src="{{optionSrc[7]}}"></image>
               <text>团购</text>
             </view>
