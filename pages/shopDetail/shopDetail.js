@@ -2,9 +2,10 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
-import { Http } from './../../utils/index';
+import { Http, Util } from './../../utils/index';
 import verification from './../../utils/verification';
 import UpCos from './../../utils/upload-tencent-cos';
+
 
 Page({
   /**
@@ -164,6 +165,14 @@ Page({
   editInof(){
     let that = this;
     let {edit} = this.data;
+
+    if(this.data.isedit) {
+      if(Util.returnIsInTimeBucket(new Date(), 9, 30, 22, 30)) {
+        wx.showToast({ title: '早上9:30到晚上10:30不允许修改信息', icon: 'none' });
+        return
+      }
+    }
+    
     this.setData({
       editInofName:!this.data.editInofName,
       isedit:!this.data.isedit
@@ -250,7 +259,6 @@ Page({
           title: that.data.vk[i],
           icon: 'none'
         });
-
         return;
       }
     }

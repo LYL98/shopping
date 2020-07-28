@@ -11,9 +11,9 @@ Page({
   data: {
     applyStatus: 'uncommitted',
     area:[
-      {key:'lt_50', name: '< 50平米'},
-      {key:'in_50_100', name: '50<100平米'},
-      {key:'gt_100', name: '> 100平米'}
+      {key:'lt_50', name: '<50平米'},
+      {key:'in_50_100', name: '50-100平米'},
+      {key:'gt_100', name: '>100平米'}
     ],
     areaIndex:-1,
     ages: [
@@ -105,6 +105,10 @@ Page({
         selectFacility.push(item.name)
       }
     })
+    if(selectFacility.length < 1) {
+      wx.showToast({ title: '店内设施不能为空', icon: 'none' })
+      return
+    }
     if(areaIndex < 0) {
       wx.showToast({ title: '经营面积不能为空', icon: 'none' })
       return
@@ -117,26 +121,21 @@ Page({
       wx.showToast({ title: '门店地址不能为空', icon: 'none' })
       return
     }
-    if(!detailAddress || detailAddress.trim().length < 1) {
-      wx.showToast({ title: '详细地址不能为空', icon: 'none' })
-      return
-    }
+    // if(!detailAddress || detailAddress.trim().length < 1) {
+    //   wx.showToast({ title: '详细地址不能为空', icon: 'none' })
+    //   return
+    // }
 
     Http.post(Config.api.storeApply, {
       store_id: this.ad.id,
       business_ares: area[areaIndex].name,
       kp_age: ages[agesIndex].name,
       facility: selectFacility,
-      address: address,
-      detail_address: detailAddress,
+      address: address + detailAddress,
       geo: {...this.pregeo, ...this.data.location}, //目前只更新经纬度
     }).then(res => {
       // 更新状态
       this.getApplyStatus()
     })
-    
-    
   }
-
-
 })

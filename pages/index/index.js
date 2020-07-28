@@ -440,6 +440,12 @@ Page({
       }
     });
   },
+  // 跳转到门店申请自提点
+  toApplyStorePage() {
+    wx.navigateTo({
+      url: '/pages/applyStore/applyStore',
+    })
+  },
   //点击banner
   urlJump(e){
     let item = e.target.dataset.item;
@@ -460,7 +466,7 @@ Page({
         })
       }
     }
-
+  
     /*===== 埋点 start ======*/
     let productName = '';
     if(item.url.indexOf('itemDetail') >= 0){

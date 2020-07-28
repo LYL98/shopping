@@ -213,17 +213,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 22,
 					"name": "门店地址列表",
 					"pathName": "pages/shop/shop",
-					"query": "",
+					"query": "id=10840",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 23,
 					"name": "门店详情",
 					"pathName": "pages/shopDetail/shopDetail",
-					"query": "id=20964",
+					"query": "id=21593",
 					"scene": null
 				}
 			]

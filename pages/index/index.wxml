@@ -17,6 +17,10 @@
           <image wx:if="{{item.url}}" mode="widthFix" data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 280rpx;"></image>
           <image wx:else data-index="{{index}}" mode="widthFix" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 280rpx;"></image>
         </swiper-item>
+        <!-- 暂时写死 -->
+        <swiper-item wx:key="x1999">
+          <image mode="widthFix" bindtap="toApplyStorePage" src="/assets/img/applyStore/apply_store_entry.png" style="width: 100%; height: 280rpx;"></image>
+        </swiper-item>
       </swiper>
       <view class="dotwrap">
         <view class="dots">

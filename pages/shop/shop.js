@@ -84,6 +84,7 @@ Page({
       }
     }
   },
+  
   // 修改门店geo
   getLocationCB(e) {
     const {lat, lng, itemIndex} = e.detail
@@ -92,7 +93,6 @@ Page({
     console.log(selectedStore)
     this.data.location = {lat, lng}
     this.updateStoreInfo(selectedStore)
-    
   },
 
   updateStoreInfo(selectedStore) {

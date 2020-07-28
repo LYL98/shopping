@@ -8,8 +8,8 @@ Component({
 
   properties: {
 	openMap: {
-			type: Boolean,
-			value: true
+		type: Boolean,
+		value: true
     },
     showText: {
       type: Boolean,
