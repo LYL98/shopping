@@ -41,10 +41,11 @@
         </navigator>
       </block>
     </view>
-    <view class="pannel-line"></view>
+    <!-- v3.8.1 -->
+    <!-- <view class="pannel-line"></view>
     <navigator class="hot-sale-entry skeleton-rect" url="/pages/hotSaleList/hotSaleList">
       <image src="/assets/img/hotSale/hot_sale_entry.png"></image>
-    </navigator>
+    </navigator> -->
     <view class="pannel-line"></view>
     <view class="recently-collect-title">
       <text class="interval"></text>
