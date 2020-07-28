@@ -1,3 +1,4 @@
+import { Util } from './../../utils/index';
 const sysInfo = wx.getSystemInfoSync();
 let systemAuthMsg =
 	sysInfo.system.indexOf('Android') !== -1
@@ -7,18 +8,23 @@ let systemAuthMsg =
 Component({
 
   properties: {
-	openMap: {
-		type: Boolean,
-		value: true
-    },
-    showText: {
-      type: Boolean,
-      value: true
-	},
-	itemIndex: {
-		type: Number,
-		value: -1,
-	}
+		openMap: {
+			type: Boolean,
+			value: true
+			},
+			showText: {
+				type: Boolean,
+				value: true
+		},
+		itemIndex: {
+			type: Number,
+			value: -1,
+		},
+		isLimitTime: {
+			type: Boolean,
+			value: false
+		}
+
   },
 
   data: {
@@ -62,8 +68,15 @@ Component({
 
     // 自动定位 获取经纬度
     initLocation(notSystemAuthMsg = false) {
+
+		if(this.data.isLimitTime) {
+			if(!Util.returnIsInTimeBucket(new Date(), 9, 30, 22, 30)) {
+        wx.showToast({ title: '只允许早上9:30到晚上10:30期间修改定位信息', icon: 'none' });
+        return
+      }
+		}
+		
 	  let that = this
-	  
       wx.getLocation({
 				type: 'gcj02', //wgs84
 				success: function(res){

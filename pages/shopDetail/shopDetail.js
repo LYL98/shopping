@@ -33,7 +33,11 @@ Page({
       address:'收货地址不能为空',
       linkman:'收货人不能为空',
       phone:'收货电话不能为空',
-    }
+    },
+    location: {
+      lat: '',
+      lng: ''
+    },
   },
 
   /**
@@ -165,13 +169,6 @@ Page({
   editInof(){
     let that = this;
     let {edit} = this.data;
-
-    if(this.data.isedit) {
-      if(Util.returnIsInTimeBucket(new Date(), 9, 30, 22, 30)) {
-        wx.showToast({ title: '早上9:30到晚上10:30不允许修改信息', icon: 'none' });
-        return
-      }
-    }
     
     this.setData({
       editInofName:!this.data.editInofName,
@@ -265,9 +262,10 @@ Page({
 
     if (that.data.loading) return;
     that.setData({ loading: true }, () => {
+      let geo = !!that.data.location.lat? {...that.pregeo, ...that.data.location} : that.pregeo
       Http.post(config.api.editStore, {
         ...that.data.edit,
-        geo: {...that.pregeo, ...this.data.location} 
+        geo: geo
       }).then(res => {
           wx.navigateTo({
             url: '/pages/shop/shop',

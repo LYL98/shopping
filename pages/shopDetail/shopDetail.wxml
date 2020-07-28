@@ -50,7 +50,7 @@
 <view class="content" wx:if="{{isedit}}">
   <view class="left"></view>
   <view class="right">
-    <locationAuth openMap="{{true}}" bind:getlocation="getLocationCB"></locationAuth>
+    <locationAuth isLimitTime="{{true}}" openMap="{{true}}" bind:getlocation="getLocationCB"></locationAuth>
   </view>
 </view>
   <view class="btn-view">

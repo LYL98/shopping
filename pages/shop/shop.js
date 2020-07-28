@@ -14,7 +14,8 @@ Page({
     optionType: '',
     query: {
       is_freeze:0
-    }
+    },
+    location: {lat:'', lng:''},
   },
 
   /**
@@ -97,6 +98,7 @@ Page({
 
   updateStoreInfo(selectedStore) {
     const {address, id, images, linkman, phone, title, geo={} } = selectedStore
+    let newGeo = !!this.datal.location.lat ? {...geo, ...this.data.location} : geo
     Http.post(config.api.editStore, {
       address,
       id,
@@ -104,7 +106,7 @@ Page({
       linkman,
       phone,
       title,
-      geo:{...geo, ...this.data.location}, //更新geo
+      geo:newGeo, //更新geo
     }).then(res => {
       wx.showToast({
         title: '更新定位成功',
