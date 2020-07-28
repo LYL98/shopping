@@ -187,37 +187,42 @@
 			</view>
 		</view>
 	</view>
-	<view class="goods_attr">
+	<view class="goods_attr" wx:if="{{detail.grade.length > 0 ||  detail.toast.length > 0  || detail.appearance.length > 0 || detail.fresh.length > 0}}">
 		<view class="goods_header">商品评级</view>
 		<view class="align-center goods_attr--box goods_attr--box--gray">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">综合等级</view>
-				<view class="goods_info--value">{{detail.grade}}</view>
+				<view class="goods_info--value" wx:if="{{detail.grade.length > 0}}">{{detail.grade}}</view>
+				<view class="goods_info--value" wx:else> - </view>
 			</view>
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">口感星级</view>
-				<view class="goods_info--value">{{detail.toast}}星</view>
+				<view class="goods_info--value" wx:if="{{detail.toast.length > 0}}">{{detail.toast}}星</view>
+				<view class="goods_info--value" wx:else> - </view>
 			</view>
 		</view>
 		<view class="align-center goods_attr--box">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">外观星级</view>
-				<view class="goods_info--value">{{detail.appearance}}星</view>
+				<view class="goods_info--value" wx:if="{{detail.appearance.length > 0}}">{{detail.appearance}}星</view>
+				<view class="goods_info--value" wx:else> - </view>
 			</view>
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">果型星级</view>
-				<view class="goods_info--value">{{detail.shape}}星</view>
+				<view class="goods_info--value" wx:if="{{detail.shape.length > 0}}">{{detail.shape}}星</view>
+				<view class="goods_info--value" wx:else> - </view>
 			</view>
 		</view>
 		<view class="align-center goods_attr--box goods_attr--box--gray">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">新鲜星级</view>
-				<view class="goods_info--value">{{detail.fresh}}星</view>
+				<view class="goods_info--value" wx:if="{{detail.fresh.length > 0}}">{{detail.fresh}}星</view>
+				<view class="goods_info--value" wx:else> - </view>
 			</view>
 		</view>
 	</view>
 
-	<view class="goods_reback">
+	<view class="goods_reback" wx:if="{{Object.keys(detail.system_class).length > 0}}">
 		<view class="goods_header">退赔规则</view>
 		<view class="align-center goods_attr--box">
 			<view class="align-center label_item">
