@@ -97,10 +97,10 @@
               <image src="{{optionSrc[6]}}"></image>
               <text>投诉建议</text>
             </navigator>
-            <!--是否显示团购入口-->
+            <!--是否显示满天星零售商城入口-->
             <view class="item" bindtap="openMiniApp" wx:if="{{myInfo.store.gb_included}}">
               <image src="{{optionSrc[7]}}"></image>
-              <text>团购</text>
+              <text>自提点</text>
             </view>
             <view class="item" wx:else></view>
             <view class="item"></view>
