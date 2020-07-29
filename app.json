@@ -44,7 +44,9 @@
     "pages/live-rep/live-rep",
     "pages/updateSystem/updateSystem",
     "pages/suggestions/suggestions",
-    "pages/suggestionsResult/suggestionsResult"
+    "pages/suggestionsResult/suggestionsResult",
+    "pages/hotSaleList/hotSaleList",
+    "pages/applyStore/applyStore"
   ],
   "plugins": {
     "live-player-plugin": {
@@ -102,6 +104,11 @@
   "networkTimeout": {
     "request": 10000,
     "downloadFile": 100000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于自动获取门店位置信息"
+    }
   },
   "debug": true,
   "sitemapLocation": "sitemap.json"

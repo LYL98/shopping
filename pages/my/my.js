@@ -236,9 +236,10 @@ Page({
 
   //打开社区团购小程序app
   openMiniApp(){
+    const { access_token } = this.data.loginInfo
     wx.navigateToMiniProgram({
       appId: Config.weiXinAppIds[0],
-      path: '/pages/index/index?access_token=' + this.data.loginInfo.access_token,
+      path: '/pages/index/index?is_from_head=true&jwt_token=' + encodeURIComponent(access_token),
       envVersion: 'trial'
     });
   }

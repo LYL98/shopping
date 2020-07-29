@@ -7,6 +7,7 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
@@ -16,12 +17,12 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
+		"compileHotReLoad": false,
 		"useIsolateContext": true,
 		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
@@ -103,7 +104,7 @@
 					"id": 6,
 					"name": "商品详情",
 					"pathName": "pages/itemDetail/itemDetail",
-					"query": "id=16542",
+					"query": "id=16688",
 					"scene": null
 				},
 				{
@@ -195,6 +196,34 @@
 					"name": "退货单",
 					"pathName": "pages/afterSaleReturn/afterSaleReturn",
 					"query": "id=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "热销榜单",
+					"pathName": "pages/hotSaleList/hotSaleList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "自提点申请",
+					"pathName": "pages/applyStore/applyStore",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 22,
+					"name": "门店地址列表",
+					"pathName": "pages/shop/shop",
+					"query": "id=10840",
+					"scene": null
+				},
+				{
+					"id": 23,
+					"name": "门店详情",
+					"pathName": "pages/shopDetail/shopDetail",
+					"query": "id=21593",
 					"scene": null
 				}
 			]

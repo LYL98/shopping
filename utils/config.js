@@ -3,6 +3,7 @@
  */
 import {
   Conn,
+  // LSRequestHttpDev,
   RequestHttpDev,
   RequestHttpTest,
   RequestHttpPre,
@@ -29,6 +30,7 @@ switch(Conn){
     tencentPath = TencentPathDev;
     break;
   case 'test':
+    // lsRequestHttp = LSRequestHttpDev,
     requestHttp = RequestHttpTest;
     tencentBucket = TencentBucketDev;
     tencentRegion = TencentRegionDev;
@@ -46,8 +48,10 @@ switch(Conn){
     tencentRegion = TencentRegionPro;
     tencentPath = TencentPathPro;
 }
+
 let apiC = requestHttp + '/c';
 let apiCommon = requestHttp + '/common';
+
 
 module.exports = {
   api: {
@@ -126,6 +130,11 @@ module.exports = {
     liveRoomUnMark: apiC + '/room/un_mark',   //  直播间取消订阅
 
     adviceItem:apiC + '/advice_item',
+
+    
+    hotSaleItems: apiC + '/item/top', // 热销榜单
+    storeApply: apiC + '/included/apply', // 门店自提点申请
+    storeApplyStatus: apiC + '/included/apply/status', // 自提点申请状态
 
   },
   //腾讯Bucket、Region

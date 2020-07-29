@@ -1,0 +1,57 @@
+
+.location-text {
+    color: #00AE66;
+    font-size: 28rpx;
+    padding: 5rpx 10rpx 0rpx 10rpx;
+}
+
+.icon-box {
+  width: 60rpx;
+  height: 79rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/*定位弹窗*/
+.dialog-wrapper{
+    position: fixed;
+    top: -164rpx;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    z-index: 2;
+    .dialog{
+      width: 560rpx;
+      background: #fff;
+      margin: auto;
+      border-radius:16rpx;
+      text-align: center;
+      padding: 0 30rpx 33rpx 30rpx;
+      >.dialog-title{
+        font-size:32rpx;
+        font-weight:500;
+        color: #151515;
+        padding: 50rpx 0;
+      }
+      >.dialog-body {
+        .tips{
+            padding-bottom: 50rpx;
+            font-weight:400;
+        }
+        .affirm-btn {
+            width: 100% !important;
+            margin: 0;
+            height: 88rpx;
+            line-height: 88rpx;
+            padding: 0;
+            color: #fff;
+            font-size:32rpx;
+            background:#00AE66!important;
+        }
+      }      
+    }
+  }

@@ -1,0 +1,23 @@
+<view>
+  <text wx:if="{{showText}}" catchtap="initLocation" class="location-text">自动定位</text>
+  <view class="icon-box" wx:else catchtap="initLocation">
+    <image style="width:28rpx;height:28rpx;" src="/assets/img/applyStore/localtion.png" ></image>
+  </view>
+</view>
+
+
+<!-- 定位授权 -->
+<view
+ wx:if="{{showLocationAuthDialog}}"
+ class="dialog-wrapper"
+ catch:tap="true"
+>
+  <view class="dialog">
+    <view class="dialog-title">{{title}}</view>
+    <view class="dialog-body">
+      <view class="tips">授权位置，享受更好的使用体验</view>
+      <button wx:if="{{showSystemLocationAuth}}" slot="btn" class="affirm-btn" bindtap="initLocation">立即授权</button>
+		  <button wx:else slot="btn" class="affirm-btn" open-type="openSetting" bindopensetting="openSettingCallback">立即授权</button>
+    </view>
+  </view>
+</view>

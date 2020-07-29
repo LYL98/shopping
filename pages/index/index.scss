@@ -67,6 +67,15 @@
   }
 }
 
+.hot-sale-entry {
+  width: 100%;
+  height: 160rpx;
+  > image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .pannel-line{
   height: 20rpx;
   background: #F7F7F8;
