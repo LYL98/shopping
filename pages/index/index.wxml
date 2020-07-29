@@ -25,6 +25,7 @@
       <view class="dotwrap">
         <view class="dots">
           <view wx:for="{{bannerList}}" wx:key="index" class="dot{{index == currentSwiper ? ' active' : ''}}"></view>
+          <view wx:key="x1999" class="dot"></view>
         </view> 
       </view> 
     </view>
