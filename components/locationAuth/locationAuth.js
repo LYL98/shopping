@@ -45,7 +45,7 @@ Component({
     },
     // 地址更新
   switchAddress() {
-	  	const { location } = this.data
+	  const { location } = this.data
 		const { lat, lng } = location;
 		wx.chooseLocation({
 			latitude: lat,
@@ -59,7 +59,6 @@ Component({
 						lat: latitude,
 						lng: longitude,
 						address,
-						
 					})
 				}
 			}

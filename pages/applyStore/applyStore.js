@@ -26,6 +26,7 @@ Page({
     facility:[{key:'freeze', name: '冰柜', checked: false}, {key:"colfd", name:"冷藏", checked: false}],
     address: "",
     detailAddress: "",
+    location: {lat:"", lng: ""},
   },
 
   onLoad: function (options) {
@@ -81,12 +82,27 @@ Page({
       console.log(res)
       const { business_ares, kp_age, address, geo, status} = res.data
       if(status == 'uncommitted') {
+        const { area, ages } = this.data
+        let areaIndex = -1, agesIndex = -1
+        area.forEach((item,index)=> {
+          if(item.name == business_ares) {
+            areaIndex = index
+          }
+        })
+        ages.forEach((item,index) => {
+          if(item.name == kp_age) {
+            agesIndex =  index
+          }
+        })
+        this.setData({
+          areaIndex,
+          agesIndex,
+          address
+        })
+
         this.pregeo = geo || {}
-        //TODO: 年龄 经营面积处理
-        // this.setData({
-        //   address: address,
-        // })
       }
+
       this.setData({
         applyStatus: status,
       })
@@ -125,6 +141,12 @@ Page({
     //   wx.showToast({ title: '详细地址不能为空', icon: 'none' })
     //   return
     // }
+    let newGeo;
+    if(!!this.data.location.lat) {
+      newGeo = {...this.pregeo, ...this.data.location} //目前只更新经纬度
+    } else {
+      newGeo = this.pregeo // 使用原来的
+    }
 
     Http.post(Config.api.storeApply, {
       store_id: this.ad.id,
@@ -132,9 +154,13 @@ Page({
       kp_age: ages[agesIndex].name,
       facility: selectFacility,
       address: address + detailAddress,
-      geo: {...this.pregeo, ...this.data.location}, //目前只更新经纬度
+      geo: newGeo, 
     }).then(res => {
       // 更新状态
+      wx.showToast({
+        title: '自提点申请提交成功',
+        icon: 'none'
+      })
       this.getApplyStatus()
     })
   }
