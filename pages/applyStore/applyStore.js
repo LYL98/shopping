@@ -60,6 +60,16 @@ Page({
 
   changeInput(e) {
     const {detail, currentTarget} = e
+    if(currentTarget.dataset.type == 'address') {
+      wx.showToast({
+        title: '不可手动输入修改,请通过右侧定位修改',
+        icon: 'none'
+      })
+      this.setData({
+        address: this.data.address
+      })
+      return
+    }
     this.setData({
       [currentTarget.dataset.type] : detail.value
     })

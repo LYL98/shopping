@@ -37,7 +37,7 @@
                 <view class="form-item" style="padding-right:0rpx;">
                     <text class="label">门店地址：</text>
                     <view class="border align-center">
-                        <input style="flex:1;"  placeholder="请选择所在的区域" placeholder-class="plhd" value="{{address}}" data-type="address" bindinput="changeInput" disabled></input>
+                        <input style="flex:1;"  placeholder="请选择所在的区域" placeholder-class="plhd" value="{{address}}" data-type="address" bindinput="changeInput"></input>
                         <view class="">
                             <locationAuth showText="{{false}}" bind:getlocation="getLocationCB"></locationAuth>
                         </view>
