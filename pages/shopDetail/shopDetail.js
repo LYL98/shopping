@@ -2,9 +2,10 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
-import { Http } from './../../utils/index';
+import { Http, Util } from './../../utils/index';
 import verification from './../../utils/verification';
 import UpCos from './../../utils/upload-tencent-cos';
+
 
 Page({
   /**
@@ -32,7 +33,11 @@ Page({
       address:'收货地址不能为空',
       linkman:'收货人不能为空',
       phone:'收货电话不能为空',
-    }
+    },
+    location: {
+      lat: '',
+      lng: ''
+    },
   },
 
   /**
@@ -49,6 +54,15 @@ Page({
         that.merchantStoreDetail();
       });
     });
+  },
+  // 点击自动定位回调
+  getLocationCB(e) {
+    console.log(e)
+    const {lat, lng, address } = e.detail
+    this.data.location = {lat, lng}
+    this.setData({
+      ['edit.address']: address
+    })
   },
 //点击上传图片
   clickPic() {
@@ -155,6 +169,7 @@ Page({
   editInof(){
     let that = this;
     let {edit} = this.data;
+    
     this.setData({
       editInofName:!this.data.editInofName,
       isedit:!this.data.isedit
@@ -241,15 +256,17 @@ Page({
           title: that.data.vk[i],
           icon: 'none'
         });
-
         return;
       }
     }
 
     if (that.data.loading) return;
     that.setData({ loading: true }, () => {
-      Http.post(config.api.editStore, that.data.edit)
-        .then(res => {
+      let geo = !!that.data.location.lat? {...that.pregeo, ...that.data.location} : that.pregeo
+      Http.post(config.api.editStore, {
+        ...that.data.edit,
+        geo: geo
+      }).then(res => {
           wx.navigateTo({
             url: '/pages/shop/shop',
             complete: () => {
@@ -294,6 +311,8 @@ Page({
             phone: rd.phone,
             id: rd.id,
           };
+          // const {lat, lng} = rd.geo
+          that.pregeo = rd.geo || {}
           that.setData({
             detail: rd,
             edit:rs

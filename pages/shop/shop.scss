@@ -1,5 +1,6 @@
 /* pages/shop/shop.wxss */
 .item{
+  position: relative;
   padding: 24rpx 30rpx;
   border-bottom: 1rpx solid #f3f4f6;
   .title{
@@ -41,5 +42,12 @@
     color: #242424;
     font-size: 24rpx;
     margin-bottom: 14rpx;
+    width: 80%;
+  }
+  
+  .location {
+    position: absolute;
+    bottom: 34rpx;
+    right: 30rpx;
   }
 }

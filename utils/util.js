@@ -159,6 +159,13 @@ var judgeItemStock = function(item){
   return false;
 }
 
+// 是否在当天的某个时间段内
+var returnIsInTimeBucket = function(date, h1, m1, h2, m2) {
+  var h = date.getHours();
+  var m = date.getMinutes();
+  return (h1 < h || h1 == h && m1 <= m) && (h < h2 || h == h2 && m <= m2);
+}
+
 module.exports = {
   formatTime: formatTime,
   returnPrice: returnPrice,
@@ -169,5 +176,6 @@ module.exports = {
   returnDateCalc: returnDateCalc,
   getUuid: getUuid,
   judgeItemStock: judgeItemStock,
-  returnDiscount: returnDiscount
+  returnDiscount: returnDiscount,
+  returnIsInTimeBucket: returnIsInTimeBucket
 }
