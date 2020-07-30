@@ -221,8 +221,7 @@
 			</view>
 		</view>
 	</view>
-
-	<view class="goods_reback" wx:if="{{Object.keys(detail.system_class).length > 0}}">
+	<view class="goods_reback" wx:if="{{detail.system_class.compensated}}">
 		<view class="goods_header">退赔规则</view>
 		<view class="align-center goods_attr--box">
 			<view class="align-center label_item">
