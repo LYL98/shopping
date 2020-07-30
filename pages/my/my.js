@@ -234,11 +234,12 @@ Page({
     })
   },
 
-  //打开社区团购小程序app
+  //打开门店助手
   openMiniApp(){
+    const { access_token } = this.data.loginInfo
     wx.navigateToMiniProgram({
-      appId: Config.weiXinAppIds[0],
-      path: '/pages/index/index?access_token=' + this.data.loginInfo.access_token,
+      appId: Config.weiXinAppIds[1],
+      path: '/pages/index/index',
       envVersion: 'trial'
     });
   }

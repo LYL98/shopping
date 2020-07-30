@@ -7,6 +7,7 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
@@ -16,12 +17,12 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
+		"compileHotReLoad": false,
 		"useIsolateContext": true,
 		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
@@ -202,6 +203,27 @@
 					"name": "热销榜单",
 					"pathName": "pages/hotSaleList/hotSaleList",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "自提点申请",
+					"pathName": "pages/applyStore/applyStore",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 22,
+					"name": "门店地址列表",
+					"pathName": "pages/shop/shop",
+					"query": "id=10840",
+					"scene": null
+				},
+				{
+					"id": 23,
+					"name": "门店详情",
+					"pathName": "pages/shopDetail/shopDetail",
+					"query": "id=21593",
 					"scene": null
 				}
 			]

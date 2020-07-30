@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "自提点申请",
+  "usingComponents": {
+    "locationAuth": "/components/locationAuth/locationAuth"
+  }
+}

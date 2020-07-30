@@ -35,7 +35,10 @@ export const TencentPathPro = 'https://cdn-xxx.xxx.xxx/';
 export const ServiceTel = '1234567890';
 
 //要打开的微信appids
-export const WeiXinAppIds = ['wxxxxxxxxxxxxxxx'];
+export const WeiXinAppIds = ['wxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxx'];
+// WeiXinAppIds[0] 满天星优选 wxd71d35efcb08acc8
+// WeiXinAppIds[1] 门店助手 wx1653f76966571193
+
 
 //版本
 export const Version = 'Vx.x.x';
