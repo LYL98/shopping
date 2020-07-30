@@ -2,7 +2,7 @@
 //获取应用实例
 const app = getApp();
 import config from './../../utils/config';
-
+import { Http } from './../../utils/index';
 Page({
 
   /**
@@ -14,7 +14,8 @@ Page({
     optionType: '',
     query: {
       is_freeze:0
-    }
+    },
+    location: {lat:'', lng:''},
   },
 
   /**
@@ -83,5 +84,34 @@ Page({
         });
       }
     }
+  },
+  
+  // 修改门店geo
+  getLocationCB(e) {
+    const {lat, lng, itemIndex} = e.detail
+    let selectedStore = this.data.dataItem[itemIndex]
+    console.log(lat, lng, itemIndex)
+    console.log(selectedStore)
+    this.data.location = {lat, lng}
+    this.updateStoreInfo(selectedStore)
+  },
+
+  updateStoreInfo(selectedStore) {
+    const {address, id, images, linkman, phone, title, geo={} } = selectedStore
+    let newGeo = !!this.datal.location.lat ? {...geo, ...this.data.location} : geo
+    Http.post(config.api.editStore, {
+      address,
+      id,
+      images,
+      linkman,
+      phone,
+      title,
+      geo:newGeo, //更新geo
+    }).then(res => {
+      wx.showToast({
+        title: '更新定位成功',
+        icon: 'none'
+      })
+    })
   }
 })
