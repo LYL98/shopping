@@ -169,7 +169,7 @@
 		<view class="align-center goods_attr--box goods_attr--box--gray">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">店内存放</view>
-				<view class="goods_info--value">常温</view>
+				<view class="goods_info--value">{{detail.system_class.store_save_way}}</view>
 			</view>
 		</view>
 		<view class="align-center ">
