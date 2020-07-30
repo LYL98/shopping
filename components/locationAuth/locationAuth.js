@@ -70,9 +70,9 @@ Component({
 
 		if(this.data.isLimitTime) {
 			if(!Util.returnIsInTimeBucket(new Date(), 9, 30, 22, 30)) {
-        wx.showToast({ title: '只允许早上9:30到晚上10:30期间修改定位信息', icon: 'none' });
-        return
-      }
+				wx.showToast({ title: '只允许早上9:30到晚上10:30期间修改定位信息', icon: 'none' });
+				return
+			}
 		}
 		
 	  let that = this
