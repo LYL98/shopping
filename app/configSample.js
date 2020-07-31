@@ -40,7 +40,7 @@ export const WeiXinAppIds = ['wxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxx'];
 // WeiXinAppIds[1] 门店助手 wx1653f76966571193
 
 
-//版本
+//版本1
 export const Version = 'Vx.x.x';
 
 //growingio配置
