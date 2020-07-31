@@ -6,8 +6,10 @@
 export const Conn = 'pre';
 
 //测试环境api地址
-export const RequestHttpDev = 'https://vestatest.pgyscm.com';
 // export const RequestHttpDev = 'https://vestadev.pgyscm.com';
+export const RequestHttpDev = 'https://vestatest.pgyscm.com';
+// export const RequestHttpDev = 'https://vestatestls.pgyscm.com';
+
 
 //预发布环境api地址
 export const RequestHttpPre = 'https://vestapre.pgyscm.com';
@@ -33,10 +35,10 @@ export const TencentPathPro = 'https://cdn-vesta-pro.pgyscm.com/';
 export const ServiceTel = '4008258522';
 
 //要打开的微信appids
-export const WeiXinAppIds = ['wxd71d35efcb08acc8'];
+export const WeiXinAppIds = ['wxd71d35efcb08acc8', 'wx1653f76966571193'];
 
 //版本
-export const Version = 'V3.6.1';
+export const Version = 'V3.8.4';
 
 //growingio配置
 export const GioConfig = {
