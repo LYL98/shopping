@@ -1,5 +1,5 @@
 {
-	"description": "项目配置文件",
+	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": []
 	},
@@ -21,20 +21,19 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"compileHotReLoad": false,
+		"useIsolateContext": true,
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
 	"appid": "wx70a3bf5f7a69987d",
 	"projectname": "selene",
-	"cloudfunctionTemplateRoot": "",
-	"watchOptions": {
-		"ignore": []
-	},
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"scripts": {},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -49,6 +48,7 @@
 			"list": []
 		},
 		"game": {
+			"currentL": -1,
 			"list": []
 		},
 		"gamePlugin": {
@@ -203,6 +203,27 @@
 					"name": "热销榜单",
 					"pathName": "pages/hotSaleList/hotSaleList",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "自提点申请",
+					"pathName": "pages/applyStore/applyStore",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 22,
+					"name": "门店地址列表",
+					"pathName": "pages/shop/shop",
+					"query": "id=10840",
+					"scene": null
+				},
+				{
+					"id": 23,
+					"name": "门店详情",
+					"pathName": "pages/shopDetail/shopDetail",
+					"query": "id=21593",
 					"scene": null
 				}
 			]
