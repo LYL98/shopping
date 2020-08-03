@@ -15,8 +15,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    locationSrc: './../../assets/img/location.png',
-    downSrc: './../../assets/img/arrow_down2.png',
     closeSrc: './../../assets/img/close2.png',
     checkSrc: './../../assets/img/checked.png',
     checkedSrc: './../../assets/img/checked_s.png',

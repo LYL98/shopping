@@ -1,95 +1,153 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 
-<view class="index-header">
-    <!--选择门店组件-->
-    <view class="skeleton-rect">
-      <selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="showHideToggle"/>
-    </view>
-    <!--搜索组件-->
-    <view class="search-box">
-      <view class="search">
-        <image src="" class="search-icon"></image>
-        <text class="search-placeholder">搜索商品</text>
-      </view>
-    </view>
-    <!--轮播图-->
-    <swiper class="banner" indicator-dots indicator-active-color="#FDCD50" autoplay bindchange="swiperChange">
-      <swiper-item wx:for="{{bannerList}}" wx:key="index">
-        <image wx:if="{{item.url}}" mode="widthFix" data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" ></image>
-        <image wx:else data-index="{{index}}" mode="widthFix" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" ></image>
-      </swiper-item>
-      <!-- 暂时写死 -->
-        <swiper-item wx:key="x1999">
-          <image mode="widthFix" bindtap="toApplyStorePage" src="/assets/img/applyStore/apply_store_entry.png" ></image>
-        </swiper-item>
-    </swiper>
-    <view class="bottom-ph-bg"></view>
-  </view>
-  <!--营业提示-->
-  <view class="close-store">
-    <image src=""></image>
-    <text>营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单</text>
-  </view>
-  <!--分类标签-->
-  <view class="tags-list">
-  <block wx:for="{{tagsList}}" wx:key="index">
-    <view class="tags-item" wx:if="{{index !== 0}}" data-item="{{item}}" bind:tap="clickTags" data-index="{{index}}" data-item="{{item}}">
-      <image src="{{item.image}}"></image>
-      <text>{{item.title}}</text>
-    </view>
-  </block>
-  </view>
+<pageNavBar
+ title="蒲公英"
+ back="{{false}}"
+ background="linear-gradient(180deg, #FFE56E 0%, #FFE05C 100%);"
+ isLoading="{{navBarLoding}}"
+ loadingColor="#000"
+></pageNavBar>
 
-  <!-- 热销榜单入口 -->
-  <navigator class="hot-sale-entry" url="/pages/hotSaleList/hotSaleList">
-      <image src="/assets/img/hotSale/hot_sale_entry.png"></image>
-  </navigator>
-
-  <view class="title-box">
-    <view class="title-box-body">
-      <text class="title">{{tagsList[0].title}}</text>
-      <text class="base-line"></text>
-    </view>
-  </view>
-
-  <view class="goods-list">
-    <view class="goods-item" wx:for="{{dataItem.items}}" wx:key="id">
-      <view class="goods-item-img">
-        <image src="{{tencentPath + item.images[0]}}_watermark375x375" lazy-load="{{index > 2 ? true : false}}"></image>
-      </view>
-      <view class="goods-item-info">
-        <view class="goods-item-info-top">
-          <view class="goods-title">{{item.title}}</view>
-          <view class="goods-sku">
-            <text wx:if="{{item.is_quoted}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-            <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-            <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
-            <text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-            <text wx:if="{{item.frame_id}}">有筐</text>
-          </view>
-          <view class="goods-limt">
-            <text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+<view class="{{isShowSelect ? 'show-select' : ''}}">
+    <skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
+    <view class="skeleton">
+      <view class="index-header">
+        <!--选择门店组件-->
+        <view class="">
+          <selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="showHideToggle"/>
+        </view>
+        <!--搜索组件-->
+        <view class="search-box">
+          <view class="skeleton-rect search">
+            <image src="/assets/img/index/search_icon.png" class="search-icon"></image>
+            <text class="search-placeholder">搜索商品</text>
           </view>
         </view>
-        <view class="goods-item-info-bottom">
-          <view class="price-box">
-            <view wx:if="{{item.is_quoted}}">
-              111
-            </view>
-            <view wx:else class="no-price">
-              今日未报价
-            </view>
-          </view>
-          <view class="store-type">
-            <text class="type-label">自营</text>
-            <text>供应商门店</text>
-          </view>
+        <!--轮播图-->
+        <swiper class="skeleton-rect banner" indicator-dots indicator-active-color="#FDCD50" autoplay bindchange="swiperChange">
+          <swiper-item wx:for="{{bannerList}}" wx:key="index">
+            <image wx:if="{{item.url}}" mode="widthFix" data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" ></image>
+            <image wx:else data-index="{{index}}" mode="widthFix" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" ></image>
+          </swiper-item>
+        </swiper>
+        <view class="bottom-ph-bg"></view>
+      </view>
 
+        <!--营业提示-->
+      <view wx:if="{{!closeStore}}" class="skeleton-rect close-store">
+        <image src="/assets/img/index/notice_icon.png"></image>
+        <text>营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单</text>
+      </view>
+
+      <!--分类标签-->
+      <view class="tags-list">
+        <block wx:for="{{tagsList}}" wx:key="index">
+          <view class="tags-item" wx:if="{{index !== 0}}" data-item="{{item}}" bind:tap="clickTags" data-index="{{index}}" data-item="{{item}}">
+            <image class="skeleton-rect" src="{{item.image}}"></image>
+            <text class="skeleton-rect">{{item.title}}</text>
+          </view>
+        </block>
+      </view>
+
+      <!-- 热销榜单入口 -->
+      <navigator class="skeleton-rect hot-sale-entry" url="/pages/hotSaleList/hotSaleList">
+          <image src="/assets/img/hotSale/hot_sale_entry.png"></image>
+      </navigator>
+
+      <!-- 今日主推 -->
+      <view class="title-box">
+        <view class="skeleton-rect title-box-body">
+          <text class="title">{{tagsList[0].title}}</text>
+          <text class="base-line"></text>
         </view>
       </view>
-      
-    </view>
+
+      <view class="goods-list">
+        <view class="goods-item" wx:for="{{dataItem.items}}" wx:key="id">
+          <view class="goods-item-img">
+            <view class="tags-mask">
+              <view class="tags-item" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+                <text>{{t}}</text>
+                <image wx:if="{{i == 0}}" src="/assets/img/index/label0.png"></image>
+                <image wx:else src="/assets/img/index/label1.png"></image>
+              </view>
+              <view class="tags-item" wx:if="{{item.is_presale}}">
+                <text>预售</text>
+                <image wx:if="{{item.tags.length == 0}}" src="/assets/img/index/label0.png"></image>
+                <image wx:else src="/assets/img/index/label1.png"></image>
+              </view>
+            </view>
+            <image src="{{tencentPath + item.images[0]}}_watermark375x375" lazy-load="{{index > 2 ? true : false}}"></image>
+          </view>
+          <view class="goods-item-info">
+            <view class="goods-item-info-top">
+              <view class="goods-title">{{item.title}}</view>
+              <view class="goods-sku">
+                <text wx:if="{{item.is_quoted}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+                <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
+                <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+                <text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+                <text wx:if="{{item.frame_id}}">有筐</text>
+              </view>
+              <view class="goods-limt">
+                <text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+              </view>
+            </view>
+            <view class="goods-item-info-bottom">
+              <view class="price-box">
+                <view wx:if="{{item.is_quoted}}">
+                <!-- 普通价 -->
+                  <!-- <view class="normal-price">
+                    <text class="rmb price-sale">{{tools.returnPrice(item.price_sale)}}</text>
+                    <text class="price-origin">￥{{tools.returnPrice(item.price_origin)}}</text>
+                  </view> -->
+                  
+                  <view class="level-price">
+                    <!-- 银卡价 -->
+                    <view class="price-sale-box silver-price">
+                        <image src="/assets/img/index/price_0.png"></image>
+                        <text class="rmb price-sale">{{tools.returnPrice(item.price_sale)}}</text>
+                    </view>
+                    <!-- 金卡价 -->
+                    <!-- <view class="price-sale-box gold-price">
+                      <image src="/assets/img/index/price_1.png"></image>
+                      <text class="rmb price-sale">{{tools.returnPrice(item.price_sale)}}</text>
+                    </view> -->
+                    <!-- 钻石价 -->
+                    <!-- <view class="price-sale-box gold-price">
+                      <image src="/assets/img/index/price_2.png"></image>
+                      <text class="rmb price-sale">{{tools.returnPrice(item.price_sale)}}</text>
+                    </view> -->
+                    <text class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">普通价￥{{tools.returnPrice(item.price_origin)}}</text>
+                  </view>
+                </view>
+                <view wx:else class="no-price">
+                  今日未报价
+                </view>
+              </view>
+              <!-- <view class="store-type">
+                <text class="type-label">供应商</text>
+                <text class="type-label type-label-self">自营</text>
+                <text>供应商门店</text>
+              </view> -->
+            </view>
+            <view class="cart-wrapper">
+              <handleShopCart itemData="{{item}}" />
+            </view>
+          </view>
+          </view>
+        </view>
   </view>
+
+
+
+    </view>
+
+  
+
+  
+
+  
 
   <view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
 

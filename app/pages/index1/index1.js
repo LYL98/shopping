@@ -17,7 +17,7 @@ Page({
       './../../assets/img/tags_icon5.png',
       './../../assets/img/tags_icon6.png',
       './../../assets/img/tags_icon7.png',
-      './../../assets/img/tags_icon8.png'
+      './../../assets/img/tags_icon8.png',
     ],
     tagsList: (()=>{
       //初始化骨架数据
@@ -43,7 +43,33 @@ Page({
 
     },
     dataItem: {
-      items: []
+      items: [
+        {
+          frame_id: '00',
+          gross_weight: 0,
+          id: 1,
+          images: [],
+          item_spec: "10g",
+          item_stock: 0,
+          order_num_max: 0,
+          origin_place: "......",
+          package_spec: "纸箱",
+          price_sale: 2000,
+          title: "xxxxxxxxxx"
+        },{
+          frame_id: '00',
+          gross_weight: 0,
+          id: 2,
+          images: [],
+          item_spec: "10g",
+          item_stock: 0,
+          order_num_max: 0,
+          origin_place: "......",
+          package_spec: "纸箱",
+          price_sale: 2000,
+          title: "xxxxxxxxxx"
+        }
+      ]
     },
     //瀑布流数据(骨架屏数据)
 
@@ -53,7 +79,8 @@ Page({
     showSkeleton: true,
     userInfo: {}, //当前登录用户
     address: {},
-    isShowSelect: false
+    isShowSelect: false,
+    navBarLoding: false,
   },
 
   swiperChange: function(e) {
@@ -401,12 +428,7 @@ Page({
       }
     });
   },
-  // 跳转到门店申请自提点
-  toApplyStorePage() {
-    wx.navigateTo({
-      url: '/pages/applyStore/applyStore',
-    })
-  },
+  
   //点击banner
   urlJump(e){
     let item = e.target.dataset.item;

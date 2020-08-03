@@ -1,9 +1,9 @@
-// .show-select{
-//   width: 100vw;
-//   height: 100vh;
-//   overflow: hidden;
-//   position: relative;
-// }
+.show-select{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
 
 view, navigator, text {
   box-sizing: border-box;
@@ -11,7 +11,7 @@ view, navigator, text {
 
 .index-header {
   position: relative;
-  background-image: linear-gradient(180deg, #FFE66F 0%, #FDCA1F 100%);
+  background-image: linear-gradient(180deg, #FFE05C 0%, #FDCB22 100%);
   .search-box {
     height: 64rpx;
     width: 100%;
@@ -28,7 +28,6 @@ view, navigator, text {
         width: 28rpx;
         height: 28rpx;
         margin-right: 12rpx;
-        background: red;
       }
       >.search-placeholder {
         opacity: 0.89;
@@ -100,6 +99,7 @@ view, navigator, text {
       width: 102rpx;
       height: 102rpx;
       display: block;
+      margin-bottom: 10rpx;
     }
     text {
       font-size: 26rpx;
@@ -113,7 +113,8 @@ view, navigator, text {
   width: 700rpx;
   height: 170rpx;
   margin: 0 auto;
-  margin-bottom: 40rpx;
+  margin-bottom: 80rpx;
+  margin-top: 20rpx;
   image {
     width: 100%;
     height: 100%;
@@ -157,22 +158,54 @@ view, navigator, text {
   justify-content: space-between;
   .goods-item{
     width: 340rpx;
-    overflow: hidden;
     border-radius: 10rpx;
     margin-bottom: 24rpx;
     box-shadow: 4rpx 0 16rpx rgba($color: #000000, $alpha: 0.08);
     .goods-item-img {
       width: 340rpx;
       height: 340rpx;
+      position: relative;
       > image {
         width: 100%;
         height: 100%;
         display: block;
         border-radius: 10rpx;
       }
+      .tags-mask {
+        display: flex;
+        flex-wrap: wrap;
+        position: absolute;
+        top: 0;
+        left: 0;
+        .tags-item {
+          width: 64rpx;
+          height: 62rpx;
+          margin-right: 8rpx;
+          position: relative;
+          > image {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          > text {
+            font-size: 22rpx;
+            display: inline-block;
+            width: 100%;
+            color: #fff;
+            text-align: center;
+            line-height: 62rpx;
+            position: relative;
+            z-index: 2;
+          }
+        }
+      }
     }
     .goods-item-info {
-      min-height: 311rpx;
+      position: relative;
+      min-height: 298rpx;
       padding: 11rpx 17rpx;
       display: flex;
       flex-direction: column;
@@ -202,24 +235,101 @@ view, navigator, text {
           }
         }
       }
-    }
-    .goods-item-info-bottom {
-      .price-box {
-        .no-price {
-          font-size: 24rpx;
+      .goods-item-info-bottom {
+        .price-box {
+          .price {
+  
+          }
+          .normal-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            .price-sale {
+              font-size: 32rpx;
+              color: #FF3B30;
+              line-height: 1;
+            }
+            .price-origin {
+              font-size: 20rpx;
+              color: #989797;
+              text-decoration: line-through;
+            }
+  
+          }
+          .level-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 4rpx;
+            .price-sale-box {
+              display: flex;
+              align-items: center;
+              .price-sale {
+                font-family: "DINAlternate-Bold";
+                font-size: 32rpx;
+                letter-spacing: 0;
+              }
+              > image {
+                width: 65rpx;
+                height: 24rpx;
+                display: block;
+                margin-right: 6rpx;
+              }
+            }
+            .price-origin {
+              font-size: 18rpx;
+              color: #989797;
+            }
+          }
+          .silver-price {
+            .price-sale {
+              color: #828893 !important;
+            }
+          }
+          .gold-price {
+            .price-sale {
+              color: #FDBD1C !important;
+            }
+          }
+          .diamond-price {
+            .price-sale {
+              color: #E5BB72 !important;
+            }
+          }
+          .no-price {
+            font-size: 24rpx;
+            color: #989797;
+            margin-bottom: 18rpx;
+          }
+          .rmb::before {
+            content: '¥';
+            font-size: 26rpx;
+          }
+        }
+        .store-type {
+          font-size: 18rpx;
           color: #989797;
+          .type-label {
+            color: #FFF;
+            background: #FF8F1F;
+            border-radius: 4rpx;
+            padding: 0rpx 3rpx;
+            margin-right: 6rpx;
+          }
+          .type-label-self {
+            background: #FF6010;
+          }
         }
       }
-      .store-type {
-        font-size: 18rpx;
-        .type-label {
-          color: #FFF;
-          background: #FF8F1F;
-          border-radius: 4rpx;
-          padding: 2rpx 4rpx;
-        }
+  
+      .cart-wrapper {
+          position: absolute;
+          bottom: 22rpx;
+          right: 22rpx;
       }
     }
+    
+
 
   }
 }

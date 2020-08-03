@@ -1,8 +1,8 @@
 <!--components/selectStore/selectStore.wxml-->
 <view class="select-store" bindtap="showSelect">
-  <view class="location"><image src="{{locationSrc}}"/></view>
+  <view class="location"><image src="./img/location_icon.png"/></view>
   <view class="title">{{address.id ? address.title : '选择门店'}}</view>
-  <view class="down"><image src="{{downSrc}}"/></view>
+  <view class="down"><image src="./img/arrow_down.png"/></view>
 </view>
 <!--选择门店主体start-->
 <view class="store-body" wx:if="{{isShow}}" bindtap="cancelSelect">
