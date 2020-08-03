@@ -557,7 +557,7 @@ Page({
         that.itemQuery();
       });
     }
-  }
+  },
 
   // 跑马灯websocket
   connectSocket(){

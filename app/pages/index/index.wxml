@@ -1,37 +1,79 @@
 <!--index.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
 
-<view  class="{{isShowSelect ? 'show-select' : ''}}">
-  <skeleton selector="skeleton" bgcolor="#fff" wx:if="{{showSkeleton}}"></skeleton>
-  <view class="closeStore" wx:if="{{!closeStore}}"> 
-    营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
-  </view>
-  
-  <view class="skeleton" style="{{!closeStore && 'margin-top:60rpx'}}">
-    <!--选择门店组件-->
-    <view class="skeleton-rect"><selectStore wx:if="{{userInfo.id}}" bindcallback="selectStoreCallBack" bindtoggle="showHideToggle"/></view>
-    <!--搜索组件-->
-    <view class="skeleton-rect"><search bind:tap="clickSearch"/></view>
-    
-    <view class="skeleton-rect" style="position:relative; background: #f3f4f6;">
-      <swiper autoplay style="{{'height: 280rpx; width:100%;'}}" class="bg-img-container-banner" bindchange="swiperChange">
-        <swiper-item wx:for="{{bannerList}}" wx:key="index">
-          <image wx:if="{{item.url}}" mode="widthFix" data-index="{{index}}" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 280rpx;"></image>
-          <image wx:else data-index="{{index}}" mode="widthFix" data-item="{{item}}" bindtap="urlJump" src="{{tencentPath + item.image}}" style="width: 100%; height: 280rpx;"></image>
-        </swiper-item>
-        <!-- 暂时写死 -->
-        <swiper-item wx:key="x1999">
-          <image mode="widthFix" bindtap="toApplyStorePage" src="/assets/img/applyStore/apply_store_entry.png" style="width: 100%; height: 280rpx;"></image>
-        </swiper-item>
-      </swiper>
-      <view class="dotwrap">
-        <view class="dots">
-          <view wx:for="{{bannerList}}" wx:key="index" class="dot{{index == currentSwiper ? ' active' : ''}}"></view>
-          <view wx:key="x1999" class="dot"></view>
-        </view> 
-      </view> 
-    </view>
-    <view class='notice align-center'>
+<view class="{{isShowSelect ? 'show-select' : ''}}">
+	<skeleton
+	 selector="skeleton"
+	 bgcolor="#fff"
+	 wx:if="{{showSkeleton}}"
+	></skeleton>
+	<view class="closeStore" wx:if="{{!closeStore}}">
+		营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
+	</view>
+
+	<view class="skeleton" style="{{!closeStore && 'margin-top:60rpx'}}">
+		<!--选择门店组件-->
+		<view class="skeleton-rect">
+			<selectStore
+			 wx:if="{{userInfo.id}}"
+			 bindcallback="selectStoreCallBack"
+			 bindtoggle="showHideToggle"
+			/>
+		</view>
+		<!--搜索组件-->
+		<view class="skeleton-rect">
+			<search bind:tap="clickSearch" />
+		</view>
+
+		<view class="skeleton-rect" style="position:relative; background: #f3f4f6;">
+			<swiper
+			 autoplay
+			 style="{{'height: 280rpx; width:100%;'}}"
+			 class="bg-img-container-banner"
+			 bindchange="swiperChange"
+			>
+				<swiper-item wx:for="{{bannerList}}" wx:key="index">
+					<image
+					 wx:if="{{item.url}}"
+					 mode="widthFix"
+					 data-index="{{index}}"
+					 data-item="{{item}}"
+					 bindtap="urlJump"
+					 src="{{tencentPath + item.image}}"
+					 style="width: 100%; height: 280rpx;"
+					></image>
+					<image
+					 wx:else
+					 data-index="{{index}}"
+					 mode="widthFix"
+					 data-item="{{item}}"
+					 bindtap="urlJump"
+					 src="{{tencentPath + item.image}}"
+					 style="width: 100%; height: 280rpx;"
+					></image>
+				</swiper-item>
+				<!-- 暂时写死 -->
+				<swiper-item wx:key="x1999">
+					<image
+					 mode="widthFix"
+					 bindtap="toApplyStorePage"
+					 src="/assets/img/applyStore/apply_store_entry.png"
+					 style="width: 100%; height: 280rpx;"
+					></image>
+				</swiper-item>
+			</swiper>
+			<view class="dotwrap">
+				<view class="dots">
+					<view
+					 wx:for="{{bannerList}}"
+					 wx:key="index"
+					 class="dot{{index == currentSwiper ? ' active' : ''}}"
+					></view>
+					<view wx:key="x1999" class="dot"></view>
+				</view>
+			</view>
+		</view>
+		<!-- <view class='notice align-center'>
       <view class="flex-shrink-zero">蒲公英</view>
       <swiper autoplay vertical style="{{'height: 36rpx'}}" class="flex1">
         <swiper-item wx:for="{{noticeList}}" wx:key="index">
@@ -39,87 +81,130 @@
         </swiper-item>
        
       </swiper>
+</view> -->
+		<view class="tags-list">
+			<!-- 点击跳转到商品列表页面 -->
+			<!-- url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" -->
+			<block wx:for="{{tagsList}}" wx:key="index">
+				<!-- 第一个为今日主推，但是不需要显示 -->
+				<navigator
+				 wx:if="{{index !== 0}}"
+				 url="/pages/itemList/itemList"
+				 bind:tap="clickTags"
+				 data-item="{{item}}"
+				 data-index="{{index}}"
+				 open-type="switchTab"
+				>
+					<image
+					 class="skeleton-rect"
+					 wx:if="{{item.image}}"
+					 src="{{item.image}}"
+					></image>
+					<image class="img-none skeleton-rect" wx:else></image>
+					<view>
+						<text class="skeleton-rect">{{item.title}}</text>
+					</view>
+				</navigator>
+			</block>
+		</view>
+		<view class="pannel-line"></view>
+		<navigator class="hot-sale-entry skeleton-rect" url="/pages/hotSaleList/hotSaleList">
+			<image src="/assets/img/hotSale/hot_sale_entry.png"></image>
+		</navigator>
+		<view class="pannel-line"></view>
+		<view class="recently-collect-title">
+			<text class="interval"></text>
+			<text class="decorate skeleton-rect"></text>
+			<text class="str skeleton-rect">{{tagsList[0].title}}</text>
+			<text class="decorate decorate2 skeleton-rect"></text>
+			<text class="interval"></text>
+		</view>
+		<view class="recently-collect-content">
+			<view
+			 wx:for="{{dataMap}}"
+			 wx:for-item="dataMapItem"
+			 wx:key="index"
+			 class="{{index === 0 ? 'left' : 'right'}}"
+			>
+				<view
+				 class="content-item"
+				 wx:for="{{dataMapItem}}"
+				 wx:for-index="i"
+				 wx:key="i"
+				>
+					<navigator
+					 url="/pages/itemDetail/itemDetail?id={{item.id}}"
+					 bind:tap="clickItem"
+					 data-item="{{item}}"
+					>
+						<view class="img">
+							<view class="mark">
+								<text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+							</view>
+							<image
+							 class="skeleton-rect"
+							 lazy-load="{{index > 2 ? true : false}}"
+							 wx:if="{{item.images.length > 0}}"
+							 src="{{tencentPath + item.images[0]}}_watermark375x375"
+							></image>
+							<view class="image skeleton-rect bg-img-container-item" wx:else></view>
+						</view>
+						<view class="content">
+							<view class="goods-decs">
+								<view class="title skeleton-rect">
+									<view
+									 class="icon-tag"
+									 wx:for="{{tools.returnTags(item.tags)}}"
+									 wx:for-item="t"
+									 wx:for-index="i"
+									 wx:key="i"
+									>
+										{{t}}
+									</view>
+									<text>{{item.title}}</text>
+								</view>
+								<view class="label">
+									<text class="skeleton-rect" wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+									<text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
+									<text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+									<text class="skeleton-rect" wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+									<text class="skeleton-rect frame" wx:if="{{item.frame_id}}">有筐</text>
+									<text class="skeleton-rect min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+								</view>
+								<view class="repertory-price">
+									<view class="price" wx:if="{{item.is_quoted}}">
+										<text class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</text>
+										<text class="rmb">¥{{tools.returnPrice(item.price_sale)}}</text>
+									</view>
+									<view class="price" wx:else>
+										<text class="skeleton-rect">今日未报价</text>
+									</view>
+									<view class="repertory skeleton-rect">{{tools.returnItemStock(item)}}</view>
+								</view>
+							</view>
+
+						</view>
+					</navigator>
+
+					<view class="join" wx:if="{{tools.judgeItemStock(item)}}">
+						<joinShopCart itemData="{{item}}" size="medium" />
+					</view>
+					<view class="join" wx:else></view>
+				</view>
+			</view>
+		</view>
+
+		<view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
+		<!--<view class="load-none" wx:else style="margin-top: 36rpx;">暂无数据</view>-->
+		<defaultPage wx:else currentPage="itemList"></defaultPage>
+	</view>
 </view>
-    <view class="tags-list">
-    <!-- 点击跳转到商品列表页面 -->
-    <!-- url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" -->
-      <block wx:for="{{tagsList}}" wx:key="index">
-        <!-- 第一个为今日主推，但是不需要显示 -->
-        <navigator wx:if="{{index !== 0}}"  url="/pages/itemList/itemList"  bind:tap="clickTags" data-item="{{item}}" data-index="{{index}}" open-type="switchTab" >
-          <image class="skeleton-rect" wx:if="{{item.image}}" src="{{item.image}}"></image>
-          <image class="img-none skeleton-rect" wx:else></image>
-          <view><text class="skeleton-rect">{{item.title}}</text></view>
-        </navigator>
-      </block>
-    </view>
-    <view class="pannel-line"></view>
-    <navigator class="hot-sale-entry skeleton-rect" url="/pages/hotSaleList/hotSaleList">
-      <image src="/assets/img/hotSale/hot_sale_entry.png"></image>
-    </navigator>
-    <view class="pannel-line"></view>
-    <view class="recently-collect-title">
-      <text class="interval"></text>
-      <text class="decorate skeleton-rect"></text>
-      <text class="str skeleton-rect">{{tagsList[0].title}}</text>
-      <text class="decorate decorate2 skeleton-rect"></text>
-      <text class="interval"></text>
-    </view>
-    <view class="recently-collect-content">
-      <view wx:for="{{dataMap}}" wx:for-item="dataMapItem" wx:key="index" class="{{index === 0 ? 'left' : 'right'}}">
-        <view class="content-item" wx:for="{{dataMapItem}}" wx:for-index="i" wx:key="i">
-          <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-item="{{item}}">
-            <view class="img">
-              <view class="mark">
-                <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
-              </view>
-              <image class="skeleton-rect" lazy-load="{{index > 2 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_watermark375x375"></image>
-              <view class="image skeleton-rect bg-img-container-item" wx:else></view>
-            </view>
-            <view class="content">
-              <view class="goods-decs">
-                <view class="title skeleton-rect">
-                  <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
-                    {{t}}
-                  </view>
-                  <text>{{item.title}}</text>
-                </view>
-                <view class="label">
-                  <text class="skeleton-rect" wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-                  <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-                  <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
-                  <text class="skeleton-rect" wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-                  <text class="skeleton-rect frame" wx:if="{{item.frame_id}}">有筐</text>
-                  <text class="skeleton-rect min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-                </view>
-                <view class="repertory-price">
-                  <view class="price" wx:if="{{item.is_quoted}}">
-                    <text class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</text>
-                    <text class="rmb">¥{{tools.returnPrice(item.price_sale)}}</text>
-                  </view>
-                  <view class="price" wx:else>
-                    <text class="skeleton-rect">今日未报价</text>
-                  </view>
-                  <view class="repertory skeleton-rect">{{tools.returnItemStock(item)}}</view>
-                </view>
-              </view>
 
-            </view>
-          </navigator>
+<newCoupon
+ wx:if="{{userInfo.id && address.id}}"
+ storeId="{{address.id}}"
+ bindtoggle="showHideToggle"
+/>
 
-          <view class="join" wx:if="{{tools.judgeItemStock(item)}}">
-            <joinShopCart itemData="{{item}}" size="medium"/>
-          </view>
-          <view class="join" wx:else></view>
-        </view>
-      </view>
-    </view>
+<gio-marketing/>
 
-    <view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
-    <!--<view class="load-none" wx:else style="margin-top: 36rpx;">暂无数据</view>-->
-    <defaultPage wx:else currentPage="itemList"></defaultPage>
-  </view>
-</view>
-
-<newCoupon wx:if="{{userInfo.id && address.id}}" storeId="{{address.id}}" bindtoggle="showHideToggle"/>
-
-<gio-marketing />

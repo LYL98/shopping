@@ -5,7 +5,6 @@
 	"private": true,
 	"main": "webpack.config.js",
 	"scripts": {
-		"install": "npm install --registry=https://registry.npm.taobao.org",
 		"dev": "webpack"
 	},
 	"devDependencies": {
