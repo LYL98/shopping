@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "newCoupon": "/components/newCoupon/newCoupon",
+    "skeleton": "/components/skeleton/skeleton",
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "selectStore": "/components/selectStore/selectStore",
+    "gio-marketing": "/utils/gio-minp/components/gio-marketing/gio-marketing"
+  }
+}

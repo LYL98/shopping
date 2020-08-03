@@ -1,5 +1,5 @@
 <!--components/selectStore/selectStore.wxml-->
-<view class="seelct-store" bindtap="showSelect">
+<view class="select-store" bindtap="showSelect">
   <view class="location"><image src="{{locationSrc}}"/></view>
   <view class="title">{{address.id ? address.title : '选择门店'}}</view>
   <view class="down"><image src="{{downSrc}}"/></view>

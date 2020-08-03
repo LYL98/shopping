@@ -1,0 +1,523 @@
+// pages/index1/index1.js
+
+const app = getApp();
+import { Constant, Config } from './../../utils/index';
+
+Page({
+
+  data: {
+    tencentPath: Config.tencentPath,
+    rightSrc: './../../assets/img/right.png',
+    bannerList: [],
+    tagsImg: [
+      './../../assets/img/tags_icon1.png',
+      './../../assets/img/tags_icon2.png',
+      './../../assets/img/tags_icon3.png',
+      './../../assets/img/tags_icon4.png',
+      './../../assets/img/tags_icon5.png',
+      './../../assets/img/tags_icon6.png',
+      './../../assets/img/tags_icon7.png',
+      './../../assets/img/tags_icon8.png'
+    ],
+    tagsList: (()=>{
+      //初始化骨架数据
+      let items = [];
+      for(let i = 0; i < 9; i++){
+        let d = {
+          id: i + 1,
+          image: '',
+          title: '今日主推'
+        };
+        items.push(d);
+      }
+      return items;
+    })(),
+    query: {
+      store_id: 0,
+      // tag: '今日主推',
+      sort: '-tags_edited',
+      page: 1,
+      page_size: Constant.PAGE_SIZE,
+      item_tag_id: '', //运营专区中今日主推ID
+      // item_tag_id: this.data.tagsList[0].id //运营专区中今日主推ID
+
+    },
+    dataItem: {
+      items: []
+    },
+    //瀑布流数据(骨架屏数据)
+
+    currentSwiper: 0,
+    initLoad: true,
+    closeStore: true,
+    showSkeleton: true,
+    userInfo: {}, //当前登录用户
+    address: {},
+    isShowSelect: false
+  },
+
+  swiperChange: function(e) {
+    this.setData({
+      currentSwiper: e.detail.current
+    })
+  },
+
+  onLoad: function (options) {
+    let that = this;
+    let { brand_name, system } = app.globalData;
+    if(brand_name){
+      wx.setNavigationBarTitle({
+        title: brand_name
+      });
+    }else{
+      app.getBrand((rd)=>{
+        wx.setNavigationBarTitle({
+          title: rd.brand_name
+        });
+      });
+    }
+    that.setData({
+      system: system
+    });
+  },
+
+  onShow: function () {
+    let that = this;
+
+    //判断登录
+    app.signIsLogin((res) => {
+      //保存登录用户信息
+      that.setData({
+        userInfo: res,
+      });
+      let { query, address } = that.data;
+      if(address && address.id){
+        let ad = app.getSelectStore(); //当前选择的地址
+        query.store_id = ad.id;
+        if (query.page !== 1) {
+          query.page_size = query.page_size * query.page;
+          query.page = 1;
+          that.setData({
+            query: query,
+            address: ad
+          }, () => {
+            that.getTagsList(true);//里面包含获取商品列表
+            // that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
+            that.getWorkTime();
+            that.getBanner(); //显示ad
+          });
+        } else {
+          that.setData({
+            query: query,
+            address: ad
+          }, () => {
+            that.getTagsList()//里面包含获取商品列表
+            // that.itemQuery();
+            that.getWorkTime();
+            that.getBanner(); //显示ad
+            
+          });
+        }
+        app.shoppingCartNum();
+      }
+    });
+  },
+
+  //点击搜索
+  clickSearch(){
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '搜索');
+    /*===== 埋点 end ======*/
+  },
+  //显示选择收货地址、新人优惠券时，锁列表不能滑动
+  showHideToggle(e){
+    this.setData({
+      isShowSelect: e.detail
+    });
+  },
+
+  //选择门店后回调
+  selectStoreCallBack(res){
+    app.shoppingCartNum();
+    let that = this;
+    let rd = res.detail;
+    if(rd && rd.id){
+      
+      let { query } = that.data;
+      query.page = 1;
+      query.page_size = Constant.PAGE_SIZE;
+      query.store_id = rd.id;
+      that.setData({
+        query: query,
+        address: rd
+      }, ()=>{
+        that.getTagsList();
+        // that.itemQuery();
+        that.getBanner(); //显示ad
+        that.getWorkTime();
+      });
+      /*===== 埋点 start ======*/
+      app.gioSetUser(rd.id);
+      /*===== 埋点 end ======*/
+    }
+  },
+
+  //是否可下单
+  getWorkTime() {
+    let that = this;
+    let { address } = that.data;
+    wx.request({
+      url: Config.api.isOrderTime,
+      header: {
+        'content-type': 'application/json',
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: address.province_code
+      },
+      success: function(res) {
+        if (res.statusCode == 200 && res.data.code == 0) {
+          let rd = res.data.data;
+          that.setData({
+            closeStore: rd.is_time_order,
+            order_end_time: rd.order_end_time,
+            order_start_time: rd.order_start_time
+          })
+          let iscwp = wx.getStorageSync('is_click_wait_pay')
+          if (rd.is_debited && !iscwp) {
+            wx.showModal({
+              title: '提示',
+              content: '您有订单未付款，请先完成付款，否则无法购买商品！',
+              confirmColor: '#00AE66',
+              success: function(res) {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url: '/pages/order/order?type=wait_complete'
+                  });
+                }
+              },
+              complete(e) {
+                wx.setStorageSync('is_click_wait_pay', true)
+              }
+            })
+          }
+
+        } else {
+          app.requestResultCode(res); //处理异常
+        }
+      },
+      complete: function(res) {
+        //判断是否网络超时
+        app.requestTimeout(res, () => {
+          that.getWorkTime();
+        });
+      }
+    });
+  },
+
+  //获取banner
+  getBanner() {
+    let that = this;
+    let { address } = that.data;
+    wx.request({
+      url: Config.api.banner,
+      header: {
+        'content-type': 'application/json',
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: address.province_code
+      },
+      success: function(res) {
+        if (res.statusCode == 200 && res.data.code == 0) {
+          let rd = res.data.data;
+          /*===== 埋点 start ======*/
+          for(let i = 0; i < rd.length; i++){
+            let item = rd[i];
+            let productName = '', tab = item.url.match(/\/\/|(\w+)/g);
+            if(item.url.indexOf('itemDetail') >= 0){
+              productName = `商品ID${tab[4]}`;
+            }else if(item.url.indexOf('itemLabel') >= 0){
+              tab = item.url.match(/([^\=]+)$/g);
+              productName = `跳转商品标签-标签-${tab[0]}`;
+            }else if(item.url.indexOf('itemList') >= 0){
+              productName = `跳转商品列表-分类-${tab[3]}`;
+            }else{
+              productName = '没有链接';
+            }
+            app.gioActionRecordAdd('positionView', {
+              moduleTitle_var: '首页banner', //楼层
+              position_var: i + 1, //坑位
+              positonName_var: `bannerID${item.id}`, //流量位名称(暂取banner_id)
+              productName: productName, //商品名称
+            });
+          }
+          /*===== 埋点 end ======*/
+          that.setData({
+            bannerList: rd
+          });
+        } else {
+          app.requestResultCode(res); //处理异常
+        }
+      },
+      complete: function(res) {
+        //判断是否网络超时
+        app.requestTimeout(res, () => {
+          that.getBanner();
+        });
+      }
+    });
+  },
+
+  //获取商品标签
+  getTagsList(isInit){
+    let that = this;
+    let { query,address } = that.data;
+    wx.request({
+      url: Config.api.itemTagsList,
+      header: {
+        'content-type': 'application/json',
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: {
+        province_code: address.province_code
+      },
+      success: function(res) {
+        if (res.statusCode == 200 && res.data.code == 0) {
+          let rd = res.data.data;
+          let { tencentPath } = that.data;
+          
+          if(rd.length > 9) rd.length = 9; //限制最长8个,但是第一个不显示
+          let rdTemp = [];
+          rd.forEach((item, index) => {
+            if(item.image){
+              rdTemp.push({
+                ...item,
+                image: tencentPath + item.image
+              });
+            }else{
+              rdTemp.push(item);
+            }
+            /*===== 埋点 start ======*/
+            if(index > 0){
+              app.gioActionRecordAdd('positionView', {
+                moduleTitle_var: 'icon区', //楼层
+                position_var: index + 1, //坑位
+                positonName_var: item.title, //流量位名称
+                productName: `跳转商品列表-展示分类-${item.title}`, //商品名称
+              });
+            }
+            /*===== 埋点 end ======*/
+          });
+          //默认选择运营专区第一个
+          query.item_tag_id = rdTemp[0].id;
+          that.setData({
+            tagsList: rdTemp,
+            query:query
+          });
+         //先取得item_tag_id,再请求获得商品 
+          that.itemQuery(isInit);
+        } else {
+          app.requestResultCode(res); //处理异常
+        }
+      },
+      complete: function(res) {
+        //判断是否网络超时
+        app.requestTimeout(res, () => {
+          that.getTagsList();
+        });
+      }
+    });
+  },
+  //获取商品列表
+  itemQuery(isInit) {
+    let that = this;
+    let {
+      query,
+      dataItem,
+      initLoad,
+    } = that.data;
+    //判断是否第一次加载，或没数据；如果是：显示loading   否则静默更新数据
+    if (initLoad || !dataItem.num) {
+      wx.showNavigationBarLoading();
+    }
+    wx.request({
+      url: Config.api.itemQuery,
+      header: {
+        'content-type': 'application/json',
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      data: query,
+      success: function(res) {
+        if (res.statusCode == 200 && res.data.code == 0) {
+          /*===== 埋点 start ======*/
+          let dotFun = (item, index) => {
+            app.gioActionRecordAdd('positionView', {
+              moduleTitle_var: '今日主推', //楼层
+              position_var: index + 1, //坑位
+              positonName_var: item.title, //流量位名称
+              productName: item.title, //商品名称
+            });
+          }
+          /*===== 埋点 end ======*/
+          let rd = res.data.data;
+          if (query.page === 1) {
+            that.setData({
+              dataItem: rd,
+            });
+          } else {
+            dataItem.items = dataItem.items.concat(rd.items);
+            that.setData({
+              dataItem: dataItem,
+            });
+          }
+        } else {
+          app.requestResultCode(res); //处理异常
+        }
+
+        //重新恢复数据
+        if (isInit) {
+          if (query.page_size > Constant.PAGE_SIZE) {
+            query.page = Math.ceil(query.page_size / Constant.PAGE_SIZE); //向上取整
+            query.page_size = Constant.PAGE_SIZE;
+            that.setData({
+              query: query
+            });
+          }
+        }
+
+      },
+      complete: function(res) {
+        that.setData({
+          initLoad: false,
+          showSkeleton: false
+        });
+        wx.hideNavigationBarLoading();
+        //判断是否网络超时
+        app.requestTimeout(res, () => {
+          that.itemQuery(isInit);
+        });
+      }
+    });
+  },
+  // 跳转到门店申请自提点
+  toApplyStorePage() {
+    wx.navigateTo({
+      url: '/pages/applyStore/applyStore',
+    })
+  },
+  //点击banner
+  urlJump(e){
+    let item = e.target.dataset.item;
+    let index = e.target.dataset.index;
+    let tab = [];
+    
+    if(item.url !== '' && item.url !== 'none' && item.url !== null){
+      let isPage = item.url.indexOf("/pages") == 0;
+      tab = item.url.match(/\/\/|(\w+)/g);
+      if(isPage) {
+        wx.navigateTo({
+          url: item.url
+        })
+      }else if(tab[0] == 'app'){
+        app.globalData.urlJump = tab[3];
+        wx.switchTab({
+          url: `/pages/itemList/itemList`
+        })
+      }
+    }
+  
+    /*===== 埋点 start ======*/
+    let productName = '';
+    if(item.url.indexOf('itemDetail') >= 0){
+      productName = `商品ID${tab[4]}`;
+    }else if(item.url.indexOf('itemLabel') >= 0){
+      tab = item.url.match(/([^\=]+)$/g);
+      productName = `跳转商品标签-标签-${tab[0]}`;
+    }else if(item.url.indexOf('itemList') >= 0){
+      productName = `跳转商品列表-分类-${tab[3]}`;
+    }else{
+      productName = '没有链接';
+    }
+    app.gioActionRecordAdd('positionClick', {
+      moduleTitle_var: '首页banner', //楼层
+      position_var: index + 1, //坑位
+      positonName_var: `bannerID${item.id}`, //流量位名称(暂取banner_id)
+      productName: productName, //商品名称
+    });
+
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '首页banner');
+    /*===== 埋点 end ======*/
+  },
+  //点击tags
+  clickTags(e){
+    let item = e.currentTarget.dataset.item;
+    let index = e.currentTarget.dataset.index;
+    app.globalData.indexTagId = item.id; //保存itemList页面要用到，
+    app.globalData.indexTagIndex = index; //保存itemList页面要用到
+    wx.switchTab({
+      url: '/pages/itemList/itemList',
+    })
+
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('positionClick', {
+      moduleTitle_var: 'icon区', //楼层
+      position_var: index, //坑位
+      positonName_var: item.title, //流量位名称
+      productName: `跳转商品列表-展示分类-${item.title}`, //商品名称
+    });
+
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', 'icon');
+    /*===== 埋点 end ======*/
+  },
+  //点击商品
+  clickItem(e){
+    let item = e.currentTarget.dataset.item;
+    /*===== 埋点 start ======*/
+    let index = 0;
+    let { dataItem } = this.data;
+    for(let i = 0; i < dataItem.items.length; i++){
+      if(dataItem.items[i].id === item.id){
+        index = i + 1;
+        break;
+      }
+    }
+    app.gioActionRecordAdd('positionClick', {
+      moduleTitle_var: '今日主推', //楼层
+      position_var: index, //坑位
+      positonName_var: item.title, //流量位名称
+      productName: item.title, //商品名称
+    });
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '今日主推');
+    /*===== 埋点 end ======*/
+  },
+  //点击页面底下的tab
+  onTabItemTap(e){
+    /*===== 埋点 start ======*/
+    app.gioActionRecordAdd('tabbar', { tabType_var: '首页' });
+    /*===== 埋点 end ======*/
+  },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function() {
+    let that = this;
+    let {
+      query,
+      dataItem
+    } = that.data;
+    if (dataItem.num / query.page_size > query.page) {
+      query.page = query.page + 1;
+      that.setData({
+        // initLoad: true,
+        query: query
+      }, () => {
+        that.itemQuery();
+      });
+    }
+  },
+})

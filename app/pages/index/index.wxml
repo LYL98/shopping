@@ -110,6 +110,6 @@
   </view>
 </view>
 
-<newCoupon wx:if="{{userInfo.id && address.id}}" storeId="{{address.id}}" bindtoggle="showHideToggle"/>
+<newCoupon wx:if="{{userInfo.id && address.id}}" wx:if="{{true}}" storeId="{{address.id}}" bindtoggle="showHideToggle"/>
 
 <gio-marketing />

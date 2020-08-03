@@ -39,13 +39,6 @@ Component({
       // show时更新门店列表，防止后台更改子账号门店，小程序端存在缓存
       this.merchantStoreList(true); //获取获取地址列表
 
-      // let ad = app.getSelectStore(); //当前选择的地址
-      // let { address } = this.data;
-      // if(ad.id !== address.id){
-      //   this.setData({
-      //     address: ad
-      //   });
-      // }
     },
   },
 

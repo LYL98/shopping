@@ -12,32 +12,29 @@
 }
 
 
-.seelct-store{
+.select-store{
   overflow: hidden;
-  padding: 0 30rpx;
-  margin-top: 20rpx;
+  height: 55rpx;
+  padding: 0 29rpx;
+  display: flex;
+  align-items: center;
   >.location{
-    float: left;
+    margin-right: 12rpx;
     >image{
-      width: 28rpx;
-      height: 32rpx;
+      display: block;
+      width: 34rpx;
+      height: 34rpx;
     }
   }
   >.title{
-    float: left;
-    font-size: 30rpx;
-    position: relative;
-    top: -3rpx;
-    margin-left: 19rpx;
+    font-size: 32rpx;
   }
   >.down{
-    float: left;
-    margin-left: 13rpx;
-    position: relative;
-    top: -5rpx;
+    margin-left: 6rpx;
     >image{
-      width: 19rpx;
-      height: 14rpx;
+      display: block;
+      width: 32rpx;
+      height: 32rpx;
     }
   }
 }
