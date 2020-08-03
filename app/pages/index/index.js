@@ -5,6 +5,9 @@ import { Constant, Config } from './../../utils/index';
 
 Page({
   data: {
+    noticeList:['果蔬农场刚刚购买了“商品名称名称,果蔬农场刚刚购买了“商品名称名称果蔬农场刚刚购买了“商品名称名称','我是第二个购买的商品'],
+    socketOpen: false, 
+    socketMsgQueue:[],
     tencentPath: Config.tencentPath,
     rightSrc: './../../assets/img/right.png',
     bannerList: [],
@@ -554,5 +557,32 @@ Page({
         that.itemQuery();
       });
     }
+  }
+
+  // 跑马灯websocket
+  connectSocket(){
+    const that = this;
+    const url = ''
+    wx.connectSocket({
+      url: url,
+      header:{
+        'content-type': 'application/json'
+      },
+      protocols: ['protocol1']
+    })
+    wx.onSocketOpen(function(res){
+      console.log('WebSocket连接已打开！');
+      that.setData({
+        socketOpen : true,
+        socketMsgQueue:[]
+      })
+      // for (var i = 0; i < that.data.socketMsgQueue.length; i++){
+			// 	self.sendSocketMessage(self.socketMsgQueue[i])
+			// }
+
+    })
+    wx.onSocketMessage(function(res){
+      console.log('接受服务器信息',res.data)
+    })
   }
 })

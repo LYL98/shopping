@@ -281,3 +281,12 @@
 .load-more, .load-none{
   background:#f7f7f8;
 }
+
+
+.notice_text{
+  overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}

@@ -41,8 +41,12 @@ Page({
       page: 1,
       page_size: 5
     },
+    slideButtons: [{ text: '删除' }],
     validCartList:[],
     inValidCartList:[],
+    isShowInput:false,
+    inputNum: '',
+    keyHeight: 0,
   },
   onLoad() {
     this.address = {}; //当前选择地址
@@ -139,6 +143,98 @@ Page({
         }
       }
     });
+  },
+
+  onDelete(e){
+    const { index, id, valid } = e.currentTarget.dataset;
+    let that = this;
+    let shoppingCartData = wx.getStorageSync('shoppingCartData');
+		wx.showModal({
+      title: '提示',
+      content: '确认从购物车移除？',
+      confirmColor: '#FDCA1F',
+      success: function (res) {
+        if (res.confirm) {
+          shoppingCartData.map((item) => {
+              if (item.id === id) {
+                shoppingCartData.splice(index,1)
+              }
+          });
+          wx.setStorageSync('shoppingCartData', shoppingCartData);
+          that.updateData();
+        }
+      }
+      
+    });
+  },
+
+  clearInValid(){
+    let that = this;
+   
+    wx.showModal({
+      title: '提示',
+      content: '确认清除失效商品？',
+      confirmColor: '#FDCA1F',
+      success: function (res) {
+        if (res.confirm) {
+          let inValidCartList = that.data.inValidCartList.map(item => item.id)
+          console.log('inValidCartList',inValidCartList)
+          let shoppingCartData = wx.getStorageSync('shoppingCartData');
+          let tempShowCartData = []
+          shoppingCartData.map(item => {
+            if(!inValidCartList.includes(item.id)){
+              tempShowCartData.push(item)
+            }
+          })
+          
+          wx.setStorageSync('shoppingCartData', tempShowCartData);
+          
+          that.updateData();
+        }
+      }
+      
+    });
+  },
+  traggleCartInput(e){
+    console.log('进入')
+    this.setData({
+      isShowInput:true
+    })
+    // const { itemData } = e.detail;
+  },
+  traggleCartHideInput(){
+    this.setData({ isShowInput: false, inputNum: '' });
+  },
+  hideInput(){
+    this.setData({ isShowInput: false, inputNum: '' });
+  },
+  inputChange(e){
+    let value = e.detail.value;
+    this.setData({ inputNum: value });
+  },
+  inputBlur(e){
+    this.setData({ keyHeight: 0 });
+  },
+    //输入法弹起
+    inputHeightChange(e){
+      let h = e.detail.height;
+      let systemInfo = wx.getSystemInfoSync();
+      // 状态栏的高度
+      let ktxStatusHeight = systemInfo.statusBarHeight;
+      // 导航栏的高度
+      let navigationHeight = 44;
+      // window的高度
+      let ktxWindowHeight = systemInfo.windowHeight;
+      // 屏幕的高度
+      let ktxScreentHeight = systemInfo.screenHeight;
+      // 底部tabBar的高度
+      let tabBarHeight = ktxScreentHeight - ktxStatusHeight - navigationHeight - ktxWindowHeight + 5;
+      this.setData({ keyHeight: h - tabBarHeight });
+    },
+  inputConfirm(e){
+    this.joinShopCart = this.selectComponent('#joinShopCart')
+    this.joinShopCart.triggleInputNum(this.data.inputNum)
+    this.joinShopCart.inputConfirm()
   },
 
   //添加或减少回调
@@ -267,7 +363,6 @@ Page({
 
       let validCartList = [];
       let inValidCartList = [];
-
       dataItem.map(item => {
         if(item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted){
           validCartList.push(item)

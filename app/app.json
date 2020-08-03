@@ -60,6 +60,9 @@
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "black"
   },
+  "useExtendedLib": {
+    "weui": true
+  },
   "navigateToMiniProgramAppIdList": [
     "wx1653f76966571193"
   ],
