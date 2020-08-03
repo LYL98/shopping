@@ -40,7 +40,9 @@ Page({
       fail_num: 0, //失效数量
       page: 1,
       page_size: 5
-    }
+    },
+    validCartList:[],
+    inValidCartList:[],
   },
   onLoad() {
     this.address = {}; //当前选择地址
@@ -263,11 +265,23 @@ Page({
         }
       }
 
+      let validCartList = [];
+      let inValidCartList = [];
+
+      dataItem.map(item => {
+        if(item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted){
+          validCartList.push(item)
+        }else{
+          inValidCartList.push(item)
+        }
+      })
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
         totalPrice: totalPrice,
         discountsPrice: discountsPrice,
+        validCartList,
+        inValidCartList,
       }, () => {
         that.judgeIsAllSelect();//判断是否全选
       });
@@ -276,7 +290,9 @@ Page({
         dataItem: [],
         totalNum: 0,
         totalPrice: 0,
-        discountsPrice: 0
+        discountsPrice: 0,
+        validCartList:[],
+        inValidCartList:[]
       });
     }
     app.shoppingCartNum(); //计算购物车数量并显示角标
