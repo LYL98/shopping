@@ -227,11 +227,14 @@ view, navigator, text {
           margin-top: 10rpx;
           color: #FF6010;
           font-size: 16rpx;
+          display: flex;
+          flex-wrap: wrap;
           > text {
             display: inline-block;
             border-radius: 4rpx;
             border: 1rpx solid #FF6010;
             padding: 2rpx 4rpx;
+            margin-right: 6rpx;
           }
         }
       }
