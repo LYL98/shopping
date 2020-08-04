@@ -46,7 +46,8 @@
     "pages/suggestions/suggestions",
     "pages/suggestionsResult/suggestionsResult",
     "pages/hotSaleList/hotSaleList",
-    "pages/applyStore/applyStore"
+    "pages/applyStore/applyStore",
+    "pages/index1/index1"
   ],
   "plugins": {
     "live-player-plugin": {

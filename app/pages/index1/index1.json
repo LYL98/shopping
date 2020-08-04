@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "蒲公英",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "handleShopCart": "/components/handleShopCart/handleShopCart",
+    "newCoupon": "/components/newCoupon/newCoupon",
+    "skeleton": "/components/skeleton/skeleton",
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "selectStore": "/components/selectStore/selectStore",
+    "pageNavBar": "/components/pageNavBar/pageNavBar",
+    "gio-marketing": "/utils/gio-minp/components/gio-marketing/gio-marketing"
+  }
+}
