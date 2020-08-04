@@ -202,6 +202,14 @@ var returnVIPLevelClassName = function(vipLevel) {
   return className;
 }
 
+// 返回指定个数的字符串
+var returnSpecStr = function(str, start, end) {
+  if(!str) {
+    return ''
+  }
+  return str.substring(start, end);
+}
+
 module.exports = {
   returnPrice: returnPrice,
   returnPriceAbs: returnPriceAbs,
@@ -218,5 +226,6 @@ module.exports = {
   returnDiscount: returnDiscount,
   returnOmissionText: returnOmissionText,
   returnTags:returnTags,
+  returnSpecStr: returnSpecStr,
   returnVIPLevelClassName: returnVIPLevelClassName
 }

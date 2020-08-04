@@ -67,7 +67,7 @@
           <view class="goods-item-img">
             <view class="tags-mask">
               <view class="tags-item" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
-                <text>{{t}}</text>
+                <text>{{tools.returnSpecStr(t,0,2)}}</text>
                 <image wx:if="{{i == 0}}" src="/assets/img/index/label0.png"></image>
                 <image wx:else src="/assets/img/index/label1.png"></image>
               </view>
