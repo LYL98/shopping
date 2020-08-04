@@ -9,9 +9,9 @@ Page({
    */
   data: {
     tencentPath: Config.tencentPath,
-    rankSrc: './../../assets/img/rank.png',
-    rankSSrc: './../../assets/img/rank_s.png',
-    rankSl: './../../assets/img/rank_l.png',
+    rankSrc: './../../assets/img/itemList/rank.png',
+    rankSSrc: './../../assets/img/itemList/rank_s.png',
+    rankSl: './../../assets/img/itemList/rank_l.png',
     screenSrc: './../../assets/img/screen.png',
     downSrc: './../../assets/img/down.png',
     categoryList: [],

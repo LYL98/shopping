@@ -1,9 +1,10 @@
-//index.js
-//获取应用实例
+// pages/index1/index1.js
+
 const app = getApp();
 import { Constant, Config } from './../../utils/index';
 
 Page({
+
   data: {
     tencentPath: Config.tencentPath,
     rightSrc: './../../assets/img/right.png',
@@ -16,7 +17,7 @@ Page({
       './../../assets/img/tags_icon5.png',
       './../../assets/img/tags_icon6.png',
       './../../assets/img/tags_icon7.png',
-      './../../assets/img/tags_icon8.png'
+      './../../assets/img/tags_icon8.png',
     ],
     tagsList: (()=>{
       //初始化骨架数据
@@ -42,49 +43,53 @@ Page({
 
     },
     dataItem: {
-      items: []
+      items: [
+        {
+          frame_id: '00',
+          gross_weight: 0,
+          id: 1,
+          images: [],
+          item_spec: "10g",
+          item_stock: 0,
+          order_num_max: 0,
+          origin_place: "......",
+          package_spec: "纸箱",
+          price_sale: 2000,
+          title: "xxxxxxxxxx"
+        },{
+          frame_id: '00',
+          gross_weight: 0,
+          id: 2,
+          images: [],
+          item_spec: "10g",
+          item_stock: 0,
+          order_num_max: 0,
+          origin_place: "......",
+          package_spec: "纸箱",
+          price_sale: 2000,
+          title: "xxxxxxxxxx"
+        }
+      ]
     },
     //瀑布流数据(骨架屏数据)
-    dataMap:[[{
-      frame_id: '00',
-      gross_weight: 0,
-      id: 1,
-      images: [],
-      item_spec: "10g",
-      item_stock: 0,
-      order_num_max: 0,
-      origin_place: "......",
-      package_spec: "纸箱",
-      price_sale: 2000,
-      title: "xxxxxxxxxx"
-    }],[{
-      frame_id: '00',
-      gross_weight: 0,
-      id: 2,
-      images: [],
-      item_spec: "10g",
-      item_stock: 0,
-      order_num_max: 0,
-      origin_place: "......",
-      package_spec: "纸箱",
-      price_sale: 2000,
-      title: "xxxxxxxxxx"
-    }]],
+
     currentSwiper: 0,
     initLoad: true,
     closeStore: true,
     showSkeleton: true,
     userInfo: {}, //当前登录用户
     address: {},
-    isShowSelect: false
+    isShowSelect: false,
+    navBarLoding: false,
   },
+
   swiperChange: function(e) {
     this.setData({
       currentSwiper: e.detail.current
     })
   },
-  //页面装载时
-  onLoad() {
+
+  onLoad: function (options) {
     let that = this;
     let { brand_name, system } = app.globalData;
     if(brand_name){
@@ -102,10 +107,8 @@ Page({
       system: system
     });
   },
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
+
+  onShow: function () {
     let that = this;
 
     //判断登录
@@ -146,6 +149,7 @@ Page({
       }
     });
   },
+
   //点击搜索
   clickSearch(){
     /*===== 埋点 start ======*/
@@ -159,6 +163,7 @@ Page({
       isShowSelect: e.detail
     });
   },
+
   //选择门店后回调
   selectStoreCallBack(res){
     app.shoppingCartNum();
@@ -184,6 +189,7 @@ Page({
       /*===== 埋点 end ======*/
     }
   },
+
   //是否可下单
   getWorkTime() {
     let that = this;
@@ -236,6 +242,7 @@ Page({
       }
     });
   },
+
   //获取banner
   getBanner() {
     let that = this;
@@ -289,6 +296,7 @@ Page({
       }
     });
   },
+
   //获取商品标签
   getTagsList(isInit){
     let that = this;
@@ -356,7 +364,6 @@ Page({
       query,
       dataItem,
       initLoad,
-      dataMap
     } = that.data;
     //判断是否第一次加载，或没数据；如果是：显示loading   否则静默更新数据
     if (initLoad || !dataItem.num) {
@@ -383,32 +390,13 @@ Page({
           /*===== 埋点 end ======*/
           let rd = res.data.data;
           if (query.page === 1) {
-            dataMap = [[], []];
-            for(let i = 0; i < rd.items.length; i++){
-              if(i % 2 === 0){
-                dataMap[0].push(rd.items[i]);
-              }else{
-                dataMap[1].push(rd.items[i]);
-              }
-              dotFun(rd.items[i], i); //埋点
-            }
             that.setData({
               dataItem: rd,
-              dataMap: dataMap,
             });
           } else {
             dataItem.items = dataItem.items.concat(rd.items);
-            for (let i = 0; i < rd.items.length; i++) {
-              if (i % 2 === 0) {
-                dataMap[0] = dataMap[0].concat(rd.items[i]);
-              } else {
-                dataMap[1] = dataMap[1].concat(rd.items[i]);
-              }
-              dotFun(rd.items[i], i); //埋点
-            }
             that.setData({
               dataItem: dataItem,
-              dataMap: dataMap
             });
           }
         } else {
@@ -440,12 +428,7 @@ Page({
       }
     });
   },
-  // 跳转到门店申请自提点
-  toApplyStorePage() {
-    wx.navigateTo({
-      url: '/pages/applyStore/applyStore',
-    })
-  },
+  
   //点击banner
   urlJump(e){
     let item = e.target.dataset.item;
@@ -496,6 +479,10 @@ Page({
     let index = e.currentTarget.dataset.index;
     app.globalData.indexTagId = item.id; //保存itemList页面要用到，
     app.globalData.indexTagIndex = index; //保存itemList页面要用到
+    wx.switchTab({
+      url: '/pages/itemList/itemList',
+    })
+
     /*===== 埋点 start ======*/
     app.gioActionRecordAdd('positionClick', {
       moduleTitle_var: 'icon区', //楼层
@@ -554,5 +541,5 @@ Page({
         that.itemQuery();
       });
     }
-  }
+  },
 })

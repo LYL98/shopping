@@ -228,6 +228,20 @@
 					"pathName": "pages/shopDetail/shopDetail",
 					"query": "id=21593",
 					"scene": null
+				},
+				{
+					"id": 24,
+					"name": "首页【新】",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 25,
+					"name": "分类【新】",
+					"pathName": "pages/itemList/itemList",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

@@ -178,6 +178,38 @@ var returnTags = function(tags){
   }
   return tags
 }
+
+// 会员等级类
+var returnVIPLevelClassName = function(vipLevel) {
+  console.log('------------')
+  console.log(vipLevel)
+  if(!vipLevel) {
+    return '';
+  }
+  var className = ''
+  
+  switch (vipLevel) {
+    case 1: 
+      className = 'silver';
+      break;
+    case 2:
+      className = 'gold';
+      break;
+    default: 
+      className = 'diamond';
+      break;
+  }
+  return className;
+}
+
+// 返回指定个数的字符串
+var returnSpecStr = function(str, start, end) {
+  if(!str) {
+    return ''
+  }
+  return str.substring(start, end);
+}
+
 module.exports = {
   returnPrice: returnPrice,
   returnPriceAbs: returnPriceAbs,
@@ -193,5 +225,7 @@ module.exports = {
   returnShowPayType: returnShowPayType,
   returnDiscount: returnDiscount,
   returnOmissionText: returnOmissionText,
-  returnTags:returnTags
+  returnTags:returnTags,
+  returnSpecStr: returnSpecStr,
+  returnVIPLevelClassName: returnVIPLevelClassName
 }

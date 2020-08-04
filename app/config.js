@@ -6,10 +6,14 @@
 export const Conn = 'dev';
 
 //测试环境api地址
+<<<<<<< HEAD
 // export const RequestHttpDev = 'https://vestadevls.pgyscm.com';
 export const RequestHttpDev = 'https://vestatestls.pgyscm.com';
+=======
+export const RequestHttpDev = 'https://vestatest.pgyscm.com';
+>>>>>>> 1e90cf4c0aaac17324fde4959683c1052571923c
 // export const RequestHttpDev = 'https://vestatestls.pgyscm.com';
-
+// export const RequestHttpDev = 'https://vestadev.pgyscm.com';
 
 //预发布环境api地址
 export const RequestHttpPre = 'https://vestapre.pgyscm.com';
