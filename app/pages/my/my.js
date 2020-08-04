@@ -28,7 +28,7 @@ Page({
       './../../assets/img/icon_suggestions.png',
       './../../assets/img/return_qrcode.png'
     ],
-    cardGrade: '',
+    cardGrade: 'diamonds',
     vip_title: '',
     has_unread:'',
     initLoad: true,
@@ -96,12 +96,11 @@ Page({
     app.signIsLogin((res) => {
       this.setData({
         loginInfo: res
-      }, () => {
-        this.showMyGrade()
       });
       this.profile();//获取用户信息
       this.afterMsg();
       this.messageInfo(); // 获取未读消息数量
+      this.getMyGrade(); // 获取会员等级
     });
   },
   //点击页面底下的tab
@@ -166,18 +165,38 @@ Page({
     })
   },
 
-  // 展示用户等级
-  showMyGrade() {
-    const { vip_level, vip_title } = this.data.loginInfo;
-    const vipInfo = {
-      1: 'silver',  // 银卡
-      2: 'golden',  // 金卡
-      3: 'diamonds', // 砖石
-    };
-    this.setData({
-      cardGrade: vipInfo[vip_level] || '',
-      vip_title: vip_title
-    })
+  // 查询用户等级
+  getMyGrade() {
+    wx.request({
+      url: Config.api.myGradeLevel,
+      header: {
+        'content-type': 'application/json',
+        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
+      },
+      success: (res) => {
+        const { level, title } = res.data.data || {};
+        const vipInfo = {
+          1: 'ordinary', // 普通
+          2: 'silver',  // 银卡
+          3: 'golden',  // 金卡
+          4: 'diamonds', // 砖石
+        };
+        if (res.statusCode == 200 && res.data.code == 0) {
+          this.setData({
+            cardGrade: vipInfo[level] || '',
+            vip_title: title || ''
+          });
+        } else {
+          app.requestResultCode(res); //处理异常
+        }
+      },
+      complete: (res) => {
+        //判断是否网络超时
+        app.requestTimeout(res, () => {
+          this.getMyGrade();
+        });
+      }
+    });
   },
  
   //获取用户信息
@@ -217,8 +236,6 @@ Page({
     });
   },
 
-
-
   messageInfo() {
     let that = this;
     wx.request({
@@ -248,7 +265,7 @@ Page({
     });
   },
 
-  // 打开消息列表
+  // 会员等级说明
   showGradDetail() {
     wx.navigateTo({
       url: '/pages/gradeDetail/gradeDetail'
