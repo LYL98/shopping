@@ -501,6 +501,7 @@ Page({
     wx.navigateTo({
       url: `/pages/itemDetail/itemDetail?id=${item.id}`,
     })
+    
     /*===== 埋点 start ======*/
     let index = 0;
     let { dataItem } = this.data;

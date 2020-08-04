@@ -1,7 +1,7 @@
 {
   "navigationBarTitleText": "我的",
+  "navigationBarBackgroundColor": "#FFE05C",
   "usingComponents": {
     "skeleton": "/components/skeleton/skeleton"
   }
-
 }
