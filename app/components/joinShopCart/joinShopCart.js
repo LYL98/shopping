@@ -31,7 +31,15 @@ Component({
     showFlyball: {
       type: Boolean,
       value: true
-    }
+    },
+    isTriggleCartEvent: {
+      type: Boolean,
+      value: true
+    },
+    isFromCartPage: {
+      type: Boolean,
+      value: false
+    },
   },
 
   /**
@@ -40,8 +48,8 @@ Component({
   data: {
     addIndexSrc: './../../assets/img/add_index.png',
     minusIndexSrc: './../../assets/img/minus_index.png',
-    addSrc: './../../assets/img/add.png',
-    minusSrc: './../../assets/img/minus.png',
+    addSrc: './../../assets/img/add_index.png',
+    minusSrc: './../../assets/img/minus_index.png',
     num: 0,
     tempNum: 0,
     hide_good_box: true,
@@ -207,8 +215,20 @@ Component({
 
     //显示输入
     showInput(e){
-      this.thatEvent = e;
-      this.setData({ isShowInput: true, inputNum: '' });
+      console.log('e: ', e);
+      if(!this.data.isTriggleCartEvent){
+        return
+      }
+      console.log('this.data.isFromCartPage: ', this.data.isFromCartPage);
+      if(this.data.isFromCartPage){
+        this.triggerEvent('traggleCartInput', {
+					itemData:this.data.itemData
+				});
+      }else{
+        this.thatEvent = e;
+        this.setData({ isShowInput: true, inputNum: '' });
+      }
+      
     },
     //隐藏输入
     hideInput(){
@@ -232,15 +252,24 @@ Component({
     },
     //失去焦点
     inputBlur(){
+      if(!this.data.isTriggleCartEvent){
+        return
+      }
       this.setData({ keyHeight: 0 });
     },
     //输入
     inputChange(e){
+      if(!this.data.isTriggleCartEvent){
+        return
+      }
       let value = e.detail.value;
       this.setData({ inputNum: value });
     },
     //输入完成
     inputConfirm(){
+      if(!this.data.isTriggleCartEvent){
+        return
+      }
       let { inputNum } = this.data;
       if(!inputNum){
         wx.showToast({
@@ -256,14 +285,35 @@ Component({
         });
         return;
       }
+      if(inputNum <= 0){
+        wx.showToast({
+          title: '请输入正确的件数',
+          icon: 'none'
+        });
+        return;
+      }
       let num = Number(inputNum);
       if(!this.isNumAbnormal(num)) return;
       this.handleUp(num);
       this.hideInput();
+      if(this.data.isFromCartPage){
+        this.triggerEvent('traggleCartHideInput', {
+				});
+      }
+    },
+    // 购物车触发修改inputNum
+    triggleInputNum(e){
+      this.setData({
+        inputNum:e
+      })
+      console.log('e',e)
     },
 
     //处理点击或输入数量、不使用优惠数量
     handleNum(){
+      if(!this.data.isTriggleCartEvent){
+        return
+      }
       let { itemData, num} = this.data;
       // 如果库存不足
       if(itemData.item_stock === 0 || itemData.item_stock < itemData.min_num_per_order){
@@ -282,9 +332,12 @@ Component({
     },
     //处理增加购物车
     handleUp(num){
+      if(!this.data.isTriggleCartEvent){
+        return
+      }
       let { itemData } = this.data;
       let tempData = {};
-      this.touchOnGoods(this.thatEvent);
+      // this.touchOnGoods(this.thatEvent);
       let data = wx.getStorageSync('shoppingCartData');
 
       if (data && data.length > 0) {
@@ -339,6 +392,9 @@ Component({
      * 减少购物车
      */
     down() {
+      if(!this.data.isTriggleCartEvent){
+        return
+      }
       let { itemData, num, isDeleteHint } = this.data;
       let tempData = {};
       //内部方法
@@ -381,7 +437,7 @@ Component({
         wx.showModal({
           title: '提示',
           content: '确认移除商品？',
-          confirmColor: '#00AE66',
+          confirmColor: '#FDCA1F',
           success: function (res) {
             if (res.confirm) {
               fun();//调用内部方法

@@ -37,7 +37,11 @@
     }
   }
 }
-
+.discount{
+  background: #FFECE3;
+  border-radius:4rpx;
+  color:#FF6010;
+}
 .img-view {
   width: 100%;
   height: 100vw;
@@ -231,7 +235,7 @@
   padding: 0 24rpx 24rpx 24rpx;
   font-size: 24rpx;
   color: #666;
-  border-top: 16rpx solid #f3f4f6;
+  border-top: 32rpx solid #f9f8f8;
   > .dec-title {
     font-size: 28rpx;
     color: #242424;
@@ -342,7 +346,7 @@
 
 .goods_info{
   padding: 0 24rpx;
-  border-top: 16rpx solid #f3f4f6;
+  border-top: 32rpx solid #f9f8f8;
 }
 .goods_top{
   height: 108rpx;
@@ -373,8 +377,8 @@ margin-left: 16rpx;
   // padding: 12rpx 20rpx;
 }
 .share_btn{
-  color:#00AE66;
-  border:1rpx solid #00AE66;
+  color:#FDCA1F;
+  border:1rpx solid #FDCA1F;
   font-size: 28rpx;
   border-radius: 50rpx;
   padding-left: 14rpx;
@@ -444,16 +448,17 @@ margin-left: 16rpx;
 .activity-item{
   display: flex;
   border-bottom: 1rpx solid #eee;
-  align-items: center;
+  align-items: flex-start;
   font-size: 28rpx;
   padding: 35rpx 0;
   .content{
-    text-align: right;
+    margin-left:24rpx;
+    // text-align: right;
     color: #242424;
   }
   .title{
     flex: initial !important;
-    min-width: 160rpx;
+    min-width: 86rpx;
     color: #808080;
     text{
       font-size: 26rpx;
@@ -467,7 +472,7 @@ margin-left: 16rpx;
     text::after{
       -webkit-transform: scale(0.5);
       transform: scale(0.5);
-      border: 1px solid #FF6868;
+      // border: 1px solid #FF6868;
       -webkit-transform-origin: 0 0;
       transform-origin: 0 0;
       display: -webkit-box;
@@ -496,7 +501,7 @@ margin-left: 16rpx;
   padding:20rpx 0;
 }
 .goods_attr{
-  border-top: 16rpx solid #f3f4f6;
+  border-top: 32rpx solid #f9f8f8;
   padding: 0 24rpx 24rpx 24rpx;
 }
 .goods_attr--item{
@@ -504,6 +509,9 @@ margin-left: 16rpx;
 }
 .goods_attr--box{
   height: 82rpx;
+}
+.goods_attr--box--more{
+  height: 104rpx !important;
 }
 .goods_info--label--max {
   min-height: 82rpx;
@@ -515,6 +523,11 @@ margin-left: 16rpx;
 
 
 .goods_reback{
-  border-top: 16rpx solid #f3f4f6;
+  border-top: 32rpx solid #f9f8f8;
   padding: 0 24rpx;
+}
+.start_image{
+  width:28rpx;
+  height:28rpx;
+  margin-right:8rpx;
 }

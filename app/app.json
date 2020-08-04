@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/shoppingCart/shoppingCart",
     "pages/browser/browser",
     "pages/order/order",
     "pages/my/my",
@@ -17,7 +18,6 @@
     "pages/accountRecord/accountRecord",
     "pages/password/password",
     "pages/shop/shop",
-    "pages/shoppingCart/shoppingCart",
     "pages/orderAdd/orderAdd",
     "pages/orderFram/orderFram",
     "pages/orderCoupon/orderCoupon",
@@ -60,6 +60,9 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "black"
+  },
+  "useExtendedLib": {
+    "weui": true
   },
   "navigateToMiniProgramAppIdList": [
     "wx1653f76966571193"

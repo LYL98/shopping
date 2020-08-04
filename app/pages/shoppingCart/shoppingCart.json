@@ -2,6 +2,9 @@
   "navigationBarTitleText": "购物车",
   "usingComponents": {
     "joinShopCart": "/components/joinShopCart/joinShopCart",
-    "defaultPage": "/components/defaultPage/defaultPage"
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "mp-cells": "/miniprogram_npm/weui-miniprogram/cells/cells",
+    "mp-cell": "/miniprogram_npm/weui-miniprogram/cell/cell",
+    "mp-slideview": "/miniprogram_npm/weui-miniprogram/slideview/slideview"
   }
 }

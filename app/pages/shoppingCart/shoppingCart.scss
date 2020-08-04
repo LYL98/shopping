@@ -12,6 +12,7 @@
   align-items: center;
   border-bottom: 1rpx solid #eee;
   padding: 20rpx 30rpx;
+  background-color: white;
   > view{
     flex: 1;
     font-size: 28rpx;
@@ -39,14 +40,33 @@
     }
   }
 }
+.item-view {
+  padding: 0!important;
+}
+.item-view-box{
+  margin: 0 24rpx;
 
+}
 .item{
-  margin-top: 20rpx;
+  margin-top: 30rpx;
+  margin-left: 24rpx;
+  // margin-right: 24rpx;
+  border-radius: 10rpx;
+  height:282rpx;
   .under_ground{
     opacity: .4;
   }
 }
-
+.item_normal{
+  height: 302rpx;
+  background-color: white;
+  margin-top: 24rpx;
+  border-radius: 10rpx;
+}
+.goods_imgage{
+  width: 170rpx !important;
+  height:170rpx !important;
+}
 .coupon-hint{
   position: fixed;
   left: 0;
@@ -106,8 +126,8 @@
     line-height: 34rpx;
     padding: 20rpx 0;
     > image{
-      width: 34rpx;
-      height: 34rpx;
+      width: 38rpx;
+      height: 38rpx;
       float: left;
       margin-right: 23rpx;
     }
@@ -167,5 +187,158 @@
   image{
     width: 220rpx;
     height: 220rpx;
+  }
+}
+
+.container{
+  background-color: #f9f8f8;
+  min-height: 100vh;
+}
+
+.discounts_text{
+  background: #FF6868;
+  font-size: 22rpx;
+  color: white;
+  line-height: 34rpx;
+  text-align: center;
+  margin-right: 29rpx;
+  padding:2rpx 9rpx;
+  border-radius: 4rpx;
+}
+.goods_image_box{
+  margin-right:10rpx;
+}
+.goods_title{
+  font-size: 28rpx!important;
+
+}
+.goods_label{
+  font-size: 24rpx;
+  color:#999;
+}
+.goods_bottom_tip{
+  position: absolute;
+  left:244rpx;
+  bottom:16rpx;
+  right:0;
+}
+.shop_type{
+  background: #FF6010;
+  font-size: 18rpx;
+  color:white;
+  width: 42rpx;
+  text-align: center;
+  border-radius: 4rpx;
+  display: inline-block;
+
+}
+.shop_stock{
+  font-size: 22rpx;
+  position: absolute;
+  right:24rpx;
+  color:#A5A5A5;
+  top: 10rpx;
+}
+.discount_info{
+  height: 96rpx;
+  // padding-top: 32rpx;
+  padding-left: 26rpx;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+.discount_info--type{
+  background: #FFECE3;
+  font-size: 24rpx;
+  color: #FF6010;
+  display: inline-block;
+  margin-right: 20rpx;
+  padding: 0 4rpx;
+}
+.discount_info--text{
+  font-size: 24rpx;
+  color:#808080;
+}
+.item_discount{
+  height: 414rpx;
+}
+.cell--weui-cell{
+  padding: 0!important;
+}
+.slideview--weui-slideview__btn-group_default .slideview--weui-slideview__btn {
+	background-color: #ff2a10 !important;
+}
+.total_price{
+  font-size: 32rpx;
+}
+.check_all{
+  font-size: 28rpx;
+  color:#333;
+  display: inline-block;
+  margin-top: 4rpx;
+}
+
+.cart_type{
+  margin-top: 24rpx;
+  
+	.title{
+		font-size: 30rpx;
+		color: #151515;
+		font-weight: bold;
+	}
+	.clear{
+		font-size: 26rpx;
+	color: #989797;
+	}
+}
+.navigator-hover{
+  background-color: white!important;
+  opacity: 1!important;
+}
+.slideview--weui-slideview{
+  height: auto!important;
+}
+.under_ground{
+  opacity: 0.4;
+}
+
+/*输入*/
+.input-body{
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba($color: #000, $alpha: .4);
+  >.input-view{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 21;
+    background: #fff;
+    padding: 10rpx;
+    display: flex;
+    align-items: center;
+    >.left{
+      flex: 1;
+      >input{
+        text-align: left;
+        height: 82rpx;
+        line-height: 82rpx;
+        font-size: 32rpx;
+        padding-left: 10rpx;
+      }
+    }
+    >.right{
+      width: 120rpx;
+      >.ok-btn{
+        background: #FDCA1F;
+        color: #fff;
+        text-align: center;
+        height: 82rpx;
+        line-height: 82rpx;
+        border-radius: 8rpx;
+      }
+    }
   }
 }
