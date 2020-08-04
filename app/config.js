@@ -3,11 +3,11 @@
  */
 
 //是否开发(dev开发、测试；pre预发布；pro生产)
-export const Conn = 'pre';
+export const Conn = 'dev';
 
 //测试环境api地址
-// export const RequestHttpDev = 'https://vestadev.pgyscm.com';
-export const RequestHttpDev = 'https://vestatest.pgyscm.com';
+// export const RequestHttpDev = 'https://vestadevls.pgyscm.com';
+export const RequestHttpDev = 'https://vestatestls.pgyscm.com';
 // export const RequestHttpDev = 'https://vestatestls.pgyscm.com';
 
 
