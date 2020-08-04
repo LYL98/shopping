@@ -63,7 +63,7 @@
       </view>
 
       <view class="goods-list">
-        <view class="goods-item" wx:for="{{dataItem.items}}" wx:key="id">
+        <view class="goods-item" wx:for="{{dataItem.items}}" wx:key="id" bind:tap="clickItem" data-item="{{item}}">
           <view class="goods-item-img">
             <view class="tags-mask">
               <view class="tags-item" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">

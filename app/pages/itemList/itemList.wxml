@@ -47,47 +47,45 @@
   </view>
 </view>
 <view class="goods-view skeleton">
-  <view class="goods-item" wx:for="{{dataItem.items}}" wx:key="index">
-    <view class="goods-item-img">
-      <view class="tags-mask">
-        <view class="tags-item" wx:if="{{item.is_presale}}">
-          <text>预售</text>
-          <image src="/assets/img/index/label0.png"></image>
+  <view class="goods-item" wx:for="{{dataItem.items}}" wx:key="index" data-id="{{item.id}}" bindtap="toItemDetail">
+      <view class="goods-item-img">
+        <view class="tags-mask">
+          <view class="tags-item" wx:if="{{item.is_presale}}">
+            <text>预售</text>
+            <image src="/assets/img/index/label0.png"></image>
+          </view>
+        </view>
+        <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_watermark200x200"></image>
+        <image class="bg-img-container-item" wx:else></image>
+      </view>
+      <view class="goods-item-info">
+        <view class="goods-item-info-top">
+          <view class="goods-titles skeleton-rect">
+              <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+                {{t}}
+              </view>
+              <text>{{item.title}}</text>
+          </view>
+          <view class="goods-sku skeleton-rect">
+              <text wx:if="{{item.is_quoted}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+              <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
+              <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+              <text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+              <text wx:if="{{item.frame_id}}">有筐</text>
+          </view>
+          <view class="goods-limt skeleton-rect">
+            <text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+            <text wx:if="{{item.order_num_max}}">限购{{item.order_num_max}}件</text>
+            <text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
+          </view>
+        </view>
+        <view class="goods-item-info-bottom skeleton-rect">
+            <priceBox isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
+        </view>
+        <view class="cart-wrapper skeleton-rect">
+            <handleShopCart itemData="{{item}}" />
         </view>
       </view>
-      <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_watermark200x200"></image>
-      <image class="bg-img-container-item" wx:else></image>
-    </view>
-    <view class="goods-item-info">
-    <view class="goods-item-info-top">
-      <view class="goods-titles skeleton-rect">
-          <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
-            {{t}}
-          </view>
-          <text>{{item.title}}</text>
-      </view>
-      <view class="goods-sku skeleton-rect">
-          <text wx:if="{{item.is_quoted}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-          <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-          <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
-          <text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-          <text wx:if="{{item.frame_id}}">有筐</text>
-      </view>
-      <view class="goods-limt skeleton-rect">
-        <text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-        <text wx:if="{{item.order_num_max}}">限购{{item.order_num_max}}件</text>
-        <text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
-      </view>
-    </view>
-     <view class="goods-item-info-bottom skeleton-rect">
-        <priceBox isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
-     </view>
-
-     <view class="cart-wrapper skeleton-rect">
-          <handleShopCart itemData="{{item}}" />
-      </view>
-      
-    </view>
   </view>
 
   <view class="load-more" wx:if="{{dataItem.num > 0 && !showSkeleton}}">{{tools.returnMore(dataItem.num, query)}}</view>

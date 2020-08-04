@@ -37,7 +37,7 @@ Component({
 
   methods: {
     initData() {
-      let { vip_title="银卡会员", vip_level=2 } = app.globalData.loginUserInfo
+      let { vip_title="", vip_level=0 } = app.globalData.loginUserInfo
       this.setData({
         vipTitle: vip_title.length > 2 ? vip_title.substring(0,2) : vip_title,
         vipLevel: vip_level
