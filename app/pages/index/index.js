@@ -498,6 +498,9 @@ Page({
   //点击商品
   clickItem(e){
     let item = e.currentTarget.dataset.item;
+    wx.navigateTo({
+      url: `/pages/itemDetail/itemDetail?id=${item.id}`,
+    })
     /*===== 埋点 start ======*/
     let index = 0;
     let { dataItem } = this.data;

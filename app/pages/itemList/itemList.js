@@ -294,6 +294,13 @@ Page({
     this.setData({ x: scrollX })
   },
 
+  toItemDetail(e) {
+    const { id }  = e.currentTarget.dataset
+    wx.navigateTo({
+      url: `/pages/itemDetail/itemDetail?id=${id}`,
+    })
+  },
+
   // 回到顶部
   goTop() {
     if (wx.pageScrollTo) {
