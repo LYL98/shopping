@@ -10,7 +10,8 @@
     <view class="add-cart">
       <view class="badge" wx:if="{{num > 0}}">{{num}}</view>
       <!-- 加 -->
-      <image src="./img/cart_add.jpg" catchtap="up"></image>
+      <image wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}" src="./img/cart_add_unusable.png" catchtap="upUnusable"></image>
+      <image wx:else src="./img/cart_add.jpg" catchtap="up"></image>
     </view>
   </view>
 </view>

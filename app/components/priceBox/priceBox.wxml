@@ -1,0 +1,21 @@
+              <wxs src="./../../utils/tools.wxs" module="tools" />
+              <view class="price-box">
+                <block wx:if="{{isQuoted}}">
+                <!-- 普通价 -->
+                  <view class="normal-price" wx:if="{{vipLevel == 0}}">
+                    <text class="rmb price-sale">{{tools.returnPrice(priceSale)}}</text>
+                    <text class="price-origin" wx:if="{{priceOrigin > priceSale}}">￥{{tools.returnPrice(priceOrigin)}}</text>
+                  </view>
+                  <!-- 会员价 -->
+                  <view class="level-price" wx:else>
+                    <view class="price-sale-box {{tools.returnVIPLevelClassName(vipLevel)}}">
+                      <text class="member-order">{{vipTitle}}价</text>
+                      <text class="rmb price-sale">{{tools.returnPrice(priceSale)}}</text>
+                    </view>
+                    <text class="price-origin" wx:if="{{priceOrigin > priceSale}}">普通价￥{{tools.returnPrice(priceOrigin)}}</text>
+                  </view>
+                </block>
+                <view wx:else class="no-price">
+                  今日未报价
+                </view>
+              </view>
