@@ -52,7 +52,7 @@
   margin-left: 24rpx;
   // margin-right: 24rpx;
   border-radius: 10rpx;
-  height:256rpx;
+  height:230rpx;
   background-color: white;
   .under_ground{
     opacity: .4;
@@ -219,8 +219,11 @@
 .goods_bottom_tip{
   position: absolute;
   left:244rpx;
-  bottom:110rpx;
+  bottom:66rpx;
   right:0;
+}
+.goods_bottom_tip--discount{
+  // bottom:110rpx !important;
 }
 .shop_type{
   background: #FF6010;

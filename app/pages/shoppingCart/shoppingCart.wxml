@@ -66,7 +66,7 @@
 									<view style="height: 30rpx;"></view>
 								</view>
 							</navigator>
-							<view class="join" style="bottom:13rpx; left: 244rpx;">
+							<view class="join" style="bottom:0rpx; left: 244rpx;">
 								<view style="min-height:36rpx;">
 									<joinShopCart
 									 id="joinShopCart"
@@ -85,9 +85,9 @@
 									/>
 								</view>
 							</view>
-							<view class="goods_bottom_tip">
+							<view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
 								<text class="shop_type"></text>
-								<text class="shop_stock">剩余{{item.item_stock}}件</text>
+								<text class="shop_stock" wx:if="{{item.item_stock < 10}}">剩余{{item.item_stock}}件</text>
 							</view>
 						</view>
 					</view>
@@ -146,7 +146,7 @@
 								<view style="height: 30rpx;"></view>
 							</view>
 						</navigator>
-						<view class="join" style="bottom:60rpx; left: 244rpx;">
+						<view class="join" style="bottom:0rpx; left: 244rpx;">
 							<view style="min-height:36rpx;">
 								<joinShopCart
 								 size="small"
@@ -158,10 +158,10 @@
 								/>
 							</view>
 						</view>
-						<view class="goods_bottom_tip">
-							<!-- <text class="shop_type">自营</text> -->
-							<!-- <text class="shop_stock">剩余10件</text> -->
-						</view>
+						<!-- <view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
+							<text class="shop_type"></text>
+							<text class="shop_stock">剩余{{item.item_stock}}件</text>
+						</view> -->
 					</view>
 				</view>
 			</view>

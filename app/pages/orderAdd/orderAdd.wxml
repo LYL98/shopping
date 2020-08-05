@@ -79,12 +79,12 @@
 						<text class="skeleton-rect" wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
 						<text class="skeleton-rect frame" wx:if="{{item.frame_id}}"> | 有筐</text>
 					</view>
-					<block wx:if="{{item.is_vip_item}}">
+					<block wx:if="{{item.is_vip_item && item.vip_level && item.vip_level > 0}}">
 						<view class="vip_card align-center">
-							<view class="vip_card--type card_type--{{loginUserInfo.vip_level}}">{{loginUserInfo.vip_title}}</view>
-							<view class="vip_card--price price_type--{{loginUserInfo.vip_level}}">￥{{tools.returnPrice(itemData.price_sale)}}</view>
+							<view class="vip_card--type card_type--{{item.vip_level}}">{{item.vip_title}}</view>
+							<view class="vip_card--price price_type--{{item.vip_level}}">￥{{tools.returnPrice(item.price_sale)}}</view>
 						</view>
-						<view class="normal_price ">普通价￥{{tools.returnPrice(itemData.price_novip)}}</view>
+						<view class="normal_price ">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
 					</block>
 					<view class="price-unit skeleton-rect" wx:else>
 						￥{{tools.returnPrice(item.price_sale)}}
