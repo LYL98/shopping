@@ -8,14 +8,14 @@ export const Conn = 'dev';
 //测试环境api地址
 export const RequestHttpDev = 'https://vestatestls.pgyscm.com';
 // export const RequestHttpDev = 'https://vestadev.pgyscm.com';
-export const RequestWsDev = 'ws://212.64.29.243:8100/connection/websocket';
+export const RequestWsDev = 'wss://iris.pgyscm.com/connection/websocket';
 
 //预发布环境api地址
 export const RequestHttpPre = 'https://vestapre.pgyscm.com';
-export const RequestWsPre = 'ws://212.64.29.243:8100/connection/websocket';
+export const RequestWsPre = 'wss://iris.pgyscm.com/connection/websocket';
 //生产环境api地址
 export const RequestHttpPro = 'https://vesta.pgyscm.com';
-export const RequestWsPro = 'ws://212.64.29.243:8100/connection/websocket';
+export const RequestWsPro = 'wss://iris.pgyscm.com/connection/websocket';
 //测试环境腾讯上传Bucket、Region
 export const TencentBucketDev = 'durian-dev-1258811046';
 export const TencentRegionDev = 'ap-shanghai';
