@@ -17,7 +17,7 @@ Component({
     list: { type: Array, value: ['TAB1', 'TAB2', 'TAB3'] }, // 定义导航条的各项标签名称
     defaultIndex: { type: Number, value: 0 }, // 默认的tabs选中项，对应wxml的组件参数 default-index
     slider: { type: Number, value: 0.2 }, // slider宽度 相对于 每个item项 所占的比重
-    color: { type: String, value: '#00AE66' }, // 导航条颜色
+    color: { type: String, value: '#FFD426' }, // 导航条颜色
     fixed: { type: Boolean, value: true }, // 是否浮动在页面顶部
     displayNumber: { type: Number, value: 4 }, // 页面显示的tab 数量
     width: { type: Number, value: null } // 指定每项显示的宽度，如果没有，则设置width 为 屏幕宽度 / 列表宽度，单位是 rpx
