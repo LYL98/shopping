@@ -73,7 +73,7 @@
 			<text wx:elif="{{itemData.item_stock < itemData.min_num_per_order || itemData.item_stock === 0}}">库存不足</text>
 			<text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
 			<view wx:elif="{{itemData.is_on_sale && tools.judgeItemStock(itemData) && itemData.is_quoted}}">
-				<block wx:if="{{itemData.is_vip_item}}">
+				<block wx:if="{{itemData.is_vip_item && level && level > 0}}">
 					<view class="vip_card align-center">
 						<view style="display:flex;align-item:center">
 							<text class="vip_card--type card_type--{{level}}">{{title}}价</text>
