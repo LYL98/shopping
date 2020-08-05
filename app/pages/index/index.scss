@@ -282,11 +282,31 @@
   background:#f7f7f8;
 }
 
-
+.notice{
+  margin: 0 24rpx;
+}
 .notice_text{
   overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+}
+.notice_logo{
+  font-size: 28rpx;
+  font-weight: bold;
+color: #151515;
+margin-right: 33rpx;
+}
+.notice_label{
+  background: #FF6010;
+  border-radius: 4rpx;
+  color:white;
+  font-size: 20rpx;
+  padding: 0 2rpx;
+  margin-right: 12rpx;
+}
+.notice_right{
+  width: 20rpx;
+  height: 24rpx;
 }

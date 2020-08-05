@@ -416,6 +416,7 @@ margin-left: 16rpx;
 }
 .goods_info--weight{
   height: 64rpx;
+  border-bottom: 1rpx solid #F9F8F8;
 }
 .label_item{
 
@@ -530,4 +531,20 @@ margin-left: 16rpx;
   width:28rpx;
   height:28rpx;
   margin-right:8rpx;
+}
+
+.vip_card{
+  font-size: 18rpx;
+  margin-left: 14rpx;
+  margin-bottom: 4rpx;
+}
+
+
+.vip_card--discount{
+  border: 1rpx solid #989797;
+  border-left: none;
+  color: #989797;
+  display: inline-block;
+  padding:0 8rpx;
+  border-radius: 4rpx;
 }

@@ -2,12 +2,18 @@
 //获取应用实例
 const app = getApp();
 import { Constant, Config } from './../../utils/index';
-
 Page({
   data: {
-    noticeList:['果蔬农场刚刚购买了“商品名称名称,果蔬农场刚刚购买了“商品名称名称果蔬农场刚刚购买了“商品名称名称','我是第二个购买的商品'],
+    noticeList:[
+      // {
+      //   store_title:'门店名称',
+      //   item_title:'商品名称',      
+      //   item_id:1
+      // }
+    ],
+    socketData:null,
     socketOpen: false, 
-    socketMsgQueue:[],
+    socketTimeout:null,
     tencentPath: Config.tencentPath,
     rightSrc: './../../assets/img/right.png',
     bannerList: [],
@@ -88,6 +94,8 @@ Page({
   },
   //页面装载时
   onLoad() {
+
+
     let that = this;
     let { brand_name, system } = app.globalData;
     if(brand_name){
@@ -104,11 +112,14 @@ Page({
     that.setData({
       system: system
     });
+
+
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+
     let that = this;
 
     //判断登录
@@ -148,6 +159,24 @@ Page({
         app.shoppingCartNum();
       }
     });
+
+    this.connectSocket()
+    this.setData({
+      noticeList:wx.getStorageSync('noticeList')
+    })
+  },
+  onHide(){
+    console.log('页面隐藏',this.data.socketOpen)
+    clearInterval(this.socketTimeout)
+    
+    if(this.data.socketOpen){
+      console.log('websocket')
+      wx.closeSocket({
+        success: () => {
+          console.log('websocket关闭')
+        }
+      })
+    }
   },
   //点击搜索
   clickSearch(){
@@ -559,16 +588,26 @@ Page({
     }
   },
 
+
+  toDetail(e){
+    const dataset = e.currentTarget.dataset;
+    wx.navigateTo({
+			url: `/pages/itemDetail/itemDetail?id=${dataset.id}`
+		});
+  },
+  // TODO 获取登录的token，生产环境wss需要配置
   // 跑马灯websocket
   connectSocket(){
     const that = this;
-    const url = ''
+    const url = 'ws://212.64.29.243:8100/connection/websocket'
+    let connect_auth_msg = '{"params":{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMiJ9.fDjjIWeNK9S31bQjXAd8ctnqtpjfKpR64ab3KFcR20U"},"id":1}';
+   
     wx.connectSocket({
       url: url,
       header:{
-        'content-type': 'application/json'
+        'content-type': 'application/json',
       },
-      protocols: ['protocol1']
+      // protocols: ['protocol1']
     })
     wx.onSocketOpen(function(res){
       console.log('WebSocket连接已打开！');
@@ -576,13 +615,52 @@ Page({
         socketOpen : true,
         socketMsgQueue:[]
       })
-      // for (var i = 0; i < that.data.socketMsgQueue.length; i++){
-			// 	self.sendSocketMessage(self.socketMsgQueue[i])
-			// }
+      wx.sendSocketMessage({
+        data: connect_auth_msg
+      })
+      let sub_channel_msg = '{"method":1,"params":{"channel":"news"},"id":523}'; // id的值可以随意指定，只要是int就行
+      setTimeout(() => {
+        wx.sendSocketMessage({
+          data: sub_channel_msg
+        })
+        that.sendSocketMessage()
 
+      },1000)
     })
     wx.onSocketMessage(function(res){
-      console.log('接受服务器信息',res.data)
+      console.log('接受服务器websocket',res.data)
+      let data = JSON.parse(res.data)
+      if(data.result && data.result.data){
+        let parseData = JSON.parse(JSON.stringify(data.result.data))
+        let secondParseData = JSON.parse(parseData.data)
+        if(secondParseData.p_type === 'vesta'){
+          that.setNoticeList(secondParseData.data)
+        }
+      }
     })
-  }
+  },
+  sendSocketMessage(msg){
+    this.socketTimeout = setInterval(() => {
+      let params = {method:7,id:1};
+    console.log('发送消息')
+    if (this.data.socketOpen) {
+      wx.sendSocketMessage({
+        data: JSON.stringify(params)
+      })
+    }
+    },25000)
+    
+  },
+  setNoticeList(data){
+    let noticeList = this.data.noticeList
+    noticeList.push(data)
+    if(noticeList.length > 10){
+      noticeList.splice(noticeList.length -1 ,1)
+    }
+    this.setData({
+      noticeList
+    })
+    wx.setStorageSync('noticeList',noticeList)
+    
+  },
 })

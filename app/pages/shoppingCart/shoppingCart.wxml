@@ -15,14 +15,14 @@
 	<view class="item-view item-view-box">
 
 		<view
-		 class="item_normal item_discount"
+		 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }}"
 		 wx:for="{{validCartList}}"
 		 wx:key="index"
 		>
 
-			<view class="discount_info align-center">
+			<view class="discount_info align-center" wx:if="{{item.stepPricesHint && item.stepPricesHint.length > 0}}">
 				<text class="discount_info--type">满折</text>
-				<text class="discount_info--text">已降至9折,再加10件降至8折</text>
+				<text class="discount_info--text">{{item.stepPricesHint}}</text>
 
 			</view>
 			<mp-slideview
@@ -55,13 +55,14 @@
 								<view class="content">
 									<view class="title goods_title">{{item.title}}</view>
 									<view class="goods_label">
-										<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 | </text>
-										<text wx:if="{{item.item_spec}}">{{item.item_spec}} | </text>
-										<text wx:if="{{item.origin_place}}">{{item.origin_place}} | </text>
-										<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤 | </text>
-										<text wx:if="{{item.frame_id}}" class="frame">有筐 | </text>
-										<text wx:if="{{item.min_num_per_order}}" class="min-num">{{item.min_num_per_order}}件起售</text>
+										<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 </text>
+										<text wx:if="{{item.item_spec}}">| {{item.item_spec}} </text>
+										<text wx:if="{{item.origin_place}}">| {{item.origin_place}} </text>
+										<text wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤 </text>
+										<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
+										<text wx:if="{{item.min_num_per_order}}" class="min-num"> | {{item.min_num_per_order}}件起售</text>
 									</view>
+
 									<view style="height: 30rpx;"></view>
 								</view>
 							</navigator>
@@ -77,12 +78,13 @@
 									 isFromCartPage
 									 bind:traggleCartInput="traggleCartInput"
 									 bind:traggleCartHideInput="traggleCartHideInput"
+									 bind:traggleStepPriceHint="traggleStepPriceHint"
 									/>
 								</view>
 							</view>
 							<view class="goods_bottom_tip">
 								<text class="shop_type"></text>
-								<text class="shop_stock">剩余10件</text>
+								<text class="shop_stock">剩余{{item.item_stock}}件</text>
 							</view>
 						</view>
 					</view>
@@ -103,9 +105,9 @@
 			 wx:key="index"
 			>
 
-				<view class="discount_info align-center">
+				<view class="discount_info align-center" wx:if="{{item.stepPricesHint && item.stepPricesHint.length > 0}}">
 					<text class="discount_info--type">满折</text>
-					<text class="discount_info--text">已降至9折,再加10件降至8折</text>
+					<text class="discount_info--text">{{item.stepPricesHint}}</text>
 
 				</view>
 				<view class="item-view">
@@ -131,12 +133,13 @@
 								<view class="title goods_title">{{item.title}}</view>
 								<view class="goods_label">
 									<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 | </text>
-									<text wx:if="{{item.item_spec}}">{{item.item_spec}} | </text>
-									<text wx:if="{{item.origin_place}}">{{item.origin_place}} | </text>
-									<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤 | </text>
-									<text wx:if="{{item.frame_id}}" class="frame">有筐 | </text>
-									<text wx:if="{{item.min_num_per_order}}" class="min-num">{{item.min_num_per_order}}件起售</text>
+									<text wx:if="{{item.item_spec}}">{{item.item_spec}} </text>
+									<text wx:if="{{item.origin_place}}">| {{item.origin_place}} </text>
+									<text wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤 </text>
+									<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
+									<text wx:if="{{item.min_num_per_order}}" class="min-num"> | {{item.min_num_per_order}}件起售</text>
 								</view>
+
 								<view style="height: 30rpx;"></view>
 							</view>
 						</navigator>

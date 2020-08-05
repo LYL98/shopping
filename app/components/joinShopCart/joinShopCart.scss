@@ -364,3 +364,44 @@
     }
   }
 }
+
+.vip_card{
+  height: 38rpx; 
+//  display: flex;
+//  align-items: center;
+}
+.vip_card--type{
+  font-size: 16rpx !important;
+  background-image: linear-gradient(135deg, #FFE800 0%, #FDBD1C 100%);
+  color:white;
+  padding:0rpx 8rpx;
+  border-radius: 4rpx;
+}
+.vip_card--price{
+  font-size: 32rpx;
+  color:#FDBD1C;
+  margin-left: 5rpx;
+}
+.normal_price{
+  font-size: 18rpx;
+  height: 20rpx;
+  color: #989797;
+}
+.card_type--1{
+  background-image: linear-gradient(135deg, #FDF6D7 0%, #E09A3A 100%)!important;
+}
+.card_type--2{
+  background-image: linear-gradient(135deg, #FFE800 0%, #FDBD1C 100%)!important;
+}
+.card_type--3{
+  background-image: linear-gradient(135deg, #EDEEF0 0%, #808691 100%)!important;
+}
+.price_type--1{
+  color: #E5BB72 !important;
+}
+.price_type--2{
+  color:#FDBD1C !important;
+}
+.price_type--3{
+  color: #828893 !important;
+}

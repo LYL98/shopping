@@ -73,15 +73,30 @@
 				</view>
 			</view>
 		</view>
-		<!-- <view class='notice align-center'>
-      <view class="flex-shrink-zero">蒲公英</view>
-      <swiper autoplay vertical style="{{'height: 36rpx'}}" class="flex1">
-        <swiper-item wx:for="{{noticeList}}" wx:key="index">
-          <view class="notice_text">{{item}}</view>
-        </swiper-item>
-       
-      </swiper>
-</view> -->
+		<view class='notice align-center'>
+			<view class="notice_logo flex-shrink-zero">蒲公英</view>
+			<view class="notice_label">播报</view>
+			<swiper
+			 autoplay
+			 vertical
+			 interval="2000"
+			 style="{{'height: 36rpx'}}"
+			 class="flex1"
+			>
+				<swiper-item wx:for="{{noticeList}}" wx:key="index">
+					<view
+					 class="justify-between align-center"
+					 bindtap="toDetail"
+					 data-id="{{item.item_id}}"
+					>
+						<text class="notice_text">**{{item.store_title}}刚刚购买了"{{item.item_title}}"</text>
+						<image class="notice_right" src="../../assets/img/right.png" />
+					</view>
+				</swiper-item>
+
+			</swiper>
+
+		</view>
 		<view class="tags-list">
 			<!-- 点击跳转到商品列表页面 -->
 			<!-- url="/pages/itemLabel/itemLabel?tag={{item.title}}&sort=-tags_edited" -->

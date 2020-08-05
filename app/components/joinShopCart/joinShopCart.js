@@ -60,8 +60,14 @@ Component({
     keyHeight: 0,
     inputNum: '',
     stepPricesHint: '', //阶梯价格优惠提示
+    loginUserInfo:{},
   },
 
+  onShow(){
+    this.setData({
+      loginUserInfo:app.globalData.loginUserInfo
+    })
+  },
   //监听
   observers: {
     //数据
@@ -475,6 +481,10 @@ Component({
         }
       }
       if(sph !== stepPricesHint) this.setData({ stepPricesHint: sph });
+      // this.triggerEvent('traggleStepPriceHint', {
+      //   stepPricesHint,
+      //   id:this.data.itemData.id
+      // });
     },
 
     /**

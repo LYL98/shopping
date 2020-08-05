@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/shoppingCart/shoppingCart",
+    "pages/index/index",
+    "pages/index1/index1",
     "pages/browser/browser",
     "pages/order/order",
     "pages/my/my",
@@ -46,8 +47,7 @@
     "pages/suggestions/suggestions",
     "pages/suggestionsResult/suggestionsResult",
     "pages/hotSaleList/hotSaleList",
-    "pages/applyStore/applyStore",
-    "pages/index1/index1"
+    "pages/applyStore/applyStore"
   ],
   "plugins": {
     "live-player-plugin": {
