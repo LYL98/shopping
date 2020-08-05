@@ -65,6 +65,7 @@ Page({
     showSkeleton: true, //骨架屏
     couponListData: [], //优惠券列表
     couponSelectData: {}, //当前选择优惠券
+    loginUserInfo:{},
   },
 
   /**
@@ -91,6 +92,9 @@ Page({
         that.getCoupon(); //获取优惠券
       });
     });
+    this.setData({
+      loginUserInfo:app.globalData.loginUserInfo
+    })
   },
 
   //选择优惠券

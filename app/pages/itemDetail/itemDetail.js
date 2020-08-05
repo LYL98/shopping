@@ -16,6 +16,8 @@ Page({
     promotionData: {}, //全场活动数据
     address: {},
     isShowVideo: false,
+    loginUserInfo:{},
+
   },
   //播放视频
   playVideo(){
@@ -37,6 +39,7 @@ Page({
     let num = app.getShoppingCartNum();//获取购物车数量
     that.setData({ shoppingCartNum: num });
   },
+ 
 
   /**
    * 生命周期函数--监听页面加载
@@ -77,6 +80,11 @@ Page({
         that.promotion();
       });
     });
+
+    
+  },
+  onShow(){
+    
   },
 
   //获取商品详情

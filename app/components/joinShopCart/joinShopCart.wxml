@@ -20,9 +20,9 @@
 			<!--数量大于0的情况start-->
 			<view class="plus-minus {{size}}" wx:if="{{num > 0}}">
 				<!--阶梯优惠提示-->
-				<view class="step-prices-hint {{sourcePage === 'itemDetail' && 'item-detail'}} {{sourcePage === 'shoppingCart' && 'shopping-cart'}}" wx:if="{{stepPricesHint}}">
+				<!-- <view class="step-prices-hint {{sourcePage === 'itemDetail' && 'item-detail'}} {{sourcePage === 'shoppingCart' && 'shopping-cart'}}" wx:if="{{stepPricesHint}}">
 					{{stepPricesHint}}
-				</view>
+				</view> -->
 
 				<view class="plus-minus-view">
 					<view class="btn minus" bindtap="down">
@@ -73,7 +73,14 @@
 			<text wx:elif="{{itemData.item_stock < itemData.min_num_per_order || itemData.item_stock === 0}}">库存不足</text>
 			<text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
 			<view wx:elif="{{itemData.is_on_sale && tools.judgeItemStock(itemData) && itemData.is_quoted}}">
-				<text class="price">￥{{tools.returnPrice(itemData.price_sale)}}</text>
+				<block wx:if="{{item.is_vip_item && discount > 0}}">
+					<view class="vip_card">
+						<text class="vip_card--type card_type--{{level}}">{{item.title}}</text>
+						<text class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(itemData.price_sale * discount / 100)}}</text>
+					</view>
+					<view class="normal_price ">普通价￥{{tools.returnPrice(itemData.price_novip)}}</view>
+				</block>
+				<text class="price" wx:else>￥{{tools.returnPrice(itemData.price_sale)}}</text>
 			</view>
 		</view>
 		<view class="discount-repertory" wx:if="{{itemData.item_stock > 0 && itemData.item_stock >= itemData.min_num_per_order}}">

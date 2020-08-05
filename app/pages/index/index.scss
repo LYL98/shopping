@@ -113,7 +113,7 @@ view, navigator, text {
   width: 700rpx;
   height: 170rpx;
   margin: 0 auto;
-  margin-bottom: 80rpx;
+  // margin-bottom: 22rpx;
   margin-top: 20rpx;
   image {
     width: 100%;
@@ -128,6 +128,7 @@ view, navigator, text {
   margin-bottom: 24rpx;
   .title-box-body {
     margin: auto;
+    margin-top: 39rpx;
     position: relative;
     .title {
       font-family: "PingFangSC-Semibold";
@@ -270,6 +271,33 @@ view, navigator, text {
   background:#f7f7f8;
 }
 
-
-
-
+.notice{
+  padding: 0 24rpx;
+  height: 80rpx;
+  box-shadow: 0 0 6rpx #eee;
+}
+.notice_text{
+  overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+.notice_logo{
+  font-size: 28rpx;
+  font-weight: bold;
+color: #151515;
+margin-right: 33rpx;
+}
+.notice_label{
+  background: #FF6010;
+  border-radius: 4rpx;
+  color:white;
+  font-size: 20rpx;
+  padding: 0 2rpx;
+  margin-right: 12rpx;
+}
+.notice_right{
+  width: 20rpx;
+  height: 24rpx;
+}
