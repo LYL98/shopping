@@ -73,12 +73,12 @@
 			<text wx:elif="{{itemData.item_stock < itemData.min_num_per_order || itemData.item_stock === 0}}">库存不足</text>
 			<text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
 			<view wx:elif="{{itemData.is_on_sale && tools.judgeItemStock(itemData) && itemData.is_quoted}}">
-				<block wx:if="{{loginUserInfo.vip_level && loginUserInfo.vip_level > 0}}">
+				<block wx:if="{{item.is_vip_item && discount > 0}}">
 					<view class="vip_card">
-						<text class="vip_card--type card_type--{{loginUserInfo.vip_level}}">{{loginUserInfo.vip_title}}</text>
-						<text class="vip_card--price price_type--{{loginUserInfo.vip_level}}">￥{{tools.returnPrice(itemData.price_vip)}}</text>
+						<text class="vip_card--type card_type--{{level}}">{{item.title}}</text>
+						<text class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(itemData.price_sale * discount / 100)}}</text>
 					</view>
-					<view class="normal_price ">普通价￥{{tools.returnPrice(itemData.price_sale)}}</view>
+					<view class="normal_price ">普通价￥{{tools.returnPrice(itemData.price_novip)}}</view>
 				</block>
 				<text class="price" wx:else>￥{{tools.returnPrice(itemData.price_sale)}}</text>
 			</view>

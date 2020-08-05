@@ -76,6 +76,9 @@
 									 bindcallback="upDownCallback"
 									 isDeleteHint
 									 isFromCartPage
+									 discount="{{discount}}"
+									 level="{{level}}"
+									 title="{{title}}"
 									 bind:traggleCartInput="traggleCartInput"
 									 bind:traggleCartHideInput="traggleCartHideInput"
 									 bind:traggleStepPriceHint="traggleStepPriceHint"
@@ -84,7 +87,7 @@
 							</view>
 							<view class="goods_bottom_tip">
 								<text class="shop_type"></text>
-								<text class="shop_stock">剩余{{item.item_stock}}件</text>
+								<text class="shop_stock" wx:if="{{item.item_stock < 10 }}">剩余{{item.item_stock}}件</text>
 							</view>
 						</view>
 					</view>

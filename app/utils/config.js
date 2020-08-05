@@ -127,6 +127,7 @@ module.exports = {
     
     couponList: apiC + '/promotion/own_coupon/query', //优惠券列表(我的优惠券)
     orderCouponList: apiC + '/order/coupon/list', //优惠券列表(下单选择优惠券)
+    userVipSelf: apiC + '/vip/myself', //获取用户level
 
     sysBrand: apiC + '/basicdata/constant/brand', //获取品牌
     sysService: apiC + '/basicdata/constant/customer_service', //投诉电话

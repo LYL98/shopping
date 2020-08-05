@@ -48,6 +48,9 @@ Page({
     inputNum: '',
     keyHeight: 0,
     loginUserInfo:{},
+    discount:0,
+    level:0,
+    title:'',
   },
   onLoad() {
     this.address = {}; //当前选择地址
@@ -67,6 +70,8 @@ Page({
       this.getWorkTime();
       this.getShoppingCartData();
       this.couponList(); //获取优惠券列表
+      this.getUserLevel()
+
     });
   },
   //点击页面底下的tab
@@ -98,6 +103,20 @@ Page({
       store_id: that.address.id
     }, { handleError: false }).then((res) => {
       that.setData({ couponNum: res.data.num, isShowCouponHint: true });
+    });
+  },
+  // 获取用户level
+  getUserLevel(){
+    let that = this;
+    Http.get(Config.api.userVipSelf, {
+    }, { handleError: false }).then((res) => {
+      this.setData({
+        discount:res.data.discount,
+        level:res.data.level,
+        title:res.data.title
+      })
+      console.log('res: ', res);
+      
     });
   },
   //隐藏优惠券提示
@@ -223,6 +242,7 @@ Page({
   },
   setStepPricesHint(num,itemData){
 
+    console.log('this.data.discount: ', this.data.discount);
     let sph = '';
     let d = itemData.step_prices;
     if(d && d.length > 0){
@@ -236,7 +256,7 @@ Page({
           break;
         }
         if(i === 0 && num < d[i].num){
-          sph = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件`;
+          sph = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件` 
           break;
         }
       }

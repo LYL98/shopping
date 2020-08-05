@@ -52,14 +52,14 @@
 	</view>
 	<view class="goods_info">
 		<view class="goods_top justify-between align-center">
-			<view class="goods_top--price ">
+			<view class="goods_top--price flex1">
 				<text class="goods_top--symbol">￥</text>
 				<text class="goods_top--money">{{tools.returnPrice(detail.price_sale)}}</text>
 				<text class="goods_top--symbol">/件</text>
-				<text class="goods_top--weight" wx:if="{{detail.is_quoted}}">约{{tools.returnPrice(detail.price_sale  / (detail.gross_weight / 10))}}/斤</text>
-				<text class="vip_card" wx:if="{{loginUserInfo.vip_level && loginUserInfo.vip_level > 0}}">
-					<text class="vip_card--type card_type--{{loginUserInfo.vip_level}}">{{loginUserInfo.vip_title}}</text>
-				<text class="vip_card--discount">专属{{loginUserInfo.vip_discount}}折</text>
+				<text class="goods_top--weight" wx:if="{{detail.is_quoted && detail.gross_weight > 0}}">约{{tools.returnPrice(detail.price_sale  / (detail.gross_weight / 10))}}/斤</text>
+				<text class="vip_card" wx:if="{{detail.is_vip_item}}">
+					<text class="vip_card--type card_type--{{detail.vip_level}}">{{detail.vip_title}}</text>
+				<text wx:if="{{detail.vip_discount > 0}}" class="vip_card--discount card_discount--{{detail.vip_level}}">专属{{detail.vip_discount}}折</text>
 				</text>
 			</view>
 			<view class="goods_top--share align-center">

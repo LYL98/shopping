@@ -128,6 +128,7 @@ view, navigator, text {
   margin-bottom: 24rpx;
   .title-box-body {
     margin: auto;
+    margin-top: 39rpx;
     position: relative;
     .title {
       font-family: "PingFangSC-Semibold";
@@ -272,7 +273,6 @@ view, navigator, text {
 
 .notice{
   padding: 0 24rpx;
-  margin-bottom: 39rpx;
   height: 80rpx;
   box-shadow: 0 0 6rpx #eee;
 }

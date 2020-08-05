@@ -40,6 +40,18 @@ Component({
       type: Boolean,
       value: false
     },
+    discount: {
+      type: Number,
+      value: 0
+    },
+    level: {
+      type: Number,
+      value: 0
+    },
+    title: {
+      type: String,
+      value: ''
+    },
   },
 
   /**
