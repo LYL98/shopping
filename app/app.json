@@ -47,7 +47,8 @@
     "pages/suggestionsResult/suggestionsResult",
     "pages/hotSaleList/hotSaleList",
     "pages/applyStore/applyStore",
-    "pages/gradeDetail/gradeDetail"
+    "pages/gradeDetail/gradeDetail",
+    "pages/my/my"
   ],
   "plugins": {
     "live-player-plugin": {
