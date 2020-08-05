@@ -52,13 +52,13 @@
   margin-left: 24rpx;
   // margin-right: 24rpx;
   border-radius: 10rpx;
-  height:282rpx;
+  height:279rpx;
   .under_ground{
     opacity: .4;
   }
 }
 .item_normal{
-  height: 302rpx;
+  height: 295rpx;
   background-color: white;
   margin-top: 24rpx;
   border-radius: 10rpx;
@@ -142,7 +142,7 @@
       color: #a2a2a2;
       margin-right: 16rpx;
       flex: 1;
-      margin-top: 4rpx;
+      margin-top: 7rpx;
     }
     >.total-discounts{
       text-align: left;
@@ -154,10 +154,9 @@
         }
       }
       >.discounts{
-        margin-top: 12rpx;
-        font-size: 26rpx;
-        height: 26rpx;
+        font-size: 18rpx;
         line-height: 26rpx;
+        color:#FDCA1F;
       }
     }
     
@@ -258,7 +257,7 @@
   color:#808080;
 }
 .item_discount{
-  height: 414rpx;
+  height: 407rpx;
 }
 .cell--weui-cell{
   padding: 0!important;
@@ -342,3 +341,4 @@
     }
   }
 }
+

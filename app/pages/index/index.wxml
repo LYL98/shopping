@@ -54,6 +54,24 @@
           <image src="/assets/img/hotSale/hot_sale_entry.png"></image>
       </navigator>
 
+      <!-- 跑马灯 -->
+		<view class='notice align-center' wx:if="{{noticeList.length > 0}}">
+			<view class="notice_logo flex-shrink-zero">蒲公英</view>
+			<view class="notice_label">播报</view>
+			<swiper autoplay vertical interval="2000" style="{{'height: 36rpx'}}" class="flex1">
+				<swiper-item wx:for="{{noticeList}}" wx:key="index">
+					<view
+					 class="justify-between align-center"
+					 bindtap="toDetail"
+					 data-id="{{item.item_id}}"
+					>
+						<text class="notice_text">**{{item.store_title}}刚刚购买了"{{item.item_title}}"</text>
+						<image class="notice_right" src="../../assets/img/right.png" />
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
+
       <!-- 今日主推 -->
       <view class="title-box">
         <view class="skeleton-rect title-box-body">
@@ -102,30 +120,27 @@
                 <text class="type-label type-label-self">自营</text>
                 <text>供应商门店</text>
               </view> -->
-            </view>
-            <view class="cart-wrapper">
-              <handleShopCart itemData="{{item}}" />
-            </view>
-          </view>
-          </view>
-        </view>
-  </view>
+					</view>
+					<view class="cart-wrapper">
+						<handleShopCart itemData="{{item}}" />
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
 
+</view>
 
+<view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
 
-    </view>
+<defaultPage wx:else currentPage="itemList"></defaultPage>
 
-  
+<newCoupon
+ wx:if="{{userInfo.id && address.id}}"
+ wx:if="{{true}}"
+ storeId="{{address.id}}"
+ bindtoggle="showHideToggle"
+/>
 
-  
+<gio-marketing/>
 
-  
-
-  <view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
-
-  <defaultPage wx:else currentPage="itemList"></defaultPage>
-
-
-<newCoupon wx:if="{{userInfo.id && address.id}}" wx:if="{{true}}" storeId="{{address.id}}" bindtoggle="showHideToggle"/>
-
-<gio-marketing />
