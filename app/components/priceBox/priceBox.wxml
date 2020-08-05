@@ -2,7 +2,7 @@
               <view class="price-box">
                 <block wx:if="{{isQuoted}}">
                 <!-- 普通价 -->
-                  <view class="normal-price" wx:if="{{vipLevel == 0 && !isVipItem}}">
+                  <view class="normal-price" wx:if="{{vipLevel == 0 || !isVipItem}}">
                     <text class="rmb price-sale">{{tools.returnPrice(priceSale)}}</text>
                     <text class="price-origin" wx:if="{{priceOrigin > priceSale}}">￥{{tools.returnPrice(priceOrigin)}}</text>
                   </view>
