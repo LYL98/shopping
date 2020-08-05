@@ -49,6 +49,7 @@ Component({
 		},
 		//商户登录
 		signLogin(e){
+			console.log('商户登录')
 			let that = this;
 			let code = that.data.loginRes.code;
 			let ed = e.detail.encryptedData;
@@ -68,6 +69,7 @@ Component({
 					handleError: false
 				}).then((res) => {
 					that.setData({ loading: false });
+					console.log(' res.data: ',  res.data);
 					that.triggerEvent('callback', res.data);
 				}).catch((error) => {
 					that.setData({ loading: false });
