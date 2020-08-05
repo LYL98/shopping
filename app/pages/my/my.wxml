@@ -14,9 +14,9 @@
           <text class="skeleton-rect"> ({{myInfo.merchant.title}})</text>
         </view>
         <view class="user_icon">
-          <text class="king skeleton-rect">嘻嘻</text>
+          <text class="king skeleton-rect" wx:if="{{myInfo.merchant.grade.title}}">{{myInfo.merchant.grade.title}}</text>
           <text class="skeleton-rect no-pre user-agreement" wx:if="{{myInfo.merchant.is_post_pay}}">协议客户</text>
-          <text class="skeleton-rect no-pre integrity_logo" wx:key="index">嘻嘻哈哈</text>
+          <text class="skeleton-rect no-pre integrity_logo" wx:for="{{myInfo.merchant.outer_tags}}" wx:key="index">{{item}}</text>
         </view>
       </view>
     </view>
