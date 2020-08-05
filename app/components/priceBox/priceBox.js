@@ -28,9 +28,6 @@ Component({
   },
 
   observers: {
-    // 'priceSale':function(){
-    //   this.initData();
-    // },
   },
 
   data: {
