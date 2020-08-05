@@ -120,6 +120,8 @@ module.exports = {
     afterMsg: apiC + '/aftersale/dialog/read/info', //售后消息
     salebackDetail: apiC + '/saleback/detail', //退货单详情
     gradeDetail: apiC + '/vip/config/desc/get', // 会员等级说明
+    myGradeLevel: apiC + '/vip/myself', // 会员等级说明
+    
 
     balanceTopup: apiC + '/balance/topup',//余额充值
     balanceTopupConfirm: apiC + '/balance/topup/confirm',//余额充值确认

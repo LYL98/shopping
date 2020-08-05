@@ -40,8 +40,8 @@
           </view>
           <view class="status">
             <text class="living" wx:if="{{item.live_status == 101}}">直播中</text>
-            <text class="soon" wx:if="{{item.live_status == 103}}">{{item.start_time}}开播</text>
-            <!-- <text class="end" wx:if="{{item.live_status == 103}}">直播已结束</text> -->
+            <text class="soon" wx:if="{{item.live_status == 102}}">{{item.start_time}}开播</text>
+            <text class="end" wx:if="{{item.live_status == 103}}">直播已结束</text>
           </view>
         </view>
         <view class="action">

@@ -190,6 +190,9 @@ Page({
     app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
     app.gioActionRecordAdd('secBuyEntrance_evar', '搜索');
     /*===== 埋点 end ======*/
+    wx.navigateTo({
+      url: '/pages/search/search',
+    })
   },
   //显示选择收货地址、新人优惠券时，锁列表不能滑动
   showHideToggle(e){

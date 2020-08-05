@@ -207,6 +207,9 @@ var returnSpecStr = function(str, start, end) {
   if(!str) {
     return ''
   }
+  if(str.length <= (end-start)) {
+    return str;
+  }
   return str.substring(start, end);
 }
 

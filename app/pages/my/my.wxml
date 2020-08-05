@@ -6,7 +6,7 @@
     <view class="my-info" bindtap="clickInfo">
       <view class="usimg">
         <image src="{{myInfo.avatar ? tencentPath + myInfo.avatar + '_min200x200' : defaultSrc}}"></image>
-        <view wx:if="{{vip_title}}" class="card `${{cardGrade}}`">{{vip_title}}</view>
+        <view wx:if="{{vip_title}}" class="card `${{bg_level}}`">{{vip_title}}</view>
       </view>
       <view class="user_dec">
         <view class="name">
