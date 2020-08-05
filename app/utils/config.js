@@ -72,6 +72,7 @@ module.exports = {
     messageFormAdd: apiC + '/member/form/add', //formid收集
 
     banner: apiC + '/item/banner', //banner首页
+    noticeList: apiC + '/order/marquee', //banner首页
     itemTagsList: apiC + '/item/tags/list', //tags首页
     itemCollectionAdd: apiC + '/item/collection/add',//商品收藏信息添加
     itemCollectionCancel: apiC + '/item/collection/cancel',//商品收藏信息取消
@@ -141,7 +142,7 @@ module.exports = {
     liveRoomUnMark: apiC + '/room/un_mark',   //  直播间取消订阅
 
     adviceItem:apiC + '/advice_item',
-
+    
     
     hotSaleItems: apiC + '/item/top', // 热销榜单
     storeApply: apiC + '/included/apply', // 门店自提点申请

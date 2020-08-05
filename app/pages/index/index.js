@@ -1,7 +1,7 @@
 // pages/index1/index1.js
 
 const app = getApp();
-import { Constant, Config } from './../../utils/index';
+import { Http,Constant, Config } from './../../utils/index';
 Page({
 
   data: {
@@ -165,10 +165,26 @@ Page({
       }
     });
 
-    this.connectSocket()
-    this.setData({
-      noticeList:wx.getStorageSync('noticeList')
-    })
+    // this.connectSocket()
+    // this.setData({
+    //   noticeList:wx.getStorageSync('noticeList')
+    // })
+    this.getNoticeList()
+  },
+  // 获取订单通高
+  getNoticeList(){
+    let address = app.getSelectStore(); 
+    Http.get(Config.api.noticeList, {
+      province_code: address.province_code
+    }).then((res) => {
+      if(res.code === 0){
+        this.setData({
+          noticeList:res.data
+        })
+      }
+      console.log('res: ', res);
+      
+    });
   },
   onHide(){
     console.log('页面隐藏',this.data.socketOpen)
