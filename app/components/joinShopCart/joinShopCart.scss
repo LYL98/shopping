@@ -200,7 +200,7 @@
     color: #FF6868;
     font-size: 30rpx;
     height: 54rpx;
-    line-height: 68rpx;
+    // line-height: 54rpx;
     > text{
       color: #A5A5A5;
       font-size: 24rpx;
@@ -367,8 +367,8 @@
 
 .vip_card{
   height: 38rpx; 
-//  display: flex;
-//  align-items: center;
+ display: flex;
+ align-items: center;
 }
 .vip_card--type{
   font-size: 16rpx !important;
