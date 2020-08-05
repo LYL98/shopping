@@ -16,18 +16,24 @@ Component({
     priceOrigin: {
       type: Number,
       value: 0
+    },
+    vipTitle: {
+      type: String,
+      value: ''
+    },
+    vipLevel: {
+      type: Number,
+      value: 0
     }
   },
 
   observers: {
-    'priceSale':function(){
-      this.initData();
-    },
+    // 'priceSale':function(){
+    //   this.initData();
+    // },
   },
 
   data: {
-    vipTitle:'',
-    vipLevel:0,
   },
 
   pageLifetimes: {
@@ -36,12 +42,12 @@ Component({
   },
 
   methods: {
-    initData() {
-      let { vip_title="", vip_level=0 } = app.globalData.loginUserInfo
-      this.setData({
-        vipTitle: vip_title.length > 2 ? vip_title.substring(0,2) : vip_title,
-        vipLevel: vip_level
-      })
-    }
+    // initData() {
+    //   let { vip_title="", vip_level=0 } = app.globalData.loginUserInfo
+    //   this.setData({
+    //     vipTitle: vip_title.length > 2 ? vip_title.substring(0,2) : vip_title,
+    //     vipLevel: vip_level
+    //   })
+    // }
   }
 })

@@ -9,7 +9,7 @@
                   <!-- 会员价 -->
                   <view class="level-price" wx:else>
                     <view class="price-sale-box {{tools.returnVIPLevelClassName(vipLevel)}}">
-                      <text class="member-order">{{vipTitle}}价</text>
+                      <text class="member-order">{{tools.returnSpecStr(vipTitle,0,2)}}价</text>
                       <text class="rmb price-sale">{{tools.returnPrice(priceSale)}}</text>
                     </view>
                     <text class="price-origin" wx:if="{{priceOrigin > priceSale}}">普通价￥{{tools.returnPrice(priceOrigin)}}</text>

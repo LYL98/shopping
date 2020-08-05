@@ -80,7 +80,7 @@
           </view>
         </view>
         <view class="goods-item-info-bottom skeleton-rect">
-            <priceBox isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
+            <priceBox vipLevel="{{dataItem.vip_level}}" vipTitle="{{dataItem.vip_title}}" isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
         </view>
         <view class="cart-wrapper skeleton-rect">
             <handleShopCart itemData="{{item}}" />

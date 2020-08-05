@@ -96,7 +96,7 @@
               </view>
             </view>
             <view class="goods-item-info-bottom">
-              <priceBox isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
+              <priceBox vipLevel="{{dataItem.vip_level}}" vipTitle="{{dataItem.vip_title}}" isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
               <!-- <view class="store-type">
                 <text class="type-label">供应商</text>
                 <text class="type-label type-label-self">自营</text>
