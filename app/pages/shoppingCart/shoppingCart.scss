@@ -48,17 +48,18 @@
 
 }
 .item{
-  margin-top: 30rpx;
+  padding-top: 30rpx;
   margin-left: 24rpx;
   // margin-right: 24rpx;
   border-radius: 10rpx;
-  height:279rpx;
+  height:256rpx;
+  background-color: white;
   .under_ground{
     opacity: .4;
   }
 }
 .item_normal{
-  height: 295rpx;
+  height: 258rpx;
   background-color: white;
   margin-top: 24rpx;
   border-radius: 10rpx;
@@ -218,7 +219,7 @@
 .goods_bottom_tip{
   position: absolute;
   left:244rpx;
-  bottom:16rpx;
+  bottom:110rpx;
   right:0;
 }
 .shop_type{
@@ -257,7 +258,7 @@
   color:#808080;
 }
 .item_discount{
-  height: 407rpx;
+  height: 380rpx;
 }
 .cell--weui-cell{
   padding: 0!important;
