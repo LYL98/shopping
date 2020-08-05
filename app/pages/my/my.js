@@ -28,7 +28,7 @@ Page({
       './../../assets/img/icon_suggestions.png',
       './../../assets/img/return_qrcode.png'
     ],
-    cardGrade: 'diamonds',
+    bg_level: 'diamonds',
     vip_title: '',
     has_unread:'',
     initLoad: true,
@@ -183,7 +183,7 @@ Page({
         };
         if (res.statusCode == 200 && res.data.code == 0) {
           this.setData({
-            cardGrade: vipInfo[level] || '',
+            bg_level: vipInfo[level] || '',
             vip_title: title || ''
           });
         } else {
