@@ -6,17 +6,16 @@
 export const Conn = 'dev';
 
 //测试环境api地址
-
-// export const RequestHttpDev = 'https://vestatest.pgyscm.com';
 export const RequestHttpDev = 'https://vestatestls.pgyscm.com';
 // export const RequestHttpDev = 'https://vestadev.pgyscm.com';
+export const RequestWsDev = 'wss://iris.pgyscm.com/connection/websocket';
 
 //预发布环境api地址
 export const RequestHttpPre = 'https://vestapre.pgyscm.com';
-
+export const RequestWsPre = 'wss://iris.pgyscm.com/connection/websocket';
 //生产环境api地址
 export const RequestHttpPro = 'https://vesta.pgyscm.com';
-
+export const RequestWsPro = 'wss://iris.pgyscm.com/connection/websocket';
 //测试环境腾讯上传Bucket、Region
 export const TencentBucketDev = 'durian-dev-1258811046';
 export const TencentRegionDev = 'ap-shanghai';
@@ -38,7 +37,7 @@ export const ServiceTel = '4008258522';
 export const WeiXinAppIds = ['wxd71d35efcb08acc8', 'wx1653f76966571193'];
 
 //版本
-export const Version = 'V3.8.4';
+export const Version = 'V3.9.0';
 
 //growingio配置
 export const GioConfig = {

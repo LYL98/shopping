@@ -67,7 +67,7 @@
               <text>{{item.title}}</text>
           </view>
           <view class="goods-sku skeleton-rect">
-              <text wx:if="{{item.is_quoted}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+              <text wx:if="{{item.is_quoted && item.gross_weight}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
               <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
               <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
               <text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
@@ -80,7 +80,7 @@
           </view>
         </view>
         <view class="goods-item-info-bottom skeleton-rect">
-            <priceBox isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
+            <priceBox  vipLevel="{{dataItem.vip_level}}" vipTitle="{{dataItem.vip_title}}" isVipItem="{{item.is_vip_item}}" isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}" priceNoVip="{{item.price_novip}}"/>
         </view>
         <view class="cart-wrapper skeleton-rect">
             <handleShopCart itemData="{{item}}" />

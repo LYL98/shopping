@@ -346,7 +346,8 @@
 
 .goods_info{
   padding: 0 24rpx;
-  border-top: 32rpx solid #f9f8f8;
+  padding-top: 32rpxs;
+  // border-top: 32rpx solid #f9f8f8;
 }
 .goods_top{
   height: 108rpx;
@@ -384,7 +385,11 @@ margin-left: 16rpx;
   padding-left: 14rpx;
   padding-right: 14rpx;
   height:62rpx;
+  background-color: white !important;
+  &::after{
+    border:none !important;
 
+  }
   // padding-left: 10rpx;
 }
 .goods_info--title{
@@ -416,6 +421,7 @@ margin-left: 16rpx;
 }
 .goods_info--weight{
   height: 64rpx;
+  border-bottom: 1rpx solid #F9F8F8;
 }
 .label_item{
 
@@ -530,4 +536,33 @@ margin-left: 16rpx;
   width:28rpx;
   height:28rpx;
   margin-right:8rpx;
+}
+
+.vip_card{
+  font-size: 18rpx;
+  margin-left: 14rpx;
+  margin-bottom: 4rpx;
+}
+
+
+.vip_card--discount{
+  
+  border-left: none;
+  color: #989797;
+  display: inline-block;
+  padding:0 8rpx;
+  border-radius: 4rpx;
+}
+
+.card_discount--1{
+  color:#E5BB72;
+  border: 1rpx solid #989797;
+}
+.card_discount--2{
+  color:#FDBD1C;
+  border: 1rpx solid #FDBD1C;
+}
+.card_discount--3{
+  color:#828893;
+  border: 1rpx solid #E5BB72;
 }

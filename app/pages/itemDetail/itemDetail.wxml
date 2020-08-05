@@ -52,15 +52,19 @@
 	</view>
 	<view class="goods_info">
 		<view class="goods_top justify-between align-center">
-			<view class="goods_top--price">
+			<view class="goods_top--price flex1">
 				<text class="goods_top--symbol">￥</text>
 				<text class="goods_top--money">{{tools.returnPrice(detail.price_sale)}}</text>
 				<text class="goods_top--symbol">/件</text>
-				<text class="goods_top--weight" wx:if="{{detail.is_quoted}}">约{{tools.returnPrice(detail.price_sale  / (detail.gross_weight / 10))}}/斤</text>
+				<text class="goods_top--weight" wx:if="{{detail.is_quoted && detail.gross_weight > 0}}">约{{tools.returnPrice(detail.price_sale  / (detail.gross_weight / 10))}}/斤</text>
+				<text class="vip_card" wx:if="{{detail.is_vip_item && detail.vip_level && detail.vip_level > 0}}">
+					<text class="vip_card--type card_type--{{detail.vip_level}}">{{detail.vip_title}}</text>
+				<text wx:if="{{detail.vip_discount > 0}}" class="vip_card--discount card_discount--{{detail.vip_level}}">专属{{detail.vip_discount}}折</text>
+				</text>
 			</view>
 			<view class="goods_top--share align-center">
 				<button class="share_btn align-center" open-type="share">
-					<image src="./../../assets/img/detail_share.png" style="width: 28rpx; height: 28rpx;margin-right:6rpx;margin-top:2rpx" />
+					<image src="./../../assets/img/detail_share.png" style="width: 32rpx; height: 32rpx;margin-right:6rpx" />
 					<text>分享商品</text>
 				</button>
 			</view>
@@ -198,7 +202,11 @@
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">口感星级</view>
 				<view class="goods_info--value align-center" wx:if="{{ detail.toast > 0}}">
-					<image class="start_image" src="../../assets/img/star.png" wx:for="{{detail.toast}}"/>
+					<image
+					 class="start_image"
+					 src="../../assets/img/star.png"
+					 wx:for="{{detail.toast}}"
+					/>
 				</view>
 				<view class="goods_info--value" wx:else> - </view>
 			</view>
@@ -207,14 +215,22 @@
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">外观星级</view>
 				<view class="goods_info--value align-center" wx:if="{{ detail.appearance > 0}}">
-					<image class="start_image" src="../../assets/img/star.png" wx:for="{{detail.appearance}}"/>
+					<image
+					 class="start_image"
+					 src="../../assets/img/star.png"
+					 wx:for="{{detail.appearance}}"
+					/>
 				</view>
 				<view class="goods_info--value" wx:else> - </view>
 			</view>
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">果型星级</view>
 				<view class="goods_info--value align-center" wx:if="{{ detail.shape > 0}}">
-					<image class="start_image" src="../../assets/img/star.png" wx:for="{{detail.shape}}"/>
+					<image
+					 class="start_image"
+					 src="../../assets/img/star.png"
+					 wx:for="{{detail.shape}}"
+					/>
 				</view>
 				<view class="goods_info--value" wx:else> - </view>
 			</view>
@@ -223,7 +239,11 @@
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">新鲜星级</view>
 				<view class="goods_info--value align-center" wx:if="{{ detail.fresh > 0}}">
-					<image class="start_image" src="../../assets/img/star.png" wx:for="{{detail.fresh}}"/>
+					<image
+					 class="start_image"
+					 src="../../assets/img/star.png"
+					 wx:for="{{detail.fresh}}"
+					/>
 				</view>
 				<view class="goods_info--value" wx:else> - </view>
 			</view>

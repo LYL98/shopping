@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/my/my",
     "pages/index/index",
     "pages/shoppingCart/shoppingCart",
     "pages/browser/browser",
@@ -47,7 +46,8 @@
     "pages/suggestionsResult/suggestionsResult",
     "pages/hotSaleList/hotSaleList",
     "pages/applyStore/applyStore",
-    "pages/gradeDetail/gradeDetail"
+    "pages/gradeDetail/gradeDetail",
+    "pages/my/my"
   ],
   "plugins": {
     "live-player-plugin": {

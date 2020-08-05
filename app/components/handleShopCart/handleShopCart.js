@@ -221,6 +221,23 @@ Component({
       return true;
     },
 
+    //选择阶梯
+    selectStepPrices(e){
+      let stepPricesIndex = e.currentTarget.dataset.index;
+      
+      if(stepPricesIndex >= 0){
+        let { itemData } = this.data;
+        let num = itemData.step_prices[stepPricesIndex].num;
+        if(!this.isNumAbnormal(num)) return;
+      }      
+      this.setData({ stepPricesIndex });
+    },
+    
+    //取消选择
+    cancelSelectStepPrices(){
+      this.setData({ isShowStepPrices: false });
+    },
+
     //处理阶梯价
     handleStepPrices(){
       let { itemData, stepPricesIndex } = this.data;

@@ -18,9 +18,9 @@
         </view>
         <!--搜索组件-->
         <view class="search-box">
-          <view class="skeleton-rect search">
-            <image src="/assets/img/index/search_icon.png" class="search-icon"></image>
-            <text class="search-placeholder">搜索商品</text>
+          <view class="search skeleton-rect" hover-class="view-hover" bindtap="clickSearch">
+             <image src="/assets/img/index/search_icon.png" class="search-icon"></image>
+             <text class="search-placeholder">搜索商品</text>
           </view>
         </view>
         <!--轮播图-->
@@ -54,6 +54,24 @@
           <image src="/assets/img/hotSale/hot_sale_entry.png"></image>
       </navigator>
 
+      <!-- 跑马灯 -->
+		<view class='notice align-center' wx:if="{{noticeList.length > 0}}">
+			<view class="notice_logo flex-shrink-zero">蒲公英</view>
+			<view class="notice_label">播报</view>
+			<swiper autoplay vertical interval="2000" style="{{'height: 36rpx'}}" class="flex1">
+				<swiper-item wx:for="{{noticeList}}" wx:key="index">
+					<view
+					 class="justify-between align-center"
+					 bindtap="toDetail"
+					 data-id="{{item.item_id}}"
+					>
+						<text class="notice_text">**{{item.store_title}}刚刚购买了"{{item.item_title}}"</text>
+						<image class="notice_right" src="../../assets/img/right.png" />
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
+
       <!-- 今日主推 -->
       <view class="title-box">
         <view class="skeleton-rect title-box-body">
@@ -83,7 +101,7 @@
             <view class="goods-item-info-top">
               <view class="goods-title">{{item.title}}</view>
               <view class="goods-sku">
-                <text wx:if="{{item.is_quoted}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+                <text wx:if="{{item.is_quoted  && item.gross_weight}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
                 <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
                 <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
                 <text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
@@ -96,36 +114,33 @@
               </view>
             </view>
             <view class="goods-item-info-bottom">
-              <priceBox isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
+              <priceBox vipLevel="{{dataItem.vip_level}}" vipTitle="{{dataItem.vip_title}}" isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}" priceNoVip="{{item.price_novip}}"/>
               <!-- <view class="store-type">
                 <text class="type-label">供应商</text>
                 <text class="type-label type-label-self">自营</text>
                 <text>供应商门店</text>
               </view> -->
-            </view>
-            <view class="cart-wrapper">
-              <handleShopCart itemData="{{item}}" />
-            </view>
-          </view>
-          </view>
-        </view>
-  </view>
+					</view>
+					<view class="cart-wrapper">
+						<handleShopCart itemData="{{item}}" />
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
 
+</view>
 
+<view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
 
-    </view>
+<defaultPage wx:else currentPage="itemList"></defaultPage>
 
-  
+<newCoupon
+ wx:if="{{userInfo.id && address.id}}"
+ wx:if="{{true}}"
+ storeId="{{address.id}}"
+ bindtoggle="showHideToggle"
+/>
 
-  
+<gio-marketing/>
 
-  
-
-  <view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
-
-  <defaultPage wx:else currentPage="itemList"></defaultPage>
-
-
-<newCoupon wx:if="{{userInfo.id && address.id}}" wx:if="{{true}}" storeId="{{address.id}}" bindtoggle="showHideToggle"/>
-
-<gio-marketing />

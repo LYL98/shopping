@@ -47,6 +47,10 @@ Page({
     isShowInput:false,
     inputNum: '',
     keyHeight: 0,
+    loginUserInfo:{},
+    discount:0,
+    level:0,
+    title:'',
   },
   onLoad() {
     this.address = {}; //当前选择地址
@@ -57,12 +61,17 @@ Page({
   onShow() {
     app.shoppingCartNum(); //计算购物车数量并显示角标
     this.address = app.getSelectStore(); //当前选择地址    
+    this.setData({
+      loginUserInfo:app.globalData.loginUserInfo
+    })
     //判断登录
     app.signIsLogin(() => {
       this.activity();
       this.getWorkTime();
       this.getShoppingCartData();
       this.couponList(); //获取优惠券列表
+      this.getUserLevel()
+
     });
   },
   //点击页面底下的tab
@@ -94,6 +103,20 @@ Page({
       store_id: that.address.id
     }, { handleError: false }).then((res) => {
       that.setData({ couponNum: res.data.num, isShowCouponHint: true });
+    });
+  },
+  // 获取用户level
+  getUserLevel(){
+    let that = this;
+    Http.get(Config.api.userVipSelf, {
+    }, { handleError: false }).then((res) => {
+      this.setData({
+        discount:res.data.discount,
+        level:res.data.level,
+        title:res.data.title.substring(0,2)
+      })
+      console.log('res: ', res);
+      
     });
   },
   //隐藏优惠券提示
@@ -146,7 +169,8 @@ Page({
   },
 
   onDelete(e){
-    const { index, id, valid } = e.currentTarget.dataset;
+    const { id } = e.currentTarget.dataset;
+    console.log('id: ', id);
     let that = this;
     let shoppingCartData = wx.getStorageSync('shoppingCartData');
 		wx.showModal({
@@ -155,8 +179,9 @@ Page({
       confirmColor: '#FDCA1F',
       success: function (res) {
         if (res.confirm) {
-          shoppingCartData.map((item) => {
+          shoppingCartData.map((item,index) => {
               if (item.id === id) {
+                console.log('item.id: ', item.id);
                 shoppingCartData.splice(index,1)
               }
           });
@@ -215,6 +240,53 @@ Page({
   inputBlur(e){
     this.setData({ keyHeight: 0 });
   },
+  setStepPricesHint(num,itemData){
+
+    console.log('this.data.discount: ', this.data.discount);
+    let sph = '';
+    let d = itemData.step_prices;
+    if(d && d.length > 0){
+      for(let i = 0; i < d.length; i++){
+        if(i === d.length - 1 && num >= d[i].num){
+          sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件`;
+          break;
+        }
+        if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+          sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
+          break;
+        }
+        if(i === 0 && num < d[i].num){
+          sph = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件` 
+          break;
+        }
+      }
+    }
+    return sph;
+    // if(sph !== stepPricesHint) this.setData({ stepPricesHint: sph });
+    // this.triggerEvent('traggleStepPriceHint', {
+    //   stepPricesHint,
+    //   id:this.data.itemData.id
+    // });
+  },
+  // traggleStepPriceHint(e){
+  //   console.log('e',e)
+  //   let tempData = this.data.validCartList
+  //   this.data.validCartList.map((item,index) =>{
+  //     if(item.id === e.detail.id){
+  //       tempData[index].stepPricesHint = e.detail.stepPricesHint
+  //       console.log('tempData[index].stepPricesHint: ', tempData[index].stepPricesHint);
+  //       this.setData({
+  //         validCartList:tempData
+  //         })
+  //       // let temp_str='validCartList['+index+'].stepPricesHint';
+  //       // this.setData({
+  //       //   [temp_str]:e.stepPricesHint
+  //       // })
+  //     }
+  //   })
+  //   console.log('sss',this.data.validCartList)
+    
+  // }, 
     //输入法弹起
     inputHeightChange(e){
       let h = e.detail.height;
@@ -364,12 +436,15 @@ Page({
       let validCartList = [];
       let inValidCartList = [];
       dataItem.map(item => {
+        let stepPricesHint = this.setStepPricesHint(item.select_num,item)
+        item.stepPricesHint = stepPricesHint
         if(item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted){
           validCartList.push(item)
         }else{
           inValidCartList.push(item)
         }
       })
+      console.log('validCartList',validCartList)
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
@@ -475,7 +550,9 @@ Page({
       });
     } else {
       that.setData({
-        dataItem: []
+        dataItem: [],
+        validCartList:[],
+        inValidCartList:[],
       });
     }
   },

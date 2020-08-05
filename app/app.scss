@@ -751,3 +751,29 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
   background-position: center;
   background-size: contain;
 }
+
+
+.vip_card{
+  font-size: 18rpx;
+}
+.vip_card--price{
+  color: #FDBD1C;
+}
+.vip_card--type{
+  display: inline-block;
+  background-image: linear-gradient(135deg, #FFE800 0%, #FDBD1C 100%);
+  color:white;
+  padding:1rpx 8rpx;
+}
+.card_type--1{
+  background-image: linear-gradient(135deg, #EDEEF0 0%, #808691 100%) !important;
+      box-shadow: inset 0 1rpx 3rpx 0 #828893 !important;
+}
+.card_type--2{
+  background-image: linear-gradient(-41deg, #FDBD1C 0%, #FFE800 100%) !important;
+  box-shadow: inset 0 1rpx 3rpx 0 #FDC126 !important;
+}
+.card_type--3{
+  background-image: linear-gradient(-41deg, #E09A3A 0%, #FDF6D7 100%)!important;
+  box-shadow: inset 0 1rpx 3rpx 0 #E3A852!important;
+}
