@@ -116,7 +116,7 @@
         </view>
       </view>
        <view class="my-order-list about-us">
-          <navigator class="pannel" url="/pages/about/about" style="height: 110rpx; line-height: 110rpx;">
+          <navigator class="pannel" url="/pages/about/about" style="height: 100rpx; line-height: 100rpx;">
             <view>
               关于我们
             </view>
