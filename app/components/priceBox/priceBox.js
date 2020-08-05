@@ -9,11 +9,18 @@ Component({
       type: Boolean,
       value: false
     },
+    // 销售价
     priceSale: {
       type: Number,
       value: 0
     },
+    // 原价
     priceOrigin: {
+      type: Number,
+      value: 0
+    },
+    // 普通价
+    priceNoVip : {
       type: Number,
       value: 0
     },
@@ -24,6 +31,10 @@ Component({
     vipLevel: {
       type: Number,
       value: 0
+    },
+    isVipItem: {
+      type: Boolean,
+      value: false
     }
   },
 
