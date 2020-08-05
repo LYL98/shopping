@@ -8,6 +8,9 @@ import {
   RequestHttpTest,
   RequestHttpPre,
   RequestHttpPro,
+  RequestWsDev,
+  RequestWsPre,
+  RequestWsPro,
   TencentBucketDev,
   TencentRegionDev,
   TencentBucketPro,
@@ -21,10 +24,11 @@ import {
 } from './../config';
 
 //config
-let requestHttp = '', tencentBucket = '', tencentRegion = '', tencentPath = '';
+let requestHttp = '', requestWs = '' , tencentBucket = '', tencentRegion = '', tencentPath = '';
 switch(Conn){
   case 'dev':
     requestHttp = RequestHttpDev;
+    requestWs = RequestWsDev
     tencentBucket = TencentBucketDev;
     tencentRegion = TencentRegionDev;
     tencentPath = TencentPathDev;
@@ -32,18 +36,21 @@ switch(Conn){
   case 'test':
     // lsRequestHttp = LSRequestHttpDev,
     requestHttp = RequestHttpTest;
+    requestWs = RequestWsDev
     tencentBucket = TencentBucketDev;
     tencentRegion = TencentRegionDev;
     tencentPath = TencentPathDev;
     break;
   case 'pre':
     requestHttp = RequestHttpPre;
+    requestWs = RequestWsPre
     tencentBucket = TencentBucketPro;
     tencentRegion = TencentRegionPro;
     tencentPath = TencentPathPro;
     break;
   default:
     requestHttp = RequestHttpPro;
+    requestWs = RequestWsPro
     tencentBucket = TencentBucketPro;
     tencentRegion = TencentRegionPro;
     tencentPath = TencentPathPro;
@@ -112,6 +119,7 @@ module.exports = {
     aftersaleComment: apiC + '/aftersale/append', //售后消息追加
     afterMsg: apiC + '/aftersale/dialog/read/info', //售后消息
     salebackDetail: apiC + '/saleback/detail', //退货单详情
+    gradeDetail: apiC + '/vip/config/desc/get', // 会员等级说明
 
     balanceTopup: apiC + '/balance/topup',//余额充值
     balanceTopupConfirm: apiC + '/balance/topup/confirm',//余额充值确认
@@ -145,6 +153,7 @@ module.exports = {
   serviceTel: ServiceTel, //服务电话
   weiXinAppIds: WeiXinAppIds, //要打开的微信appids
   conn: Conn,
+  requestWs:requestWs, // wensocket
   version: Version,
   gioConfig: GioConfig
 }

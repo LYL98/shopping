@@ -12,6 +12,7 @@ Page({
     tencentPath: Config.tencentPath,
     defaultSrc: './../../assets/img/default_avatar.png',
     myMessageSrc: './../../assets/img/my_message.png',
+    myGradeSrc: './../../assets/img/my_grade.png',
     myBalanceSrc: './../../assets/img/my_balance.png',
     myCouponSrc: './../../assets/img/my_coupon.png',
     optionSrc: [
@@ -27,6 +28,8 @@ Page({
       './../../assets/img/icon_suggestions.png',
       './../../assets/img/return_qrcode.png'
     ],
+    cardGrade: '',
+    vip_title: '',
     has_unread:'',
     initLoad: true,
     arrow:'./../../assets/img/right.png',
@@ -93,6 +96,8 @@ Page({
     app.signIsLogin((res) => {
       this.setData({
         loginInfo: res
+      }, () => {
+        this.showMyGrade()
       });
       this.profile();//获取用户信息
       this.afterMsg();
@@ -160,6 +165,20 @@ Page({
           + "?detail=" + encodeURIComponent(detail)
     })
   },
+
+  // 展示用户等级
+  showMyGrade() {
+    const { vip_level, vip_title } = this.data.loginInfo;
+    const vipInfo = {
+      1: 'silver',  // 银卡
+      2: 'golden',  // 金卡
+      3: 'diamonds', // 砖石
+    };
+    this.setData({
+      cardGrade: vipInfo[vip_level] || '',
+      vip_title: vip_title
+    })
+  },
  
   //获取用户信息
   profile(){
@@ -198,6 +217,8 @@ Page({
     });
   },
 
+
+
   messageInfo() {
     let that = this;
     wx.request({
@@ -228,11 +249,18 @@ Page({
   },
 
   // 打开消息列表
-  showMessage() {
+  showGradDetail() {
     wx.navigateTo({
-      url: '/pages/myMessage/myMessage'
+      url: '/pages/gradeDetail/gradeDetail'
     })
   },
+
+    // 打开消息列表
+    showMessage() {
+      wx.navigateTo({
+        url: '/pages/myMessage/myMessage'
+      })
+    },
 
   //打开门店助手
   openMiniApp(){

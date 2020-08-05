@@ -2,14 +2,14 @@
 <skeleton selector="skeleton" bgcolor="transparent" wx:if="{{showSkeleton}}"></skeleton>
 
 <!--搜索组件start-->
-<search style="position: fixed; top: 0; left: 0; right: 0; z-index: 2;" bind:tap="clickSearch"/>
+<search style="position: fixed; top: 0; left: 0; right: 0; z-index: 99;" bind:tap="clickSearch"/>
 
 <scroll-view catchtouchmove="true" class="{{changedown?'scroll-view':'scroll-view-down' }}" scroll-x="{{changedown}}" scroll-left="{{x}}" scroll-with-animation="{{true}}">
   <view class="tags-view-item {{activeIndex === index && 'tagActive'}}" wx:for="{{tagsList}}" wx:key='index' bindtap="clickTag" data-index="{{index}}" data-tagid="{{item.id}}" >
         <text >{{item.title}}</text>
   </view>
 <!-- 遮罩层 -->
-<view class="tags-item" wx:if="{{!changedown}}" catchtouchmove="true" bindtap="clickdown"></view>
+<view class="mask" wx:if="{{!changedown}}" catchtouchmove="true" bindtap="clickdown"></view>
 </scroll-view>
 <!-- 下拉按钮 -->
 <view class="down-img" bindtap="clickdown"><image src="{{downSrc}}"></image></view>
@@ -46,49 +46,46 @@
     <image src="{{rankSrc}}" wx:else="{{query.sort != '-count' && query.sort != 'count'}}"></image>
   </view>
 </view>
-<view class="item-view skeleton">
-  <view class="item" wx:for="{{dataItem.items}}" wx:key="index">
-    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}">
-      <view class="img">
-        <view class="mark">
-          <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+<view class="goods-view skeleton">
+  <view class="goods-item" wx:for="{{dataItem.items}}" wx:key="index" data-id="{{item.id}}" bindtap="toItemDetail">
+      <view class="goods-item-img">
+        <view class="tags-mask">
+          <view class="tags-item" wx:if="{{item.is_presale}}">
+            <text>预售</text>
+            <image src="/assets/img/index/label0.png"></image>
+          </view>
         </view>
         <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_watermark200x200"></image>
-        <view class="image bg-img-container-item" wx:else></view>
+        <image class="bg-img-container-item" wx:else></image>
       </view>
-      <view class="content">
-        <view class="title skeleton-rect">
-          <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
-            {{t}}
+      <view class="goods-item-info">
+        <view class="goods-item-info-top">
+          <view class="goods-titles skeleton-rect">
+              <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+                {{t}}
+              </view>
+              <text>{{item.title}}</text>
           </view>
-          <text>{{item.title}}</text>
+          <view class="goods-sku skeleton-rect">
+              <text wx:if="{{item.is_quoted}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+              <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
+              <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+              <text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+              <text wx:if="{{item.frame_id}}">有筐</text>
           </view>
-        <view class="label">
-          <text class="skeleton-rect tips-price" wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-          <text class="skeleton-rect" wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-          <text class="skeleton-rect" wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
-          <text class="skeleton-rect" wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-          <text class="skeleton-rect frame" wx:if="{{item.frame_id}}">有筐</text>
-          <text class="skeleton-rect min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+          <view class="goods-limt skeleton-rect">
+            <text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+            <text wx:if="{{item.order_num_max}}">限购{{item.order_num_max}}件</text>
+            <text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
+          </view>
         </view>
-        <view class="price-unit skeleton-rect" wx:if="{{item.is_quoted}}">
-          <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</view>
-          <view class="price">
-            <text>￥{{tools.returnPrice(item.price_sale)}}</text>
-          </view>
+        <view class="goods-item-info-bottom skeleton-rect">
+            <priceBox isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}"/>
         </view>
-        <view class="price-unit skeleton-rect" wx:else>
-          <text>今日未报价</text>
+        <view class="cart-wrapper skeleton-rect">
+            <handleShopCart itemData="{{item}}" />
         </view>
       </view>
-    </navigator>
-    <view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
-      <view style="min-height:36rpx;">
-        <joinShopCart wx:if="{{tools.judgeItemStock(item)}}" size="small" style="float:right;" itemData="{{item}}"/>
-      </view>
-      <view style="clear: both;"></view>
-      <view class="repertory">{{tools.returnItemStock(item)}}</view>
-    </view>
   </view>
 
   <view class="load-more" wx:if="{{dataItem.num > 0 && !showSkeleton}}">{{tools.returnMore(dataItem.num, query)}}</view>

@@ -12,7 +12,6 @@ Component({
       type: Object,
       value: {}
     },
-
   },
 
   data: {
@@ -190,6 +189,38 @@ Component({
       /*===== 埋点 end ======*/
     },
 
+    //库存不足
+    upUnusable(){
+      this.isNumAbnormal(this.data.num + 1);
+    },
+
+    //数量异常提示
+    isNumAbnormal(num){
+      let { itemData } = this.data;
+      if(num < itemData.min_num_per_order){
+        wx.showToast({
+          title: `该商品${itemData.min_num_per_order}件起售`,
+          icon: 'none'
+        });
+        return false;
+      }
+      if(num > itemData.order_num_max){
+        wx.showToast({
+          title: `该商品最大订货数${itemData.order_num_max}件`,
+          icon: 'none'
+        });
+        return false;
+      }
+      if(num > itemData.item_stock){
+        wx.showToast({
+          title: '该商品库存只有' + itemData.item_stock + '件',
+          icon: 'none'
+        });
+        return false;
+      }
+      return true;
+    },
+
     //处理阶梯价
     handleStepPrices(){
       let { itemData, stepPricesIndex } = this.data;
@@ -201,11 +232,6 @@ Component({
         }
       });
     },
-
-
-
-    
-
 
   }
 })

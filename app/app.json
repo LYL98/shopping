@@ -1,11 +1,10 @@
 {
   "pages": [
-    "pages/shoppingCart/shoppingCart",
     "pages/index/index",
-    "pages/index1/index1",
+    "pages/my/my",
+    "pages/shoppingCart/shoppingCart",
     "pages/browser/browser",
     "pages/order/order",
-    "pages/my/my",
     "pages/about/about",
     "pages/myMessage/myMessage",
     "pages/search/search",
@@ -47,7 +46,8 @@
     "pages/suggestions/suggestions",
     "pages/suggestionsResult/suggestionsResult",
     "pages/hotSaleList/hotSaleList",
-    "pages/applyStore/applyStore"
+    "pages/applyStore/applyStore",
+    "pages/gradeDetail/gradeDetail"
   ],
   "plugins": {
     "live-player-plugin": {
@@ -69,7 +69,7 @@
   ],
   "tabBar": {
     "color": "#A5A5A5",
-    "selectedColor": "#00AE66",
+    "selectedColor": "#FFD426",
     "borderStyle": "black",
     "backgroundColor": "#fff",
     "list": [

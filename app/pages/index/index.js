@@ -1,8 +1,9 @@
-//index.js
-//获取应用实例
+// pages/index1/index1.js
+
 const app = getApp();
 import { Constant, Config } from './../../utils/index';
 Page({
+
   data: {
     noticeList:[
       // {
@@ -25,7 +26,7 @@ Page({
       './../../assets/img/tags_icon5.png',
       './../../assets/img/tags_icon6.png',
       './../../assets/img/tags_icon7.png',
-      './../../assets/img/tags_icon8.png'
+      './../../assets/img/tags_icon8.png',
     ],
     tagsList: (()=>{
       //初始化骨架数据
@@ -51,42 +52,46 @@ Page({
 
     },
     dataItem: {
-      items: []
+      items: [
+        {
+          frame_id: '00',
+          gross_weight: 0,
+          id: 1,
+          images: [],
+          item_spec: "10g",
+          item_stock: 0,
+          order_num_max: 0,
+          origin_place: "......",
+          package_spec: "纸箱",
+          price_sale: 2000,
+          title: "xxxxxxxxxx"
+        },{
+          frame_id: '00',
+          gross_weight: 0,
+          id: 2,
+          images: [],
+          item_spec: "10g",
+          item_stock: 0,
+          order_num_max: 0,
+          origin_place: "......",
+          package_spec: "纸箱",
+          price_sale: 2000,
+          title: "xxxxxxxxxx"
+        }
+      ]
     },
     //瀑布流数据(骨架屏数据)
-    dataMap:[[{
-      frame_id: '00',
-      gross_weight: 0,
-      id: 1,
-      images: [],
-      item_spec: "10g",
-      item_stock: 0,
-      order_num_max: 0,
-      origin_place: "......",
-      package_spec: "纸箱",
-      price_sale: 2000,
-      title: "xxxxxxxxxx"
-    }],[{
-      frame_id: '00',
-      gross_weight: 0,
-      id: 2,
-      images: [],
-      item_spec: "10g",
-      item_stock: 0,
-      order_num_max: 0,
-      origin_place: "......",
-      package_spec: "纸箱",
-      price_sale: 2000,
-      title: "xxxxxxxxxx"
-    }]],
+
     currentSwiper: 0,
     initLoad: true,
     closeStore: true,
     showSkeleton: true,
     userInfo: {}, //当前登录用户
     address: {},
-    isShowSelect: false
+    isShowSelect: false,
+    navBarLoding: false,
   },
+
   swiperChange: function(e) {
     this.setData({
       currentSwiper: e.detail.current
@@ -178,6 +183,7 @@ Page({
       })
     }
   },
+
   //点击搜索
   clickSearch(){
     /*===== 埋点 start ======*/
@@ -191,6 +197,7 @@ Page({
       isShowSelect: e.detail
     });
   },
+
   //选择门店后回调
   selectStoreCallBack(res){
     app.shoppingCartNum();
@@ -216,6 +223,7 @@ Page({
       /*===== 埋点 end ======*/
     }
   },
+
   //是否可下单
   getWorkTime() {
     let that = this;
@@ -268,6 +276,7 @@ Page({
       }
     });
   },
+
   //获取banner
   getBanner() {
     let that = this;
@@ -321,6 +330,7 @@ Page({
       }
     });
   },
+
   //获取商品标签
   getTagsList(isInit){
     let that = this;
@@ -388,7 +398,6 @@ Page({
       query,
       dataItem,
       initLoad,
-      dataMap
     } = that.data;
     //判断是否第一次加载，或没数据；如果是：显示loading   否则静默更新数据
     if (initLoad || !dataItem.num) {
@@ -415,32 +424,13 @@ Page({
           /*===== 埋点 end ======*/
           let rd = res.data.data;
           if (query.page === 1) {
-            dataMap = [[], []];
-            for(let i = 0; i < rd.items.length; i++){
-              if(i % 2 === 0){
-                dataMap[0].push(rd.items[i]);
-              }else{
-                dataMap[1].push(rd.items[i]);
-              }
-              dotFun(rd.items[i], i); //埋点
-            }
             that.setData({
               dataItem: rd,
-              dataMap: dataMap,
             });
           } else {
             dataItem.items = dataItem.items.concat(rd.items);
-            for (let i = 0; i < rd.items.length; i++) {
-              if (i % 2 === 0) {
-                dataMap[0] = dataMap[0].concat(rd.items[i]);
-              } else {
-                dataMap[1] = dataMap[1].concat(rd.items[i]);
-              }
-              dotFun(rd.items[i], i); //埋点
-            }
             that.setData({
               dataItem: dataItem,
-              dataMap: dataMap
             });
           }
         } else {
@@ -472,12 +462,7 @@ Page({
       }
     });
   },
-  // 跳转到门店申请自提点
-  toApplyStorePage() {
-    wx.navigateTo({
-      url: '/pages/applyStore/applyStore',
-    })
-  },
+  
   //点击banner
   urlJump(e){
     let item = e.target.dataset.item;
@@ -528,6 +513,10 @@ Page({
     let index = e.currentTarget.dataset.index;
     app.globalData.indexTagId = item.id; //保存itemList页面要用到，
     app.globalData.indexTagIndex = index; //保存itemList页面要用到
+    wx.switchTab({
+      url: '/pages/itemList/itemList',
+    })
+
     /*===== 埋点 start ======*/
     app.gioActionRecordAdd('positionClick', {
       moduleTitle_var: 'icon区', //楼层
@@ -543,6 +532,10 @@ Page({
   //点击商品
   clickItem(e){
     let item = e.currentTarget.dataset.item;
+    wx.navigateTo({
+      url: `/pages/itemDetail/itemDetail?id=${item.id}`,
+    })
+    
     /*===== 埋点 start ======*/
     let index = 0;
     let { dataItem } = this.data;
@@ -598,12 +591,14 @@ Page({
   // TODO 获取登录的token，生产环境wss需要配置
   // 跑马灯websocket
   connectSocket(){
+    if(!app.globalData.loginUserInfo.cent_token){
+      return
+    }
     const that = this;
-    const url = 'ws://212.64.29.243:8100/connection/websocket'
-    let connect_auth_msg = '{"params":{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMiJ9.fDjjIWeNK9S31bQjXAd8ctnqtpjfKpR64ab3KFcR20U"},"id":1}';
+    let connect_auth_msg = `{"params":{"token": ${app.globalData.loginUserInfo.cent_token}},"id":1}`;
    
     wx.connectSocket({
-      url: url,
+      url: Config.requestWs,
       header:{
         'content-type': 'application/json',
       },
