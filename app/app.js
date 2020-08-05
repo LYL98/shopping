@@ -68,7 +68,6 @@ App({
         success: function (res) {
           if (res.statusCode == 200 && res.data.code == 0) {
             let rd = res.data.data;
-            console.log('rd: ', rd);
             that.updateLoginInfo(rd); //系统登录信息
             //gio设置userid
             if(!that.globalData.gioIsSetUserId){
@@ -103,7 +102,6 @@ App({
 
   //更新登录信息
   updateLoginInfo(data){
-    console.log('****',data)
     this.globalData.loginUserInfo = data;
     wx.setStorageSync("loginUserInfo", data);
   },
@@ -143,7 +141,6 @@ App({
 
   //网络请求异常处理方法
   requestResultCode(res) {
-    console.log(res);
     let that = this;
     if (res.statusCode >= 500){
       wx.showModal({
