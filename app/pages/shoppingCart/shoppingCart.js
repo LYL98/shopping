@@ -113,7 +113,7 @@ Page({
       this.setData({
         discount:res.data.discount,
         level:res.data.level,
-        title:res.data.title
+        title:res.data.title.substring(0,2)
       })
       console.log('res: ', res);
       
