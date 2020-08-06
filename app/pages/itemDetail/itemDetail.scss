@@ -392,6 +392,11 @@ margin-left: 16rpx;
   padding-left: 14rpx;
   padding-right: 14rpx;
   height:62rpx;
+  position: absolute;
+z-index: 10;
+top: 32rpx;
+right: 22rpx;
+
   // transform: scale();
   // width: 186rpx;
 
@@ -573,8 +578,8 @@ margin-left: 16rpx;
 }
 
 .card_discount--1{
-  color:#D79E5C;
-  border: 1px solid #D79E5C;
+  color:#848383;
+  border: 1px solid #848383;
    border-left:none;
 }
 .card_discount--2{

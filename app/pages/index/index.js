@@ -235,6 +235,7 @@ Page({
         that.getTagsList();
         // that.itemQuery();
         that.getBanner(); //显示ad
+        that.getNoticeList()
         that.getWorkTime();
       });
       /*===== 埋点 start ======*/
