@@ -1,0 +1,119 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/shoppingCart/shoppingCart",
+    "pages/browser/browser",
+    "pages/order/order",
+    "pages/about/about",
+    "pages/myMessage/myMessage",
+    "pages/search/search",
+    "pages/itemLabel/itemLabel",
+    "pages/loginGuide/loginGuide",
+    "pages/login/login",
+    "pages/loginBind/loginBind",
+    "pages/itemList/itemList",
+    "pages/itemDetail/itemDetail",
+    "pages/account/account",
+    "pages/accountRecord/accountRecord",
+    "pages/password/password",
+    "pages/shop/shop",
+    "pages/orderAdd/orderAdd",
+    "pages/orderFram/orderFram",
+    "pages/coupon/coupon",
+    "pages/payResult/payResult",
+    "pages/orderResult/orderResult",
+    "pages/orderDetail/orderDetail",
+    "pages/member/member",
+    "pages/avatar/index",
+    "pages/reply/reply",
+    "pages/afterSale/afterSale",
+    "pages/orderCoupon/orderCoupon",
+    "pages/afterSaleRecord/afterSaleRecord",
+    "pages/afterSaleDetail/afterSaleDetail",
+    "pages/afterSaleQrCode/afterSaleQrCode",
+    "pages/afterSaleReturn/afterSaleReturn",
+    "pages/shopDetail/shopDetail",
+    "pages/commercial/commercial",
+    "pages/myCsm/myCsm",
+    "pages/complain/complain",
+    "pages/myDetail/myDetail",
+    "pages/shootVideo/shootVideo",
+    "pages/playVideo/playVideo",
+    "pages/live/live",
+    "pages/live-rep/live-rep",
+    "pages/updateSystem/updateSystem",
+    "pages/suggestions/suggestions",
+    "pages/suggestionsResult/suggestionsResult",
+    "pages/hotSaleList/hotSaleList",
+    "pages/applyStore/applyStore",
+    "pages/gradeDetail/gradeDetail",
+    "pages/my/my"
+  ],
+  "plugins": {
+    "live-player-plugin": {
+      "version": "1.0.16",
+      "provider": "wx2b03c6e691cd7370"
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black"
+  },
+  "useExtendedLib": {
+    "weui": true
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx1653f76966571193"
+  ],
+  "tabBar": {
+    "color": "#616161",
+    "selectedColor": "#FFD426",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/img/home.png",
+        "selectedIconPath": "assets/img/home_s.png"
+      },
+      {
+        "pagePath": "pages/itemList/itemList",
+        "text": "商品",
+        "iconPath": "assets/img/item.png",
+        "selectedIconPath": "assets/img/item_s.png"
+      },
+      {
+        "pagePath": "pages/live/live",
+        "text": "直播",
+        "iconPath": "assets/img/live.png",
+        "selectedIconPath": "assets/img/live_s.png"
+      },
+      {
+        "pagePath": "pages/shoppingCart/shoppingCart",
+        "text": "购物车",
+        "iconPath": "assets/img/shop_cart.png",
+        "selectedIconPath": "assets/img/shop_cart_s.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "assets/img/my.png",
+        "selectedIconPath": "assets/img/my_s.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 100000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于自动获取门店位置信息"
+    }
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,140 @@
+/* components/selectStore/selectStore.wxss */
+/*文字太宽加....*/
+.add-dot {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  display: block;
+}
+/*链接样式*/
+.link-active:active{
+  background: #f3f4f6;
+}
+
+
+.select-store{
+  overflow: hidden;
+  height: 55rpx;
+  padding: 0 29rpx;
+  display: flex;
+  align-items: center;
+  >.location{
+    margin-right: 12rpx;
+    >image{
+      display: block;
+      width: 34rpx;
+      height: 34rpx;
+    }
+  }
+  >.title{
+    font-size: 32rpx;
+  }
+  >.down{
+    margin-left: 6rpx;
+    >image{
+      display: block;
+      width: 32rpx;
+      height: 32rpx;
+    }
+  }
+}
+
+.store-body{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, .4);
+  z-index: 10;
+  >.store{
+    background: #fff;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top-left-radius: 30rpx;
+    border-top-right-radius: 30rpx;
+    animation: store-bottom .3s;
+    overflow: hidden;
+    >.title{
+      height: 153rpx;
+      position: relative;
+      margin: 0 30rpx;
+      border-bottom: 1rpx solid #eee;
+      > .str{
+        font-size: 38rpx;
+        font-weight: bold;
+        padding-top: 60rpx;
+      }
+      > .close-btn{
+        width: 42rpx;
+        height: 42rpx;
+        position: absolute;
+        right: 0rpx;
+        top: 60rpx;
+        > image{
+          width: 24rpx;
+          height: 24rpx;
+          margin: 10rpx 0 0 10rpx;
+        }
+      }
+    }
+    >.content{
+      max-height: 600rpx;
+      overflow-y: auto;
+      .item{
+        display: flex;
+        border-bottom: 1rpx solid #eee;
+        padding: 35rpx 0;
+        align-items: center;
+        position: relative;
+        margin: 0 30rpx;
+        >.left{
+          flex: 1;
+          > .store-title{
+            font-size: 30rpx;
+            font-weight: bold;
+          }
+          > .store-address{
+            font-size: 26rpx;
+            color: #a5a5a5;
+          }
+        }
+        >.right{
+          text-align: right;
+          flex: initial;
+          width: 90rpx;
+          text-align: right;
+          > image{
+            width: 38rpx;
+            height: 38rpx;
+          }
+        }
+      }
+    }
+    >.btn{
+      margin: 20rpx 30rpx;
+      .btn1{
+        background: #FFD426;
+        font-size: 32rpx;
+        color: #fff;
+        border-radius: 100rpx;
+        height: 80rpx;
+        line-height: 80rpx;
+        &:active{
+          opacity: 0.7;
+        }
+        &::after{
+          border: 0;
+        }
+      }
+    }
+  }
+}
+
+@keyframes store-bottom
+{
+  from {bottom: -1000rpx;}
+  to {bottom: 0;}
+}

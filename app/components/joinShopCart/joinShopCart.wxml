@@ -1,0 +1,197 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<view style="position: relative;">
+	<view class="plus-minus-body {{sourcePage === 'shoppingCart' && 'shopping-cart-plus-minus'}}">
+		<!--预定start-->
+		<view wx:if="{{itemData.is_presale}}">
+			<view class="plus-minus {{size}}">
+				<navigator
+				 wx:if="{{tools.judgeItemStock(itemData) && itemData.order_num_max > 0 && isCanPresale}}"
+				 class="presale-btn"
+				 url="/pages/itemDetail/itemDetail?id={{itemData.id}}"
+				>预定
+				</navigator>
+				<view wx:else class="presale-btn unusable">预定</view>
+			</view>
+		</view>
+		<!--预定end-->
+
+		<!--以下不是预定的-->
+		<view wx:else>
+			<!--数量大于0的情况start-->
+			<view class="plus-minus {{size}}" wx:if="{{num > 0}}">
+				<!--阶梯优惠提示-->
+				<!-- <view class="step-prices-hint {{sourcePage === 'itemDetail' && 'item-detail'}} {{sourcePage === 'shoppingCart' && 'shopping-cart'}}" wx:if="{{stepPricesHint}}">
+					{{stepPricesHint}}
+				</view> -->
+
+				<view class="plus-minus-view">
+					<view class="btn minus" bindtap="down">
+						<image src="{{size =='medium' ? minusIndexSrc : minusSrc}}"></image>
+					</view>
+					<view  class="cart_num num" bind:tap="showInput">{{num}}</view>
+					<view
+					 wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}"
+					 class="btn add unusable"
+					 bindtap="upUnusable"
+					>
+						<image src="{{size =='medium' ? addIndexSrc : addSrc}}"></image>
+					</view>
+					<view
+					 wx:else
+					 class="btn add"
+					 bindtap="up"
+					>
+						<image src="{{size =='medium' ? addIndexSrc : addSrc}}"></image>
+					</view>
+				</view>
+			</view>
+			<!--数量大于0的情况end-->
+
+			<!--数量等于0的情况start-->
+			<view class="plus-minus {{size}}" wx:else>
+				<view class="join-btn" catchtap="up">加入购物车</view>
+				<view class="add-cart-icon" catchtap="up">
+					<image src="./../../assets/img/cart_icon.png" />
+				</view>
+			</view>
+			<!--数量等于0的情况end-->
+
+			<!--小飞球-->
+			<view
+			 wx:if="{{showFlyball}}"
+			 class="good_box"
+			 hidden="{{hide_good_box}}"
+			 style="left: {{bus_x}}px; top: {{bus_y}}px;"
+			></view>
+		</view>
+	</view>
+
+	<!--购物车专用start-->
+	<view class="shopping-cart-page" wx:if="{{sourcePage === 'shoppingCart'}}">
+		<view class="price-unit">
+			<text wx:if="{{!itemData.is_quoted}}">今日未报价</text>
+			<text wx:elif="{{itemData.item_stock < itemData.min_num_per_order || itemData.item_stock === 0}}">库存不足</text>
+			<text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
+			<view wx:elif="{{itemData.is_on_sale && tools.judgeItemStock(itemData) && itemData.is_quoted}}">
+				<block wx:if="{{itemData.is_vip_item && discount > 0}}">
+					<view class="vip_card align-center">
+						<view style="display:flex;align-item:center">
+							<text class="vip_card--type card_type--{{level}}">{{title}}价</text>
+						</view>
+
+						<view class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(itemData.price_sale)}}</view>
+					</view>
+					<view class="normal_price ">普通价￥{{tools.returnPrice(itemData.price_novip)}}</view>
+				</block>
+				<text class="price" wx:else>￥{{tools.returnPrice(itemData.price_sale)}}</text>
+			</view>
+		</view>
+		<view class="discount-repertory" wx:if="{{itemData.item_stock > 0 && itemData.item_stock >= itemData.min_num_per_order}}">
+			<view class="repertory">{{tools.returnItemStock(itemData)}}</view>
+		</view>
+	</view>
+	<!--购物车专用end-->
+</view>
+
+<!--输入-->
+<view
+ class="input-body"
+ wx:if="{{isShowInput}}"
+ bind:tap="hideInput"
+>
+	<view
+	 class="input-view"
+	 style="bottom: {{keyHeight}}px"
+	 catch:tap
+	>
+		<view class="left">
+			<input
+			 type="number"
+			 placeholder="请输入件数"
+			 focus
+			 adjust-position="{{false}}"
+			 bindinput="inputChange"
+			 bindkeyboardheightchange="inputHeightChange"
+			 bindblur="inputBlur"
+			/>
+		</view>
+		<view class="right">
+			<view
+			 class="ok-btn"
+			 hover-class="link-active"
+			 bind:tap="inputConfirm"
+			>OK
+			</view>
+		</view>
+	</view>
+</view>
+
+<!--阶梯价弹框选-->
+<view
+ class="step-prices-body"
+ wx:if="{{isShowStepPrices}}"
+ bindtap="cancelSelectStepPrices"
+>
+	<view class="step-prices" catchtap>
+		<view class="title">
+			<view class="str">单品优惠</view>
+			<view
+			 class="close-btn"
+			 hover-class="link-active"
+			 bindtap="cancelSelectStepPrices"
+			>
+				<image src="./../../assets/img/close2.png"></image>
+			</view>
+		</view>
+		<view class="content">
+			<view
+			 hover-class="link-active"
+			 data-index="{{-1}}"
+			 bindtap="selectStepPrices"
+			>
+				<view class="item">
+					<view class="left">
+						<image
+						 src="./../../assets/img/checked_s.png"
+						 wx:if="{{stepPricesIndex === -1}}"
+						 style="width: 38rpx; height: 38rpx;"
+						/>
+						<image
+						 src="./../../assets/img/checked.png"
+						 wx:else
+						 style="width: 38rpx; height: 38rpx;"
+						/>
+					</view>
+					<view class="right">不参与优惠</view>
+				</view>
+			</view>
+			<view
+			 hover-class="link-active"
+			 wx:for="{{itemData.step_prices}}"
+			 wx:key="index"
+			 data-index="{{index}}"
+			 bindtap="selectStepPrices"
+			>
+				<view class="item {{item.num > itemData.order_num_max || item.num < itemData.min_num_per_order || item.num > itemData.item_stock ? 'disabled' : ''}}">
+					<view class="left">
+						<image
+						 src="./../../assets/img/checked_s.png"
+						 wx:if="{{stepPricesIndex=== index}}"
+						 style="width: 38rpx; height: 38rpx;"
+						/>
+						<image
+						 src="./../../assets/img/checked.png"
+						 wx:else
+						 style="width: 38rpx; height: 38rpx;"
+						/>
+					</view>
+					<view class="right">满{{item.num}}件￥{{tools.returnPrice(item.price_sale)}}/件</view>
+				</view>
+			</view>
+		</view>
+		<view class="btn">
+			<button class="btn1" bindtap="handleStepPrices">确认</button>
+		</view>
+	</view>
+</view>
+

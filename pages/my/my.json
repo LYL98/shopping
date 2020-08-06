@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "我的",
-  "usingComponents": {
-    "skeleton": "/components/skeleton/skeleton"
-  }
-
-}

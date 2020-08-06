@@ -1,10 +1,10 @@
 {
-	"description": "项目配置文件",
+	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"enhance": false,
 		"postcss": true,
@@ -34,14 +34,7 @@
 	"libVersion": "2.6.4",
 	"appid": "wx70a3bf5f7a69987d",
 	"projectname": "selene",
-	"cloudfunctionTemplateRoot": "",
-	"watchOptions": {
-		"ignore": []
-	},
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"scripts": {},
+	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
@@ -58,7 +51,7 @@
 			"list": []
 		},
 		"game": {
-			"current": -1,
+			"currentL": -1,
 			"list": []
 		},
 		"gamePlugin": {
@@ -234,6 +227,20 @@
 					"name": "门店详情",
 					"pathName": "pages/shopDetail/shopDetail",
 					"query": "id=21593",
+					"scene": null
+				},
+				{
+					"id": 24,
+					"name": "首页【新】",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 25,
+					"name": "分类【新】",
+					"pathName": "pages/itemList/itemList",
+					"query": "",
 					"scene": null
 				}
 			]
