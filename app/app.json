@@ -19,7 +19,6 @@
     "pages/shop/shop",
     "pages/orderAdd/orderAdd",
     "pages/orderFram/orderFram",
-    "pages/orderCoupon/orderCoupon",
     "pages/coupon/coupon",
     "pages/payResult/payResult",
     "pages/orderResult/orderResult",
@@ -28,6 +27,7 @@
     "pages/avatar/index",
     "pages/reply/reply",
     "pages/afterSale/afterSale",
+    "pages/orderCoupon/orderCoupon",
     "pages/afterSaleRecord/afterSaleRecord",
     "pages/afterSaleDetail/afterSaleDetail",
     "pages/afterSaleQrCode/afterSaleQrCode",
@@ -68,7 +68,7 @@
     "wx1653f76966571193"
   ],
   "tabBar": {
-    "color": "#A5A5A5",
+    "color": "#616161",
     "selectedColor": "#FFD426",
     "borderStyle": "black",
     "backgroundColor": "#fff",
