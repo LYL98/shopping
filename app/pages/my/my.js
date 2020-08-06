@@ -29,6 +29,7 @@ Page({
     ],
     bg_level: 'diamonds',
     vip_title: '',
+    myLevel: null,
     has_unread:'',
     initLoad: true,
     myInfo: {
@@ -182,7 +183,8 @@ Page({
         if (res.statusCode == 200 && res.data.code == 0) {
           this.setData({
             bg_level: vipInfo[level] || 'diamonds',
-            vip_title: title || ''
+            vip_title: title || '',
+            myLevel: level
           });
         } else {
           app.requestResultCode(res); //处理异常
