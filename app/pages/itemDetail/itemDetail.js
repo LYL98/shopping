@@ -17,7 +17,8 @@ Page({
     address: {},
     isShowVideo: false,
     loginUserInfo:{},
-    isOnSale:true
+    isOnSale:true,
+    isShowVipInfo:false
 
   },
   //播放视频
@@ -111,6 +112,7 @@ Page({
           isOnSale:true
         })
       }
+      
       let vidoes= [];
       if(rd.content){
         let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] : '';
@@ -120,7 +122,15 @@ Page({
         }
         rd.content = rd.content.replace(/<img/g, '<img style="width:100%;height:auto" ');
       }
-      
+      if(rd.is_vip_item && rd.vip_level > 0 && rd.vip_discount > 0 ){
+        this.setData({
+          isShowVipInfo:true
+        })
+      }else{
+        this.setData({
+          isShowVipInfo:false
+        })
+      }
       that.setData({
         detail: rd,
         vidoes: vidoes

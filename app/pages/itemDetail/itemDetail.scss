@@ -353,7 +353,10 @@
 }
 .goods_top{
   height: 108rpx;
+}
+.goods_info--more{
   padding-bottom: 30rpx;
+
 }
 
 
@@ -569,10 +572,15 @@ margin-left: 16rpx;
 }
 
 .card_discount--1{
+  
+  color:#D79E5C;
+  border: 1px solid #D79E5C;
+}
+.card_discount--2{
   color:#989797;
   border: 1px solid #989797;
 }
-.card_discount--2{
+.card_discount--3{
   color:#FDBD1C;
   border: 1px solid #FDBD1C;
 }
@@ -606,5 +614,10 @@ left: 28rpx;
 
 .origin_price{
   text-decoration: line-through;
+  color: #989797;
   margin-left: 16rpx;
+}
+.cart_num{
+  height:81rpx !important;
+  line-height:81rpx !important;
 }
