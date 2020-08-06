@@ -141,6 +141,7 @@
 						 wx:for-item="t"
 						 wx:for-index="i"
 						 wx:key="i"
+						 wx:if="{{t}}"
 						>
 							<text>{{tools.returnSpecStr(t,0,2)}}</text>
 							<image wx:if="{{i == 0}}" src="/assets/img/index/label0.png"></image>
@@ -174,6 +175,7 @@
 						<priceBox
 						 vipLevel="{{dataItem.vip_level}}"
 						 vipTitle="{{dataItem.vip_title}}"
+						 vipDiscount="{{dataItem.vip_discount}}"
 						 isVipItem="{{item.is_vip_item}}"
 						 isQuoted="{{item.is_quoted}}"
 						 priceSale="{{item.price_sale}}"

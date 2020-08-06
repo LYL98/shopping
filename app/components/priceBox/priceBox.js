@@ -24,6 +24,11 @@ Component({
       type: Number,
       value: 0
     },
+    // 会员折扣
+    vipDiscount: {
+      type: Number,
+      value: 0
+    },
     vipTitle: {
       type: String,
       value: ''
