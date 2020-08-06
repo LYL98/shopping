@@ -175,7 +175,8 @@ Page({
   getNoticeList(){
     let address = app.getSelectStore(); 
     Http.get(Config.api.noticeList, {
-      province_code: address.province_code
+      province_code: address.province_code,
+      handleError:false
     }).then((res) => {
       if(res.code === 0){
         this.setData({
@@ -184,6 +185,8 @@ Page({
       }
       console.log('res: ', res);
       
+    }).catch(err => {
+      console.log('err',err)
     });
   },
   onHide(){
