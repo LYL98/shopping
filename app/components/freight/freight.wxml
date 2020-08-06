@@ -1,0 +1,41 @@
+<!--components/selectStore/selectStore.wxml-->
+<view class="select-store" bindtap="showSelect">
+	<view class="location">
+		<image src="./img/location_icon.png" />
+	</view>
+	<view class="title">运费明细</view>
+	<view class="down">
+		<image src="./img/arrow_down.png" />
+	</view>
+</view>
+<view class="store-body" bindtap="cancelSelect">
+	<view class="store" catchtap>
+		<view class="title">
+			<view class="str">运费明细</view>
+			<view class="close-btn link-active" bindtap="cancelSelect">
+				<image src="./../../assets/img/close2.png"></image>
+			</view>
+		</view>
+		<view class="content">
+			<view class="freight_item align-center">
+				<view class="freight_item--label">大件:</view>
+				<view class="freight_item--value">15件</view>
+				<view class="freight_item--value">10元/件</view>
+				<view class="freight_item--value">￥120</view>
+			</view>
+			<view class="freight_item align-center">
+				<view class="freight_item--label">小件:</view>
+				<view class="freight_item--value">15件</view>
+				<view class="freight_item--value">10元/件</view>
+				<view class="freight_item--value">￥120</view>
+			</view>
+			<view class="freight_all">
+				<view class="freight_all--label">总计</view>
+				<view class="freight_all--value">￥2980.6</view>
+			</view>
+		</view>
+
+	</view>
+
+</view>
+

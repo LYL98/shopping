@@ -67,6 +67,7 @@ Page({
     couponListData: [], //优惠券列表
     couponSelectData: {}, //当前选择优惠券
     loginUserInfo:{},
+    showFreight:true
   },
 
   /**

@@ -277,5 +277,7 @@
 	 callback="{{payCallBack}}"
 	 wx:if="{{isShowPay}}"
 	/>
+
+	<freight wx:if="{{showFreight}}" />
 </view>
 
