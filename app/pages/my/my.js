@@ -31,7 +31,6 @@ Page({
     vip_title: '',
     has_unread:'',
     initLoad: true,
-    arrow:'./../../assets/img/right.png',
     myInfo: {
       realname: '用户姓名',
       merchant: {
