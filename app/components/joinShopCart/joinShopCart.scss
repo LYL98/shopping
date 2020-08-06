@@ -80,8 +80,8 @@
       > .num{
         flex: 1;
         background: white;
-        border-top: 1rpx solid #eee;
-        border-bottom: 1rpx solid #eee;
+        border-top: 2rpx solid #f2f2f2;
+        border-bottom: 2rpx solid #f2f2f2;
 
         color: #616161;
         font-size: 26rpx;
@@ -115,7 +115,7 @@
         > .num{
           width: 54rpx;
           flex: initial !important;
-          height: 48rpx;
+          height: 47rpx;
           line-height: 48rpx;
         }
       }
@@ -172,7 +172,7 @@
         }
         > .num{
           flex: 1;
-          height: 81rpx;
+          height: 79rpx;
           
           line-height: 81rpx;
         }
