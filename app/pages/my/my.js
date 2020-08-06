@@ -12,7 +12,6 @@ Page({
     tencentPath: Config.tencentPath,
     defaultSrc: './../../assets/img/default_avatar.png',
     myMessageSrc: './../../assets/img/my_message.png',
-    myGradeSrc: './../../assets/img/my_grade.png',
     myBalanceSrc: './../../assets/img/my_balance.png',
     myCouponSrc: './../../assets/img/my_coupon.png',
     optionSrc: [

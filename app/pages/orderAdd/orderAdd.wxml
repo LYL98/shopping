@@ -231,7 +231,7 @@
 		</view>
 		<view class="content">
 
-			<view class="skeleton-rect add-dot f-r price_color" style="width: 500rpx;">￥20
+			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">￥20
 			</view>
 		</view>
 	</view>

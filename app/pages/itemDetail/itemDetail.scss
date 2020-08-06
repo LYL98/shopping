@@ -41,6 +41,7 @@
   background: #FFECE3;
   border-radius:4rpx;
   color:#FF6010;
+  border-radius: 4rpx;
 }
 .img-view {
   width: 100%;
@@ -346,7 +347,7 @@
 
 .goods_info{
   padding: 0 24rpx;
-  padding-top: 32rpxs;
+  padding-top:10rpx;
   position: relative;
   // border-top: 32rpx solid #f9f8f8;
 }
@@ -521,7 +522,7 @@ margin-left: 16rpx;
   // padding: 0 24rpx 24rpx 24rpx;
 }
 .goods_attr--item{
-  width: 306rpx;
+  width: 330rpx;
 }
 .goods_attr--box{
   height: 82rpx;
@@ -598,7 +599,7 @@ margin-left: 16rpx;
   font-size: 28rpx;
   color: #989797;
   position: absolute;
-  top: 90rpx;
+  top: 99rpx;
 left: 28rpx;
 
 }
