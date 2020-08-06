@@ -563,30 +563,34 @@ margin-left: 16rpx;
 .vip_card--discount{
   
   border-left: none;
-  color: #989797;
+  color: #01B8FF;
   display: inline-block;
   padding:0 8rpx;
   border-bottom-right-radius: 4rpx;
   border-top-right-radius: 4rpx;
-
+   border: 1px solid #01B8FF;
+   border-left:none;
 }
 
 .card_discount--1{
-  
   color:#D79E5C;
   border: 1px solid #D79E5C;
+   border-left:none;
 }
 .card_discount--2{
   color:#989797;
   border: 1px solid #989797;
+   border-left:none;
 }
 .card_discount--3{
   color:#FDBD1C;
   border: 1px solid #FDBD1C;
+   border-left:none;
 }
-.card_discount--3{
+.card_discount--4{
   color:#E5BB72;
   border: 1px solid #E5BB72;
+   border-left:none;
 }
 
 .no_sale{

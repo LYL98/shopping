@@ -171,7 +171,7 @@
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">筐</view>
 				<text wx:if="{{detail.frame_id}}">{{tools.returnPrice(detail.frame.price)}}元</text>
-				<text wx:else>无</text>
+				<text class="goods_info--value" wx:else>无</text>
 			</view>
 		</view>
 		<view class="align-center goods_attr--box goods_attr--box--gray">
@@ -182,7 +182,7 @@
 		</view>
 		<view class="align-center " style="padding-left:24rpx">
 			<view class="align-center label_item goods_info--label--max ">
-				<view class="goods_info--label goods_info--label--single">卖点</view>
+				<view class="goods_info--label">卖点</view>
 				<view class="goods_info--value" wx:if="{{detail.selling_points.length > 0}}">{{detail.selling_points}}</view>
 				<view class="goods_info--value" wx:else> - </view>
 			</view>
