@@ -381,12 +381,18 @@
 .vip_card--price{
   font-size: 32rpx;
   color:#FDBD1C;
-  margin-left: 5rpx;
+  margin-left: 0rpx;
 }
 .normal_price{
   font-size: 18rpx;
   height: 20rpx;
   color: #989797;
+}
+.vip_card--type{
+  display: inline-block;
+  background-image: linear-gradient(-41deg, #76D6FD,  #01B8FF,#9AE2FF)
+  color:white;
+  padding:2rpx 8rpx;
 }
 .card_type--1{
   background-image: linear-gradient(135deg, #EDEEF0 0%, #808691 100%) !important;
@@ -397,8 +403,7 @@
   box-shadow: inset 0 1rpx 3rpx 0 #FDC126 !important;
 }
 .card_type--3{
-  background-image: linear-gradient(-41deg, #E09A3A 0%, #FDF6D7 100%)!important;
-  box-shadow: inset 0 1rpx 3rpx 0 #E3A852!important;
+  background-image: linear-gradient(-41deg, #76D6FD,  #01B8FF,#9AE2FF) !important;
 }
 .price_type--1{
   color: #828893 !important;
