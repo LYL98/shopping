@@ -61,7 +61,7 @@
       <view class="goods-item-info">
         <view class="goods-item-info-top">
           <view class="goods-titles skeleton-rect">
-              <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+              <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i" wx:if="{{t}}">
                 {{t}}
               </view>
               <text>{{item.title}}</text>
