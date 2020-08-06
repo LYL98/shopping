@@ -393,14 +393,14 @@
 		 open-type="switchTab"
 		 class="btn-mini"
 		>
-			<image src="./../../assets/img/home.png"></image>
+			<image src="./../../assets/img/detail_home.png"></image>
 		</navigator>
 		<navigator
 		 url="/pages/shoppingCart/shoppingCart"
 		 open-type="switchTab"
 		 class="btn-mini"
 		>
-			<image src="./../../assets/img/shop_cart.png"></image>
+			<image src="./../../assets/img/detail_cart.png"></image>
 			<span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
 		</navigator>
 		<view
