@@ -57,7 +57,7 @@
 	</view>
 	<view class="goods_info">
 		<view class="goods_top justify-between align-center" style="padding-bottom: {{isShowVipInfo? '30rpx' : '0rpx'}}">
-			<view class="goods_top--price flex1">
+			<view class="goods_top--price flex1" wx:if="{{detail.is_quoted}}">
 				<text class="goods_top--symbol">￥</text>
 				<text class="goods_top--money">{{tools.returnPrice(detail.price_sale)}}</text>
 				<text class="goods_top--symbol">/件</text>
@@ -68,7 +68,7 @@
 				<text  class="vip_card--discount card_discount--{{detail.vip_level}}">专属{{detail.vip_discount / 10}}折</text>
 				</text>
 			</view>
-
+			<view style="color:#A5A5A5;" wx:else>今日未报价</view>
 		</view>
 		<view class="other_price" wx:if="{{isShowVipInfo}}">
 			<text>普通价:{{tools.returnPrice(detail.price_novip)}}/件</text>
