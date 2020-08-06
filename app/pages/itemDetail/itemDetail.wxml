@@ -65,7 +65,7 @@
 				<text class="goods_top--weight" wx:if="{{detail.is_quoted && detail.gross_weight > 0}}">约{{tools.returnPrice(detail.price_sale  / (detail.gross_weight / 10))}}/斤</text>
 				<text class="vip_card" wx:if="{{detail.is_vip_item && detail.vip_level && detail.vip_level > 0 && detail.vip_discount > 0}}">
 					<text class="vip_card--type card_type--{{detail.vip_level}}">{{detail.vip_title}}</text>
-				<text  class="vip_card--discount card_discount--{{detail.vip_level}}">专属{{detail.vip_discount / 100}}折</text>
+				<text  class="vip_card--discount card_discount--{{detail.vip_level}}">专属{{detail.vip_discount / 10}}折</text>
 				</text>
 			</view>
 
