@@ -17,6 +17,7 @@ Page({
     address: {},
     isShowVideo: false,
     loginUserInfo:{},
+    isOnSale:true
 
   },
   //播放视频
@@ -98,6 +99,20 @@ Page({
     }).then(res => {
       wx.hideNavigationBarLoading();
       let rd = res.data;
+      rd.is_on_sale = false
+      console.log('d.is_on_sale: ', rd.is_on_sale);
+      if(!rd.is_on_sale){
+        this.setData({
+          isOnSale:false
+        })
+        wx.setNavigationBarTitle({
+          title: '商品已下架'
+        });
+      }else{
+        this.setData({
+          isOnSale:true
+        })
+      }
       let vidoes= [];
       if(rd.content){
         let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] : '';

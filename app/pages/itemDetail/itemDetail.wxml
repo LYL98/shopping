@@ -1,6 +1,5 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
-
-<view>
+<view wx:if="{{isOnSale}}">
 	<view style="position:relative;">
 		<view class="mark">
 			<text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
@@ -434,5 +433,15 @@
 			<view class="unjoin-shopping-btn">{{detail.is_presale ? '预定' : '加入购物车'}}</view>
 		</view>
 	</view>
+</view>
+<view class="no_sale" wx:else>
+	<view>该商品已下架，您可以挑选其他商品</view>
+	<navigator
+	 url="/pages/index/index"
+	 open-type="switchTab"
+	 class="backHome"
+	>
+		<view>返回首页</view>
+	</navigator>
 </view>
 
