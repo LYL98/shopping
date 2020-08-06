@@ -279,8 +279,19 @@ view, navigator, text {
 
 .notice{
   padding: 0 24rpx;
-  height: 80rpx;
-  box-shadow: 0 0 6rpx #eee;
+box-shadow: 0 0 6rpx #eee;
+position: absolute;
+width: 464rpx;
+height: 54rpx;
+top: 162rpx;
+left:25rpx;
+z-index: 10;
+background: rgba(0,0,0,0.75);
+color: white;
+border-radius: 27rpx;
+font-size: 18rpx;
+padding-top: 14rpx;
+
 }
 .notice_text{
   overflow: hidden;
@@ -288,6 +299,8 @@ view, navigator, text {
 	display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+  top:24rpx;
+  
 }
 .notice_logo{
   font-size: 28rpx;
@@ -305,6 +318,7 @@ margin-right: 33rpx;
   margin-right: 12rpx;
 }
 .notice_right{
-  width: 20rpx;
-  height: 24rpx;
+ width: 14rpx;
+height: 18rpx;
+
 }
