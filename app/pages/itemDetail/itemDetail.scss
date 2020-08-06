@@ -347,10 +347,12 @@
 .goods_info{
   padding: 0 24rpx;
   padding-top: 32rpxs;
+  position: relative;
   // border-top: 32rpx solid #f9f8f8;
 }
 .goods_top{
   height: 108rpx;
+  padding-bottom: 30rpx;
 }
 
 
@@ -591,4 +593,17 @@ margin-left: 16rpx;
   border-radius: 10rpx;
   line-height: 60rpx;
 
+}
+.other_price{
+  font-size: 28rpx;
+  color: #989797;
+  position: absolute;
+  top: 90rpx;
+left: 28rpx;
+
+}
+
+.origin_price{
+  text-decoration: line-through;
+  margin-left: 16rpx;
 }

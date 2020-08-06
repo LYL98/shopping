@@ -64,9 +64,13 @@
 			<view class="goods_top--share align-center">
 				<button class="share_btn align-center" open-type="share">
 					<image src="./../../assets/img/detail_share.png" style="width: 32rpx; height: 32rpx;margin-right:6rpx" />
-					<text>分享商品</text>
+					<text>分享</text>
 				</button>
 			</view>
+		</view>
+		<view class="other_price">
+			<text wx:if="{{detail.is_vip_item && detail.vip_level && detail.vip_level > 0}}">普通价:{{tools.returnPrice(detail.price_novip)}}/件</text>
+			<text wx:if="{{detail.price_origin > 0}}" class="origin_price">{{tools.returnPrice(detail.price_origin)}}/件</text>
 		</view>
 		<view class="goods_info--title">
 			{{detail.title}}

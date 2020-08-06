@@ -99,8 +99,6 @@ Page({
     }).then(res => {
       wx.hideNavigationBarLoading();
       let rd = res.data;
-      rd.is_on_sale = false
-      console.log('d.is_on_sale: ', rd.is_on_sale);
       if(!rd.is_on_sale){
         this.setData({
           isOnSale:false
