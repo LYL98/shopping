@@ -35,7 +35,7 @@ Page({
       },
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
+          let rd = that.convert(res.data.data);
           that.setData({
             detail: rd
           });
@@ -45,7 +45,16 @@ Page({
       },
     });
   },
+  convert(htmlText) {
+		let str = htmlText.replace(/<img[^>]*>/gi, function (match) {
+			return match.replace(
+				/style\s*?=\s*?([‘"])[\s\S]*?\1/gi,
+				'style="width:100%;max-width:100%;height:auto;"'
+			); // 替换style
+		});
 
+		return str;
+	},
   /**
    * 生命周期函数--监听页面卸载
    */
