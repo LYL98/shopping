@@ -158,7 +158,7 @@ Page({
             // that.itemQuery();
             that.getWorkTime();
             that.getBanner(); //显示ad
-            
+            this.getNoticeList()
           });
         }
         app.shoppingCartNum();
@@ -169,7 +169,6 @@ Page({
     // this.setData({
     //   noticeList:wx.getStorageSync('noticeList')
     // })
-    this.getNoticeList()
   },
   // 获取订单通高
   getNoticeList(){
