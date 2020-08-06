@@ -181,7 +181,7 @@ Page({
         };
         if (res.statusCode == 200 && res.data.code == 0) {
           this.setData({
-            bg_level: vipInfo[level] || '',
+            bg_level: vipInfo[level] || 'diamonds',
             vip_title: title || ''
           });
         } else {
