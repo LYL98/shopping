@@ -1,6 +1,5 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
-
-<view>
+<view wx:if="{{isOnSale}}">
 	<view style="position:relative;">
 		<view class="mark">
 			<text wx:if="{{detail.is_presale}}" class="is-presale">预</text>
@@ -65,9 +64,13 @@
 			<view class="goods_top--share align-center">
 				<button class="share_btn align-center" open-type="share">
 					<image src="./../../assets/img/detail_share.png" style="width: 32rpx; height: 32rpx;margin-right:6rpx" />
-					<text>分享商品</text>
+					<text>分享</text>
 				</button>
 			</view>
+		</view>
+		<view class="other_price">
+			<text wx:if="{{detail.is_vip_item && detail.vip_level && detail.vip_level > 0}}">普通价:{{tools.returnPrice(detail.price_novip)}}/件</text>
+			<text wx:if="{{detail.price_origin > 0}}" class="origin_price">{{tools.returnPrice(detail.price_origin)}}/件</text>
 		</view>
 		<view class="goods_info--title">
 			{{detail.title}}
@@ -434,5 +437,15 @@
 			<view class="unjoin-shopping-btn">{{detail.is_presale ? '预定' : '加入购物车'}}</view>
 		</view>
 	</view>
+</view>
+<view class="no_sale" wx:else>
+	<view>该商品已下架，您可以挑选其他商品</view>
+	<navigator
+	 url="/pages/index/index"
+	 open-type="switchTab"
+	 class="backHome"
+	>
+		<view>返回首页</view>
+	</navigator>
 </view>
 

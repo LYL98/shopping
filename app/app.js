@@ -68,7 +68,6 @@ App({
         success: function (res) {
           if (res.statusCode == 200 && res.data.code == 0) {
             let rd = res.data.data;
-            console.log('rd: ', rd);
             that.updateLoginInfo(rd); //系统登录信息
             //gio设置userid
             if(!that.globalData.gioIsSetUserId){
@@ -103,7 +102,6 @@ App({
 
   //更新登录信息
   updateLoginInfo(data){
-    console.log('****',data)
     this.globalData.loginUserInfo = data;
     wx.setStorageSync("loginUserInfo", data);
   },
@@ -143,14 +141,13 @@ App({
 
   //网络请求异常处理方法
   requestResultCode(res) {
-    console.log(res);
     let that = this;
     if (res.statusCode >= 500){
       wx.showModal({
         title: "提示",
         content: "服务器异常，请重试",
         confirmText: "我知道了",
-        confirmColor: "#00AE66",
+        confirmColor: "#FDCA1F",
         showCancel: false
       });
     } else if (res.statusCode >= 400) {
@@ -158,7 +155,7 @@ App({
         title: '提示',
         content: '请求出错啦',
         confirmText: '我知道了',
-        confirmColor: '#00ADE7',
+        confirmColor: '#FDCA1F',
         showCancel: false
       });
     } else if (res.data.code == 200 || res.data.code == 201) {
@@ -167,7 +164,7 @@ App({
         title: "提示",
         content: res.data.message,
         confirmText: "重新登录",
-        confirmColor: "#00AE66",
+        confirmColor: "#FDCA1F",
         showCancel: false,
         success: function (resData) {
           if (resData.confirm) {
@@ -183,7 +180,7 @@ App({
         title: "提示",
         content: res.data.message,
         confirmText: "我知道了",
-        confirmColor: "#00AE66",
+        confirmColor: "#FDCA1F",
         showCancel: false
       });
     }
@@ -212,7 +209,7 @@ App({
                 title: "提示",
                 content: "授权失败，请重试",
                 confirmText: "我知道了",
-                confirmColor: "#00AE66",
+                confirmColor: "#FDCA1F",
                 showCancel: false
               });
             }
@@ -225,7 +222,7 @@ App({
           title: "提示",
           content: "授权失败，请重试",
           confirmText: "我知道了",
-          confirmColor: "#00AE66",
+          confirmColor: "#FDCA1F",
           showCancel: false
         });
       }
@@ -239,7 +236,7 @@ App({
         title: '提示',
         content: '网络超时，请重试',
         confirmText: '重试',
-        confirmColor: '#00AE66',
+        confirmColor: '#FDCA1F',
         success: function(res){
           if (res.confirm) {
             typeof callback === 'function' && callback('timeout');
@@ -253,7 +250,7 @@ App({
         title: '提示',
         content: '请求出错啦,请检查网络是否可用',
         confirmText: '重试',
-        confirmColor: '#00AE66',
+        confirmColor: '#FDCA1F',
         success: function(res){
           if (res.confirm) {
             typeof callback === 'function' && callback('netFail');
@@ -320,7 +317,7 @@ App({
             wx.showModal({
               title: '更新提示',
               content: '新版本已经准备好，是否重启应用？',
-              confirmColor: "#00AE66",
+              confirmColor: "#FDCA1F",
               success: function (res) {
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
@@ -334,7 +331,7 @@ App({
             wx.showModal({
               title: '已经有新版本了哟~',
               content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~',
-              confirmColor: "#00AE66",
+              confirmColor: "#FDCA1F",
             })
           })
         }
@@ -343,7 +340,7 @@ App({
       wx.showModal({
         title: '提示',
         content: '当前微信版本过低，无法自动更新，请升级到最新微信版本后重试。',
-        confirmColor: "#00AE66",
+        confirmColor: "#FDCA1F",
       })
     }
   },
