@@ -458,10 +458,7 @@ Page({
         }
       })
       console.log('validCartList',validCartList)
-      this.setData({
-        validCartList:[],
-        inValidCartList:[]
-      })
+     
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
