@@ -68,7 +68,7 @@
 										<view style="height: 30rpx;"></view>
 									</view>
 								</navigator>
-								<view class="join" style="bottom:10rpx; left: 244rpx;">
+								<view class="join" style="bottom:16rpx; left: 244rpx;">
 									<view style="min-height:36rpx;">
 										<joinShopCart
 										 id="joinShopCart"
@@ -148,7 +148,7 @@
 									<view style="height: 30rpx;"></view>
 								</view>
 							</navigator>
-							<view class="join" style="bottom:10rpx; left: 244rpx;">
+							<view class="join" style="bottom:16rpx; left: 244rpx;">
 								<view style="min-height:36rpx;">
 									<joinShopCart
 									 size="small"
@@ -202,7 +202,7 @@
 				<view class="total-discounts">
 					<view class="total align-center">
 						<text>合计:</text>
-						<text class="total_price"> ￥{{tools.returnPrice(totalPrice)}}</text>
+						<text class="total_price" style="align-item:center"> ￥{{tools.returnPrice(totalPrice)}}</text>
 					</view>
 					<view class="discounts" wx:if="{{discountsPrice}}">已优惠:
 						<text> ￥{{tools.returnPrice(discountsPrice)}}</text>

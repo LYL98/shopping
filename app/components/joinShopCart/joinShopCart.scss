@@ -390,7 +390,7 @@
 }
 .vip_card--type{
   display: inline-block;
-  background-image: linear-gradient(-41deg, #76D6FD,  #01B8FF,#9AE2FF)
+  background-image: linear-gradient(-41deg, #76D6FD,  #01B8FF,#9AE2FF);
   color:white;
   padding:2rpx 8rpx;
 }
@@ -405,6 +405,9 @@
 .card_type--3{
   background-image: linear-gradient(-41deg, #76D6FD,  #01B8FF,#9AE2FF) !important;
 }
+.vip_card--price{
+   color: #01B8FF;
+}
 .price_type--1{
   color: #828893 !important;
 }
@@ -412,5 +415,5 @@
   color:#FDBD1C !important;
 }
 .price_type--3{
-  color: #E5BB72 !important;
+  color: #01B8FF !important;
 }
