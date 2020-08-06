@@ -182,14 +182,15 @@ Page({
           shoppingCartData.map((item,index) => {
               if (item.id === id) {
                 console.log('item.id: ', item.id);
-                let validCartList = that.data.validCartList
-                validCartList.map((itemChild,indexChild) => {
-                  if(itemChild.id = id){
-                    that.setData({
-                      validCartList: validCartList.splice(indexChild,1)
-                    })
-                  }
-                })
+                // let validCartList = that.data.validCartList
+                // validCartList.map((itemChild,indexChild) => {
+                //   if(itemChild.id = id){
+                //     console.log('indexChild: ', indexChild);
+                //     that.setData({
+                //       validCartList: validCartList.splice(indexChild,1)
+                //     })
+                //   }
+                // })
                 shoppingCartData.splice(index,1)
                
               }
@@ -441,6 +442,11 @@ Page({
           }
         }
       }
+
+      this.setData({
+        validCartList:[],
+        inValidCartList:[]
+      })
 
       let validCartList = [];
       let inValidCartList = [];
