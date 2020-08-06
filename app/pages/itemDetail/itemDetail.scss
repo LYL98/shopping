@@ -347,10 +347,12 @@
 .goods_info{
   padding: 0 24rpx;
   padding-top: 32rpxs;
+  position: relative;
   // border-top: 32rpx solid #f9f8f8;
 }
 .goods_top{
   height: 108rpx;
+  padding-bottom: 30rpx;
 }
 
 
@@ -576,4 +578,32 @@ margin-left: 16rpx;
 .card_discount--3{
   color:#E5BB72;
   border: 1px solid #E5BB72;
+}
+
+.no_sale{
+  margin-top: 240rpx;
+  text-align: center;
+}
+.backHome{
+  background-color: #FDCA1F;
+  color: white;
+  width: 200rpx;
+  margin: 0 auto;
+  margin-top: 40rpx;
+  border-radius: 10rpx;
+  line-height: 60rpx;
+
+}
+.other_price{
+  font-size: 28rpx;
+  color: #989797;
+  position: absolute;
+  top: 90rpx;
+left: 28rpx;
+
+}
+
+.origin_price{
+  text-decoration: line-through;
+  margin-left: 16rpx;
 }
