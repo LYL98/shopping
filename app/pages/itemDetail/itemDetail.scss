@@ -353,7 +353,10 @@
 }
 .goods_top{
   height: 108rpx;
+}
+.goods_info--more{
   padding-bottom: 30rpx;
+
 }
 
 
@@ -606,6 +609,7 @@ left: 28rpx;
 
 .origin_price{
   text-decoration: line-through;
+  color: #989797;
   margin-left: 16rpx;
 }
 .cart_num{

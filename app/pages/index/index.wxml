@@ -61,7 +61,30 @@
 					 src="{{tencentPath + item.image}}"
 					></image>
 				</swiper-item>
+				<!-- 跑马灯 -->
+		
 			</swiper>
+			<view class='notice align-center' wx:if="{{noticeList.length > 0 && bannerList.length > 0}}">
+			<swiper
+			 autoplay
+			 vertical
+			 circular
+			 interval="2000"
+			 style="{{'height: 46rpx'}}"
+			 class="flex1"
+			>
+				<swiper-item wx:for="{{noticeList}}" wx:key="index">
+					<view
+					 class="justify-between align-center"
+					 bindtap="toDetail"
+					 data-id="{{item.item_id}}"
+					>
+						<text class="notice_text">**{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了"{{item.item_title}}"</text>
+						<image class="notice_right" src="../../assets/img/right.png" />
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
 			<view class="bottom-ph-bg"></view>
 		</view>
 
@@ -93,29 +116,7 @@
 			<image src="/assets/img/hotSale/hot_sale_entry.png"></image>
 		</navigator>
 
-		<!-- 跑马灯 -->
-		<view class='notice align-center' wx:if="{{noticeList.length > 0}}">
-			<view class="notice_label">播报</view>
-			<swiper
-			 autoplay
-			 vertical
-			 circular
-			 interval="2000"
-			 style="{{'height: 46rpx'}}"
-			 class="flex1"
-			>
-				<swiper-item wx:for="{{noticeList}}" wx:key="index">
-					<view
-					 class="justify-between align-center"
-					 bindtap="toDetail"
-					 data-id="{{item.item_id}}"
-					>
-						<text class="notice_text">**{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了"{{item.item_title}}"</text>
-						<image class="notice_right" src="../../assets/img/right_black.png" />
-					</view>
-				</swiper-item>
-			</swiper>
-		</view>
+		
 
 		<!-- 今日主推 -->
 		<view class="title-box">
