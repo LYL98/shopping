@@ -13,7 +13,6 @@
   </block>
 
   <view class="coupon-body">
-    <view class="commodity_coupon">商品券</view>
     <view wx:for="{{dataItem.items}}" wx:key="item.coupon.id" 
       class="coupon-item {{item.coupon.item_id !== 0 || (item.gift_item && item.gift_item.id) ? '' : 'white-bg'}} {{(item.is_used || nowDataTime > item.coupon.time_end) && 'unusable'}} ">
       <image class="bg-img" src="{{couponBgSrc}}" />
