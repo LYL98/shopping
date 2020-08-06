@@ -162,6 +162,7 @@ view, navigator, text {
     border-radius: 10rpx;
     margin-bottom: 24rpx;
     box-shadow: 4rpx 0 16rpx rgba($color: #000000, $alpha: 0.08);
+    line-height: 1.25;
     .goods-item-img {
       width: 340rpx;
       height: 340rpx;
@@ -206,8 +207,8 @@ view, navigator, text {
     }
     .goods-item-info {
       position: relative;
-      min-height: 314rpx;
-      padding: 11rpx 17rpx;
+      min-height: 286rpx;
+      padding: 12rpx 16rpx 16rpx 16rpx;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -241,6 +242,10 @@ view, navigator, text {
       }
       .goods-item-info-bottom {
 
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
         .store-type {
           font-size: 18rpx;
           color: #989797;
@@ -258,9 +263,9 @@ view, navigator, text {
       }
   
       .cart-wrapper {
-          position: absolute;
-          bottom: 22rpx;
-          right: 22rpx;
+          // position: absolute;
+          // bottom: 22rpx;
+          // right: 22rpx;
       }
     }
 
