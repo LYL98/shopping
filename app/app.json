@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/orderAdd/orderAdd",
     "pages/shoppingCart/shoppingCart",
     "pages/browser/browser",
     "pages/order/order",
@@ -17,7 +18,6 @@
     "pages/accountRecord/accountRecord",
     "pages/password/password",
     "pages/shop/shop",
-    "pages/orderAdd/orderAdd",
     "pages/orderFram/orderFram",
     "pages/orderCoupon/orderCoupon",
     "pages/coupon/coupon",

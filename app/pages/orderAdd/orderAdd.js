@@ -53,6 +53,7 @@ Page({
       })()
     },
     rightSrc: './../../assets/img/right.png',
+    rightPriceSrc: './../../assets/img/right_price.png',
     orderAddBgSrc: './../../assets/img/order_add_bg.png',
     orderAddData: {
       items: []

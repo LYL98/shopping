@@ -100,41 +100,51 @@
 	</view>
 
 	<view class="subtotal bottom-border2 t-r">
-		<text class="skeleton-rect">小计：￥{{tools.returnPrice(dataItem.item_total_price)}}</text>
+		<text class="skeleton-rect"></text>
 	</view>
 
+	<view class="input-item" bindtap="selectCoupon">
+		<view class="title">
+			<text class="skeleton-rect">小计：</text>
+		</view>
+		<view class="content">
+
+			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">￥{{tools.returnPrice(dataItem.item_total_price)}}
+			</view>
+		</view>
+	</view>
 	<!--优惠券start-->
 	<view class="input-item" bindtap="selectCoupon">
 		<view class="title">
-			<text class="skeleton-rect">优惠券</text>
+			<text class="skeleton-rect">商品优惠券</text>
 		</view>
 		<view class="content">
 			<image
-			 class="right-img f-r"
+			 class="right-img f-r price-right-img"
 			 style="top: 8rpx;"
-			 src="{{rightSrc}}"
+			 src="{{rightPriceSrc}}"
 			></image>
 			<view
 			 class="skeleton-rect add-dot f-r"
-			 style="width: 500rpx; color:#A5A5A5;"
+			 style="width: 480rpx; color:#A5A5A5;"
 			 wx:if="{{couponListData.length === 0}}"
 			>无可用优惠券
 			</view>
 			<view
 			 class="skeleton-rect add-dot f-r"
-			 style="width: 500rpx;"
+			 style="width: 480rpx;"
 			 wx:elif="{{couponListData.length > 0 && couponSelectData && couponSelectData.id}}"
 			>
 				<!--满减-->
-				<text wx:if="{{couponSelectData.coupon.coupon_type === 'type_reduction'}}">-￥{{tools.returnPrice(couponSelectData.coupon.benefit)}}</text>
+				<text class="price_color" wx:if="{{couponSelectData.coupon.coupon_type === 'type_reduction'}}">-￥{{tools.returnPrice(couponSelectData.coupon.benefit)}}</text>
 				<!--折扣-->
-				<text wx:elif="{{couponSelectData.coupon.coupon_type === 'type_discount'}}">-￥{{tools.returnPrice(dataItem.coupon_reduction)}}</text>
+				<text class="price_color"  wx:elif="{{couponSelectData.coupon.coupon_type === 'type_discount'}}">-￥{{tools.returnPrice(dataItem.coupon_reduction)}}</text>
 				<!--赠送-->
 				<text wx:else>送{{couponSelectData.coupon.benefit}}件{{couponSelectData.gift_item.title}}</text>
 			</view>
 			<view
 			 class="skeleton-rect add-dot f-r"
-			 style="width: 500rpx;"
+			 style="width: 480rpx;"
 			 wx:else
 			>{{couponListData.length}}张可用的优惠券
 			</view>
@@ -184,8 +194,50 @@
 		</view>
 	</view>
 
+	<view class="send_price">
+		<view class="send_item justify-between">
+			<view class="send_item--label">运费总计</view>
+			<view class="send_item--value align-center">
+				<text>￥1234 </text>
+				<image
+				 class="right-img f-r price-right-img"
+				 style="top: 8rpx;"
+				 src="{{rightPriceSrc}}"
+				></image>
+			</view>
+		</view>
+		<view class="send_item justify-between">
+			<view class="send_item--label">运费优惠券</view>
+			<view class="send_item--value align-center">
+				<text>￥1234 </text>
+				<image
+				 class="right-img f-r price-right-img"
+				 style="top: 8rpx;"
+				 src="{{rightPriceSrc}}"
+				></image>
+			</view>
+		</view>
+		<view class="send_item justify-between">
+			<view class="send_item--label">运费满额优惠</view>
+			<view class="send_item--value align-center">
+				<text>￥1234 </text>
+			</view>
+		</view>
+	</view>
+
+	<view class="input-item" bindtap="selectCoupon">
+		<view class="title">
+			<text class="skeleton-rect">运费实收：</text>
+		</view>
+		<view class="content">
+
+			<view class="skeleton-rect add-dot f-r price_color" style="width: 500rpx;">￥20
+			</view>
+		</view>
+	</view>
+
 	<!--运费start-->
-	<view class="input-item">
+	<!-- <view class="input-item">
 		<view class="title">
 			<text class="skeleton-rect">运费</text>
 		</view>
@@ -194,8 +246,8 @@
 		</view>
 		<view class="content" wx:else>
 			<text class="skeleton-rect">免运费</text>
-		</view>
-	</view>
+		</view> -->
+	<!-- </view> -->
 	<!--运费end-->
 	<view class="bottom-border2" style="position: relative; top: -1rpx;"></view>
 
