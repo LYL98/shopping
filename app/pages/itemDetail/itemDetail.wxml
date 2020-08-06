@@ -367,7 +367,7 @@
 	</view> -->
 
 	<view class="introduce">
-		<view class="goods_header" style="margin-left:15rpx">商品详情</view>
+		<view class="goods_header">商品详情</view>
 		<view>
 			<video
 			 class="dec-video"

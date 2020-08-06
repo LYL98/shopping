@@ -4,36 +4,118 @@
 	<view class="top-hint" wx:if="{{!closeStore}}">
 		营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
 	</view>
-	<view class="work-field">
-		<view class="align-center">
-			<view class="discounts_text">优惠</view>
-			<view>运费{{tools.returnPrice(activity.amount_delivery)}}元,满{{tools.returnPrice(activity.discount_delivery_line)}}元免运费</view>
+	<view class="cart_content">
 
-		</view>
-	</view>
-
-	<view class="item-view item-view-box">
-
-		<view
-		 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }}"
-		 wx:for="{{validCartList}}"
-		 wx:key="index"
-		>
-
-			<view class="discount_info align-center" wx:if="{{item.stepPricesHint && item.stepPricesHint.length > 0}}">
-				<text class="discount_info--type">满折</text>
-				<text class="discount_info--text">{{item.stepPricesHint}}</text>
+		<view class="work-field">
+			<view class="align-center">
+				<view class="discounts_text">优惠</view>
+				<view>运费{{tools.returnPrice(activity.amount_delivery)}}元,满{{tools.returnPrice(activity.discount_delivery_line)}}元免运费</view>
 
 			</view>
-			<mp-slideview
-			 buttons="{{slideButtons}}"
-			 data-index="{{index}}"
-			 data-id="{{item.id}}"
-			 data-valid="{{true}}"
-			 bindbuttontap="onDelete"
+		</view>
+
+		<view class="item-view item-view-box">
+
+			<view
+			 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }}"
+			 wx:for="{{validCartList}}"
+			 wx:key="index"
 			>
-				<mp-cell>
-					<view class="item-view">
+
+				<view class="discount_info align-center" wx:if="{{item.stepPricesHint && item.stepPricesHint.length > 0}}">
+					<text class="discount_info--type">满折</text>
+					<text class="discount_info--text">{{item.stepPricesHint}}</text>
+
+				</view>
+				<mp-slideview
+				 buttons="{{slideButtons}}"
+				 data-index="{{index}}"
+				 data-id="{{item.id}}"
+				 data-valid="{{true}}"
+				 bindbuttontap="onDelete"
+				>
+					<mp-cell>
+						<view class="item-view">
+							<view class="item">
+								<navigator url="/pages/itemDetail/itemDetail?id={{item.id}}">
+									<view
+									 class="checked"
+									 catch:tap="redioSelect"
+									 data-rs="{{item}}"
+									>
+										<image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
+									</view>
+									<view class="img goods_image_box">
+										<image
+										 class="goods_imgage"
+										 lazy-load="{{index > 4 ? true : false}}"
+										 wx:if="{{item.images.length > 0}}"
+										 src="{{tencentPath + item.images[0]}}_watermark200x200"
+										></image>
+										<view class="image bg-img-container-item" wx:else></view>
+									</view>
+									<view class="content">
+										<view class="title goods_title">{{item.title}}</view>
+										<view class="goods_label">
+											<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 </text>
+											<text wx:if="{{item.item_spec}}">| {{item.item_spec}} </text>
+											<text wx:if="{{item.origin_place}}">| {{item.origin_place}} </text>
+											<text wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤 </text>
+											<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
+											<text wx:if="{{item.min_num_per_order}}" class="min-num"> | {{item.min_num_per_order}}件起售</text>
+										</view>
+
+										<view style="height: 30rpx;"></view>
+									</view>
+								</navigator>
+								<view class="join" style="bottom:10rpx; left: 244rpx;">
+									<view style="min-height:36rpx;">
+										<joinShopCart
+										 id="joinShopCart"
+										 size="small"
+										 sourcePage="shoppingCart"
+										 itemData="{{item}}"
+										 bindcallback="upDownCallback"
+										 isDeleteHint
+										 isFromCartPage
+										 discount="{{discount}}"
+										 level="{{level}}"
+										 title="{{title}}"
+										 bind:traggleCartInput="traggleCartInput"
+										 bind:traggleCartHideInput="traggleCartHideInput"
+										 bind:traggleStepPriceHint="traggleStepPriceHint"
+										/>
+									</view>
+								</view>
+								<view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
+									<text class="shop_type"></text>
+									<text class="shop_stock" wx:if="{{item.item_stock < 10}}">剩余{{item.item_stock}}件</text>
+								</view>
+							</view>
+						</view>
+
+					</mp-cell>
+				</mp-slideview>
+			</view>
+
+			<block wx:if="{{inValidCartList.length > 0}}">
+				<view class="cart_type justify-between">
+					<text class="title">失效商品</text>
+					<text class="clear" bindtap="clearInValid">清空</text>
+				</view>
+
+				<view
+				 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }} "
+				 wx:for="{{inValidCartList}}"
+				 wx:key="index"
+				>
+
+					<view class="discount_info align-center invaild_opacity" wx:if="{{item.stepPricesHint && item.stepPricesHint.length > 0}}">
+						<text class="discount_info--type">满折</text>
+						<text class="discount_info--text">{{item.stepPricesHint}}</text>
+
+					</view>
+					<view class="item-view invaild_opacity">
 						<view class="item">
 							<navigator url="/pages/itemDetail/itemDetail?id={{item.id}}">
 								<view
@@ -41,7 +123,7 @@
 								 catch:tap="redioSelect"
 								 data-rs="{{item}}"
 								>
-									<image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
+									<image src="{{item.is_select  ? checkedSrc : checkedSrc}}"></image>
 								</view>
 								<view class="img goods_image_box">
 									<image
@@ -55,8 +137,8 @@
 								<view class="content">
 									<view class="title goods_title">{{item.title}}</view>
 									<view class="goods_label">
-										<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 </text>
-										<text wx:if="{{item.item_spec}}">| {{item.item_spec}} </text>
+										<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 | </text>
+										<text wx:if="{{item.item_spec}}">{{item.item_spec}} </text>
 										<text wx:if="{{item.origin_place}}">| {{item.origin_place}} </text>
 										<text wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤 </text>
 										<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
@@ -69,164 +151,86 @@
 							<view class="join" style="bottom:10rpx; left: 244rpx;">
 								<view style="min-height:36rpx;">
 									<joinShopCart
-									 id="joinShopCart"
 									 size="small"
 									 sourcePage="shoppingCart"
 									 itemData="{{item}}"
 									 bindcallback="upDownCallback"
 									 isDeleteHint
-									 isFromCartPage
-									 discount="{{discount}}"
-									 level="{{level}}"
-									 title="{{title}}"
-									 bind:traggleCartInput="traggleCartInput"
-									 bind:traggleCartHideInput="traggleCartHideInput"
-									 bind:traggleStepPriceHint="traggleStepPriceHint"
+									 isTriggleCartEvent="{{false}}"
 									/>
 								</view>
 							</view>
-							<view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
-								<text class="shop_type"></text>
-								<text class="shop_stock" wx:if="{{item.item_stock < 10}}">剩余{{item.item_stock}}件</text>
-							</view>
-						</view>
-					</view>
-
-				</mp-cell>
-			</mp-slideview>
-		</view>
-
-		<block wx:if="{{inValidCartList.length > 0}}">
-			<view class="cart_type justify-between">
-				<text class="title">失效商品</text>
-				<text class="clear" bindtap="clearInValid">清空</text>
-			</view>
-
-			<view
-			 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }} under_ground"
-			 wx:for="{{inValidCartList}}"
-			 wx:key="index"
-			>
-
-				<view class="discount_info align-center" wx:if="{{item.stepPricesHint && item.stepPricesHint.length > 0}}">
-					<text class="discount_info--type">满折</text>
-					<text class="discount_info--text">{{item.stepPricesHint}}</text>
-
-				</view>
-				<view class="item-view">
-					<view class="item">
-						<navigator url="/pages/itemDetail/itemDetail?id={{item.id}}">
-							<view
-							 class="checked"
-							 catch:tap="redioSelect"
-							 data-rs="{{item}}"
-							>
-								<image src="{{item.is_select  ? checkedSrc : checkedSrc}}"></image>
-							</view>
-							<view class="img goods_image_box">
-								<image
-								 class="goods_imgage"
-								 lazy-load="{{index > 4 ? true : false}}"
-								 wx:if="{{item.images.length > 0}}"
-								 src="{{tencentPath + item.images[0]}}_watermark200x200"
-								></image>
-								<view class="image bg-img-container-item" wx:else></view>
-							</view>
-							<view class="content">
-								<view class="title goods_title">{{item.title}}</view>
-								<view class="goods_label">
-									<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 | </text>
-									<text wx:if="{{item.item_spec}}">{{item.item_spec}} </text>
-									<text wx:if="{{item.origin_place}}">| {{item.origin_place}} </text>
-									<text wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤 </text>
-									<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
-									<text wx:if="{{item.min_num_per_order}}" class="min-num"> | {{item.min_num_per_order}}件起售</text>
-								</view>
-
-								<view style="height: 30rpx;"></view>
-							</view>
-						</navigator>
-						<view class="join" style="bottom:10rpx; left: 244rpx;">
-							<view style="min-height:36rpx;">
-								<joinShopCart
-								 size="small"
-								 sourcePage="shoppingCart"
-								 itemData="{{item}}"
-								 bindcallback="upDownCallback"
-								 isDeleteHint
-								 isTriggleCartEvent="{{false}}"
-								/>
-							</view>
-						</view>
-						<!-- <view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
+							<!-- <view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
 							<text class="shop_type"></text>
 							<text class="shop_stock">剩余{{item.item_stock}}件</text>
 						</view> -->
+						</view>
 					</view>
+				</view>
+			</block>
+
+			<!-- <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view> -->
+			<defaultPage
+			 wx:if="{{dataItem.length  === 0}}"
+			 currentPage="shoppingCart"
+			 loading="{{loading}}"
+			></defaultPage>
+		</view>
+
+		<block wx:if="{{couponNum > 0 && isShowCouponHint}}">
+			<view style="height: 89rpx;"></view>
+			<view class="coupon-hint" style="bottom: {{dataItem.length > 0 ? 120 : 0}}rpx;">
+				<navigator url="/pages/coupon/coupon?from=shoppingCart" class="coupon-item">
+					<image src="./../../assets/img/coupon.png" style="width: 40rpx; height: 30rpx;" />
+					<view>您有{{couponNum}}张可用优惠券</view>
+					<image src="./../../assets/img/right_red.png" style="width: 12rpx; height: 20rpx;" />
+				</navigator>
+				<view class="close" bind:tap="hideCouponHint">
+					<image src="./../../assets/img/close2.png" style="width: 24rpx; height: 24rpx;" />
 				</view>
 			</view>
 		</block>
 
-		<!-- <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view> -->
-		<defaultPage
-		 wx:if="{{dataItem.length  === 0}}"
-		 currentPage="shoppingCart"
-		 loading="{{loading}}"
-		></defaultPage>
-	</view>
-
-	<block wx:if="{{couponNum > 0 && isShowCouponHint}}">
-		<view style="height: 89rpx;"></view>
-		<view class="coupon-hint" style="bottom: {{dataItem.length > 0 ? 120 : 0}}rpx;">
-			<navigator url="/pages/coupon/coupon?from=shoppingCart" class="coupon-item">
-				<image src="./../../assets/img/coupon.png" style="width: 40rpx; height: 30rpx;" />
-				<view>您有{{couponNum}}张可用优惠券</view>
-				<image src="./../../assets/img/right_red.png" style="width: 12rpx; height: 20rpx;" />
-			</navigator>
-			<view class="close" bind:tap="hideCouponHint">
-				<image src="./../../assets/img/close2.png" style="width: 24rpx; height: 24rpx;" />
+		<view style="height: 120rpx;"></view>
+		<view class="bottom-view b-cfff" wx:if="{{dataItem.length > 0}}">
+			<view class="checked" bindtap="allSelect">
+				<image src="{{isAllSelect ? checkedSSrc : checkedSrc}}"></image>
+				<text class="check_all">全选</text>
 			</view>
-		</view>
-	</block>
-
-	<view style="height: 120rpx;"></view>
-	<view class="bottom-view b-cfff" wx:if="{{dataItem.length > 0}}">
-		<view class="checked" bindtap="allSelect">
-			<image src="{{isAllSelect ? checkedSSrc : checkedSrc}}"></image>
-			<text class="check_all">全选</text>
-		</view>
-		<view class="total-price align-center" wx:if="{{!isEdit}}">
-			<view class="hint">不含运费</view>
-			<view class="total-discounts">
-				<view class="total align-center">
-					<text>合计:</text>
-					<text class="total_price"> ￥{{tools.returnPrice(totalPrice)}}</text>
-				</view>
-				<view class="discounts" wx:if="{{discountsPrice}}">已优惠:
-					<text> ￥{{tools.returnPrice(discountsPrice)}}</text>
+			<view class="total-price align-center" wx:if="{{!isEdit}}">
+				<view class="hint">不含运费</view>
+				<view class="total-discounts">
+					<view class="total align-center">
+						<text>合计:</text>
+						<text class="total_price"> ￥{{tools.returnPrice(totalPrice)}}</text>
+					</view>
+					<view class="discounts" wx:if="{{discountsPrice}}">已优惠:
+						<text> ￥{{tools.returnPrice(discountsPrice)}}</text>
+					</view>
 				</view>
 			</view>
-		</view>
-		<view class="total-price" wx:else></view>
-		<view class="btn" wx:if="{{!isEdit}}">
-			<button
-			 class="btn2"
-			 wx:if="{{totalNum <= 0 || !closeStore}}"
-			 disabled
-			>去结算
-			</button>
-			<navigator
-			 class="btn2"
-			 bindtap="submitClearing"
-			 wx:else
-			 url="/pages/orderAdd/orderAdd"
-			>去结算
-			</navigator>
-		</view>
-		<view class="btn" wx:else>
-			<button bindtap="removeItem" type="warn">删除</button>
+			<view class="total-price" wx:else></view>
+			<view class="btn" wx:if="{{!isEdit}}">
+				<button
+				 class="btn2"
+				 wx:if="{{totalNum <= 0 || !closeStore}}"
+				 disabled
+				>去结算
+				</button>
+				<navigator
+				 class="btn2"
+				 bindtap="submitClearing"
+				 wx:else
+				 url="/pages/orderAdd/orderAdd"
+				>去结算
+				</navigator>
+			</view>
+			<view class="btn" wx:else>
+				<button bindtap="removeItem" type="warn">删除</button>
+			</view>
 		</view>
 	</view>
+
 </view>
 
 <view

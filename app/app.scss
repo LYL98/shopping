@@ -240,6 +240,7 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
 /*共用商品列表*/
 .item-view{
   padding: 10rpx 0;
+  margin: 0 30rpx;
   >.item{
     position: relative; //售后页面
     > navigator, > .no-nav{
