@@ -79,7 +79,7 @@
 					 bindtap="toDetail"
 					 data-id="{{item.item_id}}"
 					>
-						<text class="notice_text">**{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了"{{item.item_title}}"</text>
+						<text class="notice_text">*{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了{{item.item_title}}</text>
 						<image class="notice_right" src="../../assets/img/right.png" />
 					</view>
 				</swiper-item>
