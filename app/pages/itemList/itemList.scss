@@ -142,12 +142,12 @@
         }
       }
       .goods-item-info-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-bottom: 16rpx;
       }
       .cart-wrapper {
-        position: absolute;
-        bottom: 30rpx;
-        right: 22rpx;
         .repertory {
           
         }

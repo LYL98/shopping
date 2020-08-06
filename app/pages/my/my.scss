@@ -23,8 +23,8 @@
 
     >.usimg {
       flex: initial;
-      width: 130rpx;
-      height: 130rpx;
+      width: 138rpx;
+      height: 138rpx;
       position: relative;
       margin-right: 18rpx;
 
@@ -34,13 +34,13 @@
         font-size: 18rpx;
         color: #fff;
         text-align: center;
-        width: 140rpx;
-        height: 140rpx;
-        bottom: -5rpx;
+        width: 148rpx;
+        height: 148rpx;
+        bottom: -7rpx;
         left: -5rpx;
 
         > .title {
-          margin-top: 106rpx;
+          margin-top: 115rpx;
         }
       }
 
@@ -192,10 +192,10 @@
       &::before {
         content: ' ';
         position: absolute;
-        top: 5rpx;
+        top: 8rpx;
         right: 0;
-        width: 40rpx;
-        height: 40rpx;
+        width: 32rpx;
+        height: 32rpx;
         transform: scale(0.5);
         background: no-repeat center/100% url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJFBMVEUAAAAVFRUWFhYYGBgWFhYVFRUYGBgbGxsVFRUYGBgcHBwWFhYL6TL1AAAADHRSTlMA2OAgGPA1HNwvErwgKerYAAAAOUlEQVQI12Ng4NzMAAEsSgZQlpEylMHcBBOqgAmxw4UKYUIsQgugDNECCMMxDCaQQECACybAKQamAI0MCJl3nD8wAAAAAElFTkSuQmCC");
       }
@@ -284,18 +284,23 @@
   }
 
   .item {
+    position: relative;
     text-align: right;
 
+    &::before {
+      content: ' ';
+      position: absolute;
+      top: 25%;
+      right: -16rpx;
+      width: 48rpx;
+      height: 48rpx;
+      transform: scale(0.5);
+      background: no-repeat center/100% url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAM1BMVEUAAACqqqqYl5eYmJiamJiampqsrKyZmJiZmJiYmJiamZmampqem5uYmJiZmZmbm5uYl5d8vSMeAAAAEHRSTlMAA/imeUkHt6+qZ0Eo0HMzj8ZC9wAAADxJREFUKM9jAAMeDm4GrIBLgIkVqwQbO51kOHDJMJIjw0mGDLMAEw8OCQFuHOIsw1CcgQuHOAM/Lx+6EAD28gOJsq4JFgAAAABJRU5ErkJggg==");
+    }
     text {
       color: #A5A5A5;
-      font-size: 24rpx;
-      margin-right: 8rpx;
-    }
-
-    image {
-      width: 13rpx;
-      height: 24rpx;
-      vertical-align: middle;
+      font-size: 28rpx;
+      margin-right: 22rpx;
     }
   }
 }
@@ -339,6 +344,7 @@
     text-align: center;
     padding: 20rpx 0;
     position: relative;
+    min-width: 96rpx;
 
     &:active {
       background: #f9f9fa;
@@ -352,14 +358,13 @@
     }
 
     .reply {
-      font-size: 16rpx;
+      width: 12rpx;
+      height: 12rpx;
       background: #f30;
-      border-radius: 10rpx;
-      color: #fff;
+      border-radius: 50%;
       position: absolute;
-      padding: 3rpx 5rpx;
-      top: 0;
-      right: 0;
+      top: 11rpx;
+      right: 14rpx;
     }
 
     >text {

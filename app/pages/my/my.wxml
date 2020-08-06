@@ -6,7 +6,7 @@
     <view class="my-info" bindtap="clickInfo">
       <view class="usimg">
         <image src="{{myInfo.avatar ? tencentPath + myInfo.avatar + '_min200x200' : defaultSrc}}"></image>
-        <view wx:if="{{vip_title}}" class="card `${{bg_level}}`">
+        <view wx:if="{{vip_title && myLevel}}" class="card `${{bg_level}}`">
           <view class="title">{{vip_title}}</view>
         </view>
       </view>
@@ -51,9 +51,7 @@
         <view>
           我的订单
         </view>
-        <view class="item">
-          <image src="{{arrow}}" />
-        </view>
+        <view class="item" />
       </navigator>
       <view class="item-menus">
           <navigator url="{{item.url}}" wx:for="{{myOrderList}}" wx:key="index">
@@ -72,24 +70,22 @@
         <view class="item-menus">
             <view class="option-view">
               <view class="option-tiem">
-                <navigator class="item" url="/pages/member/member">
-                  <image src="{{optionSrc[1]}}"></image>
-                  <text>账号管理</text>
+                <navigator class="item " url="/pages/shop/shop?name=my">
+                  <image src="{{optionSrc[3]}}"></image>
+                  <text>查看门店</text>
                 </navigator>
-                <navigator class="item" url="/pages/itemLabel/itemLabel?tag=收藏商品" bind:tap="clickMyCollect">
-                  <image src="{{optionSrc[8]}}"></image>
-                  <text>我的收藏</text>
+                <navigator class="item" url="/pages/myCsm/myCsm">
+                  <image src="{{optionSrc[5]}}"></image>
+                  <text>客户经理</text>
                 </navigator>
-                <navigator class="item" url="/pages/afterSaleRecord/afterSaleRecord">
-                  <image src="{{optionSrc[4]}}"></image>
-                  <text>售后</text>
-                  <text class="reply" wx:if="{{has_unread.has_unread}}">有新消息</text>
+                <navigator class="item" url="/pages/suggestions/suggestions">
+                  <image src="{{optionSrc[9]}}"></image>
+                  <text>需求提报</text>
                 </navigator>
-                <navigator class="item" url="/pages/afterSaleQrCode/afterSaleQrCode">
-                  <image src="{{optionSrc[10]}}"></image>
-                  <text>退货码</text>
+                <navigator class="item" url="/pages/complain/complain">
+                  <image src="{{optionSrc[6]}}"></image>
+                  <text>投诉建议</text>
                 </navigator>
-                
               </view>
               <view class="option-tiem">
                 <navigator class="item" url="/pages/member/member">
@@ -103,7 +99,7 @@
                 <navigator class="item" url="/pages/afterSaleRecord/afterSaleRecord">
                   <image src="{{optionSrc[4]}}"></image>
                   <text>售后</text>
-                  <text class="reply" wx:if="{{has_unread.has_unread}}">有新消息</text>
+                  <text class="reply" wx:if="{{has_unread.has_unread}}" />
                 </navigator>
                 <navigator class="item" url="/pages/afterSaleQrCode/afterSaleQrCode">
                   <image src="{{optionSrc[10]}}"></image>
@@ -128,7 +124,6 @@
             </view>
             <view class="item">
               <text>{{version}}</text>
-              <image src="{{arrow}}" />
             </view>
           </navigator>
        </view>

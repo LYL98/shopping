@@ -80,11 +80,13 @@
           </view>
         </view>
         <view class="goods-item-info-bottom skeleton-rect">
-            <priceBox  vipLevel="{{dataItem.vip_level}}" vipTitle="{{dataItem.vip_title}}" isVipItem="{{item.is_vip_item}}" isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}" priceNoVip="{{item.price_novip}}"/>
+            <priceBox  vipLevel="{{dataItem.vip_level}}" vipTitle="{{dataItem.vip_title}}" vipDiscount="{{dataItem.vip_discount}}" isVipItem="{{item.is_vip_item}}" isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}" priceNoVip="{{item.price_novip}}"/>
+
+            <view class="cart-wrapper skeleton-rect">
+              <handleShopCart itemData="{{item}}" />
+            </view>
         </view>
-        <view class="cart-wrapper skeleton-rect">
-            <handleShopCart itemData="{{item}}" />
-        </view>
+        
       </view>
   </view>
 

@@ -61,7 +61,30 @@
 					 src="{{tencentPath + item.image}}"
 					></image>
 				</swiper-item>
+				<!-- 跑马灯 -->
+		
 			</swiper>
+			<view class='notice align-center' wx:if="{{noticeList.length > 0 && bannerList.length > 0}}">
+			<swiper
+			 autoplay
+			 vertical
+			 circular
+			 interval="2000"
+			 style="{{'height: 46rpx'}}"
+			 class="flex1"
+			>
+				<swiper-item wx:for="{{noticeList}}" wx:key="index">
+					<view
+					 class="justify-between align-center"
+					 bindtap="toDetail"
+					 data-id="{{item.item_id}}"
+					>
+						<text class="notice_text">*{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了{{item.item_title}}</text>
+						<image class="notice_right" src="../../assets/img/right.png" />
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
 			<view class="bottom-ph-bg"></view>
 		</view>
 
@@ -93,29 +116,7 @@
 			<image src="/assets/img/hotSale/hot_sale_entry.png"></image>
 		</navigator>
 
-		<!-- 跑马灯 -->
-		<view class='notice align-center' wx:if="{{noticeList.length > 0}}">
-			<view class="notice_label">播报</view>
-			<swiper
-			 autoplay
-			 vertical
-			 circular
-			 interval="2000"
-			 style="{{'height: 46rpx'}}"
-			 class="flex1"
-			>
-				<swiper-item wx:for="{{noticeList}}" wx:key="index">
-					<view
-					 class="justify-between align-center"
-					 bindtap="toDetail"
-					 data-id="{{item.item_id}}"
-					>
-						<text class="notice_text">**{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了"{{item.item_title}}"</text>
-						<image class="notice_right" src="../../assets/img/right_black.png" />
-					</view>
-				</swiper-item>
-			</swiper>
-		</view>
+		
 
 		<!-- 今日主推 -->
 		<view class="title-box">
@@ -141,6 +142,7 @@
 						 wx:for-item="t"
 						 wx:for-index="i"
 						 wx:key="i"
+						 wx:if="{{t}}"
 						>
 							<text>{{tools.returnSpecStr(t,0,2)}}</text>
 							<image wx:if="{{i == 0}}" src="/assets/img/index/label0.png"></image>
@@ -174,6 +176,7 @@
 						<priceBox
 						 vipLevel="{{dataItem.vip_level}}"
 						 vipTitle="{{dataItem.vip_title}}"
+						 vipDiscount="{{dataItem.vip_discount}}"
 						 isVipItem="{{item.is_vip_item}}"
 						 isQuoted="{{item.is_quoted}}"
 						 priceSale="{{item.price_sale}}"
@@ -185,10 +188,12 @@
                 <text class="type-label type-label-self">自营</text>
                 <text>供应商门店</text>
               </view> -->
+
+							<view class="cart-wrapper">
+								<handleShopCart itemData="{{item}}" />
+							</view>
 					</view>
-					<view class="cart-wrapper">
-						<handleShopCart itemData="{{item}}" />
-					</view>
+					
 				</view>
 			</view>
 		</view>

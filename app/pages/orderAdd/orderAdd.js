@@ -67,7 +67,10 @@ Page({
     couponListData: [], //优惠券列表
     couponSelectData: {}, //当前选择优惠券
     loginUserInfo:{},
-    showFreight:false
+    showFreight:false,
+    discount:0,
+    level:0,
+    title:'',
   },
 
   /**
@@ -92,11 +95,27 @@ Page({
         address: address
       }, ()=>{
         that.getCoupon(); //获取优惠券
+        this.getUserLevel()
       });
     });
     this.setData({
       loginUserInfo:app.globalData.loginUserInfo
     })
+  },
+
+   // 获取用户level
+   getUserLevel(){
+    let that = this;
+    Http.get(Config.api.userVipSelf, {
+    }, { handleError: false }).then((res) => {
+      this.setData({
+        discount:res.data.discount,
+        level:res.data.level,
+        title:res.data.title.substring(0,2)
+      })
+      console.log('res: ', res);
+      
+    });
   },
 
   //选择优惠券

@@ -190,9 +190,12 @@ var returnVIPLevelClassName = function(vipLevel) {
   
   switch (vipLevel) {
     case 1: 
-      className = 'silver';
+      className = 'copper';
       break;
     case 2:
+      className = 'silver';
+      break;
+    case 3:
       className = 'gold';
       break;
     default: 

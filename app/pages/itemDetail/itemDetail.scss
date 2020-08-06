@@ -353,7 +353,10 @@
 }
 .goods_top{
   height: 108rpx;
+}
+.goods_info--more{
   padding-bottom: 30rpx;
+
 }
 
 
@@ -522,7 +525,7 @@ margin-left: 16rpx;
   // padding: 0 24rpx 24rpx 24rpx;
 }
 .goods_attr--item{
-  width: 330rpx;
+  width: 366rpx;
 }
 .goods_attr--box{
   height: 82rpx;
@@ -560,25 +563,34 @@ margin-left: 16rpx;
 .vip_card--discount{
   
   border-left: none;
-  color: #989797;
+  color: #01B8FF;
   display: inline-block;
   padding:0 8rpx;
   border-bottom-right-radius: 4rpx;
   border-top-right-radius: 4rpx;
-
+   border: 1px solid #01B8FF;
+   border-left:none;
 }
 
 .card_discount--1{
-  color:#989797;
-  border: 1px solid #989797;
+  color:#D79E5C;
+  border: 1px solid #D79E5C;
+   border-left:none;
 }
 .card_discount--2{
-  color:#FDBD1C;
-  border: 1px solid #FDBD1C;
+  color:#989797;
+  border: 1px solid #989797;
+   border-left:none;
 }
 .card_discount--3{
+  color:#FDBD1C;
+  border: 1px solid #FDBD1C;
+   border-left:none;
+}
+.card_discount--4{
   color:#E5BB72;
   border: 1px solid #E5BB72;
+   border-left:none;
 }
 
 .no_sale{
@@ -599,12 +611,17 @@ margin-left: 16rpx;
   font-size: 28rpx;
   color: #989797;
   position: absolute;
-  top: 99rpx;
+  top: 100rpx;
 left: 28rpx;
 
 }
 
 .origin_price{
   text-decoration: line-through;
+  color: #989797;
   margin-left: 16rpx;
+}
+.cart_num{
+  height:81rpx !important;
+  line-height:81rpx !important;
 }
