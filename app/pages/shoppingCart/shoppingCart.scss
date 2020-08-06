@@ -42,6 +42,7 @@
 }
 .item-view {
   padding: 0!important;
+    margin: 0 !important;
 }
 .item-view-box{
   margin: 0 24rpx;
@@ -57,6 +58,9 @@
   .under_ground{
     opacity: .4;
   }
+}
+.invaild_opacity {
+  opacity: .4;
 }
 .item_normal{
   height: 265rpx;
@@ -346,3 +350,8 @@
   }
 }
 
+
+
+.cart_content{
+  margin: 0 24rpx;
+}

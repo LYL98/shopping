@@ -95,12 +95,11 @@
 
 		<!-- 跑马灯 -->
 		<view class='notice align-center' wx:if="{{noticeList.length > 0}}">
-			<view class="notice_logo flex-shrink-zero">蒲公英</view>
 			<view class="notice_label">播报</view>
 			<swiper
 			 autoplay
 			 vertical
-       circular
+			 circular
 			 interval="2000"
 			 style="{{'height: 46rpx'}}"
 			 class="flex1"
@@ -112,7 +111,7 @@
 					 data-id="{{item.item_id}}"
 					>
 						<text class="notice_text">**{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了"{{item.item_title}}"</text>
-						<image class="notice_right" src="../../assets/img/right.png" />
+						<image class="notice_right" src="../../assets/img/right_black.png" />
 					</view>
 				</swiper-item>
 			</swiper>
