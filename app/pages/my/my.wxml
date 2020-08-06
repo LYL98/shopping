@@ -51,9 +51,7 @@
         <view>
           我的订单
         </view>
-        <view class="item">
-          <image src="{{arrow}}" />
-        </view>
+        <view class="item" />
       </navigator>
       <view class="item-menus">
           <navigator url="{{item.url}}" wx:for="{{myOrderList}}" wx:key="index">

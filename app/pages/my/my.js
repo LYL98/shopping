@@ -31,7 +31,6 @@ Page({
     vip_title: '',
     has_unread:'',
     initLoad: true,
-    arrow:'./../../assets/img/right.png',
     myInfo: {
       realname: '用户姓名',
       merchant: {
@@ -182,7 +181,7 @@ Page({
         };
         if (res.statusCode == 200 && res.data.code == 0) {
           this.setData({
-            bg_level: vipInfo[level] || '',
+            bg_level: vipInfo[level] || 'diamonds',
             vip_title: title || ''
           });
         } else {
