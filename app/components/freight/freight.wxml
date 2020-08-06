@@ -1,5 +1,5 @@
 <!--components/selectStore/selectStore.wxml-->
-<view class="select-store" bindtap="showSelect">
+<view class="select-store">
 	<view class="location">
 		<image src="./img/location_icon.png" />
 	</view>
@@ -8,11 +8,11 @@
 		<image src="./img/arrow_down.png" />
 	</view>
 </view>
-<view class="store-body" bindtap="cancelSelect">
+<view class="store-body" bindtap="onFreightClose">
 	<view class="store" catchtap>
 		<view class="title">
 			<view class="str">运费明细</view>
-			<view class="close-btn link-active" bindtap="cancelSelect">
+			<view class="close-btn link-active" bindtap="onFreightClose">
 				<image src="./../../assets/img/close2.png"></image>
 			</view>
 		</view>

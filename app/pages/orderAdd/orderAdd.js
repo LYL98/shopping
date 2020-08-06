@@ -67,7 +67,7 @@ Page({
     couponListData: [], //优惠券列表
     couponSelectData: {}, //当前选择优惠券
     loginUserInfo:{},
-    showFreight:true
+    showFreight:false
   },
 
   /**
@@ -493,5 +493,15 @@ Page({
   onUnload: function() {
     wx.removeStorageSync('orderCouponListData');
     wx.removeStorageSync('orderCouponSelectData');
+  },
+  showFreight(){
+    this.setData({
+      showFreight:true
+    })
+  },
+  onFreightClose(){
+    this.setData({
+      showFreight:false
+    })
   }
 })

@@ -196,8 +196,8 @@
 
 	<view class="send_price">
 		<view class="send_item justify-between">
-			<view class="send_item--label">运费总计</view>
-			<view class="send_item--value align-center">
+			<view class="send_item--label" >运费总计</view>
+			<view class="send_item--value align-center" bindtap="showFreight">
 				<text>￥1234 </text>
 				<image
 				 class="right-img f-r price-right-img"
@@ -276,8 +276,9 @@
 	 warning="{{ payWarning }}"
 	 callback="{{payCallBack}}"
 	 wx:if="{{isShowPay}}"
+	bind:close="onClose"
 	/>
 
-	<freight wx:if="{{showFreight}}" />
+	<freight wx:if="{{showFreight}}" bind:onFreightClose="onFreightClose"/>
 </view>
 
