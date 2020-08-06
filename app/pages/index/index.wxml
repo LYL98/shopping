@@ -100,6 +100,7 @@
 			<swiper
 			 autoplay
 			 vertical
+       circular
 			 interval="2000"
 			 style="{{'height: 46rpx'}}"
 			 class="flex1"
@@ -174,6 +175,7 @@
 						<priceBox
 						 vipLevel="{{dataItem.vip_level}}"
 						 vipTitle="{{dataItem.vip_title}}"
+						 isVipItem="{{item.is_vip_item}}"
 						 isQuoted="{{item.is_quoted}}"
 						 priceSale="{{item.price_sale}}"
 						 priceOrigin="{{item.price_origin}}"
