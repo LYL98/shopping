@@ -28,7 +28,7 @@
 					<view class="btn minus" bindtap="down">
 						<image src="{{size =='medium' ? minusIndexSrc : minusSrc}}"></image>
 					</view>
-					<view class="num" bind:tap="showInput">{{num}}</view>
+					<view style="height:81rpx;line-height:81rpx" class="num" bind:tap="showInput">{{num}}</view>
 					<view
 					 wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}"
 					 class="btn add unusable"
