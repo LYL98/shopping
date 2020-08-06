@@ -83,7 +83,7 @@
 				 wx:for-item="t"
 				 wx:for-index="i"
 				 wx:key="i"
-				 style="background: '#FF6010'"
+				 style="background: #FF6010"
 				>
 					{{t}}
 				</view>
