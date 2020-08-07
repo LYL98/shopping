@@ -158,7 +158,7 @@ Page({
             // that.itemQuery();
             that.getWorkTime();
             that.getBanner(); //显示ad
-            
+            this.getNoticeList()
           });
         }
         app.shoppingCartNum();
@@ -169,13 +169,14 @@ Page({
     // this.setData({
     //   noticeList:wx.getStorageSync('noticeList')
     // })
-    this.getNoticeList()
+   
   },
   // 获取订单通高
   getNoticeList(){
     let address = app.getSelectStore(); 
     Http.get(Config.api.noticeList, {
-      province_code: address.province_code
+      province_code: address.province_code,
+      handleError:false
     }).then((res) => {
       if(res.code === 0){
         this.setData({
@@ -184,6 +185,8 @@ Page({
       }
       console.log('res: ', res);
       
+    }).catch(err => {
+      console.log('err',err)
     });
   },
   onHide(){
@@ -235,6 +238,7 @@ Page({
         that.getTagsList();
         // that.itemQuery();
         that.getBanner(); //显示ad
+        that.getNoticeList()
         that.getWorkTime();
       });
       /*===== 埋点 start ======*/

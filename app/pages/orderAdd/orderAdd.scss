@@ -103,7 +103,7 @@
   }
 }
 .item-view>.item {
-  margin-left: 24rpx;
+  // margin-left: 24rpx;
 
 }
 
@@ -121,4 +121,56 @@
 .normal_price{
   font-size: 18rpx;
   color: #989797;
+}
+
+.price_color{
+  color: #FF6868;
+}
+.send_price{
+  padding: 0 30rpx;
+  margin-top: 24rpx;
+}
+.send_item{
+  line-height: 64rpx;
+  // margin-bottom: 27rpxs;
+  font-size: 26rpx;
+}
+.send_item--label{
+  color: #808080;
+}
+.send_item--value{
+  color: #FF6868;
+}
+.price_right_i {
+  border: solid #FB5853;
+   border-width: 0 1px 1px 0;
+   display: inline-block;
+   padding: 3px;
+   transform: rotate(-45deg);
+   -webkit-transform: rotate(-45deg);
+   margin-bottom: 3rpx;
+  
+  }
+  .price-right-img{
+    width: 25rpx !important;
+    height: 25rpx !important;
+    margin-top: 3rpx !important;
+    margin-left: 4rpx !important;
+    margin-bottom: 8rpx;
+
+
+  }
+.item-view>.item {
+  margin-top:30rpx;
+  height: 220rpx;
+}
+
+.item_bottom_price{
+  position: absolute;
+  bottom: -28rpx;
+  left: 184rpx;
+  right: 0;
+}
+.content .num-price{
+  bottom: 4rpx !important;
 }

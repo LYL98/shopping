@@ -162,6 +162,7 @@ view, navigator, text {
     border-radius: 10rpx;
     margin-bottom: 24rpx;
     box-shadow: 4rpx 0 16rpx rgba($color: #000000, $alpha: 0.08);
+    line-height: 1.25;
     .goods-item-img {
       width: 340rpx;
       height: 340rpx;
@@ -206,8 +207,8 @@ view, navigator, text {
     }
     .goods-item-info {
       position: relative;
-      min-height: 314rpx;
-      padding: 11rpx 17rpx;
+      min-height: 286rpx;
+      padding: 12rpx 16rpx 16rpx 16rpx;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -241,6 +242,10 @@ view, navigator, text {
       }
       .goods-item-info-bottom {
 
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
         .store-type {
           font-size: 18rpx;
           color: #989797;
@@ -258,9 +263,9 @@ view, navigator, text {
       }
   
       .cart-wrapper {
-          position: absolute;
-          bottom: 22rpx;
-          right: 22rpx;
+          // position: absolute;
+          // bottom: 22rpx;
+          // right: 22rpx;
       }
     }
 
@@ -274,8 +279,21 @@ view, navigator, text {
 
 .notice{
   padding: 0 24rpx;
-  height: 80rpx;
-  box-shadow: 0 0 6rpx #eee;
+box-shadow: 0 0 6rpx #eee;
+position: absolute;
+width: 464rpx;
+height: 54rpx;
+top: 162rpx;
+left:25rpx;
+z-index: 10;
+background: rgba(0,0,0,0.5);
+color: white;
+border-radius: 27rpx;
+font-size: 24rpx;
+padding-top: 11rpx;
+
+
+
 }
 .notice_text{
   overflow: hidden;
@@ -283,6 +301,8 @@ view, navigator, text {
 	display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+  top:24rpx;
+  
 }
 .notice_logo{
   font-size: 28rpx;
@@ -296,9 +316,11 @@ margin-right: 33rpx;
   color:white;
   font-size: 20rpx;
   padding: 0 2rpx;
+  margin-left:24rpx;
   margin-right: 12rpx;
 }
 .notice_right{
-  width: 20rpx;
-  height: 24rpx;
+ width: 14rpx;
+height: 18rpx;
+
 }

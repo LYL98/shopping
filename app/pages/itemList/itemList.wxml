@@ -61,7 +61,7 @@
       <view class="goods-item-info">
         <view class="goods-item-info-top">
           <view class="goods-titles skeleton-rect">
-              <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
+              <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i" wx:if="{{t}}">
                 {{t}}
               </view>
               <text>{{item.title}}</text>
@@ -80,11 +80,13 @@
           </view>
         </view>
         <view class="goods-item-info-bottom skeleton-rect">
-            <priceBox  vipLevel="{{dataItem.vip_level}}" vipTitle="{{dataItem.vip_title}}" isVipItem="{{item.is_vip_item}}" isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}" priceNoVip="{{item.price_novip}}"/>
+            <priceBox  vipLevel="{{dataItem.vip_level}}" vipTitle="{{dataItem.vip_title}}" vipDiscount="{{dataItem.vip_discount}}" isVipItem="{{item.is_vip_item}}" isQuoted="{{item.is_quoted}}" priceSale="{{item.price_sale}}" priceOrigin="{{item.price_origin}}" priceNoVip="{{item.price_novip}}"/>
+
+            <view class="cart-wrapper skeleton-rect">
+              <handleShopCart itemData="{{item}}" />
+            </view>
         </view>
-        <view class="cart-wrapper skeleton-rect">
-            <handleShopCart itemData="{{item}}" />
-        </view>
+        
       </view>
   </view>
 

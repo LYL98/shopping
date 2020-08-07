@@ -12,7 +12,6 @@ Page({
     tencentPath: Config.tencentPath,
     defaultSrc: './../../assets/img/default_avatar.png',
     myMessageSrc: './../../assets/img/my_message.png',
-    myGradeSrc: './../../assets/img/my_grade.png',
     myBalanceSrc: './../../assets/img/my_balance.png',
     myCouponSrc: './../../assets/img/my_coupon.png',
     optionSrc: [
@@ -30,9 +29,9 @@ Page({
     ],
     bg_level: 'diamonds',
     vip_title: '',
+    myLevel: null,
     has_unread:'',
     initLoad: true,
-    arrow:'./../../assets/img/right.png',
     myInfo: {
       realname: '用户姓名',
       merchant: {
@@ -183,8 +182,9 @@ Page({
         };
         if (res.statusCode == 200 && res.data.code == 0) {
           this.setData({
-            bg_level: vipInfo[level] || '',
-            vip_title: title || ''
+            bg_level: vipInfo[level] || 'diamonds',
+            vip_title: title || '',
+            myLevel: level
           });
         } else {
           app.requestResultCode(res); //处理异常

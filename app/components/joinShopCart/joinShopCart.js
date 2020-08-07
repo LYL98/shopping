@@ -350,6 +350,7 @@ Component({
     },
     //处理增加购物车
     handleUp(num){
+      wx.sho
       if(!this.data.isTriggleCartEvent){
         return
       }

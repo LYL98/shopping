@@ -41,6 +41,7 @@
   background: #FFECE3;
   border-radius:4rpx;
   color:#FF6010;
+  border-radius: 4rpx;
 }
 .img-view {
   width: 100%;
@@ -346,13 +347,16 @@
 
 .goods_info{
   padding: 0 24rpx;
-  padding-top: 32rpxs;
+  padding-top:10rpx;
   position: relative;
   // border-top: 32rpx solid #f9f8f8;
 }
 .goods_top{
   height: 108rpx;
+}
+.goods_info--more{
   padding-bottom: 30rpx;
+
 }
 
 
@@ -388,6 +392,11 @@ margin-left: 16rpx;
   padding-left: 14rpx;
   padding-right: 14rpx;
   height:62rpx;
+  position: absolute;
+z-index: 10;
+top: 32rpx;
+right: 22rpx;
+
   // transform: scale();
   // width: 186rpx;
 
@@ -440,6 +449,10 @@ margin-left: 16rpx;
   color: #989797;
   width:118rpx;
   flex-shrink: 0;
+}
+.goods_info--label--auto_width{
+  width:auto!important;
+  margin-right:28rpx;
 }
 .goods_info--label--top{
   width:80rpx;
@@ -521,7 +534,7 @@ margin-left: 16rpx;
   // padding: 0 24rpx 24rpx 24rpx;
 }
 .goods_attr--item{
-  width: 306rpx;
+  width: 366rpx;
 }
 .goods_attr--box{
   height: 82rpx;
@@ -559,25 +572,34 @@ margin-left: 16rpx;
 .vip_card--discount{
   
   border-left: none;
-  color: #989797;
+  color: #01B8FF;
   display: inline-block;
   padding:0 8rpx;
   border-bottom-right-radius: 4rpx;
   border-top-right-radius: 4rpx;
-
+   border: 1px solid #01B8FF;
+   border-left:none;
 }
 
 .card_discount--1{
-  color:#989797;
-  border: 1px solid #989797;
+  color:#D79E5C;
+  border: 1px solid #D79E5C;
+   border-left:none;
 }
 .card_discount--2{
-  color:#FDBD1C;
-  border: 1px solid #FDBD1C;
+  color:#989797;
+  border: 1px solid #989797;
+   border-left:none;
 }
 .card_discount--3{
+  color:#FDBD1C;
+  border: 1px solid #FDBD1C;
+   border-left:none;
+}
+.card_discount--4{
   color:#E5BB72;
   border: 1px solid #E5BB72;
+   border-left:none;
 }
 
 .no_sale{
@@ -598,12 +620,17 @@ margin-left: 16rpx;
   font-size: 28rpx;
   color: #989797;
   position: absolute;
-  top: 90rpx;
+  top: 100rpx;
 left: 28rpx;
 
 }
 
 .origin_price{
   text-decoration: line-through;
+  color: #989797;
   margin-left: 16rpx;
+}
+.cart_num{
+  height:81rpx !important;
+  line-height:81rpx !important;
 }

@@ -80,8 +80,8 @@
       > .num{
         flex: 1;
         background: white;
-        border-top: 1rpx solid #F9F8F8;
-        border-bottom: 1rpx solid #F9F8F8;
+        border-top: 2rpx solid #f2f2f2;
+        border-bottom: 2rpx solid #f2f2f2;
 
         color: #616161;
         font-size: 26rpx;
@@ -115,7 +115,7 @@
         > .num{
           width: 54rpx;
           flex: initial !important;
-          height: 48rpx;
+          height: 47rpx;
           line-height: 48rpx;
         }
       }
@@ -172,8 +172,9 @@
         }
         > .num{
           flex: 1;
-          height: 82rpx;
-          line-height: 82rpx;
+          height: 79rpx;
+          
+          line-height: 81rpx;
         }
       }
     }
@@ -380,31 +381,46 @@
 .vip_card--price{
   font-size: 32rpx;
   color:#FDBD1C;
-  margin-left: 5rpx;
+  margin-left: 0rpx;
 }
 .normal_price{
   font-size: 18rpx;
   height: 20rpx;
   color: #989797;
 }
+.vip_card--type{
+  display: inline-block;
+  background-image: linear-gradient(-41deg, #76D6FD,  #01B8FF,#9AE2FF);
+  color:white;
+  padding:2rpx 8rpx;
+}
 .card_type--1{
-  background-image: linear-gradient(135deg, #EDEEF0 0%, #808691 100%) !important;
-  box-shadow: inset 0 1rpx 3rpx 0 #828893 !important;
+   background-image: linear-gradient(-41deg,   #F9CB85 0%, #AD6629 100%) !important;
+      box-shadow: inset 0 1rpx 3rpx 0 #A37044 !important;
 }
 .card_type--2{
-  background-image: linear-gradient(-41deg, #FDBD1C 0%, #FFE800 100%) !important;
+  background-image: linear-gradient(-41deg, #EDEEF0 0%, #808691 100%) !important;
   box-shadow: inset 0 1rpx 3rpx 0 #FDC126 !important;
 }
 .card_type--3{
-  background-image: linear-gradient(-41deg, #E09A3A 0%, #FDF6D7 100%)!important;
-  box-shadow: inset 0 1rpx 3rpx 0 #E3A852!important;
+  background-image: linear-gradient(-41deg, #FDBD1C 0%, #FFE800 100%) !important;
+}
+.card_type--4{
+background-image: linear-gradient(-41deg, #76D6FD, #01B8FF, #9AE2FF);
+
+}
+.vip_card--price{
+   color: #01B8FF;
 }
 .price_type--1{
-  color: #828893 !important;
+  color: #D79E5C !important;
 }
 .price_type--2{
-  color:#FDBD1C !important;
+  color: #828893 !important;
 }
 .price_type--3{
-  color: #E5BB72 !important;
+  color:#FDBD1C !important;
+}
+.price_type--4{
+  color: #01B8FF !important;
 }

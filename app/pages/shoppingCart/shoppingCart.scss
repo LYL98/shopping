@@ -42,6 +42,7 @@
 }
 .item-view {
   padding: 0!important;
+    margin: 0 !important;
 }
 .item-view-box{
   margin: 0 24rpx;
@@ -57,6 +58,9 @@
   .under_ground{
     opacity: .4;
   }
+}
+.invaild_opacity {
+  opacity: .4;
 }
 .item_normal{
   height: 265rpx;
@@ -77,6 +81,7 @@
   border-top: 1rpx solid #eee;
   text-align: center;
   background: #fff;
+  z-index: 10;
   >.coupon-item{
     height: 62rpx;
     background: #FFE1E1;
@@ -116,7 +121,7 @@
   align-items: center;
   border-top: 1rpx solid #eee;
   padding: 0 30rpx;
-  z-index: 2;
+  z-index: 10;
   > view{
     flex: 1;
     font-size: 26rpx;
@@ -146,7 +151,7 @@
       margin-top: 9rpx;
     }
     >.total-discounts{
-      text-align: left;
+      // text-align: left;
       >.total{
         >.price{
           font-size: 32rpx;
@@ -346,3 +351,8 @@
   }
 }
 
+
+
+.cart_content{
+  margin: 0 24rpx;
+}

@@ -53,6 +53,7 @@ Page({
       })()
     },
     rightSrc: './../../assets/img/right.png',
+    rightPriceSrc: './../../assets/img/right_price.png',
     orderAddBgSrc: './../../assets/img/order_add_bg.png',
     orderAddData: {
       items: []
@@ -63,9 +64,15 @@ Page({
     payData: {}, //支付数据
     payCallBack: null, //支付回调
     showSkeleton: true, //骨架屏
-    couponListData: [], //优惠券列表
-    couponSelectData: {}, //当前选择优惠券
+    couponGoodsListData: [], //商品优惠券列表
+    couponGoodsSelectData: {}, //当前选择商品优惠券
+    couponDeliveryListData: [], //运费优惠券列表
+    couponDeliverySelectData: {}, //当前选择运费优惠券
     loginUserInfo:{},
+    showFreight:false,
+    discount:0,
+    level:0,
+    title:'',
   },
 
   /**
@@ -90,6 +97,7 @@ Page({
         address: address
       }, ()=>{
         that.getCoupon(); //获取优惠券
+        this.getUserLevel()
       });
     });
     this.setData({
@@ -97,14 +105,38 @@ Page({
     })
   },
 
-  //选择优惠券
-  selectCoupon(){
-    let { couponListData, address } = this.data;
-    if(couponListData.length  > 0){
+   // 获取用户level
+   getUserLevel(){
+    let that = this;
+    Http.get(Config.api.userVipSelf, {
+    }, { handleError: false }).then((res) => {
+      this.setData({
+        discount:res.data.discount,
+        level:res.data.level,
+        title:res.data.title.substring(0,2)
+      })
+      console.log('res: ', res);
+      
+    });
+  },
+
+  //选择商品优惠券
+  selectGoodsCoupon(){
+    let { couponGoodsListData } = this.data;
+    if(couponGoodsListData.length  > 0){
       wx.navigateTo({
-        url: '/pages/orderCoupon/orderCoupon'
+        url: '/pages/orderCoupon/orderCoupon?type=goods'
       });
     }
+  },
+  // 选择运费优惠券
+  selectDeliveryCoupon(){
+    let { couponDeliveryListData } = this.data;
+    // if(couponDeliveryListData.length  > 0){
+      wx.navigateTo({
+        url: '/pages/orderCoupon/orderCoupon?type=delivery'
+      });
+    // }
   },
   
   //跳转页面
@@ -121,15 +153,15 @@ Page({
     let { orderType, address } = that.data;
     
     //判断是预售或正常订单
-    let d = wx.getStorageSync(orderType === 'presale' ? 'shoppingCartPresaleData' : 'shoppingCartData');
+    let shoppingCartData = wx.getStorageSync(orderType === 'presale' ? 'shoppingCartPresaleData' : 'shoppingCartData');
 
-    if (d && d.length > 0) {
+    if (shoppingCartData && shoppingCartData.length > 0) {
       let data = [];
-      for (let i = 0; i < d.length; i++) {
-        if (d[i].is_select) {
+      for (let i = 0; i < shoppingCartData.length; i++) {
+        if (shoppingCartData[i].is_select) {
           data.push({
-            id: d[i].id,
-            "number": d[i].num,
+            id: shoppingCartData[i].id,
+            "number": shoppingCartData[i].num,
           });
         }
       }
@@ -143,36 +175,57 @@ Page({
           store_id: address.id,
           items: data
         }, { throttle: false }).then((res)=>{
-          let cou = wx.getStorageSync('orderCouponSelectData');
-          let csd = {};
+          let couponGoodsStorageSelectData = wx.getStorageSync('orderCouponGoodsSelectData');
+          let couponDeliveryStorageSelectData = wx.getStorageSync('orderCouponGoodsSelectData');
+          let couponGoodsSelectData = {}; // 选择的商品优惠券
+          let couponDeliverySelectData = {}; // 选择的运费优惠券
           let rd = res.data;
-          let d = rd.filter(item => item.is_usable); //可用
-          //如果已选择
-          if(typeof cou === 'object'){
-            //判断如果选择了优惠券
-            if(cou.id){
-              let dd = d.filter(item => item.id === cou.id); //有当前选择的
-              if(dd.length > 0){
-                csd = dd[0];
+          let couponGoodsUseData = rd.filter(item => item.is_usable && item.coupon.coupon_type != 'type_delivery'); //可用
+          let couponDeliveryUseData = rd.filter(item => item.is_usable && item.coupon.coupon_type == 'type_delivery'); //可用
+          //如果已选择商品优惠券
+          if(typeof couponGoodsStorageSelectData === 'object'){
+            if(couponGoodsStorageSelectData.id){
+              //判断如果选择了优惠券
+              if(couponGoodsUseData.filter(item => item.id === couponGoodsStorageSelectData.id).length > 0){
+                couponGoodsSelectData = couponGoodsUseData.filter(item => item.id === couponGoodsStorageSelectData.id)[0];
               }else{
-                csd = d.length > 0 ? d[0] : {};
+                couponGoodsSelectData = couponGoodsUseData.length > 0 ? couponGoodsUseData[0] : {};
               }
+            }else{
+               //如果选择不使用优惠券
+              couponGoodsSelectData = {}
             }
-            //如果选择不使用优惠券
-            else{
-              csd = {}
-            }
-          }
-          //如刚进页面未有选择，自动选择最最优的
-          else{
-            csd = d.length > 0 ? d[0] : {};
+          }else{
+            //如刚进页面未有选择，自动选择最最优的
+            couponGoodsSelectData = couponGoodsUseData.length > 0 ? couponGoodsUseData[0] : {};
           }
 
-          wx.setStorageSync('orderCouponListData', rd); //所有优惠券
+          //如果已选择运费优惠券
+          if(typeof couponDeliveryStorageSelectData === 'object'){
+            if(couponDeliveryStorageSelectData.id){
+              //判断如果选择了优惠券
+              if(couponDeliveryUseData.filter(item => item.id === couponDeliveryStorageSelectData.id).length > 0){
+                couponDeliverySelectData = couponDeliveryUseData.filter(item => item.id === couponDeliveryStorageSelectData.id)[0];
+              }else{
+                couponDeliverySelectData = couponDeliveryUseData.length > 0 ? couponDeliveryUseData[0] : {};
+              }
+            }else{
+               //如果选择不使用优惠券
+              couponDeliverySelectData = {}
+            }
+          }else{
+            //如刚进页面未有选择，自动选择最最优的
+            couponDeliverySelectData = couponDeliveryUseData.length > 0 ? couponDeliveryUseData[0] : {};
+          }
+
+          wx.setStorageSync('orderCouponGoodsListData', rd.filter(item => item.coupon.coupon_type != 'type_delivery')); //所有商品优惠券
+          wx.setStorageSync('orderCouponDeliveryListData', rd.filter(item => item.coupon.coupon_type == 'type_delivery')); //所有运费优惠券
 
           that.setData({
-            couponListData: d, //只有可用的
-            couponSelectData: csd
+            couponGoodsListData: couponGoodsUseData, //只有可用的
+            couponGoodsSelectData: couponGoodsSelectData,
+            couponDeliveryListData: couponDeliveryUseData, //只有可用的
+            couponDeliverySelectData: couponDeliverySelectData
           }, ()=>{
             that.orderPre(); //订单预生成
           });
@@ -183,8 +236,8 @@ Page({
         dataItem: {
           items: []
         },
-        couponListData: [],
-        selectCouponData: {}
+        couponGoodsListData: [],
+        couponDeliveryListData: [],
       });
     }
   },
@@ -192,7 +245,7 @@ Page({
   //预生成订单
   orderPre() {
     let that = this;
-    let { address, orderType, deliveryDate, couponSelectData, orderAddData } = that.data;
+    let { address, orderType, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
     wx.showNavigationBarLoading();
     wx.request({
       url: Config.api.orderPre,
@@ -203,7 +256,8 @@ Page({
       method: 'POST',
       data: {
         items: orderAddData.items,
-        coupon_merchant_id: couponSelectData.id || '',
+        coupon_merchant_id: couponGoodsSelectData.id || '',
+        delivery_coupon_id: couponDeliverySelectData.id || '',
         store_id: address.id || '',
         delivery_date: deliveryDate,
         is_presale: orderType === 'presale' ? true : false //是否预售订单
@@ -315,7 +369,7 @@ Page({
    */
   submitOrder() {
     let that = this;
-    let { orderAddData, dataItem, address, orderType, deliveryDate, couponSelectData } = that.data;
+    let { orderAddData, dataItem, address, orderType, deliveryDate, couponGoodsSelectData,couponDeliverySelectData } = that.data;
     if (!address.id) {
       wx.showToast({
         title: '请选择门店地址',
@@ -325,7 +379,8 @@ Page({
     }
     let d = {
       store_id: address.id,
-      coupon_merchant_id: couponSelectData.id || '',
+      coupon_merchant_id: couponGoodsSelectData.id || '',
+      delivery_coupon_id: couponDeliverySelectData.id || '',
       ...orderAddData,
       delivery_date: deliveryDate,
       is_presale: orderType === 'presale' ? true : false //是否预售订单
@@ -394,7 +449,7 @@ Page({
   //订单支付
   orderPay(rd) {
     let that = this;
-    let { dataItem, orderType, couponSelectData } = that.data;
+    let { dataItem, orderType, couponGoodsSelectData,couponDeliverySelectData } = that.data;
     that.setData({
       payData: {
         order_id: rd.id,
@@ -406,16 +461,16 @@ Page({
         if (res === 'success') {
           /*===== 埋点 start ======*/
           let coupon_var = '', couponType_var = '', promoteRule_var = '';
-          if(couponSelectData.id && couponSelectData.coupon){
+          if(couponGoodsSelectData.id && couponGoodsSelectData.coupon){
             let ct = Constant.COUPON_TYPE;
-            coupon_var = couponSelectData.coupon.title;
-            couponType_var = ct[couponSelectData.coupon.coupon_type];
-            if(couponSelectData.coupon.coupon_type === 'type_reduction'){
-              promoteRule_var = `￥${Util.returnPrice(couponSelectData.coupon.benefit)}`;
-            }else if(couponSelectData.coupon.coupon_type === 'type_discount'){
-              promoteRule_var = `${Util.returnDiscount(couponSelectData.coupon.benefit)}折`;
+            coupon_var = couponGoodsSelectData.coupon.title;
+            couponType_var = ct[couponGoodsSelectData.coupon.coupon_type];
+            if(couponGoodsSelectData.coupon.coupon_type === 'type_reduction'){
+              promoteRule_var = `￥${Util.returnPrice(couponGoodsSelectData.coupon.benefit)}`;
+            }else if(couponGoodsSelectData.coupon.coupon_type === 'type_discount'){
+              promoteRule_var = `${Util.returnDiscount(couponGoodsSelectData.coupon.benefit)}折`;
             }else{
-              promoteRule_var = `送${couponSelectData.coupon.benefit}件`;
+              promoteRule_var = `送${couponGoodsSelectData.coupon.benefit}件`;
             }
           }
           app.gioActionRecordAdd('payOrderSuccess', {
@@ -489,7 +544,17 @@ Page({
 
   //页面卸载时
   onUnload: function() {
-    wx.removeStorageSync('orderCouponListData');
-    wx.removeStorageSync('orderCouponSelectData');
+    wx.removeStorageSync('orderCouponGoodsListData');
+    wx.removeStorageSync('orderCouponGoodsSelectData');
+  },
+  showFreight(){
+    this.setData({
+      showFreight:true
+    })
+  },
+  onFreightClose(){
+    this.setData({
+      showFreight:false
+    })
   }
 })

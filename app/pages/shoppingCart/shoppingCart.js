@@ -182,14 +182,15 @@ Page({
           shoppingCartData.map((item,index) => {
               if (item.id === id) {
                 console.log('item.id: ', item.id);
-                let validCartList = that.data.validCartList
-                validCartList.map((itemChild,indexChild) => {
-                  if(itemChild.id = id){
-                    that.setData({
-                      validCartList: validCartList.splice(indexChild,1)
-                    })
-                  }
-                })
+                // let validCartList = that.data.validCartList
+                // validCartList.map((itemChild,indexChild) => {
+                //   if(itemChild.id = id){
+                //     console.log('indexChild: ', indexChild);
+                //     that.setData({
+                //       validCartList: validCartList.splice(indexChild,1)
+                //     })
+                //   }
+                // })
                 shoppingCartData.splice(index,1)
                
               }
@@ -402,6 +403,7 @@ Page({
   },
   //更新页面数据
   updateData(data) {
+    wx.showLoading();
     let that = this;
     let totalNum = 0, totalPrice = 0, discountsPrice = 0;
     let { dataItem } = that.data;
@@ -442,6 +444,8 @@ Page({
         }
       }
 
+      
+
       let validCartList = [];
       let inValidCartList = [];
       dataItem.map(item => {
@@ -454,6 +458,7 @@ Page({
         }
       })
       console.log('validCartList',validCartList)
+     
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
@@ -474,6 +479,7 @@ Page({
         inValidCartList:[]
       });
     }
+    wx.hideLoading();
     app.shoppingCartNum(); //计算购物车数量并显示角标
   },
 
