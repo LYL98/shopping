@@ -161,5 +161,16 @@
 
   }
 .item-view>.item {
-  margin-top:30rpx
+  margin-top:30rpx;
+  height: 220rpx;
+}
+
+.item_bottom_price{
+  position: absolute;
+  bottom: -28rpx;
+  left: 184rpx;
+  right: 0;
+}
+.content .num-price{
+  bottom: 4rpx !important;
 }

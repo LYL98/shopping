@@ -98,14 +98,18 @@
 
 		</view>
 
-		<view class="goods_info--weight align-center justify-between">
+		<view class="goods_info--weight align-center justify-between" style="margin-right:59rpx;">
 			<view class="align-center label_item">
-				<view class="goods_info--label goods_info--label--top">毛重</view>
-				<view class="goods_info--value">{{detail.gross_weight ? '约' + tools.returnGrossWeight(detail.gross_weight) + '斤' : '-'}}</view>
+				<view class="goods_info--label goods_info--label--auto_width goods_info--label--top">毛重</view>
+				<view class="goods_info--value flex1">{{detail.gross_weight ? '约' + tools.returnGrossWeight(detail.gross_weight) + '斤' : '-'}}</view>
 			</view>
-			<view class="align-center laberl_item--right">
-				<view class="goods_info--label goods_info--label--top">净重</view>
-				<view class="goods_info--value">{{detail.net_weight ? '约' + tools.returnGrossWeight(detail.net_weight) + '斤' : '-'}}</view>
+			<view class="align-center ">
+				<view class="goods_info--label goods_info--label--auto_width  goods_info--label--top">净重</view>
+				<view class="goods_info--value flex1">{{detail.net_weight ? '约' + tools.returnGrossWeight(detail.net_weight) + '斤' : '-'}}</view>
+			</view>
+			<view class="align-center">
+				<view class="goods_info--label goods_info--label--auto_width goods_info--label--top">件规格</view>
+				<view class="goods_info--value flex1">{{detail.piece_spec}}</view>
 			</view>
 		</view>
 
