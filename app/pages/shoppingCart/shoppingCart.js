@@ -403,6 +403,7 @@ Page({
   },
   //更新页面数据
   updateData(data) {
+    wx.showLoading();
     let that = this;
     let totalNum = 0, totalPrice = 0, discountsPrice = 0;
     let { dataItem } = that.data;
@@ -443,10 +444,7 @@ Page({
         }
       }
 
-      this.setData({
-        validCartList:[],
-        inValidCartList:[]
-      })
+      
 
       let validCartList = [];
       let inValidCartList = [];
@@ -460,6 +458,7 @@ Page({
         }
       })
       console.log('validCartList',validCartList)
+     
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
@@ -480,6 +479,7 @@ Page({
         inValidCartList:[]
       });
     }
+    wx.hideLoading();
     app.shoppingCartNum(); //计算购物车数量并显示角标
   },
 
