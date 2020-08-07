@@ -131,12 +131,13 @@ Page({
   },
   // 选择运费优惠券
   selectDeliveryCoupon(){
+  console.log('选择运费优惠券')
     let { couponDeliveryListData } = this.data;
-    // if(couponDeliveryListData.length  > 0){
+    if(couponDeliveryListData.length  > 0){
       wx.navigateTo({
         url: '/pages/orderCoupon/orderCoupon?type=delivery'
       });
-    // }
+    }
   },
   
   //跳转页面
@@ -176,7 +177,7 @@ Page({
           items: data
         }, { throttle: false }).then((res)=>{
           let couponGoodsStorageSelectData = wx.getStorageSync('orderCouponGoodsSelectData');
-          let couponDeliveryStorageSelectData = wx.getStorageSync('orderCouponGoodsSelectData');
+          let couponDeliveryStorageSelectData = wx.getStorageSync('orderCouponDeliverySelectData');
           let couponGoodsSelectData = {}; // 选择的商品优惠券
           let couponDeliverySelectData = {}; // 选择的运费优惠券
           let rd = res.data;
@@ -546,6 +547,8 @@ Page({
   onUnload: function() {
     wx.removeStorageSync('orderCouponGoodsListData');
     wx.removeStorageSync('orderCouponGoodsSelectData');
+    wx.removeStorageSync('orderCouponDeliveryListData');
+    wx.removeStorageSync('orderCouponDeliverySelectData');
   },
   showFreight(){
     this.setData({

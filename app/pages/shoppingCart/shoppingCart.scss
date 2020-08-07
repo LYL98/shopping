@@ -13,6 +13,9 @@
   border-bottom: 1rpx solid #eee;
   padding: 20rpx 30rpx;
   background-color: white;
+
+  font-size: 26rpx;
+color: #242424;
   > view{
     flex: 1;
     font-size: 28rpx;
@@ -285,7 +288,7 @@
 }
 
 .cart_type{
-  margin-top: 24rpx;
+  padding-top: 24rpx;
   
 	.title{
 		font-size: 30rpx;
