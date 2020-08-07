@@ -547,6 +547,8 @@ Page({
   onUnload: function() {
     wx.removeStorageSync('orderCouponGoodsListData');
     wx.removeStorageSync('orderCouponGoodsSelectData');
+    wx.removeStorageSync('orderCouponDeliveryListData');
+    wx.removeStorageSync('orderCouponDeliverySelectData');
   },
   showFreight(){
     this.setData({
