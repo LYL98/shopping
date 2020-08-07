@@ -9,6 +9,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    freightData:{type:Array,value:[]},
+    totalDeliveryFee:{type:Number,value:0},
   },
 
   /**

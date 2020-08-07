@@ -1,4 +1,5 @@
 <!--components/selectStore/selectStore.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
 <view class="select-store">
 	<view class="location">
 		<image src="./img/location_icon.png" />
@@ -17,21 +18,19 @@
 			</view>
 		</view>
 		<view class="content">
-			<view class="freight_item align-center">
-				<view class="freight_item--label">大件:</view>
-				<view class="freight_item--value">15件</view>
-				<view class="freight_item--value">10元/件</view>
-				<view class="freight_item--value">￥120</view>
-			</view>
-			<view class="freight_item align-center">
-				<view class="freight_item--label">小件:</view>
-				<view class="freight_item--value">15件</view>
-				<view class="freight_item--value">10元/件</view>
-				<view class="freight_item--value">￥120</view>
+			<view
+			 class="freight_item align-center"
+			 wx:for="{{freightData}}"
+			 wx:key="index"
+			>
+				<view class="freight_item--label">{{item.piece_spec}}:</view>
+				<view class="freight_item--value">{{item.bp_item_num}}件</view>
+				<view class="freight_item--value">{{item.bp_delivery_price}}元/件</view>
+				<view class="freight_item--value">￥{{item.bp_fee}}</view>
 			</view>
 			<view class="freight_all">
 				<view class="freight_all--label">总计</view>
-				<view class="freight_all--value">￥2980.6</view>
+				<view class="freight_all--value">￥ {{tools.returnPrice(totalDeliveryFee)}}</view>
 			</view>
 		</view>
 
