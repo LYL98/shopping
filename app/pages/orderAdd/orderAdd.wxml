@@ -200,7 +200,8 @@
 		<view class="send_item justify-between">
 			<view class="send_item--label">运费总计</view>
 			<view class="send_item--value align-center" bindtap="showFreight">
-				<text>￥1234 </text>
+
+				<text>￥{{tools.returnPrice(dataItem.total_delivery_fee)}} </text>
 				<image
 				 class="right-img f-r price-right-img"
 				 style="top: 8rpx;"
@@ -238,7 +239,8 @@
 		<view class="send_item justify-between">
 			<view class="send_item--label">运费满额优惠</view>
 			<view class="send_item--value align-center">
-				<text>-￥1234 </text>
+
+				<text>-￥{{tools.returnPrice(dataItem.delivery_reduction)}} </text>
 			</view>
 		</view>
 	</view>
@@ -249,7 +251,7 @@
 		</view>
 		<view class="content">
 
-			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">￥20
+			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">￥{{tools.returnPrice(dataItem.delivery_fee)}}
 			</view>
 		</view>
 	</view>
@@ -297,6 +299,11 @@
 	 bind:close="onClose"
 	/>
 
-	<freight wx:if="{{showFreight}}" bind:onFreightClose="onFreightClose" />
+	<freight
+	 wx:if="{{showFreight}}"
+	 bind:onFreightClose="onFreightClose"
+	 freightData="{{dataItem.delivery_detail}}"
+	 totalDeliveryFee="{{dataItem.total_delivery_fee}}"
+	/>
 </view>
 
