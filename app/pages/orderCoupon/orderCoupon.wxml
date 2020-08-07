@@ -77,9 +77,9 @@
 			<view class="content">
 				<view class="left">
 					<view class="price">
-						<text wx:if="{{item.coupon.coupon_type === 'type_reduction'}}">￥{{tools.returnPrice(item.coupon.benefit)}}</text>
-						<text wx:elif="{{item.coupon.coupon_type === 'type_discount'}}">{{tools.returnDiscount(item.coupon.benefit)}}折</text>
-						<text wx:else>送{{item.coupon.benefit}}件</text>
+						<!-- <text wx:if="{{item.coupon.coupon_type === 'type_reduction'}}">￥{{tools.returnPrice(item.coupon.benefit)}}</text> -->
+						<!-- <text wx:elif="{{item.coupon.coupon_type === 'type_discount'}}">{{tools.returnDiscount(item.coupon.benefit)}}折</text> -->
+						<text>{{tools.returnPrice(item.coupon.benefit)}}</text>
 					</view>
 					<view class="hint">
 						<text>运费满{{tools.returnPrice(item.coupon.amount_full)}}元可用</text>

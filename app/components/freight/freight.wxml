@@ -24,9 +24,12 @@
 			 wx:key="index"
 			>
 				<view class="freight_item--label">{{item.piece_spec}}:</view>
-				<view class="freight_item--value">{{item.bp_item_num}}件</view>
-				<view class="freight_item--value">{{item.bp_delivery_price}}元/件</view>
-				<view class="freight_item--value">￥{{item.bp_fee}}</view>
+				<view class="freight_item--box">
+					<view class="freight_item--value">{{item.item_num}}件</view>
+					<view class="freight_item--value">{{item.delivery_price}}元/件</view>
+					<view class="freight_item--value">￥{{item.fee}}</view>
+				</view>
+
 			</view>
 			<view class="freight_all">
 				<view class="freight_all--label">总计</view>

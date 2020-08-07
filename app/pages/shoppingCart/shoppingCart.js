@@ -66,7 +66,7 @@ Page({
     })
     //判断登录
     app.signIsLogin(() => {
-      this.activity();
+      // this.activity();
       this.getWorkTime();
       this.getShoppingCartData();
       this.couponList(); //获取优惠券列表

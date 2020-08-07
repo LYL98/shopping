@@ -149,14 +149,17 @@
   display: flex;
   align-items: center;
   padding-left: 71rpx;
+  padding-right: 71rpx;
 }
 .freight_item--label{
   font-size: 30rpx;
   color: #989797;
   margin-right: 97rpx;
+  flex-shrink: 0;
+
 }
 .freight_item--value{
-  margin-right: 84rpx;
+  // margin-right: 84rpx;
   font-size: 30rpx;
 color: #242424;
 }
@@ -164,9 +167,14 @@ color: #242424;
   margin-top:21rpx;
   padding-left: 71rpx;
   line-height:110rpx;
-  align-item:center;
   display: flex;
   justify-content: space-between;
   padding-right: 32rpx;
   border-top: 1rpx solid #eee;
+}
+.freight_item--box{
+  display: flex;
+  flex:1;
+  justify-content: space-between;
+  align-items: align-center;
 }
