@@ -121,9 +121,10 @@ Page({
               showSkeleton: false
             });
           } else {
-            dataItem.items = dataItem.items.concat(sourceData.items);
+            dataItem.items[0].data = dataItem.items[0].data.concat(sourceData.items[0].data);
+            dataItem.items[1].data = dataItem.items[1].data.concat(sourceData.items[1].data);
             that.setData({
-              dataItem: dataItem,
+              dataItem,
               showSkeleton: false
             });
           }
