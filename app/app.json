@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/orderAdd/orderAdd",
     "pages/shoppingCart/shoppingCart",
+    "pages/itemList/itemList",
+    "pages/orderAdd/orderAdd",
     "pages/browser/browser",
     "pages/order/order",
     "pages/about/about",
@@ -12,7 +13,6 @@
     "pages/loginGuide/loginGuide",
     "pages/login/login",
     "pages/loginBind/loginBind",
-    "pages/itemList/itemList",
     "pages/itemDetail/itemDetail",
     "pages/account/account",
     "pages/accountRecord/accountRecord",

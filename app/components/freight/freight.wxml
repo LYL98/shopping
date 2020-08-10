@@ -26,8 +26,8 @@
 				<view class="freight_item--label">{{item.piece_spec}}:</view>
 				<view class="freight_item--box">
 					<view class="freight_item--value">{{item.item_num}}件</view>
-					<view class="freight_item--value">{{item.delivery_price}}元/件</view>
-					<view class="freight_item--value">￥{{item.fee}}</view>
+					<view class="freight_item--value">{{tools.returnPrice(item.delivery_price)}}元/件</view>
+					<view class="freight_item--value">￥{{tools.returnPrice(item.fee)}}</view>
 				</view>
 
 			</view>

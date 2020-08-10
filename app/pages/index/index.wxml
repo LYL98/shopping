@@ -62,29 +62,29 @@
 					></image>
 				</swiper-item>
 				<!-- 跑马灯 -->
-		
+
 			</swiper>
 			<view class='notice align-center' wx:if="{{noticeList.length > 0 && bannerList.length > 0}}">
-			<swiper
-			 autoplay
-			 vertical
-			 circular
-			 interval="2000"
-			 style="{{'height: 46rpx'}}"
-			 class="flex1"
-			>
-				<swiper-item wx:for="{{noticeList}}" wx:key="index">
-					<view
-					 class="justify-between align-center"
-					 bindtap="toDetail"
-					 data-id="{{item.item_id}}"
-					>
-						<text class="notice_text">*{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了{{item.item_title}}</text>
-						<image class="notice_right" src="../../assets/img/right.png" />
-					</view>
-				</swiper-item>
-			</swiper>
-		</view>
+				<swiper
+				 autoplay
+				 vertical
+				 circular
+				 interval="2000"
+				 style="{{'height: 46rpx'}}"
+				 class="flex1"
+				>
+					<swiper-item wx:for="{{noticeList}}" wx:key="index">
+						<view
+						 class="justify-between align-center"
+						 bindtap="toDetail"
+						 data-id="{{item.item_id}}"
+						>
+							<text class="notice_text">*{{item.store_title}} {{item.is_today ? '刚刚' : '昨天'}}购买了{{item.item_title}}</text>
+							<image class="notice_right" src="../../assets/img/right.png" />
+						</view>
+					</swiper-item>
+				</swiper>
+			</view>
 			<view class="bottom-ph-bg"></view>
 		</view>
 
@@ -115,8 +115,6 @@
 		<navigator class="skeleton-rect hot-sale-entry" url="/pages/hotSaleList/hotSaleList">
 			<image src="/assets/img/hotSale/hot_sale_entry.png"></image>
 		</navigator>
-
-		
 
 		<!-- 今日主推 -->
 		<view class="title-box">
@@ -172,7 +170,7 @@
 							<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
 						</view>
 					</view>
-					<view class="goods-item-info-bottom">
+					<view>
 						<priceBox
 						 vipLevel="{{dataItem.vip_level}}"
 						 vipTitle="{{dataItem.vip_title}}"
@@ -183,17 +181,22 @@
 						 priceOrigin="{{item.price_origin}}"
 						 priceNoVip="{{item.price_novip}}"
 						/>
-						<!-- <view class="store-type">
-                <text class="type-label">供应商</text>
-                <text class="type-label type-label-self">自营</text>
-                <text>供应商门店</text>
-              </view> -->
+						<view class="goods-item-info-bottom">
+							<view class="store-type">
+								<block wx:if="{{item.sale_type == '供应商'}}">
+									<text class="type-label" >供应商</text>
+									<text>{{item.supplier}}门店</text>
+								</block>
+								<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">自营</text>
+							</view>
 
 							<view class="cart-wrapper">
 								<handleShopCart itemData="{{item}}" />
 							</view>
+						</view>
+
 					</view>
-					
+
 				</view>
 			</view>
 		</view>

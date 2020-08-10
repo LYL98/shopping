@@ -538,6 +538,19 @@ right: 22rpx;
 }
 .goods_attr--box{
   height: 82rpx;
+}
+// .goods_header_attr--other{
+//   .goods_attr--box{
+
+//     padding-left: 24rpx;
+//   }
+//   .goods_info--label{
+//     padding-left: 24rpx;
+//   }
+  
+// }
+.pl24{
+  
   padding-left: 24rpx;
 }
 .goods_attr--box--more{
@@ -633,4 +646,20 @@ left: 28rpx;
 .cart_num{
   height:81rpx !important;
   line-height:81rpx !important;
+}
+
+.store-type {
+  font-size: 18rpx;
+  color: #989797;
+  margin-top: 6rpx;
+  .type-label {
+    color: #FFF;
+    background: #FF8F1F;
+    border-radius: 4rpx;
+    padding: 0rpx 3rpx;
+    margin-right: 6rpx;
+  }
+  .type-label-self {
+    background: #FF6010;
+  }
 }

@@ -294,3 +294,20 @@
   top: 400rpx;
   left: 0;
 }
+
+
+.store-type {
+  font-size: 18rpx;
+  color: #989797;
+  margin-top: 6rpx;
+  .type-label {
+    color: #FFF;
+    background: #FF8F1F;
+    border-radius: 4rpx;
+    padding: 0rpx 3rpx;
+    margin-right: 6rpx;
+  }
+  .type-label-self {
+    background: #FF6010;
+  }
+}

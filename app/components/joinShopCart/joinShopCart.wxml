@@ -18,7 +18,11 @@
 		<!--以下不是预定的-->
 		<view wx:else>
 			<!--数量大于0的情况start-->
-			<view class="plus-minus {{size}}" wx:if="{{num > 0}}">
+			<view
+			 class="plus-minus {{size}}"
+			 wx:if="{{num > 0}}"
+			 style="margin-top:{{ isFromCartPage ? '32rpx' : 0}}"
+			>
 				<!--阶梯优惠提示-->
 				<!-- <view class="step-prices-hint {{sourcePage === 'itemDetail' && 'item-detail'}} {{sourcePage === 'shoppingCart' && 'shopping-cart'}}" wx:if="{{stepPricesHint}}">
 					{{stepPricesHint}}
@@ -28,7 +32,7 @@
 					<view class="btn minus" bindtap="down">
 						<image src="{{size =='medium' ? minusIndexSrc : minusSrc}}"></image>
 					</view>
-					<view  class="cart_num num" bind:tap="showInput">{{num}}</view>
+					<view class="cart_num num" bind:tap="showInput">{{num}}</view>
 					<view
 					 wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}"
 					 class="btn add unusable"
