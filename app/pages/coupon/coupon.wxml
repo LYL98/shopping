@@ -13,39 +13,45 @@
   </block>
 
   <view class="coupon-body">
-    <view wx:for="{{dataItem.items}}" wx:key="item.coupon.id" 
-      class="coupon-item {{item.coupon.item_id !== 0 || (item.gift_item && item.gift_item.id) ? '' : 'white-bg'}} {{(item.is_used || nowDataTime > item.coupon.time_end) && 'unusable'}} ">
-      <image class="bg-img" src="{{couponBgSrc}}" />
-      <!--已使用-->
-      <image class="status-img" src="{{couponUseSrc}}" wx:if="{{item.is_used && !showSkeleton}}" />
-      <!--已过期-->
-      <image class="status-img" src="{{couponPastSrc}}" wx:elif="{{nowDataTime > item.coupon.time_end && !showSkeleton}}" />
-
-      <view class="content">
-        <view class="left">
-          <view class="price">
-            <text class="skeleton-rect" wx:if="{{item.coupon.coupon_type === 'type_reduction'}}">￥{{tools.returnPrice(item.coupon.benefit)}}</text>
-            <text class="skeleton-rect" wx:elif="{{item.coupon.coupon_type === 'type_discount'}}">{{tools.returnDiscount(item.coupon.benefit)}}折</text>
-            <text class="skeleton-rect" wx:else>送{{item.coupon.benefit}}件</text>
+    <block wx:for="{{dataItem.items}}" wx:for-item="items" wx:key="items.key">
+      <view wx:if="{{items.data.length}}" class="coupon-type">{{items.key}}</view>
+      <view wx:for="{{items.data}}" wx:for-item="item" wx:key="item.coupon.id" class="coupon-item {{item.coupon.item_id !== 0 || (item.gift_item && item.gift_item.id) ? '' : 'white-bg'}} {{(item.is_used || nowDataTime > item.coupon.time_end) && 'unusable'}} ">
+        <image class="bg-img" src="{{couponBgSrc}}" />
+        <!--已使用-->
+        <image class="status-img" src="{{couponUseSrc}}" wx:if="{{item.is_used && !showSkeleton}}" />
+        <!--已过期-->
+        <image class="status-img" src="{{couponPastSrc}}" wx:elif="{{nowDataTime > item.coupon.time_end && !showSkeleton}}" />
+        <view class="content">
+          <view class="left">
+            <view class="price">
+              <block wx:if="{{item.coupon.coupon_type === 'type_gift' || item.coupon.coupon_type === 'type_reduction' || item.coupon.coupon_type === 'type_discount'}}">
+              <text class="skeleton-rect" wx:if="{{item.coupon.coupon_type === 'type_reduction'}}">￥{{tools.returnPrice(item.coupon.benefit)}}</text>
+                <text class="skeleton-rect" wx:elif="{{item.coupon.coupon_type === 'type_discount'}}">{{tools.returnDiscount(item.coupon.benefit)}}折</text>
+                <text class="skeleton-rect" wx:else>送{{item.coupon.benefit}}件</text>
+              </block>
+              <block wx:if="{{item.coupon.coupon_type === 'type_delivery'}}">
+                <text class="skeleton-rect">￥{{tools.returnPrice(item.coupon.benefit)}}</text>
+              </block>
+            </view>
+            <view class="hint">
+              <text class="skeleton-rect">满{{tools.returnPrice(item.coupon.amount_full)}}元可用</text>
+            </view>
           </view>
-          <view class="hint">
-            <text class="skeleton-rect">满{{tools.returnPrice(item.coupon.amount_full)}}元可用</text>
+          <view class="right">
+            <view class="title">
+              <text class="skeleton-rect">{{couponType[item.coupon.coupon_type]}}</text>
+            </view>
+            <view class="date">
+              <text class="skeleton-rect">{{item.coupon.time_start}} 至 {{item.coupon.time_end}}</text>
+            </view>
           </view>
-        </view>
-        <view class="right">
-          <view class="title">
-            <text class="skeleton-rect">{{couponType[item.coupon.coupon_type]}}</text>
           </view>
-          <view class="date">
-            <text class="skeleton-rect">{{item.coupon.time_start}} 至 {{item.coupon.time_end}}</text>
+          <view class="bottom" wx:if="{{item.coupon.item_id !== 0 || (item.gift_item && item.gift_item.id)}}">
+            <text wx:if="{{item.gift_item && item.gift_item.id}}">赠送商品：{{item.gift_item.title}}</text>
+            <text class="skeleton-rect" wx:if="{{item.coupon.item_id}}">适用范围：{{item.item.title}}</text>
           </view>
-        </view>
       </view>
-      <view class="bottom" wx:if="{{item.coupon.item_id !== 0 || (item.gift_item && item.gift_item.id)}}">
-        <text wx:if="{{item.gift_item && item.gift_item.id}}">赠送商品：{{item.gift_item.title}}</text>
-        <text class="skeleton-rect" wx:if="{{item.coupon.item_id}}">适用范围：{{item.item.title}}</text>
-      </view>
-    </view>
+    </block>
   </view>
 
   <view class="load-more" wx:if="{{dataItem.num > 0}}">

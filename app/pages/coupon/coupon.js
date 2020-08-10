@@ -101,13 +101,27 @@ Page({
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;
+          const coupons = [['type_reduction', 'type_discount', 'type_gift'],['type_delivery']]// 商品券
+          const sourceData = {
+            items:[
+              {
+                key: '商品券',
+                data: rd && rd.items.filter( item => coupons[0].includes(item.coupon.coupon_type))
+              },
+              {
+                key: '运费券',
+                data: rd && rd.items.filter( item => coupons[1].includes(item.coupon.coupon_type))
+              },
+            ],
+            num: rd.num
+          };
           if (query.page === 1) {
             that.setData({
-              dataItem: rd,
+              dataItem: sourceData,
               showSkeleton: false
             });
           } else {
-            dataItem.items = dataItem.items.concat(rd.items);
+            dataItem.items = dataItem.items.concat(sourceData.items);
             that.setData({
               dataItem: dataItem,
               showSkeleton: false
