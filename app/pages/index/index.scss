@@ -246,20 +246,7 @@ view, navigator, text {
         align-items: center;
         justify-content: space-between;
 
-        .store-type {
-          font-size: 18rpx;
-          color: #989797;
-          .type-label {
-            color: #FFF;
-            background: #FF8F1F;
-            border-radius: 4rpx;
-            padding: 0rpx 3rpx;
-            margin-right: 6rpx;
-          }
-          .type-label-self {
-            background: #FF6010;
-          }
-        }
+        
       }
   
       .cart-wrapper {
@@ -272,6 +259,21 @@ view, navigator, text {
   }
 }
 
+.store-type {
+  font-size: 18rpx;
+  color: #989797;
+  margin-top: 6rpx;
+  .type-label {
+    color: #FFF;
+    background: #FF8F1F;
+    border-radius: 4rpx;
+    padding: 0rpx 3rpx;
+    margin-right: 6rpx;
+  }
+  .type-label-self {
+    background: #FF6010;
+  }
+}
 .load-more, .load-none{
   background:#fff;
   color: #EEE;

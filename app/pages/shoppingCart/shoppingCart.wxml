@@ -66,7 +66,13 @@
 											<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
 											<text wx:if="{{item.min_num_per_order}}" class="min-num"> | {{item.min_num_per_order}}件起售</text>
 										</view>
-
+										<view class="store-type" wx:if="{{item.sale_type.length > 0}}">
+											<block wx:if="{{item.sale_type == '供应商'}}">
+												<text class="type-label" >供应商</text>
+												<text>供应商门店</text>
+											</block>
+											<text wx:else class="type-label type-label-self">自营</text>
+										</view>
 										<view style="height: 30rpx;"></view>
 									</view>
 								</navigator>
