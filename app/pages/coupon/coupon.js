@@ -1,4 +1,5 @@
 // pages/complain/complain.js
+import http from './../../utils/http';
 import config from './../../utils/config';
 import util from './../../utils/util';
 import constant from './../../utils/constant';
@@ -86,74 +87,49 @@ Page({
   couponList(){
     let that = this;
     let address = app.getSelectStore(); //当前选择地址
-    let { query, dataItem } = that.data;
+    let { query } = that.data;
     wx.showNavigationBarLoading();
-    wx.request({
-      url: config.api.couponList,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        ...query,
-        store_id: address.id
-      },
-      success: function (res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          const coupons = [['type_reduction', 'type_discount', 'type_gift'],['type_delivery']]// 商品券
-          const sourceData = {
-            items:[
-              {
-                key: '商品券',
-                data: rd && rd.items.filter( item => coupons[0].includes(item.coupon.coupon_type))
-              },
-              {
-                key: '运费券',
-                data: rd && rd.items.filter( item => coupons[1].includes(item.coupon.coupon_type))
-              },
-            ],
-            num: rd.num
-          };
-          if (query.page === 1) {
-            that.setData({
-              dataItem: sourceData,
-              showSkeleton: false
-            });
-          } else {
-            dataItem.items[0].data = dataItem.items[0].data.concat(sourceData.items[0].data);
-            dataItem.items[1].data = dataItem.items[1].data.concat(sourceData.items[1].data);
-            that.setData({
-              dataItem,
-              showSkeleton: false
-            });
-          }
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function (res) {
-        wx.hideNavigationBarLoading();
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.couponList();
+    http.get(config.api.couponList, {
+      ...query,
+      store_id: address.id
+    }).then(res => {
+      wx.hideNavigationBarLoading();
+      let rd = res.data;
+      const coupons = [['type_reduction', 'type_discount', 'type_gift'],['type_delivery']]// 商品券
+        const sourceData = {
+          items:[
+            {
+              key: '商品券',
+              data: rd && rd.items.filter( item => coupons[0].includes(item.coupon.coupon_type))
+            },
+            {
+              key: '运费券',
+              data: rd && rd.items.filter( item => coupons[1].includes(item.coupon.coupon_type))
+            },
+          ],
+          num: rd.num
+        };
+        that.setData({
+          dataItem: sourceData,
+          showSkeleton: false
         });
-      }
+    }).catch(() => {
+      wx.hideNavigationBarLoading();
     });
   },
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
-    let that = this;
-    let { query, dataItem } = that.data;
-    if (dataItem.num / query.page_size > query.page) {
-      query.page = query.page + 1;
-      that.setData({
-        query: query
-      }, () => {
-        that.couponList();
-      });
-    }
-  }
+  // onReachBottom: function() {
+  //   let that = this;
+  //   let { query, dataItem } = that.data;
+  //   if (dataItem.num / query.page_size > query.page) {
+  //     query.page = query.page + 1;
+  //     that.setData({
+  //       query: query
+  //     }, () => {
+  //       that.couponList();
+  //     });
+  //   }
+  // }
 })

@@ -11,10 +11,9 @@
     </view>
     <view style="height: 80rpx;"></view>
   </block>
-
   <view class="coupon-body">
-    <block wx:for="{{dataItem.items}}" wx:for-item="items" wx:key="items.key">
-      <view wx:if="{{items.data.length}}" class="coupon-type">{{items.key}}</view>
+    <block wx:for="{{dataItem.items}}" wx:for-item="items" wx:key="index">
+      <view wx:if="{{items.data.length}}" class="coupon-type {{items.key == '运费券' ? 'fare-coupon' : ''}} ">{{items.key}}</view>
       <view wx:for="{{items.data}}" wx:for-item="item" wx:key="item.coupon.id" class="coupon-item {{item.coupon.item_id !== 0 || (item.gift_item && item.gift_item.id) ? '' : 'white-bg'}} {{(item.is_used || nowDataTime > item.coupon.time_end) && 'unusable'}} ">
         <image class="bg-img" src="{{couponBgSrc}}" />
         <!--已使用-->
@@ -34,7 +33,7 @@
               </block>
             </view>
             <view class="hint">
-              <text class="skeleton-rect">满{{tools.returnPrice(item.coupon.amount_full)}}元可用</text>
+              <text class="skeleton-rect">{{item.coupon.coupon_type === 'type_delivery' ? "运费" : '' }}满{{tools.returnPrice(item.coupon.amount_full)}}元可用</text>
             </view>
           </view>
           <view class="right">

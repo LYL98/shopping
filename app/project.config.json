@@ -242,6 +242,12 @@
 					"pathName": "pages/itemList/itemList",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/coupon/coupon",
+					"scene": null
 				}
 			]
 		}
