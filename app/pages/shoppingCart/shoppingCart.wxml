@@ -66,17 +66,11 @@
 											<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
 											<text wx:if="{{item.min_num_per_order}}" class="min-num"> | {{item.min_num_per_order}}件起售</text>
 										</view>
-										<view class="store-type" wx:if="{{item.sale_type.length > 0}}">
-											<block wx:if="{{item.sale_type == '供应商'}}">
-												<text class="type-label" >供应商</text>
-												<text>供应商门店</text>
-											</block>
-											<text wx:else class="type-label type-label-self">自营</text>
-										</view>
+
 										<view style="height: 30rpx;"></view>
 									</view>
 								</navigator>
-								<view class="join" style="bottom:16rpx; left: 244rpx;">
+								<view class="join" style="bottom:60rpx; left: 244rpx;">
 									<view style="min-height:36rpx;">
 										<joinShopCart
 										 id="joinShopCart"
@@ -94,11 +88,22 @@
 										 bind:traggleStepPriceHint="traggleStepPriceHint"
 										/>
 									</view>
+
+								</view>
+								<view class="store-type" style="position:absolute;bottom:10rpx;left: 244rpx;">
+									<view class="store-type">
+										<block wx:if="{{item.sale_type == '供应商'}}">
+											<text class="type-label" >供应商</text>
+											<text>{{item.supplier}}门店</text>
+										</block>
+										<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">自营</text>
+									</view>
 								</view>
 								<view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
 									<text class="shop_type"></text>
 									<text class="shop_stock" wx:if="{{item.item_stock < 10}}">剩余{{item.item_stock}}件</text>
 								</view>
+
 							</view>
 						</view>
 

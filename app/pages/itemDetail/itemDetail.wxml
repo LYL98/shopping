@@ -77,6 +77,14 @@
 		<view class="goods_info--title">
 			{{detail.title}}
 		</view>
+		<view class="store-type">
+			<view class="store-type">
+				<block>
+					<text class="type-label" >供应商</text>
+					<text>{{item.supplier}}门店</text>
+				</block>
+			</view>
+		</view>
 		<view class="goods_info--tag justify-between align-center">
 			<view class="align-center">
 				<view
@@ -157,8 +165,8 @@
 	</view>
 
 	<view class="goods_attr">
-		<view class="goods_header goods_header--attr">商品属性</view>
-		<view class="align-center goods_attr--box goods_attr--box--gray">
+		<view class="goods_header goods_header--attr goods_header_attr--other">商品属性</view>
+		<view class="align-center goods_attr--box goods_attr--box--gray pl24">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">产地</view>
 				<view class="goods_info--value">{{detail.origin_place || '-'}}</view>
@@ -168,7 +176,7 @@
 				<view class="goods_info--value">{{detail.item_spec || '-'}}</view>
 			</view>
 		</view>
-		<view class="align-center goods_attr--box">
+		<view class="align-center goods_attr--box pl24">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">包装方式</view>
 				<view class="goods_info--value">{{detail.package_spec || '-'}}</view>
@@ -179,20 +187,20 @@
 				<text class="goods_info--value" wx:else>无</text>
 			</view>
 		</view>
-		<view class="align-center goods_attr--box goods_attr--box--gray">
+		<view class="align-center goods_attr--box goods_attr--box--gray pl24">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">店内存放</view>
 				<view class="goods_info--value">{{detail.system_class.store_save_way}}</view>
 			</view>
 		</view>
-		<view class="align-center " style="padding-left:24rpx">
+		<view class="align-center pl24">
 			<view class="align-center label_item goods_info--label--max ">
 				<view class="goods_info--label">卖点</view>
 				<view class="goods_info--value" wx:if="{{detail.selling_points.length > 0}}">{{detail.selling_points}}</view>
 				<view class="goods_info--value" wx:else> - </view>
 			</view>
 		</view>
-		<view class="align-center goods_attr--box--gray" style="padding-left:24rpx">
+		<view class="align-center goods_attr--box--gray pl24">
 			<view class="align-center label_item goods_info--label--max">
 				<view class="goods_info--label  goods_info--label--single">可能存在的瑕疵</view>
 				<view class="goods_info--value" wx:if="{{detail.flaw.length > 0}}">{{detail.flaw}}</view>
@@ -259,7 +267,7 @@
 		</view>
 	</view>
 	<view class="goods_reback" wx:if="{{detail.system_class.compensated}}">
-		<view class="goods_header goods_header--attr">退赔规则</view>
+		<view class="goods_header ">退赔规则</view>
 		<view class="align-center goods_attr--box goods_attr--box--more">
 			<view class="align-start label_item">
 				<view class="goods_info--label goods_info--label--reback">可赔付范围</view>

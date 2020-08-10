@@ -171,30 +171,30 @@
 						</view>
 					</view>
 					<view>
+						<priceBox
+						 vipLevel="{{dataItem.vip_level}}"
+						 vipTitle="{{dataItem.vip_title}}"
+						 vipDiscount="{{dataItem.vip_discount}}"
+						 isVipItem="{{item.is_vip_item}}"
+						 isQuoted="{{item.is_quoted}}"
+						 priceSale="{{item.price_sale}}"
+						 priceOrigin="{{item.price_origin}}"
+						 priceNoVip="{{item.price_novip}}"
+						/>
 						<view class="goods-item-info-bottom">
-
-							<priceBox
-							 vipLevel="{{dataItem.vip_level}}"
-							 vipTitle="{{dataItem.vip_title}}"
-							 vipDiscount="{{dataItem.vip_discount}}"
-							 isVipItem="{{item.is_vip_item}}"
-							 isQuoted="{{item.is_quoted}}"
-							 priceSale="{{item.price_sale}}"
-							 priceOrigin="{{item.price_origin}}"
-							 priceNoVip="{{item.price_novip}}"
-							/>
+							<view class="store-type">
+								<block wx:if="{{item.sale_type == '供应商'}}">
+									<text class="type-label" >供应商</text>
+									<text>{{item.supplier}}门店</text>
+								</block>
+								<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">自营</text>
+							</view>
 
 							<view class="cart-wrapper">
 								<handleShopCart itemData="{{item}}" />
 							</view>
 						</view>
-						<view class="store-type" wx:if="{{item.sale_type.length > 0}}">
-							<block wx:if="{{item.sale_type == '供应商'}}">
-								<text class="type-label" >供应商</text>
-								<text>供应商门店</text>
-							</block>
-							<text wx:else class="type-label type-label-self">自营</text>
-						</view>
+
 					</view>
 
 				</view>
