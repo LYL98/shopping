@@ -107,7 +107,7 @@
 
 	<view class="input-item">
 		<view class="title">
-			<text class="skeleton-rect">小计：</text>
+			<text class="skeleton-rect">商品小计：</text>
 		</view>
 		<view class="content">
 

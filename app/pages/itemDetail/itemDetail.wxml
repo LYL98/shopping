@@ -79,10 +79,11 @@
 		</view>
 		<view class="store-type">
 			<view class="store-type">
-				<block>
+				<block wx:if="{{detail.sale_type == '平台'}}">
 					<text class="type-label" >供应商</text>
-					<text>{{item.supplier}}门店</text>
+					<text>{{detail.supplier}}门店</text>
 				</block>
+				<text wx:elif="{{detail.sale_type == '自营'}}" class="type-label type-label-self">自营</text>
 			</view>
 		</view>
 		<view class="goods_info--tag justify-between align-center">
