@@ -92,7 +92,7 @@
 								</view>
 								<view class="store-type" style="position:absolute;bottom:10rpx;left: 244rpx;">
 									<view class="store-type">
-										<block wx:if="{{item.sale_type == '供应商'}}">
+										<block wx:if="{{item.sale_type == '平台'}}">
 											<text class="type-label" >供应商</text>
 											<text>{{item.supplier}}门店</text>
 										</block>
