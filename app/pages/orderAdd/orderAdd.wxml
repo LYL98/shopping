@@ -47,11 +47,16 @@
 	<view class="bottom-border1">
 		<image src="{{orderAddBgSrc}}"></image>
 	</view>
-
+	<view class="border-top"></view>
 	<view class="item-view">
+		<view class="platform align-center">
+			<view class="platform_tag platform_tag--self">自营</view>
+			<view>蒲公英资自营</view>
+
+		</view>
 		<view
 		 class="item"
-		 wx:for="{{dataItem.items}}"
+		 wx:for="{{selfGoods}}"
 		 wx:key="index"
 		>
 			<view class="no-nav">
@@ -98,14 +103,94 @@
 				</view>
 			</view>
 		</view>
-		<view class="item-view-bottom"></view>
-	</view>
+		<view class="item_all_price justify-end align-center">
+			<view class="align-center" style="margin-right:24rpx">
+				<view>商品金额: </view>
+				<view>￥{{tools.returnPrice(detail.self_total_price)}}</view>
+			</view>
+			<view class="align-center">
+				<view>运费金额: </view>
+				<view>￥{{tools.returnPrice(detail.self_delivery_fee)}}</view>
+			</view>
 
-	<view class="subtotal bottom-border2 t-r">
-		<text class="skeleton-rect"></text>
+		</view>
 	</view>
+	<view class="border-top"></view>
 
-	<view class="input-item">
+	<view class="item-view">
+		<view class="platform align-center">
+			<view class="platform_tag platform_tag--supplier">平台</view>
+			<view>供应商直供</view>
+
+		</view>
+		<view
+		 class="item"
+		 wx:for="{{supplierGoods}}"
+		 wx:key="index"
+		>
+			<view class="no-nav">
+				<view class="img">
+					<view class="mark">
+						<text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+					</view>
+					<image
+					 class="skeleton-rect"
+					 lazy-load="{{index > 4 ? true : false}}"
+					 wx:if="{{item.images.length > 0}}"
+					 src="{{tencentPath + item.images[0]}}_watermark200x200"
+					></image>
+					<view class="image skeleton-rect" wx:else></view>
+				</view>
+				<view class="content">
+					<view class="title skeleton-rect">
+						<text class="present" wx:if="{{item.is_gift}}">赠品</text>
+						{{item.title}}
+					</view>
+					<view class="goods_label">
+						<text class="skeleton-rect tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+						<text class="skeleton-rect" wx:if="{{item.item_spec}}"> | {{item.item_spec}}</text>
+						<text class="skeleton-rect" wx:if="{{item.origin_place}}"> | {{item.origin_place}}</text>
+						<text class="skeleton-rect" wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+						<text class="skeleton-rect frame" wx:if="{{item.frame_id}}"> | 有筐</text>
+					</view>
+					<view class="item_bottom_price">
+						<block wx:if="{{item.is_vip_item && discount > 0}}">
+							<view class="vip_card align-center">
+								<view class="vip_card--type card_type--{{level}}">{{title}}价</view>
+								<view class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(item.price_sale)}}</view>
+							</view>
+							<view class="normal_price " style="line-height: 10rpx;">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
+						</block>
+						<view class="price-unit skeleton-rect" wx:else>
+							￥{{tools.returnPrice(item.price_sale)}}
+						</view>
+						<view class="store-type">
+							<text class="type-label" >供应商</text>
+							<text2>{{item.supplier}}门店</text2>
+						</view>
+						<view class="num-price">
+							<text class="num-str skeleton-rect">× {{item.number}}</text>
+							<text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale * item.number)}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="item_all_price justify-end align-center">
+			<view class="align-center" style="margin-right:24rpx">
+				<view>商品金额: </view>
+				<view>￥{{tools.returnPrice(detail.supplier_total_price)}}</view>
+			</view>
+			<view class="align-center">
+				<view>运费金额: </view>
+				<view>￥{{tools.returnPrice(detail.supplier_delivery_fee)}}</view>
+			</view>
+
+		</view>
+	</view>
+	<view class="border-top"></view>
+
+	<view class="input-item ">
 		<view class="title">
 			<text class="skeleton-rect">商品小计：</text>
 		</view>
@@ -178,6 +263,7 @@
 	<!--筐费用-->
 	<view
 	 class="input-item"
+	 style="border-bottom:none!important"
 	 wx:if="{{dataItem.fram_total_price}}"
 	 bind:tap="skipPage"
 	 data-page="/pages/orderFram/orderFram"
@@ -251,7 +337,7 @@
 		</view>
 	</view>
 
-	<view class="input-item">
+	<view class="input-item" style="border-bottom:none!important">
 		<view class="title">
 			<text class="skeleton-rect">运费实收：</text>
 		</view>

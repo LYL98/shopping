@@ -13,7 +13,7 @@ const init = () => {
 			202,
 			31
 		)(
-			figlet.textSync('PGY GAEA', {
+			figlet.textSync('PGY SELENE', {
 				horizontalLayout: 'default',
 				verticalLayout: 'default'
 			})

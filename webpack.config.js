@@ -2,10 +2,26 @@ const path = require('path');
 const glob = require('globby');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
-
+const chalk = require('chalk');
+const figlet = require('figlet');
 const CSS_PATH = {
 	pattern: ['app/pages/**/*.scss', 'app/components/**/*.scss', 'app/app.scss'],
 	app: path.join(__dirname, 'app')
+};
+
+const init = () => {
+	console.log(
+		chalk.bold.rgb(
+			253,
+			202,
+			31
+		)(
+			figlet.textSync('PGY SELENE', {
+				horizontalLayout: 'default',
+				verticalLayout: 'default'
+			})
+		)
+	);
 };
 
 const getCSSEntries = (config) => {
@@ -44,4 +60,5 @@ let config = {
 	}
 };
 
+init()
 module.exports = config;

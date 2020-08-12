@@ -67,7 +67,7 @@
 
 .item-view-bottom{
   border-bottom: 1rpx solid #eee;
-  margin: 0 30rpx;
+  margin: 0 32rpx;
 }
 
 .subtotal{
@@ -127,8 +127,9 @@
   color: #FF6868;
 }
 .send_price{
-  padding: 0 30rpx;
-  margin-top: 24rpx;
+  padding: 14rpx 32rpx;
+  background: #F9F9F9;
+
 }
 .send_item{
   line-height: 64rpx;
@@ -136,7 +137,8 @@
   font-size: 26rpx;
 }
 .send_item--label{
-  color: #808080;
+  color: #989797 ;
+  font-size: 24rpx;
 }
 .send_item--value{
   color: #FF6868;
@@ -173,4 +175,64 @@
 }
 .content .num-price{
   bottom: 4rpx !important;
+}
+
+.platform{
+  height: 96rpx;
+  font-size: 30rpx;
+color: #151515;
+border-bottom: 1rpx solid #EEEEEE;
+padding-left: 32rpx;
+padding-right: 32rpx;
+}
+.platform_tag{
+  border-radius: 4rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  padding: 0  4rpx;
+  margin-right: 20rpx;
+
+}
+.platform_tag--self{
+  background: #FF6010;
+}
+.platform_tag--supplier{
+  
+  background: #FF8F1F;
+}
+.item{
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+}
+.item-view {
+  margin: 0!important;
+  // border-top: 24rpx solid #F9F9F8;
+}
+.item_all_price{
+  font-size: 24rpx;
+  color: #616161;
+  height: 82rpx;
+  margin: 0 25rpx;
+  border-top: 1rpx solid #eee;
+}
+.border-top{
+  background-color: #F9F9F8;
+  height: 24rpx;
+  width: 100%;
+}
+
+.store-type {
+  font-size: 18rpx;
+  color: #989797;
+  margin-top: 6rpx;
+  .type-label {
+    color: #FFF;
+    background: #FF8F1F;
+    border-radius: 4rpx;
+    padding: 0rpx 3rpx;
+    margin-right: 6rpx;
+  }
+  .type-label-self {
+    background: #FF6010;
+  }
 }

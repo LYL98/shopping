@@ -100,6 +100,8 @@
 				</view>
 			</view>
 			<view class="goods_info--limit align-center">
+				<text>运费{{tools.returnPrice(detail.delivery_price)}}元</text>
+				<view class="cicle"></view>
 				<text>起购件{{detail.min_num_per_order}}件</text>
 				<view class="cicle"></view>
 				<text>最多下单{{detail.order_num_max}}件</text>
