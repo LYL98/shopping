@@ -73,6 +73,8 @@ Page({
     discount:0,
     level:0,
     title:'',
+    selfGoods:[], // 自营的商品
+    supplierGoods:[], // 供应商那个商品
   },
 
   /**
@@ -289,9 +291,13 @@ Page({
          */
         if (res.statusCode == 200 && res.data.code === 0) {
           let rd = res.data.data;
+          let selfGoods = rd.items.filter(item => item.sale_type === '自营')
+          let supplierGoods = rd.items.filter(item => item.sale_type === '平台')
           that.setData({
             dataItem: rd,
-            showSkeleton: false
+            showSkeleton: false,
+            selfGoods,
+            supplierGoods
           });
           /*===== 埋点 start ======*/
           app.gioActionRecordAdd('createOrder', {
