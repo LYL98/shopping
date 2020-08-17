@@ -209,8 +209,8 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "自提点申请",
+					"id": 21,
+					"name": "门店申请",
 					"pathName": "pages/applyStore/applyStore",
 					"query": "",
 					"scene": null
@@ -247,6 +247,7 @@
 					"id": -1,
 					"name": "优惠券",
 					"pathName": "pages/coupon/coupon",
+					"query": "",
 					"scene": null
 				}
 			]

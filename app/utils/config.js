@@ -145,8 +145,8 @@ module.exports = {
     
     
     hotSaleItems: apiC + '/item/top', // 热销榜单
-    storeApply: apiC + '/included/apply', // 门店自提点申请
-    storeApplyStatus: apiC + '/included/apply/status', // 自提点申请状态
+    storeApply: apiC + '/included/apply', // 门店申请
+    storeApplyStatus: apiC + '/included/apply/status', // 门店申请状态
 
   },
   //腾讯Bucket、Region
