@@ -1,78 +1,129 @@
 <view class="" wx:if="{{applyStatus == 'uncommitted'}}">
-    <view class="header-box">
-        <image src="/assets/img/applyStore/apply_store_logo.png"></image>
-    </view>
-    <view class="body-box">
-        <view class="form-wrapper">
-            <view class="form-box">
-                <image class="form-title-img" src="/assets/img/applyStore/title.png"></image>
-                <view class="form-item">
-                    <text class="label">经营面积：</text>
-                    <view class="border align-center">
-                        <picker style="flex:1;" data-type="area" bindchange="bindPickerChange" range="{{area}}" value="{{areaIndex}}" range-key="name">
-                            <input placeholder="请选择经营面积" placeholder-class="plhd" disabled="{{true}}" value="{{area[areaIndex].name}}"></input>
-                        </picker>
-                        <image style="width:32rpx;height:32rpx;" src="/assets/img/applyStore/arrow-down.png"></image>
-                    </view>
-                </view>
-                <view class="form-item">
-                    <text class="label">店主年龄：</text>
-                    <view class="border align-center">
-                        <picker style="flex:1;" data-type="ages" bindchange="bindPickerChange" range="{{ages}}" value="{{agesIndex}}" range-key="name">
-                            <input placeholder="请选择您的年龄" placeholder-class="plhd" disabled="{{true}}" value="{{ages[agesIndex].name}}"></input>
-                        </picker>
-                        <image style="width:32rpx;height:32rpx;" src="/assets/img/applyStore/arrow-down.png"></image>
-                    </view>
-                </view>
-                <view class="form-item">
-                    <text class="label">店内设施：</text>
-                    <view class="align-center facility">
-                        <view class="align-center" style="margin-right:40rpx;" wx:for="{{facility}}" wx:key="id" data-index="{{index}}" bindtap="changeFacility">
-                            <image wx:if="{{item.checked}}" src="/assets/img/applyStore/radio_s.jpg"></image>
-                            <image wx:else src="/assets/img/applyStore/radio.jpg"></image>
-                            <text>{{item.name}}</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="form-item" style="padding-right:0rpx;">
-                    <text class="label">门店地址：</text>
-                    <view class="border align-center">
-                        <input style="flex:1;"  placeholder="请选择所在的区域" placeholder-class="plhd" value="{{address}}" data-type="address" bindinput="changeInput"></input>
-                        <view class="">
-                            <locationAuth showText="{{false}}" bind:getlocation="getLocationCB"></locationAuth>
-                        </view>
-                    </view>
-                </view>
-                <view class="form-item">
-                    <text class="label">详细地址：</text>
-                    <view class="border align-center">
-                        <input style="flex:1;" placeholder="街道、楼号、房号等" placeholder-class="plhd" value="{{detailAddress}}" data-type="detailAddress" bindinput="changeInput"></input>
-                    </view>
-                </view>
-                <view class="apply-box">
-                    <view class="apply-btn" hover-class="view-hover" bindtap="applyStore">立即申请</view>
-                </view>
-                
-            </view>
-        </view>
-        <view class="footer-title">
-            提交申请后1～3天内请点击进入此页面查看申请结果
-        </view>
-    </view>
+	<view class="header-box">
+		<image src="/assets/img/applyStore/apply_store_logo.png"></image>
+	</view>
+	<view class="body-box">
+		<view class="form-wrapper">
+			<view class="form-box">
+				<image class="form-title-img" src="/assets/img/applyStore/title.png"></image>
+				<view class="form-item">
+					<text class="label">经营面积：</text>
+					<view class="border align-center">
+						<picker
+						 style="flex:1;"
+						 data-type="area"
+						 bindchange="bindPickerChange"
+						 range="{{area}}"
+						 value="{{areaIndex}}"
+						 range-key="name"
+						>
+							<input
+							 placeholder="请选择经营面积"
+							 placeholder-class="plhd"
+							 disabled="{{true}}"
+							 value="{{area[areaIndex].name}}"
+							></input>
+						</picker>
+						<image style="width:32rpx;height:32rpx;" src="/assets/img/applyStore/arrow-down.png"></image>
+					</view>
+				</view>
+				<view class="form-item">
+					<text class="label">店主年龄：</text>
+					<view class="border align-center">
+						<picker
+						 style="flex:1;"
+						 data-type="ages"
+						 bindchange="bindPickerChange"
+						 range="{{ages}}"
+						 value="{{agesIndex}}"
+						 range-key="name"
+						>
+							<input
+							 placeholder="请选择您的年龄"
+							 placeholder-class="plhd"
+							 disabled="{{true}}"
+							 value="{{ages[agesIndex].name}}"
+							></input>
+						</picker>
+						<image style="width:32rpx;height:32rpx;" src="/assets/img/applyStore/arrow-down.png"></image>
+					</view>
+				</view>
+				<view class="form-item">
+					<text class="label">店内设施：</text>
+					<view class="align-center facility">
+						<view
+						 class="align-center"
+						 style="margin-right:40rpx;"
+						 wx:for="{{facility}}"
+						 wx:key="id"
+						 data-index="{{index}}"
+						 bindtap="changeFacility"
+						>
+							<image wx:if="{{item.checked}}" src="/assets/img/applyStore/radio_s.jpg"></image>
+							<image wx:else src="/assets/img/applyStore/radio.jpg"></image>
+							<text>{{item.name}}</text>
+						</view>
+					</view>
+				</view>
+				<view class="form-item" style="padding-right:0rpx;">
+					<text class="label">门店地址：</text>
+					<view class="border align-center">
+						<input
+						 style="flex:1;"
+						 placeholder="请选择所在的区域"
+						 placeholder-class="plhd"
+						 value="{{address}}"
+						 data-type="address"
+						 bindinput="changeInput"
+						></input>
+						<view class="">
+							<locationAuth showText="{{false}}" bind:getlocation="getLocationCB"></locationAuth>
+						</view>
+					</view>
+				</view>
+				<view class="form-item">
+					<text class="label">详细地址：</text>
+					<view class="border align-center">
+						<input
+						 style="flex:1;"
+						 placeholder="街道、楼号、房号等"
+						 placeholder-class="plhd"
+						 value="{{detailAddress}}"
+						 data-type="detailAddress"
+						 bindinput="changeInput"
+						></input>
+					</view>
+				</view>
+				<view class="apply-box">
+					<view
+					 class="apply-btn"
+					 hover-class="view-hover"
+					 bindtap="applyStore"
+					>立即申请
+					</view>
+				</view>
+
+			</view>
+		</view>
+		<view class="footer-title">
+			提交申请后1～3天内请点击进入此页面查看申请结果
+		</view>
+	</view>
 </view>
 
 <view class="apply-store-result" wx:if="{{applyStatus == 'pass'}}">
-    <view class="result flex-column align-center">
-        <image src="/assets/img/applyStore/apply_store_success.png" style="width:300rpx;height:260rpx"></image>
-        <text class="apply-status" decode="{{true}}">·&nbsp;申请成功&nbsp;·</text>
-        <view class="apply-msg">您的自提点申请已通过审核，请及时联系您的客户经理～</view>
-    </view>  
+	<view class="result flex-column align-center">
+		<image src="/assets/img/applyStore/apply_store_success.png" style="width:300rpx;height:260rpx"></image>
+		<text class="apply-status" decode="{{true}}">·&nbsp;申请成功&nbsp;·</text>
+		<view class="apply-msg">您的满天星申请已通过审核，请及时联系您的客户经理～</view>
+	</view>
 </view>
 
 <view class="apply-store-result" wx:if="{{applyStatus == 'wait_audit'}}">
-    <view class="result flex-column align-center">
-        <image src="/assets/img/applyStore/apply_store_success.png" style="width:300rpx;height:260rpx"></image>
-        <text class="apply-status" decode="{{true}}">·&nbsp;审核中&nbsp;·</text>
-        <view class="apply-msg">您的自提点申请已提交审核，1～3个工作日内，会有申请结果。请您耐心等待～</view>
-    </view>  
+	<view class="result flex-column align-center">
+		<image src="/assets/img/applyStore/apply_store_success.png" style="width:300rpx;height:260rpx"></image>
+		<text class="apply-status" decode="{{true}}">·&nbsp;审核中&nbsp;·</text>
+		<view class="apply-msg">您的满天星申请已提交审核，1～3个工作日内，会有申请结果。请您耐心等待～</view>
+	</view>
 </view>
+

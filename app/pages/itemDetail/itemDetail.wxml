@@ -213,7 +213,7 @@
 	</view>
 	<view class="goods_attr" wx:if="{{detail.grade.length > 0 ||  detail.toast > 0  || detail.appearance> 0 || detail.fresh > 0}}">
 		<view class="goods_header goods_header--attr">商品评级</view>
-		<view class="align-center goods_attr--box goods_attr--box--gray">
+		<view class="align-center goods_attr--box goods_attr--box--gray  pl24">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">综合等级</view>
 				<view class="goods_info--value" wx:if="{{detail.grade.length > 0}}">{{detail.grade}}</view>
@@ -232,7 +232,7 @@
 			</view>
 		</view>
 		<view class="align-center goods_attr--box">
-			<view class="align-center label_item goods_attr--item ">
+			<view class="align-center label_item goods_attr--item  pl24">
 				<view class="goods_info--label">外观星级</view>
 				<view class="goods_info--value align-center" wx:if="{{ detail.appearance > 0}}">
 					<image
@@ -255,7 +255,7 @@
 				<view class="goods_info--value" wx:else> - </view>
 			</view>
 		</view>
-		<view class="align-center goods_attr--box goods_attr--box--gray">
+		<view class="align-center goods_attr--box goods_attr--box--gray  pl24">
 			<view class="align-center label_item goods_attr--item ">
 				<view class="goods_info--label">新鲜星级</view>
 				<view class="goods_info--value align-center" wx:if="{{ detail.fresh > 0}}">
