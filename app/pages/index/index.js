@@ -395,7 +395,7 @@ Page({
             /*===== 埋点 end ======*/
           });
           //默认选择运营专区第一个
-          query.item_tag_id = rdTemp[0].id;
+          query.item_tag_id = rdTemp[0] && rdTemp[0].id;
           that.setData({
             tagsList: rdTemp,
             query:query
