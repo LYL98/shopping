@@ -249,6 +249,13 @@
 					"pathName": "pages/coupon/coupon",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/complain/complain",
+					"pathName": "pages/complain/complain",
+					"query": "",
+					"scene": null
 				}
 			]
 		}
