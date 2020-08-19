@@ -1,5 +1,5 @@
 // pages/complain/complain.js
-import config from './../../utils/config';
+import { Config } from './../../utils/index';
 const app = getApp();
 
 Page({
@@ -8,7 +8,7 @@ Page({
    */
   data: {
     serviceTel: '400 825 8522',
-    qrCode: '/assets/img/service_weixin.png',
+    qrCode: Config.tencentPath + '/common/service_weixin.png',
   },
   //拨打电话
   makePhoneCall(){
@@ -17,5 +17,12 @@ Page({
     });
   },
   onLoad: function() {
+    
+  },
+  previewImg() {
+    const { qrCode } = this.data
+    wx.previewImage({
+      urls: [qrCode],
+    })
   }
 })
