@@ -8,7 +8,7 @@
   <view>
     <view class="title">客服微信</view>
     <view class="qr-code">
-      <image src="{{qrCode}}" bindtap=""></image>
+      <image src="{{qrCode}}" bindtap="previewImg"></image>
     </view>
     <view class="hint">
       <text>扫扫二维码，加客服微信</text>
