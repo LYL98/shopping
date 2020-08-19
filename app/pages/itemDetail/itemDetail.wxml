@@ -269,7 +269,7 @@
 			</view>
 		</view>
 	</view>
-	<view class="goods_reback" wx:if="{{detail.system_class.compensated}}">
+	<view class="goods_reback" wx:if="{{detail.system_class.compensated && detail.sale_type !== '平台'}}">
 		<view class="goods_header ">退赔规则</view>
 		<view class="align-center goods_attr--box goods_attr--box--more">
 			<view class="align-start label_item">
