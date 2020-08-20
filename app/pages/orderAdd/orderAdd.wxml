@@ -51,8 +51,8 @@
 		<view class="border-top"></view>
 		<view class="item-view">
 			<view class="platform align-center">
-				<view class="platform_tag platform_tag--self">自营</view>
-				<view>蒲公英自营</view>
+				<view class="platform_tag platform_tag--self">蒲公英优选</view>
+				<view>蒲公英</view>
 
 			</view>
 			<view
