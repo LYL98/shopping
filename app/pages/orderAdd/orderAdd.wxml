@@ -214,6 +214,7 @@
 			 class="right-img f-r price-right-img"
 			 style="top: 8rpx;"
 			 src="{{rightPriceSrc}}"
+			 wx:if="{{couponGoodsListData.length > 0}}"
 			></image>
 			<view
 			 class="skeleton-rect add-dot f-r"
@@ -311,6 +312,7 @@
 				<view class="send_item--value align-center" wx:if="{{couponDeliveryListData.length > 0 && couponDeliverySelectData && couponDeliverySelectData.id}}">
 					<text>-￥{{tools.returnPrice(couponDeliverySelectData.coupon.benefit)}} </text>
 					<image
+					 wx:if="{{couponDeliveryListData.length > 0}}"
 					 class="right-img f-r price-right-img align-center"
 					 style="top: 8rpx;"
 					 src="{{rightPriceSrc}}"
