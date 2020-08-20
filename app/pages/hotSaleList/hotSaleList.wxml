@@ -27,7 +27,7 @@
               <view class="price-box">
                 <block wx:if="{{item.is_quoted}}">
                   <view class="sale-price">¥{{tools.returnPrice(item.price_sale)}}</view>
-                  <view class="original-price" wx:if="{{item.price_origin}}">¥{{tools.returnPrice(item.price_origin)}}</view>
+                  <view class="original-price" wx:if="{{item.price_origin > item.price_sale}}">¥{{tools.returnPrice(item.price_origin)}}</view>
                 </block>
                 <block wx:else>
                   <text>今日未报价</text>
