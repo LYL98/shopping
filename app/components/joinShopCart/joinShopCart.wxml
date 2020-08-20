@@ -21,7 +21,7 @@
 			<view
 			 class="plus-minus {{size}}"
 			 wx:if="{{num > 0}}"
-			 style="margin-top:{{ isFromCartPage ? '32rpx' : 0}}"
+			 style="margin-top:{{ isFromCartPage ? '40rpx' : 0}}"
 			>
 				<!--阶梯优惠提示-->
 				<!-- <view class="step-prices-hint {{sourcePage === 'itemDetail' && 'item-detail'}} {{sourcePage === 'shoppingCart' && 'shopping-cart'}}" wx:if="{{stepPricesHint}}">
@@ -72,7 +72,7 @@
 
 	<!--购物车专用start-->
 	<view class="shopping-cart-page" wx:if="{{sourcePage === 'shoppingCart'}}">
-		<view class="price-unit">
+		<view class="price-unit" style="margin-top:8rpx">
 			<text wx:if="{{!itemData.is_quoted}}">今日未报价</text>
 			<text wx:elif="{{itemData.item_stock < itemData.min_num_per_order || itemData.item_stock === 0}}">库存不足</text>
 			<text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
@@ -90,9 +90,9 @@
 				<text class="price" wx:else>￥{{tools.returnPrice(itemData.price_sale)}}</text>
 			</view>
 		</view>
-		<view class="discount-repertory" wx:if="{{itemData.item_stock > 0 && itemData.item_stock >= itemData.min_num_per_order}}">
+		<!-- <view class="discount-repertory" wx:if="{{itemData.item_stock > 0 && itemData.item_stock >= itemData.min_num_per_order}}">
 			<view class="repertory">{{tools.returnItemStock(itemData)}}</view>
-		</view>
+		</view> -->
 	</view>
 	<!--购物车专用end-->
 </view>
