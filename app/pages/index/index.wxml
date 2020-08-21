@@ -184,10 +184,10 @@
 						<view class="goods-item-info-bottom">
 							<view class="store-type">
 								<block wx:if="{{item.sale_type == '平台'}}">
-									<text class="type-label" >供应商</text>
+									<text class="type-label" >商家</text>
 									<text>{{item.supplier}}门店</text>
 								</block>
-								<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">蒲公英优选</text>
+								<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
 							</view>
 
 							<view class="cart-wrapper">
