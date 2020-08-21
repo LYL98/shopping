@@ -51,9 +51,8 @@
 		<view class="border-top"></view>
 		<view class="item-view">
 			<view class="platform align-center">
-				<view class="platform_tag platform_tag--self">自营</view>
-				<view>蒲公英自营</view>
-
+				<view class="platform_tag platform_tag--self">优选</view>
+				<view>蒲公英优选</view>
 			</view>
 			<view
 			 class="item"
@@ -123,8 +122,7 @@
 		<view class="item-view">
 			<view class="platform align-center">
 				<view class="platform_tag platform_tag--supplier">平台</view>
-				<view>供应商直供</view>
-
+				<view>商家直供</view>
 			</view>
 			<view
 			 class="item"
@@ -168,7 +166,7 @@
 								￥{{tools.returnPrice(item.price_sale)}}
 							</view>
 							<view class="store-type">
-								<text class="type-label" >供应商</text>
+								<text class="type-label" >商家</text>
 								<text2>{{item.supplier}}门店</text2>
 							</view>
 							<view class="num-price">
