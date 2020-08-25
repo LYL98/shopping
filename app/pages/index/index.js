@@ -534,11 +534,10 @@ Page({
   clickTags(e){
     let item = e.currentTarget.dataset.item;
     let index = e.currentTarget.dataset.index;
-    app.globalData.indexTagId = item.id; //保存itemList页面要用到，
-    app.globalData.indexTagIndex = index; //保存itemList页面要用到
-    wx.switchTab({
-      url: '/pages/itemList/itemList',
-    })
+
+    wx.navigateTo({
+      url: `/pages/itemTag/itemTag?id=${item.id}`,
+    });
 
     /*===== 埋点 start ======*/
     app.gioActionRecordAdd('positionClick', {

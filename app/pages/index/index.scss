@@ -123,31 +123,26 @@ view, navigator, text {
   }
 }
 
-.title-box {
-  display: flex;
-  margin-bottom: 24rpx;
-  .title-box-body {
-    margin: auto;
-    margin-top: 39rpx;
+.title-box-body {
+  margin: 39rpx auto 24rpx;
+  text-align: center;
+  position: relative;
+  >.title {
+    font-size: 36rpx;
+    line-height: 36rpx;
+    color: #151515;
     position: relative;
-    .title {
-      font-family: "PingFangSC-Semibold";
-      font-size: 36rpx;
-      color: #151515;
-      letter-spacing: 2.25px;
-      background: transparent;
-      z-index: 2;
-      position: relative;
-    }
-    .base-line {
-      position: absolute;
-      bottom: 4rpx;
-      right: 6rpx;
-      display: inline-block;
-      width: 140rpx;
-      height: 8rpx;
-      background: #FFD426;
-    }
+    z-index: 1;
+  }
+  >.base-line {
+    width: 120rpx;
+    height: 8rpx;
+    background: #FFD426;
+    display: block;
+    position: absolute;
+    bottom: 6rpx;
+    left: 50%;
+    margin-left: -60rpx;
   }
 }
 
@@ -241,18 +236,9 @@ view, navigator, text {
         }
       }
       .goods-item-info-bottom {
-
         display: flex;
         align-items: center;
         justify-content: space-between;
-
-        
-      }
-  
-      .cart-wrapper {
-          // position: absolute;
-          // bottom: 22rpx;
-          // right: 22rpx;
       }
     }
 

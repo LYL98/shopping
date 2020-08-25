@@ -403,6 +403,7 @@ App({
   },
   //gio数据埋点(event事件，data数据)
   gioActionRecordAdd(event, data){
+    if(Config.comm !== 'pro') return; //不是生产环境，不埋点上传
     let events = {
       'setUserId': { type: '', data: data },
       'setUser': { type: '', data: data },

@@ -1,0 +1,322 @@
+<!--
+此文件为开发者工具生成，生成时间: 2020/8/25 下午5:12:17 
+使用方法：
+在 pages/itemList/itemList.wxml 引入模板
+
+```
+<import src="itemList.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 pages/itemList/itemList.wxss 中引入样式
+```
+@import "./itemList.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view class="search-body" style="height: 0px;">
+      <view is="components/search/search" style="position: fixed; top: 0; left: 0; right: 0; z-index: 99;">
+        <view class="search--search-body">
+          <navigator class="search--search">
+            <view class="search--input sk-transparent">
+              <image class="sk-image">
+              </image>
+              搜索商品
+            </view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <scroll-view class="scroll-view" scroll-left="0" scroll-with-animation="true" scroll-x="true" style="top: 55px; border: none;">
+      <view class="tags-view-item false sk-transparent sk-text-23-0769-226 sk-text" data-index="0" data-tagid="49" style="background-position-x: 50%;">
+        榴莲/山竹
+      </view>
+      <view class="tags-view-item tag-active sk-transparent sk-opacity" data-index="1" data-tagid="58">
+        荔枝
+      </view>
+      <view class="tags-view-item false sk-transparent sk-opacity" data-index="2" data-tagid="64">
+        热带水果
+      </view>
+      <view class="tags-view-item false sk-transparent sk-opacity" data-index="3" data-tagid="65">
+        葡提
+      </view>
+      <view class="tags-view-item false sk-transparent sk-opacity" data-index="4" data-tagid="51">
+        火龙果
+      </view>
+      <view class="tags-view-item false" data-index="5" data-tagid="57">
+      </view>
+      <view class="tags-view-item false" data-index="6" data-tagid="98">
+      </view>
+      <view class="tags-view-item false" data-index="7" data-tagid="52">
+      </view>
+      <view class="tags-view-item false" data-index="8" data-tagid="50">
+      </view>
+      <view class="tags-view-item false" data-index="9" data-tagid="53">
+      </view>
+      <view class="tags-view-item false" data-index="10" data-tagid="55">
+      </view>
+      <view class="tags-view-item false" data-index="11" data-tagid="60">
+      </view>
+      <view class="tags-view-item false" data-index="12" data-tagid="56">
+      </view>
+      <view class="tags-view-item false" data-index="13" data-tagid="59">
+      </view>
+      <view class="tags-view-item false" data-index="14" data-tagid="61">
+      </view>
+      <view class="tags-view-item false" data-index="15" data-tagid="62">
+      </view>
+      <view class="tags-view-item false" data-index="16" data-tagid="63">
+      </view>
+      <view class="tags-view-item false" data-index="17" data-tagid="54">
+      </view>
+      <view class="tags-view-item false" data-index="18" data-tagid="66">
+      </view>
+      <view class="tags-view-item false" data-index="19" data-tagid="67">
+      </view>
+      <view class="tags-view-item false" data-index="20" data-tagid="68">
+      </view>
+      <view class="tags-view-item false" data-index="21" data-tagid="69">
+      </view>
+      <view class="tags-view-item false" data-index="22" data-tagid="70">
+      </view>
+      <view class="tags-view-item false" data-index="23" data-tagid="71">
+      </view>
+      <view class="tags-view-item false" data-index="24" data-tagid="72">
+      </view>
+    </scroll-view>
+    <view class="down-img" style="top: 55px; border: none;">
+      <image class="sk-image">
+      </image>
+    </view>
+    <view class="category-view" style="top: 103px;">
+      <view class="active sk-transparent sk-text-18-7500-987 sk-text" data-id="1" data-index="0" hover-class="link-active">
+        分类1
+      </view>
+      <view class="false sk-transparent sk-text-18-7500-148 sk-text" data-id="2" data-index="1" hover-class="link-active">
+        分类2
+      </view>
+      <view class="false sk-transparent sk-text-18-7500-792 sk-text" data-id="3" data-index="2" hover-class="link-active">
+        分类3
+      </view>
+      <view class="false sk-transparent sk-text-18-7500-933 sk-text" data-id="4" data-index="3" hover-class="link-active">
+        分类4
+      </view>
+      <view class="false sk-transparent sk-text-18-7500-540 sk-text" data-id="5" data-index="4" hover-class="link-active">
+        分类5
+      </view>
+    </view>
+    <view class="head-view" style="top: 103px; border: none;">
+      <view data-sort="other" class="sk-transparent">
+        综合
+        <image class="sk-image">
+        </image>
+      </view>
+      <view class="interval">
+      </view>
+      <view data-sort="price" class="sk-transparent">
+        单价
+        <image class="sk-image">
+        </image>
+      </view>
+      <view class="interval">
+      </view>
+      <view data-sort="count" class="sk-transparent">
+        销售
+        <image class="sk-image">
+        </image>
+      </view>
+    </view>
+    <view class="goods-view">
+      <view class="category-title sk-transparent sk-text-31-2500-905 sk-text" id="category-title1" style="border: none;">
+        分类1
+      </view>
+      <view class="goods-item" data-id="16276">
+        <view class="goods-item-img">
+          <view class="tags-mask">
+          </view>
+          <image class="sk-image">
+          </image>
+        </view>
+        <view class="goods-item-info" style="border: none;">
+          <view class="goods-item-info-top">
+            <view class="goods-titles">
+              <view class="icon-tag sk-transparent sk-text-7-1429-784 sk-text" style="background-position-x: 50%;">
+                引流
+              </view>
+              <text class="sk-transparent sk-text-8-3333-374 sk-text">
+                【限量秒杀】泰象泰国金枕榴莲A5果
+              </text>
+            </view>
+            <view class="goods-sku">
+              <text class="sk-transparent sk-text-8-3333-136 sk-text sk-pseudo sk-pseudo-circle">
+                5头
+              </text>
+              <text class="sk-transparent sk-text-8-3333-419 sk-text sk-pseudo sk-pseudo-circle">
+                泰国
+              </text>
+              <text class="sk-transparent sk-text-8-3333-865 sk-text">
+                约38斤
+              </text>
+            </view>
+            <view class="goods-limt">
+              <text class="sk-transparent sk-text-18-7500-756 sk-text" style="border: none;">
+                限购999件
+              </text>
+            </view>
+          </view>
+          <view is="components/priceBox/priceBox">
+            <view class="priceBox--price-box">
+              <view class="priceBox--no-price sk-transparent sk-text-18-7500-482 sk-text">
+                今日未报价
+              </view>
+            </view>
+          </view>
+          <view class="goods-item-info-bottom">
+            <view class="store-type">
+              <text class="type-label type-label-self sk-transparent sk-text-18-7500-765 sk-text">
+                优选
+              </text>
+            </view>
+            <view class="cart-wrapper">
+              <view is="components/handleShopCart/handleShopCart">
+                <view>
+                  <view>
+                    <view class="handleShopCart--add-cart">
+                      <image class="sk-image">
+                      </image>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="goods-item" data-id="23457">
+        <view class="goods-item-img">
+          <view class="tags-mask">
+          </view>
+          <image class="sk-image">
+          </image>
+        </view>
+        <view class="goods-item-info" style="border: none;">
+          <view class="goods-item-info-top">
+            <view class="goods-titles">
+              <text class="sk-transparent sk-text-8-3333-3 sk-text">
+                【限量秒杀】佳果缘长柄猫山王榴莲
+              </text>
+            </view>
+            <view class="goods-sku">
+              <text class="sk-transparent sk-text-8-3333-609 sk-text sk-pseudo sk-pseudo-circle">
+                5-7#
+              </text>
+              <text class="sk-transparent sk-text-8-3333-459 sk-text sk-pseudo sk-pseudo-circle">
+                泰国
+              </text>
+              <text class="sk-transparent sk-text-8-3333-594 sk-text">
+                约19斤
+              </text>
+            </view>
+            <view class="goods-limt">
+              <text class="sk-transparent sk-text-18-7500-861 sk-text" style="border: none;">
+                限购999件
+              </text>
+              <text class="sk-transparent sk-text-18-7500-53 sk-text" style="border: none;">
+                仅剩3件
+              </text>
+            </view>
+          </view>
+          <view is="components/priceBox/priceBox">
+            <view class="priceBox--price-box">
+              <view class="priceBox--no-price sk-transparent sk-text-18-7500-333 sk-text">
+                今日未报价
+              </view>
+            </view>
+          </view>
+          <view class="goods-item-info-bottom">
+            <view class="store-type">
+              <text class="type-label type-label-self sk-transparent sk-text-18-7500-519 sk-text">
+                优选
+              </text>
+            </view>
+            <view class="cart-wrapper">
+              <view is="components/handleShopCart/handleShopCart">
+                <view>
+                  <view>
+                    <view class="handleShopCart--add-cart">
+                      <image class="sk-image">
+                      </image>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="goods-item" data-id="23163">
+        <view class="goods-item-img">
+          <view class="tags-mask">
+          </view>
+          <image class="sk-image">
+          </image>
+        </view>
+        <view class="goods-item-info" style="border: none;">
+          <view class="goods-item-info-top">
+            <view class="goods-titles">
+              <view class="icon-tag sk-transparent sk-text-7-1429-39 sk-text" style="background-position-x: 50%;">
+                主推
+              </view>
+              <view class="icon-tag sk-transparent sk-text-7-1429-407 sk-text" style="background-position-x: 50%;">
+                秒杀
+              </view>
+              <text class="sk-transparent sk-text-8-3333-965 sk-text">
+                【限量秒杀】大象泰国金枕榴莲A5果
+              </text>
+            </view>
+            <view class="goods-sku">
+              <text class="sk-transparent sk-text-8-3333-495 sk-text sk-pseudo sk-pseudo-circle">
+                5头
+              </text>
+              <text class="sk-transparent sk-text-8-3333-367 sk-text sk-pseudo sk-pseudo-circle">
+                泰国
+              </text>
+              <text class="sk-transparent sk-text-8-3333-867 sk-text">
+                约38斤
+              </text>
+            </view>
+            <view class="goods-limt">
+              <text class="sk-transparent sk-text-18-7500-718 sk-text" style="border: none;">
+                限购999件
+              </text>
+            </view>
+          </view>
+          <view is="components/priceBox/priceBox">
+            <view class="priceBox--price-box">
+              <view class="priceBox--no-price sk-transparent sk-text-18-7500-527 sk-text">
+                今日未报价
+              </view>
+            </view>
+          </view>
+          <view class="goods-item-info-bottom">
+            <view class="cart-wrapper">
+              <view is="components/handleShopCart/handleShopCart">
+                <view>
+                  <view>
+                    <view class="handleShopCart--add-cart">
+                      <image class="sk-image">
+                      </image>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

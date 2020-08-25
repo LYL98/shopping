@@ -117,11 +117,9 @@
 		</navigator>
 
 		<!-- 今日主推 -->
-		<view class="title-box">
-			<view class="skeleton-rect title-box-body">
-				<text class="title">{{tagsList[0].title}}</text>
-				<text class="base-line"></text>
-			</view>
+		<view class="skeleton-rect title-box-body">
+			<vie class="title">{{tagsList[0].title}}</vie>
+			<vie class="base-line"></vie>
 		</view>
 
 		<view class="goods-list">

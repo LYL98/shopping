@@ -1,6 +1,5 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <view wx:if="{{isOnSale}}">
-	<!-- <view class="goods_top--share align-center"> -->
 	<button class="share_btn align-center" open-type="share">
 		<image src="./../../assets/img/detail_share.png" style="width: 32rpx; height: 32rpx;margin-right:6rpx" />
 		<text>分享</text>
