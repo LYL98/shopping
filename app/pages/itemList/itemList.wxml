@@ -27,14 +27,16 @@
 			data-index="{{index}}"
 			data-id="{{item.id}}"
 		>{{item.title}}</view>
-		<!-- 遮罩层 -->
-		<view
-			class="mask"
-			wx:if="{{!changedown}}"
-			catchtouchmove="true"
-			bindtap="clickdown"
-		></view>
 	</scroll-view>
+	<!-- 遮罩层 -->
+	<view
+		class="scroll-view-body"
+		wx:if="{{!changedown}}"
+		catchtouchmove="true"
+		bindtap="clickdown"
+	>
+	</view>
+	
 	<!-- 下拉按钮 -->
 	<view class="down-img" bindtap="clickdown" style="top: {{isShowSearch ? 100 : 0}}rpx;">
 		<image src="./../../assets/img/down.png"></image>
@@ -75,14 +77,15 @@
 		</view>
 	</view>
 	<view class="goods-view">
-		<block wx:for="{{dataItem.categorys}}" wx:for-item="category">
+		<block wx:for="{{dataItem.categorys}}" wx:for-item="category" wx:for-index="categoryIndex">
 			<view class="category-title" id="category-title{{category.id}}">{{category.title}}</view>
-			<view
-				class="goods-item"
-				wx:for="{{category.items}}"
-				wx:key="index"
-				data-id="{{item.id}}"
-				bindtap="toItemDetail"
+			<block wx:for="{{category.items}}">
+				<view
+					wx:if="{{showItemIds[item.id]}}"
+					wx:key="index"
+					data-id="{{item.id}}"
+					bindtap="toItemDetail"
+					class="goods-item"
 				>
 					<view class="goods-item-img">
 						<view class="tags-mask">
@@ -149,12 +152,13 @@
 								<handleShopCart itemData="{{item}}" />
 							</view>
 						</view>
-
 					</view>
 				</view>
+				<view class="goods-item" data-id="{{item.id}}" style="background: #ececec; height: 200rpx; margin: 0 24rpx 36rpx;border-radius: 8rpx;" wx:else></view>
+			</block>
 		</block>
 
-		<view class="load-more" wx:if="{{dataItem.categorys.length > 0 && !showSkeleton}}">已无更多水果</view>
+		<view class="load-more" wx:if="{{dataItem.categorys.length > 0 && !showSkeleton}}">已加载所有</view>
 		<defaultPage wx:elif="{{!showSkeleton}}" currentPage="itemList"></defaultPage>
 	</view>
 </block>

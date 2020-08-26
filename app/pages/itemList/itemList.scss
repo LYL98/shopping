@@ -6,6 +6,16 @@
   overflow: hidden;
 }
 
+//遮罩层
+.scroll-view-body{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba($color: #000, $alpha: .4);
+  z-index: 4;
+  top: 100rpx;
+  left: 0;
+}
 //默认进来的样式
 .scroll-view, .scroll-view-down {
   border-top: 1rpx solid #f3f4f6;
@@ -47,8 +57,9 @@
   }
   //展开
   &.scroll-view-down{
-    height: 300rpx;
+    height: auto;
     white-space: normal;
+    padding-bottom: 20rpx;
     .tags-view-item{
       display: inline-block;
       white-space: normal;
@@ -80,18 +91,7 @@
     height: 16rpx;
   }
 }
-//遮罩层
-.mask{
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  overflow: hidden;
-  background-color: #000;
-  opacity: 0.5;
-  z-index: 4;
-  top: 400rpx;
-  left: 0;
-}
+
 .category-view{
   z-index: 2;
   top: 188rpx;
