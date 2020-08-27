@@ -152,10 +152,10 @@ Page({
       dataItem.vip_discount = rd.vip_discount;
       dataItem.vip_level = rd.vip_level;
       dataItem.vip_title = rd.vip_title;
-      for(let i = 0; i < 30; i++){
+      for(let i = 0; i < 50; i++){
         if(i === 0){
           rd.items.map((item, index) => {
-            if(index <= 4){
+            if(index <= 20){
               showItemIds[`${i}_${item.id}`] = true;
             }
           });
@@ -265,18 +265,22 @@ Page({
       this.setData({ isShowSearch: true });
     }
 
-    if(this.scrollTime) clearTimeout(this.scrollTime);
-    this.scrollTime = setTimeout(() => {
+    if(this.scrollInterval) return;
+
+    this.scrollInterval = setInterval(() => {
       this.scrollTop = e.scrollTop;
       let showItemIds = {};
       wx.createSelectorQuery().selectAll('.goods-item').boundingClientRect(gis => {
         gis.map(item => {
-          if(item.top > -200 && item.top <= this.screenHeight + 200){
+          if(item.top > -1000 && item.top <= this.screenHeight + 1000){
             showItemIds[item.dataset.id] = true;
           }
         });
+        console.log(showItemIds);
         this.setData({ showItemIds });
       }).exec();
-    }, 200);
+      if(this.scrollInterval) clearInterval(this.scrollInterval);
+      this.scrollInterval = undefined;
+    }, 500);
   }
 })

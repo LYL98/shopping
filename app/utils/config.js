@@ -9,6 +9,7 @@ import {
   RequestHttpPre,
   RequestHttpPro,
   RequestWsDev,
+  RequestWsTest,
   RequestWsPre,
   RequestWsPro,
   TencentBucketDev,
@@ -34,9 +35,8 @@ switch(Conn){
     tencentPath = TencentPathDev;
     break;
   case 'test':
-    // lsRequestHttp = LSRequestHttpDev,
     requestHttp = RequestHttpTest;
-    requestWs = RequestWsDev
+    requestWs = RequestWsTest
     tencentBucket = TencentBucketDev;
     tencentRegion = TencentRegionDev;
     tencentPath = TencentPathDev;
