@@ -33,6 +33,7 @@ Page({
     this.address = {}; //当前选择的地址
     this.screenWidth = wx.getSystemInfoSync().windowWidth;
     this.screenHeight = wx.getSystemInfoSync().windowHeight;
+    this.factor = this.screenWidth / 750;
   },
   /**
    * 生命周期函数--监听页面显示
@@ -61,6 +62,25 @@ Page({
     /*===== 埋点 end ======*/
   },
 
+  //点击一级品类
+  clickOneCategory(e) {
+    if (this.flag) return;
+    this.flag = true;
+    let id = e.currentTarget.dataset.id;
+    this.setData({
+      'query.display_class_id': id
+    }, () => {
+      this.itemListDisplayClass();
+    });
+    this.pageScrollTo(0, 0);
+
+    /*===== 埋点 start ======*/
+    let con = twoCategoryList.filter(item => item.id === id);
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '商品');
+    app.gioActionRecordAdd('secBuyEntrance_evar', con.length > 0 ? con[0].title : '全部');
+    /*===== 埋点 end ======*/
+  },
+
   //选择展示二级分类
   selectTwoCategory(e) {
     let id = e.target.dataset.id;
@@ -69,22 +89,15 @@ Page({
       selectTwoCategoryId: id
     });
     if(index === 0){
-      this.pageScrollTo(0, 500);
+      this.pageScrollTo(0, 200);
       return;
     }
     wx.createSelectorQuery().selectAll(`#category-title${id}`).boundingClientRect(ct => {
-      let factor = this.screenWidth / 750;
       let top = this.data.isShowSearch ?
-                this.scrollTop + ct[0].top - factor * 74:
-                this.scrollTop + ct[0].top - factor * 74 - factor * 100 ;
-      this.pageScrollTo(top, 500);
+                this.scrollTop + ct[0].top - this.factor * 74:
+                this.scrollTop + ct[0].top - this.factor * 74 - this.factor * 100 ;
+      this.pageScrollTo(top, 200);
     }).exec();
-
-    /*===== 埋点 start ======*/
-    // let con = twoCategoryList.filter(item => item.id === id);
-    // app.gioActionRecordAdd('firstBuyEntrance_evar', '商品');
-    // app.gioActionRecordAdd('secBuyEntrance_evar', con.length > 0 ? con[0].title : '全部');
-    /*===== 埋点 end ======*/
   },
 
   //排序
@@ -124,7 +137,6 @@ Page({
       //如果是从首页的banner进来
       if(app.globalData.urlJump){
         query.display_class_id = Number(app.globalData.urlJump);
-        that.setData({ activeIndex: '' });
         delete app.globalData.urlJump;
       }else{
         query.display_class_id = that.data.query.display_class_id || res.data[0].id; //如果未有选择，默认选择第一
@@ -152,10 +164,10 @@ Page({
       dataItem.vip_discount = rd.vip_discount;
       dataItem.vip_level = rd.vip_level;
       dataItem.vip_title = rd.vip_title;
-      for(let i = 0; i < 50; i++){
+      for(let i = 0; i < 6; i++){
         if(i === 0){
           rd.items.map((item, index) => {
-            if(index <= 20){
+            if(index <= 10){
               showItemIds[`${i}_${item.id}`] = true;
             }
           });
@@ -163,7 +175,7 @@ Page({
         }
         dataItem.categorys.push({
           id: i + 1,
-          title: `分类${i + 1}`,
+          title: `水果${i + 1}`,
           items: rd.items.map(item => {
             return {
               ...item,
@@ -173,7 +185,7 @@ Page({
         });
         twoCategoryList.push({
           id: i + 1,
-          title: `分类${i + 1}`
+          title: `水果${i + 1}`
         });
       }
       that.setData({
@@ -186,32 +198,6 @@ Page({
     }).catch(error => {
       wx.hideNavigationBarLoading();
       that.flag = false;
-    });
-  },
-  
-  //点击一级品类
-  clickOneCategory(e) {
-    if (this.flag) return;
-    this.flag = true;
-    let index = e.currentTarget.dataset.index;
-    let id = e.currentTarget.dataset.id;
-    this.setData({
-      activeIndex: index
-    }, () => {
-      this.handleTags();
-      this.itemListDisplayClass();
-    });
-    this.pageScrollTo(0, 0);
-  },
-
-  //点击下拉按钮
-  clickdown() {
-    this.setData({
-      changedown: !this.data.changedown
-    }, () => {
-      if(this.data.changedown){
-        this.handleTags();
-      }
     });
   },
 
@@ -232,6 +218,7 @@ Page({
     this.setData({ x: scrollX });
   },
 
+  //跳转详情
   toItemDetail(e) {
     const { id }  = e.currentTarget.dataset
     wx.navigateTo({
@@ -257,6 +244,8 @@ Page({
    * 页面滚动事件的处理函数
    */
   onPageScroll(e){
+    this.scrollTop = e.scrollTop;
+
     if(e.scrollTop > 100 && this.data.isShowSearch){
       this.setData({ isShowSearch: false });
     }
@@ -268,7 +257,22 @@ Page({
     if(this.scrollInterval) return;
 
     this.scrollInterval = setInterval(() => {
-      this.scrollTop = e.scrollTop;
+      //获取所商品列的标题
+      wx.createSelectorQuery().selectAll('.category-title').boundingClientRect(cts => {
+        let selectTwoCategoryId = null;
+        let top = this.data.isShowSearch ? this.factor * 180 + this.factor * 100 : this.factor * 180;
+        cts.map(item => {
+          if(item.top <= top){
+            selectTwoCategoryId = item.dataset.id;
+          }
+        });
+
+        if(selectTwoCategoryId && selectTwoCategoryId != this.data.selectTwoCategoryId){
+          this.setData({ selectTwoCategoryId });
+        }
+      }).exec();
+      
+      //获取所有商品列
       let showItemIds = {};
       wx.createSelectorQuery().selectAll('.goods-item').boundingClientRect(gis => {
         gis.map(item => {
@@ -276,7 +280,7 @@ Page({
             showItemIds[item.dataset.id] = true;
           }
         });
-        console.log(showItemIds);
+        console.log('获取滚动情况', showItemIds);
         this.setData({ showItemIds });
       }).exec();
       if(this.scrollInterval) clearInterval(this.scrollInterval);

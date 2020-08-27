@@ -235,6 +235,13 @@
 					"pathName": "pages/coupon/coupon",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 25,
+					"name": "运营专区",
+					"pathName": "pages/itemTag/itemTag",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

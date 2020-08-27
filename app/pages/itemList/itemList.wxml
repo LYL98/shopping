@@ -4,48 +4,38 @@
 <template is="skeleton" wx-if="{{showSkeleton}}" />
 
 <block wx:else>
-	<!--搜索组件start-->
+	<!--搜索组件-->
 	<view class="search-body" style="height: {{isShowSearch ? 0 : 100}}rpx;">
 		<search style="position: fixed; top: 0; left: 0; right: 0; z-index: 99;" bind:tap="clickSearch" />
 	</view>
-	<!--搜索组件end-->
 
-	<!--展示一级分类start-->
-	<scroll-view
-		catchtouchmove="true"
-		class="{{changedown ? 'scroll-view' : 'scroll-view-down' }}"
-		scroll-x="{{changedown}}"
-		scroll-left="{{x}}"
-		scroll-with-animation="{{true}}"
-		style="top: {{isShowSearch ? 100 : 0}}rpx;"
-	>
+	<!--展示一级分类-->
+	<view class="class-view" style="top: {{isShowSearch ? 100 : 0}}rpx;">
 		<view
-			class="tags-view-item {{activeIndex === index && 'tag-active'}}"
+			class="class-view-item {{query.display_class_id === item.id && 'active'}}"
+			hover-class="link-hover"
 			wx:for="{{oneCategoryList}}"
 			wx:key='index'
 			bindtap="clickOneCategory"
-			data-index="{{index}}"
 			data-id="{{item.id}}"
 		>{{item.title}}</view>
-	</scroll-view>
-	<!-- 遮罩层 -->
-	<view
-		class="scroll-view-body"
-		wx:if="{{!changedown}}"
-		catchtouchmove="true"
-		bindtap="clickdown"
-	>
 	</view>
 	
-	<!-- 下拉按钮 -->
-	<view class="down-img" bindtap="clickdown" style="top: {{isShowSearch ? 100 : 0}}rpx;">
-		<image src="./../../assets/img/down.png"></image>
-	</view>
-	<!--展示一级分类end-->
-	<view class="category-view" style="top: {{isShowSearch ? 188 : 88}}rpx;">
+	<!--展示二级分类-->
+	<!-- <scroll-view
+		catchtouchmove="true"
+		scroll-x="{{changedown}}"
+		scroll-left="{{x}}"
+		scroll-with-animation="{{true}}"
+	></scroll-view> -->
+	<scroll-view
+		class="category-view"
+		style="top: {{isShowSearch ? 188 : 88}}rpx;"
+		catchtouchmove="true"
+	>
 		<view
-			class="{{selectTwoCategoryId === item.id && 'active'}}"
-			hover-class="link-active"
+			class="item {{selectTwoCategoryId === item.id && 'active'}}"
+			hover-class="link-hover"
 			wx:for="{{twoCategoryList}}"
 			wx:key="index"
 			bindtap="selectTwoCategory"
@@ -53,7 +43,9 @@
 			data-index="{{index}}"
 			wx:if="{{item.title}}"
 		>{{item.title}}</view>
-	</view>
+	</scroll-view>
+
+	<!--筛选-->
 	<view class="head-view" style="top: {{isShowSearch ? 188 : 88}}rpx;">
 		<view bindtap="changeSort" data-sort="{{query.sort === 'other' ? '-other' : 'other'}}">
 			综合
@@ -76,10 +68,14 @@
 			<image src="./../../assets/img/itemList/rank.png" wx:else="{{query.sort != '-count' && query.sort != 'count'}}"></image>
 		</view>
 	</view>
+
+	<!--商品区-->
 	<view class="goods-view">
 		<block wx:for="{{dataItem.categorys}}" wx:for-item="category" wx:for-index="categoryIndex">
-			<view class="category-title" id="category-title{{category.id}}">{{category.title}}</view>
+			<!--二级分类标题-->
+			<view class="category-title" data-id="{{category.id}}" id="category-title{{category.id}}">{{category.title}}</view>
 			<block wx:for="{{category.items}}">
+				<!--在可视区内才显示商品-->
 				<view
 					wx:if="{{showItemIds[item.id]}}"
 					wx:key="index"
@@ -140,7 +136,6 @@
 							priceNoVip="{{item.price_novip}}"
 						/>
 						<view class="goods-item-info-bottom">
-
 							<view class="store-type">
 								<block wx:if="{{item.sale_type == '平台'}}">
 									<text class="type-label" >商家</text>
@@ -154,7 +149,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="goods-item" data-id="{{item.id}}" style="background: #ececec; height: 200rpx; margin: 0 24rpx 36rpx;border-radius: 8rpx;" wx:else></view>
+				<!--不在可视区不显示-->
+				<view class="goods-item" data-id="{{item.id}}" style="background: #F9F8F8; height: 200rpx; margin: 0 24rpx 36rpx;border-radius: 8rpx;" wx:else></view>
 			</block>
 		</block>
 

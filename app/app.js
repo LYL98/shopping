@@ -296,7 +296,6 @@ App({
   //小程序初始化完成时触发，全局只触发一次。
   onLaunch() {
     this.screenSize();//获取屏宽高
-    this.getBrand();
   },
 
   //全局显示时
@@ -357,24 +356,6 @@ App({
         res.system.indexOf('iOS')> -1 ? that.globalData.system = 'ios' : that.globalData.system = 'android'
       }
     })
-  },
-  //获取品牌
-  getBrand: function(callBack) {
-    let that = this;
-    wx.request({
-        url: Config.api.sysBrand,
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function (res) {
-          if (res.statusCode == 200 && res.data.code == 0) {
-            let d = res.data.data;
-            that.globalData.brand_icon = d.brand_icon;
-            that.globalData.brand_name = d.brand_name;
-            typeof callBack === 'function' && callBack(d);
-          }
-        }
-    });
   },
   //获取页面（页面路由）
   getPage(route){

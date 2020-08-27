@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "运营专区",
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "handleShopCart": "/components/handleShopCart/handleShopCart",
+    "priceBox": "/components/priceBox/priceBox"
+  }
 }

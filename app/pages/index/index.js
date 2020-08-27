@@ -43,13 +43,10 @@ Page({
     })(),
     query: {
       store_id: 0,
-      // tag: '今日主推',
       sort: '-tags_edited',
       page: 1,
       page_size: Constant.PAGE_SIZE,
       item_tag_id: '', //运营专区中今日主推ID
-      // item_tag_id: this.data.tagsList[0].id //运营专区中今日主推ID
-
     },
     dataItem: {
       items: [
@@ -81,7 +78,6 @@ Page({
       ]
     },
     //瀑布流数据(骨架屏数据)
-
     currentSwiper: 0,
     initLoad: true,
     closeStore: true,
@@ -99,26 +95,6 @@ Page({
   },
   //页面装载时
   onLoad() {
-
-
-    let that = this;
-    let { brand_name, system } = app.globalData;
-    if(brand_name){
-      wx.setNavigationBarTitle({
-        title: brand_name
-      });
-    }else{
-      app.getBrand((rd)=>{
-        wx.setNavigationBarTitle({
-          title: rd.brand_name
-        });
-      });
-    }
-    that.setData({
-      system: system
-    });
-
-
   },
   /**
    * 生命周期函数--监听页面显示

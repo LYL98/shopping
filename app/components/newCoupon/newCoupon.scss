@@ -20,7 +20,7 @@
   animation-duration: .5s;
   animation-timing-function: cubic-bezier(1,0,.91,.19);
   >.title{
-    >image{
+    >.image{
       display: block;
     }
   }
@@ -91,7 +91,7 @@
     position: relative;
     top: 110rpx;
     margin: 0 auto;
-    >image{
+    >.image{
       display: block;
     }
   }
