@@ -10,8 +10,8 @@
     <view class="add-cart">
       <view class="badge" wx:if="{{num > 0}}">{{num}}</view>
       <!-- 加 -->
-      <image wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}" src="./img/cart_add_unusable.png" catchtap="upUnusable"></image>
-      <image wx:else src="./img/cart_add.jpg" catchtap="up"></image>
+      <image class="image" wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}" src="./img/cart_add_unusable.png" catchtap="upUnusable"></image>
+      <image class="image" wx:else src="./img/cart_add.jpg" catchtap="up"></image>
     </view>
   </view>
 </view>
@@ -22,15 +22,15 @@
     <view class="title">
       <view class="str">单品优惠</view>
       <view class="close-btn" hover-class="link-active" bindtap="cancelSelectStepPrices">
-        <image src="./../../assets/img/close2.png"></image>
+        <image class="image" src="./../../assets/img/close2.png"></image>
       </view>
     </view>
     <view class="content">
       <view hover-class="link-active" data-index="{{-1}}" bindtap="selectStepPrices">
         <view class="item">
           <view class="left">
-            <image src="./../../assets/img/checked_s.png" wx:if="{{stepPricesIndex === -1}}" style="width: 38rpx; height: 38rpx;"/>
-            <image src="./../../assets/img/checked.png" wx:else style="width: 38rpx; height: 38rpx;"/>
+            <image class="image" src="./../../assets/img/checked_s.png" wx:if="{{stepPricesIndex === -1}}" style="width: 38rpx; height: 38rpx;"/>
+            <image class="image" src="./../../assets/img/checked.png" wx:else style="width: 38rpx; height: 38rpx;"/>
           </view>
           <view class="right">不参与优惠</view>
         </view>
@@ -38,8 +38,8 @@
       <view hover-class="link-active" wx:for="{{itemData.step_prices}}" wx:key="index" data-index="{{index}}" bindtap="selectStepPrices">
         <view class="item {{item.num > itemData.order_num_max || item.num < itemData.min_num_per_order || item.num > itemData.item_stock ? 'disabled' : ''}}">
           <view class="left">
-            <image src="./../../assets/img/checked_s.png" wx:if="{{stepPricesIndex=== index}}" style="width: 38rpx; height: 38rpx;"/>
-            <image src="./../../assets/img/checked.png" wx:else style="width: 38rpx; height: 38rpx;"/>
+            <image class="image" src="./../../assets/img/checked_s.png" wx:if="{{stepPricesIndex=== index}}" style="width: 38rpx; height: 38rpx;"/>
+            <image class="image" src="./../../assets/img/checked.png" wx:else style="width: 38rpx; height: 38rpx;"/>
           </view>
           <view class="right">满{{item.num}}件￥{{tools.returnPrice(item.price_sale)}}/件</view>
         </view>

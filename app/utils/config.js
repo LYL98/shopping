@@ -80,6 +80,7 @@ module.exports = {
     itemDetail: apiC + '/item/detail',//商品详情
     displayClassQuery: apiC + '/display_class/list',//商品分类展示
     itemListDisplayClass: apiC + '/item/query/by_display_class',//用户端商品浏览(根据展示分类code)
+    itemListDisplayClassNew: apiC + '/item/query/by_display_class_new', //用户端商品浏览(根据展示分类code)new
     itemQuery: apiC + '/item/query',//商品搜索
     itemCartQuery: apiC + '/item/cart/list',//商品库存查询(购物车用)
     itemRecoentlyBuy: apiC + '/item/list/recent_buy',//最近购买商品

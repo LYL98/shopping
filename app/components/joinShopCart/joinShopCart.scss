@@ -59,7 +59,7 @@
     >.add-cart-icon{
       width: 54rpx;
       height: 54rpx;
-      >image{
+      >.image{
         width: 54rpx;
         height: 54rpx;
       }
@@ -70,7 +70,7 @@
       align-items: center;
       >.btn{
         flex: initial;
-        > image{
+        > .image{
           float: left;
         }
         &.unusable{
@@ -107,7 +107,7 @@
         >.btn{
           width: 50rpx;
           height: 50rpx;
-          >image{
+          >.image{
             width: 50rpx;
             height: 50rpx;
           }
@@ -136,7 +136,7 @@
         >.btn{
           width: 82rpx;
           height: 58rpx;
-          >image{
+          >.image{
             width: 82rpx;
             height: 58rpx;
           }
@@ -165,7 +165,7 @@
         >.btn{
           width: 82rpx;
           height: 82rpx;
-          >image{
+          >.image{
             width: 82rpx;
             height: 82rpx;
           }
@@ -202,7 +202,7 @@
     font-size: 30rpx;
     height: 54rpx;
     // line-height: 54rpx;
-    > text{
+    > .text{
       color: #A5A5A5;
       font-size: 24rpx;
     }
@@ -262,7 +262,7 @@
         position: absolute;
         right: 0rpx;
         top: 60rpx;
-        > image{
+        > .image{
           width: 24rpx;
           height: 24rpx;
           margin: 10rpx 0 0 10rpx;
@@ -285,7 +285,7 @@
         >.left{
           flex: initial;
           width: 68rpx;
-          > image{
+          > .image{
             display: block;
           }
         }
@@ -344,7 +344,7 @@
     align-items: center;
     >.left{
       flex: 1;
-      >input{
+      >.input{
         text-align: left;
         height: 82rpx;
         line-height: 82rpx;

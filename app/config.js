@@ -3,7 +3,7 @@
  */
 
 //是否开发(dev开发、test测试；pre预发布；pro生产)
-export const Conn = 'pre';
+export const Conn = 'dev';
 
 //测试环境api地址
 export const RequestHttpDev = 'https://vestadev.pgyscm.com';
@@ -29,7 +29,7 @@ export const TencentBucketPro = 'durian-pro-1258811046';
 export const TencentRegionPro = 'ap-shanghai';
 
 //测试环境腾讯下载地址
-export const TencentPathDev = 'https://cdn-vesta-dev.pgyscm.com/';
+export const TencentPathDev = 'https://cdn-vesta-pro.pgyscm.com/';
 
 //生产环境腾讯下载地址
 export const TencentPathPro = 'https://cdn-vesta-pro.pgyscm.com/';

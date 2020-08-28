@@ -99,41 +99,38 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-
-    let that = this;
-
+  onShow() {
     //判断登录
     app.signIsLogin((res) => {
       //保存登录用户信息
-      that.setData({
+      this.setData({
         userInfo: res,
       });
-      let { query, address } = that.data;
+      let { query, address } = this.data;
       if(address && address.id){
         let ad = app.getSelectStore(); //当前选择的地址
         query.store_id = ad.id;
         if (query.page !== 1) {
           query.page_size = query.page_size * query.page;
           query.page = 1;
-          that.setData({
+          this.setData({
             query: query,
             address: ad
           }, () => {
-            that.getTagsList(true);//里面包含获取商品列表
+            this.getTagsList(true);//里面包含获取商品列表
             // that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
-            that.getWorkTime();
-            that.getBanner(); //显示ad
+            this.getWorkTime();
+            this.getBanner(); //显示ad
           });
         } else {
-          that.setData({
+          this.setData({
             query: query,
             address: ad
           }, () => {
-            that.getTagsList()//里面包含获取商品列表
+            this.getTagsList()//里面包含获取商品列表
             // that.itemQuery();
-            that.getWorkTime();
-            that.getBanner(); //显示ad
+            this.getWorkTime();
+            this.getBanner(); //显示ad
             this.getNoticeList()
           });
         }

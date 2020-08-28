@@ -205,11 +205,6 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
 }
 /*商品列表、标签共用分类菜单*/
 .category-view{
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 100rpx;
-  bottom: 0;
   width: 190rpx;
   background: #F9F8F8;
   color: #616161;
