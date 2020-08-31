@@ -74,8 +74,9 @@ App({
               that.gioActionRecordAdd('setUserId', rd.id);
               that.globalData.gioIsSetUserId = true;
             }
-            if(!that.globalData.gioIsSetUser){
-              that.gioSetUser(rd.store_id);
+            let address = that.getSelectStore();
+            if(!that.globalData.gioIsSetUser && address.id){
+              that.gioSetUser(address.id);
             }
             typeof callBack == "function" && callBack(rd);
           } else {

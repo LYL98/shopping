@@ -1,3 +1,5 @@
+@import "./index.skeleton.scss";
+
 .show-select{
   width: 100vw;
   height: 100vh;
@@ -83,28 +85,77 @@ view, navigator, text {
   }
 }
 
-.tags-list {
+.tags-list-body{
   width: 700rpx;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  .tags-item {
-    width: 25%;
-    height: 182rpx;
+  overflow: hidden;
+}
+.tags-list-step-body{
+  background: rgba($color: #FFD426, $alpha: .3);
+  width: 50rpx;
+  height: 8rpx;
+  margin: 0 auto;
+  border-radius: 4rpx;
+  position: relative;
+  top: -5rpx;
+  overflow: hidden;
+  >.step{
+    width: 30rpx;
+    height: 8rpx;
+    background: #FFD426;
+    border-radius: 4rpx;
+  }
+}
+.tags-list {
+  max-height: 364rpx;
+  white-space: nowrap;
+  width: max-content;
+  >.left, >.right{
+    float: left;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    image {
-      width: 102rpx;
-      height: 102rpx;
-      display: block;
-      margin-bottom: 10rpx;
+    flex-wrap: wrap;
+    max-height: 364rpx;
+    &.left{
+      width: 700rpx;
     }
-    text {
-      font-size: 26rpx;
-      font-weight: 400;
-      color: #616161;
+    &.right{
+      width: auto;
+      flex-direction: column;
+    }
+    >.tags-item {
+      width: 175rpx;
+      height: 182rpx;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      >image {
+        width: 102rpx;
+        height: 102rpx;
+        display: block;
+        margin-bottom: 10rpx;
+      }
+      >text {
+        font-size: 26rpx;
+        font-weight: 400;
+        color: #616161;
+      }
+    }
+  }
+}
+
+.cards{
+  width: 700rpx;
+  margin: 20rpx auto 0;
+  display: flex;
+  justify-content: space-between;
+  >.item{
+    height: 220rpx;
+    width: 220rpx;
+    border-radius: 16rpx;
+    overflow: hidden;
+    >.image{
+      display: block;
     }
   }
 }
@@ -267,21 +318,18 @@ view, navigator, text {
 
 .notice{
   padding: 0 24rpx;
-box-shadow: 0 0 6rpx #eee;
-position: absolute;
-width: 464rpx;
-height: 54rpx;
-top: 162rpx;
-left:25rpx;
-z-index: 10;
-background: rgba(0,0,0,0.5);
-color: white;
-border-radius: 27rpx;
-font-size: 24rpx;
-padding-top: 11rpx;
-
-
-
+  box-shadow: 0 0 6rpx #eee;
+  position: absolute;
+  width: 464rpx;
+  height: 54rpx;
+  top: 110rpx;
+  left:25rpx;
+  z-index: 10;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 27rpx;
+  font-size: 24rpx;
+  padding-top: 11rpx;
 }
 .notice_text{
   overflow: hidden;
@@ -295,8 +343,8 @@ padding-top: 11rpx;
 .notice_logo{
   font-size: 28rpx;
   font-weight: bold;
-color: #151515;
-margin-right: 33rpx;
+  color: #151515;
+  margin-right: 33rpx;
 }
 .notice_label{
   background: #FF6010;
@@ -308,7 +356,6 @@ margin-right: 33rpx;
   margin-right: 12rpx;
 }
 .notice_right{
- width: 14rpx;
-height: 18rpx;
-
+  width: 14rpx;
+  height: 18rpx;
 }

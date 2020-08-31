@@ -107,7 +107,7 @@
     ]
   },
   "networkTimeout": {
-    "request": 10000,
+    "request": 30000,
     "downloadFile": 100000
   },
   "permission": {

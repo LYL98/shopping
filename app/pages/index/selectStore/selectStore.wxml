@@ -1,4 +1,3 @@
-<!--components/selectStore/selectStore.wxml-->
 <view class="select-store" bindtap="showSelect">
   <view class="location"><image class="image" src="./img/location_icon.png"/></view>
   <view class="title">{{address.id ? address.title : '选择门店'}}</view>
@@ -10,7 +9,7 @@
     <view class="title">
       <view class="str">选择门店</view>
       <view class="close-btn link-active" bindtap="cancelSelect" wx:if="{{address.id}}">
-        <image class="image" src="{{closeSrc}}"></image>
+        <image class="image" src="/assets/img/close2.png"></image>
       </view>
     </view>
     <view class="content">
@@ -21,8 +20,8 @@
             <view class="store-address add-dot">{{item.address}}</view>
           </view>
           <view class="right">
-            <image class="image" src="{{checkedSrc}}" wx:if="{{item.id === addressTemp.id}}"/>
-            <image class="image" src="{{checkSrc}}" wx:else/>
+            <image class="image" src="/assets/img/checked_s.png" wx:if="{{item.id === addressTemp.id}}"/>
+            <image class="image" src="/assets/img/checked.png" wx:else/>
           </view>
         </view>
       </view>

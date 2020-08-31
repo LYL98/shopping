@@ -1,6 +1,7 @@
-  
-  .bg{
+@import "./itemTag.skeleton.scss";  
+  .top-bg{
     margin-bottom: 52rpx;
+    height: 100vw;
     >image{
       display: block;
     }
@@ -14,6 +15,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    min-height: 500rpx;
     >.goods-item{
       width: 340rpx;
       border-radius: 10rpx;
@@ -126,48 +128,49 @@
     background:#fff;
     color: #EEE;
   }
-  
-  .notice{
-    padding: 0 24rpx;
-    box-shadow: 0 0 6rpx #eee;
-    position: absolute;
-    width: 464rpx;
-    height: 54rpx;
-    top: 162rpx;
-    left:25rpx;
-    z-index: 10;
-    background: rgba(0,0,0,0.5);
-    color: white;
-    border-radius: 27rpx;
-    font-size: 24rpx;
-    padding-top: 11rpx;
+
+  .load-more{
+    text-align: center;
+    color: #000;
+    font-size: 30rpx;
   }
-  .notice_text{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    top:24rpx;
     
+  .bottom-bg{
+    margin-top: 52rpx;
+    >image{
+      display: block;
+    }
+    >.image{
+      background: #efefef;
+    }
   }
-  .notice_logo{
-    font-size: 28rpx;
-    font-weight: bold;
-    color: #151515;
-    margin-right: 33rpx;
+
+  .shopping-btn {
+    z-index: 1;
+    height: 82rpx;
+    width: 82rpx;
+    background: #fff;
+    position: fixed;
+    bottom: 100rpx;
+    left: 36rpx;
+    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.20);
+    border-radius: 50rpx;
+    > image {
+      width: 48rpx;
+      height: 48rpx;
+      margin: 17rpx 0 0 17rpx;
+      display: block;
+    }
+    > .sh-cart-num {
+      position: absolute;
+      top: -5rpx;
+      right: -10rpx;
+      background: #ff5252;
+      color: #fff;
+      padding: 0 12rpx;
+      border-radius: 16rpx;
+      font-size: 22rpx;
+      height: 34rpx;
+      line-height: 34rpx;
+    }
   }
-  .notice_label{
-    background: #FF6010;
-    border-radius: 4rpx;
-    color:white;
-    font-size: 20rpx;
-    padding: 0 2rpx;
-    margin-left:24rpx;
-    margin-right: 12rpx;
-  }
-  .notice_right{
-    width: 14rpx;
-    height: 18rpx;
-  }
-  

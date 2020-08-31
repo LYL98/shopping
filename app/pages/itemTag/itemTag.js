@@ -12,13 +12,13 @@ Page({
       page: 1,
       page_size: Constant.PAGE_SIZE,
       item_tag_id: '', //运营专区中今日主推ID
-
     },
+    detail: {},
     dataItem: {
       items: [],
       num: 0
     },
-    initLoad: true,
+    loading: false,
     showSkeleton: true
   },
 
@@ -27,74 +27,57 @@ Page({
     // wx.setNavigationBarTitle({
     //   title: '运营专区'
     // });
-  },
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
     //判断登录
     app.signIsLogin((res) => {
       let { query } = this.data;
       let ad = app.getSelectStore(); //当前选择的地址
       if(ad && ad.id){
+        let num = app.getShoppingCartNum();//获取购物车数量
         query.store_id = ad.id;
         query.item_tag_id = this.options.id || '';
-        if (query.page !== 1) {
-          query.page_size = query.page_size * query.page;
-          query.page = 1;
-          this.setData({ query: query }, () => {
-            this.itemQuery(true); //获取商品列表 (isInit是否进入页面)
-          });
-        } else {
-          this.setData({ query: query }, () => {
-            this.itemQuery();
-          });
-        }
+        this.setData({ query: query, shoppingCartNum: num, }, () => {
+          this.itemQuery();
+        });
       }
     });
-   
+  },
+
+  joinShoppingCart() {
+    let that = this;
+    let num = app.getShoppingCartNum();//获取购物车数量
+    that.setData({ shoppingCartNum: num });
   },
 
   //获取商品列表
-  itemQuery(isInit) {
+  itemQuery() {
     let that = this;
-    let { query, dataItem, initLoad } = that.data;
-    //判断是否第一次加载，或没数据；如果是：显示loading   否则静默更新数据
-    if (initLoad || !dataItem.num) {
-      wx.showNavigationBarLoading();
-    }
-    let fun = ()=> {
-      //重新恢复数据
-      if (isInit) {
-        if (query.page_size > Constant.PAGE_SIZE) {
-          query.page = Math.ceil(query.page_size / Constant.PAGE_SIZE); //向上取整
-          query.page_size = Constant.PAGE_SIZE;
+    let { query, dataItem } = that.data;
+    wx.showNavigationBarLoading();
+    that.setData({ loading: true }, () => {
+      Http.get(Config.api.itemQuery, query).then(res => {
+        wx.hideNavigationBarLoading();
+        let rd = res.data;
+        if (query.page === 1) {
           that.setData({
-            query: query
+            dataItem: rd,
+            loading: false,
+            showSkeleton: false
+          });
+        } else {
+          dataItem.items = dataItem.items.concat(rd.items);
+          that.setData({
+            dataItem: dataItem,
+            loading: false,
+            showSkeleton: false
           });
         }
-      }
-      that.setData({
-        initLoad: false,
-        showSkeleton: false
+      }).catch(error => {
+        wx.hideNavigationBarLoading();
+        that.setData({
+          'query.page': that.data.query.page - 1,
+          loading: false
+        });
       });
-      wx.hideNavigationBarLoading();
-    }
-    Http.get(Config.api.itemQuery, query).then(res => {
-      let rd = res.data;
-      if (query.page === 1) {
-        that.setData({
-          dataItem: rd
-        });
-      } else {
-        dataItem.items = dataItem.items.concat(rd.items);
-        that.setData({
-          dataItem: dataItem
-        });
-      }
-      fun();
-    }).catch(error => {
-      fun();
     });
   },
   
@@ -107,18 +90,15 @@ Page({
   },
   
   /**
-   * 页面上拉触底事件的处理函数
+   * 加载更多
    */
-  onReachBottom: function() {
+  loadMore() {
     let that = this;
-    let {
-      query,
-      dataItem
-    } = that.data;
+    let { query, dataItem, loading } = that.data;
+    if(loading) return;
     if (dataItem.num / query.page_size > query.page) {
-      query.page = query.page + 1;
       that.setData({
-        query: query
+        'query.page': query.page + 1
       }, () => {
         that.itemQuery();
       });

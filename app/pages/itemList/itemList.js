@@ -1,6 +1,6 @@
 //获取应用实例
 const app = getApp();
-import { Constant, Config, Http } from './../../utils/index';
+import { Config, Http } from './../../utils/index';
 
 Page({
 
@@ -10,6 +10,7 @@ Page({
   data: {
     tencentPath: Config.tencentPath,
     selectTwoCategoryId: '',
+    selectLeftCategoryId: '',
     query: {
       store_id: 0,
       sort: '-other',
@@ -19,7 +20,6 @@ Page({
       items: []
     },
     showSkeleton: true,
-    y: 0, //选中二级品类后滑动的距离
     oneCategoryList: [], //一级品类数据
     showItemIds: {}, //{1: true, 2: false} //为了优化速度
   },
@@ -81,7 +81,8 @@ Page({
   selectTwoCategory(e) {
     let id = e.target.dataset.id;
     this.setData({
-      selectTwoCategoryId: id
+      selectTwoCategoryId: id,
+      selectLeftCategoryId: id
     });
   },
 
@@ -189,21 +190,19 @@ Page({
     if(this.scrollInterval) return;
 
     this.scrollInterval = setInterval(() => {
-      // //获取所商品列的标题
-      // wx.createSelectorQuery().selectAll('.category-title').boundingClientRect(cts => {
-      //   let selectTwoCategoryId = null, selectTwoCategoryIndex = 0;
-      //   let top = this.factor * 275; //100 + 88 + 84 + 3
-      //   cts.map((item, index) => {
-      //     if(item.top <= top){
-      //       selectTwoCategoryId = item.dataset.id;
-      //       selectTwoCategoryIndex = index;
-      //     }
-      //   });
-
-      //   if(selectTwoCategoryId && selectTwoCategoryId !== this.data.selectTwoCategoryId){
-      //     this.setData({ selectTwoCategoryId, y: selectTwoCategoryIndex * 20 });
-      //   }
-      // }).exec();
+      //获取所商品列的标题
+      wx.createSelectorQuery().selectAll('.category-title').boundingClientRect(cts => {
+        let selectTwoCategoryId = null;
+        let top = this.factor * 275; //100 + 88 + 84 + 3
+        cts.map(item => {
+          if(item.top <= top){
+            selectTwoCategoryId = item.dataset.id;
+          }
+        });
+        if(this.data.selectLeftCategoryId !== selectTwoCategoryId){
+          this.setData({ selectLeftCategoryId: selectTwoCategoryId });
+        }
+      }).exec();
       
       //获取所有商品列
       let showItemIds = {};
@@ -213,19 +212,11 @@ Page({
             showItemIds[item.dataset.id] = true;
           }
         });
-        //console.log('获取滚动情况', showItemIds);
+        // console.log('获取滚动情况', showItemIds);
         this.setData({ showItemIds });
       }).exec();
       if(this.scrollInterval) clearInterval(this.scrollInterval);
       this.scrollInterval = undefined;
     }, 500);
-  },
-  /**
-   * 页面滚动事件的处理函数
-   */
-  onPageScroll(e){
-    this.scrollTop = e.scrollTop;
-
-    
   },
 })

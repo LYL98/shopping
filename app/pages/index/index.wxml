@@ -1,33 +1,23 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
-
-<pageNavBar
- title="蒲公英"
- back="{{false}}"
- background="linear-gradient(180deg, #FFE56E 0%, #FFE05C 100%);"
- isLoading="{{navBarLoding}}"
- loadingColor="#000"
-></pageNavBar>
+<import src="index.skeleton.wxml"/>
 
 <view class="{{isShowSelect ? 'show-select' : ''}}">
-	<skeleton
-	 selector="skeleton"
-	 bgcolor="#fff"
-	 wx:if="{{showSkeleton}}"
-	></skeleton>
-	<view class="skeleton">
+	<!--选择门店组件-->
+	<view class="" style="background: #FFE05C;">
+		<selectStore
+			wx:if="{{userInfo.id}}"
+			bindcallback="selectStoreCallBack"
+			bindtoggle="showHideToggle"
+		/>
+	</view>
+	<!--骨架屏-->
+	<template is="skeleton" wx-if="{{showSkeleton}}" />
+	<view wx:else>
 		<view class="index-header">
-			<!--选择门店组件-->
-			<view class="">
-				<selectStore
-				 wx:if="{{userInfo.id}}"
-				 bindcallback="selectStoreCallBack"
-				 bindtoggle="showHideToggle"
-				/>
-			</view>
 			<!--搜索组件-->
 			<view class="search-box">
 				<view
-				 class="search skeleton-rect"
+				 class="search"
 				 hover-class="view-hover"
 				 bindtap="clickSearch"
 				>
@@ -37,41 +27,31 @@
 			</view>
 			<!--轮播图-->
 			<swiper
-			 class="skeleton-rect banner"
-			 indicator-dots
-			 indicator-active-color="#FDCD50"
-			 autoplay
-			 bindchange="swiperChange"
+				class="banner"
+				indicator-dots
+				indicator-active-color="#FDCD50"
+				autoplay
 			>
 				<swiper-item wx:for="{{bannerList}}" wx:key="index">
 					<image
-					 wx:if="{{item.url}}"
-					 mode="widthFix"
-					 data-index="{{index}}"
-					 data-item="{{item}}"
-					 bindtap="urlJump"
-					 src="{{tencentPath + item.image}}"
-					></image>
-					<image
-					 wx:else
-					 data-index="{{index}}"
-					 mode="widthFix"
-					 data-item="{{item}}"
-					 bindtap="urlJump"
-					 src="{{tencentPath + item.image}}"
+						data-index="{{index}}"
+						mode="widthFix"
+						data-item="{{item}}"
+						bindtap="urlJump"
+						src="{{tencentPath + item.image}}"
 					></image>
 				</swiper-item>
-				<!-- 跑马灯 -->
-
 			</swiper>
+
+			<!-- 跑马灯 -->
 			<view class='notice align-center' wx:if="{{noticeList.length > 0 && bannerList.length > 0}}">
 				<swiper
-				 autoplay
-				 vertical
-				 circular
-				 interval="2000"
-				 style="{{'height: 46rpx'}}"
-				 class="flex1"
+					autoplay
+					vertical
+					circular
+					interval="2000"
+					style="{{'height: 46rpx'}}"
+					class="flex1"
 				>
 					<swiper-item wx:for="{{noticeList}}" wx:key="index">
 						<view
@@ -89,130 +69,184 @@
 		</view>
 
 		<!--营业提示-->
-		<view wx:if="{{!closeStore}}" class="skeleton-rect close-store">
+		<view wx:if="{{!closeStore}}" class="close-store">
 			<image src="/assets/img/index/notice_icon.png"></image>
-			<text>营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单</text>
+			<text>营业时间：{{tools.returnTimeFormat(order_start_time, 'HH:mm')}} - {{tools.returnTimeFormat(order_end_time, 'HH:mm')}}，其他时间无法下单</text>
 		</view>
 
 		<!--运营专区标签-->
-		<view class="tags-list">
-			<block wx:for="{{tagsList}}" wx:key="index">
-				<view
-				 class="tags-item"
-				 hover-class="link-hover"
-				 wx:if="{{index !== 0}}"
-				 data-item="{{item}}"
-				 bind:tap="clickTags"
-				 data-index="{{index}}"
-				 data-item="{{item}}"
-				>
-					<image class="skeleton-rect" src="{{item.image}}"></image>
-					<text class="skeleton-rect">{{item.title}}</text>
+		<scroll-view
+			wx:if="{{tagsList.kingkong.length > 1}}"
+			class="tags-list-body"
+			scroll-x
+			style="height: {{tagsList.kingkong.length >= 5 ? 364 : 182}}rpx;"
+			bindscroll="scrollTags"
+		>
+			<view class="tags-list">
+				<!--第二个 - 第九个-->
+				<view class="left">
+					<block wx:for="{{tagsList.kingkong}}" wx:key="index">
+						<view
+							class="tags-item"
+							hover-class="link-hover"
+							wx:if="{{index > 0 && index <= 7}}"
+							bind:tap="clickTags"
+							data-type="kingkong"
+							data-index="{{index}}"
+							data-item="{{item}}"
+						>
+							<image src="{{tencentPath + item.image + '_min200x200'}}"></image>
+							<text>{{item.title}}</text>
+						</view>
+					</block>
 				</view>
-			</block>
+				<!--第十个 - 第十九个-->
+				<view class="right" wx:if="{{tagsList.kingkong.length > 8}}">
+					<block wx:for="{{tagsList.kingkong}}" wx:key="index">
+						<view
+							class="tags-item"
+							hover-class="link-hover"
+							wx:if="{{index > 8}}"
+							bind:tap="clickTags"
+							data-index="{{index}}"
+							data-item="{{item}}"
+						>
+							<image src="{{item.image}}"></image>
+							<text>{{item.title}}</text>
+						</view>
+					</block>
+				</view>
+			</view>
+		</scroll-view>
+		<view class="tags-list-step-body" wx:if="{{tagsList.kingkong.length > 8}}">
+			<view class="step" style="margin-left: {{tagsListX}}rpx;"></view>
+		</view>
+
+		<!--卡片区-->
+		<view class="cards" wx:if="{{tagsList.card.length > 1}}">
+			<!--第一个-->
+			<view class="item" hover-class="link-hover" data-type="card" data-index="{{0}}" bind:tap="clickTags">
+				<image class="image" src="{{tencentPath + tagsList.card[0].cover_image}}" style="width: 100%;" mode="top" />
+			</view>
+
+			<!--第二个-->
+			<view class="item" wx:if="{{tagsList.card.length > 1}}" hover-class="link-hover" data-type="card" data-index="{{1}}" bind:tap="clickTags">
+				<image class="image" src="{{tencentPath + tagsList.card[1].cover_image}}" style="width: 100%;" mode="top" />
+			</view>
+			<view class="item" wx:else>
+				<image class="image" src="/assets/img/hotSale/hot_sale_entry.png" style="width: 100%;" mode="top" />
+			</view>
+
+			<!--第三个-->
+			<view class="item" wx:if="{{tagsList.card.length > 2}}" hover-class="link-hover" data-type="card" data-index="{{2}}" bind:tap="clickTags">
+				<image class="image" src="{{tencentPath + tagsList.card[2].cover_image}}" style="width: 100%;" mode="top" />
+			</view>
+			<view class="item" wx:else>
+				<image class="image" src="/assets/img/hotSale/hot_sale_entry.png" style="width: 100%;" mode="top" />
+			</view>
 		</view>
 
 		<!-- 热销榜单入口 -->
-		<navigator class="skeleton-rect hot-sale-entry" url="/pages/hotSaleList/hotSaleList">
+		<navigator class="hot-sale-entry" url="/pages/hotSaleList/hotSaleList">
 			<image src="/assets/img/hotSale/hot_sale_entry.png"></image>
 		</navigator>
 
 		<!-- 今日主推 -->
-		<view class="skeleton-rect title-box-body">
-			<vie class="title">{{tagsList[0].title}}</vie>
-			<vie class="base-line"></vie>
-		</view>
+		<block wx:if="{{tagsList.recommend.length > 0}}">
+			<view class="title-box-body">
+				<vie class="title">{{tagsList.recommend[0].title}}</vie>
+				<vie class="base-line"></vie>
+			</view>
 
-		<view class="goods-list">
-			<view
-			 class="goods-item"
-			 wx:for="{{dataItem.items}}"
-			 wx:key="index"
-			 bind:tap="clickItem"
-			 data-item="{{item}}"
-			>
-				<view class="goods-item-img">
-					<view class="tags-mask">
-						<view
-						 class="tags-item"
-						 wx:for="{{tools.returnTags(item.tags)}}"
-						 wx:for-item="t"
-						 wx:for-index="i"
-						 wx:key="i"
-						 wx:if="{{t}}"
-						>
-							<text>{{tools.returnSpecStr(t,0,2)}}</text>
-							<image wx:if="{{i == 0}}" src="/assets/img/index/label0.png"></image>
-							<image wx:else src="/assets/img/index/label1.png"></image>
-						</view>
-						<view class="tags-item" wx:if="{{item.is_presale}}">
-							<text>预售</text>
-							<image wx:if="{{item.tags.length == 0}}" src="/assets/img/index/label0.png"></image>
-							<image wx:else src="/assets/img/index/label1.png"></image>
-						</view>
-					</view>
-					<image src="{{tencentPath + item.images[0]}}_watermark375x375" lazy-load="{{index > 2 ? true : false}}"></image>
-				</view>
-				<view class="goods-item-info">
-					<view class="goods-item-info-top">
-						<view class="goods-title">{{item.title}}</view>
-						<view class="goods-sku">
-							<text wx:if="{{item.is_quoted  && item.gross_weight}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-							<text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-							<text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
-							<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-							<text wx:if="{{item.frame_id}}">有筐</text>
-						</view>
-						<view class="goods-limt">
-							<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-							<text wx:if="{{item.min_num_per_order}}">限购{{item.order_num_max}}件</text>
-							<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
-						</view>
-					</view>
-					<view>
-						<priceBox
-						 vipLevel="{{dataItem.vip_level}}"
-						 vipTitle="{{dataItem.vip_title}}"
-						 vipDiscount="{{dataItem.vip_discount}}"
-						 isVipItem="{{item.is_vip_item}}"
-						 isQuoted="{{item.is_quoted}}"
-						 priceSale="{{item.price_sale}}"
-						 priceOrigin="{{item.price_origin}}"
-						 priceNoVip="{{item.price_novip}}"
-						/>
-						<view class="goods-item-info-bottom">
-							<view class="store-type">
-								<block wx:if="{{item.sale_type == '平台'}}">
-									<text class="type-label" >商家</text>
-									<text>{{item.supplier}}门店</text>
-								</block>
-								<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
+			<view class="goods-list">
+				<view
+				class="goods-item"
+				wx:for="{{dataItem.items}}"
+				wx:key="index"
+				bind:tap="clickItem"
+				data-item="{{item}}"
+				>
+					<view class="goods-item-img">
+						<view class="tags-mask">
+							<view
+							class="tags-item"
+							wx:for="{{tools.returnTags(item.tags)}}"
+							wx:for-item="t"
+							wx:for-index="i"
+							wx:key="i"
+							wx:if="{{t}}"
+							>
+								<text>{{tools.returnSpecStr(t,0,2)}}</text>
+								<image wx:if="{{i == 0}}" src="/assets/img/index/label0.png"></image>
+								<image wx:else src="/assets/img/index/label1.png"></image>
 							</view>
-
-							<view class="cart-wrapper">
-								<handleShopCart itemData="{{item}}" />
+							<view class="tags-item" wx:if="{{item.is_presale}}">
+								<text>预售</text>
+								<image wx:if="{{item.tags.length == 0}}" src="/assets/img/index/label0.png"></image>
+								<image wx:else src="/assets/img/index/label1.png"></image>
 							</view>
 						</view>
+						<image src="{{tencentPath + item.images[0]}}_watermark375x375" lazy-load="{{index > 2 ? true : false}}"></image>
+					</view>
+					<view class="goods-item-info">
+						<view class="goods-item-info-top">
+							<view class="goods-title">{{item.title}}</view>
+							<view class="goods-sku">
+								<text wx:if="{{item.is_quoted  && item.gross_weight}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+								<text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
+								<text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+								<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+								<text wx:if="{{item.frame_id}}">有筐</text>
+							</view>
+							<view class="goods-limt">
+								<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+								<text wx:if="{{item.min_num_per_order}}">限购{{item.order_num_max}}件</text>
+								<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
+							</view>
+						</view>
+						<view>
+							<priceBox
+								vipLevel="{{dataItem.vip_level}}"
+								vipTitle="{{dataItem.vip_title}}"
+								vipDiscount="{{dataItem.vip_discount}}"
+								isVipItem="{{item.is_vip_item}}"
+								isQuoted="{{item.is_quoted}}"
+								priceSale="{{item.price_sale}}"
+								priceOrigin="{{item.price_origin}}"
+								priceNoVip="{{item.price_novip}}"
+							/>
+							<view class="goods-item-info-bottom">
+								<view class="store-type">
+									<block wx:if="{{item.sale_type == '平台'}}">
+										<text class="type-label" >商家</text>
+										<text>{{item.supplier}}门店</text>
+									</block>
+									<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
+								</view>
+
+								<view class="cart-wrapper">
+									<handleShopCart itemData="{{item}}" />
+								</view>
+							</view>
+
+						</view>
 
 					</view>
-
 				</view>
 			</view>
-		</view>
+
+			<view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
+
+			<defaultPage wx:else currentPage="itemList" style="position: relative; top: -100rpx;"></defaultPage>
+		</block>
+
+		<newCoupon
+			wx:if="{{userInfo.id && address.id}}"
+			wx:if="{{true}}"
+			storeId="{{address.id}}"
+			bindtoggle="showHideToggle"
+		/>
+
+		<gio-marketing/>
 	</view>
-
 </view>
-
-<view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
-
-<defaultPage wx:else currentPage="itemList"></defaultPage>
-
-<newCoupon
- wx:if="{{userInfo.id && address.id}}"
- wx:if="{{true}}"
- storeId="{{address.id}}"
- bindtoggle="showHideToggle"
-/>
-
-<gio-marketing/>
-

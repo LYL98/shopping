@@ -1,9 +1,11 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 
-<view>
-	<view class="bg">
-		<image wx:if="{{1}}" src="/assets/img/service_weixin.png" style="width: 100vw; height: 100vw;" />
-		<view wx:else class="image" style="width: 100vw; height: 100vw;"></view>
+<import src="itemTag.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{showSkeleton}}" />
+
+<view wx:else>
+	<view class="top-bg">
+		<image src="/assets/img/service_weixin.png" style="width: 100vw; height: 100vw;" />
 	</view>
 	<view class="goods-list">
 		<view
@@ -72,7 +74,7 @@
 						</view>
 
 						<view class="cart-wrapper">
-							<handleShopCart itemData="{{item}}" />
+							<handleShopCart itemData="{{item}}" bindcallback="joinShoppingCart"/>
 						</view>
 					</view>
 
@@ -81,9 +83,14 @@
 			</view>
 		</view>
 	</view>
+	<view class="load-more" hover-class="link-hover" bind:tap="loadMore" wx:if="{{dataItem.num / query.page_size > query.page}}">{{loading ? '加载中...' : '点击加载更多'}}</view>
+	<view class="bottom-bg">
+		<image src="/assets/img/service_weixin.png" style="width: 100vw; height: 100vw;" />
+		<image src="/assets/img/service_weixin.png" style="width: 100vw; height: 100vw;" />
+	</view>
+
+	<navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="shopping-btn">
+		<image src="/assets/img/shop_cart.png"></image>
+		<span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
+	</navigator>
 </view>
-
-<view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
-
-<!-- <defaultPage wx:else currentPage="itemList"></defaultPage> -->
-

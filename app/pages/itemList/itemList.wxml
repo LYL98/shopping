@@ -29,11 +29,12 @@
 				class="category-view"
 				catchtouchmove="true"
 				scroll-y="{{true}}"
-				scroll-top="{{y}}"
 				scroll-with-animation="{{true}}"
+				scroll-into-view="select-category{{selectLeftCategoryId}}"
 			>
 				<view
-					class="item {{selectTwoCategoryId === item.id && 'active'}}"
+					id="select-category{{item.id}}"
+					class="item {{selectLeftCategoryId === item.id && 'active'}}"
 					hover-class="link-hover"
 					wx:for="{{dataItem.items}}"
 					wx:key="index"
@@ -76,6 +77,7 @@
 					scroll-y="{{true}}"
 					scroll-top="{{y}}"
 					scroll-with-animation="{{true}}"
+					enable-back-to-top="{{true}}"
 					scroll-into-view="category-title{{selectTwoCategoryId}}"
 					bindscroll="scrollItem"
 					class="goods-view"
@@ -167,7 +169,5 @@
 			</view>
 		</view>
 	</view>
-	<view wx:elif="{{!showSkeleton}}" style="margin-top: 200rpx;">
-		<defaultPage currentPage="itemList"></defaultPage>
-	</view>
+	<defaultPage wx:elif="{{!showSkeleton}}" currentPage="itemList"></defaultPage>
 </view>
