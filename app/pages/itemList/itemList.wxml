@@ -18,6 +18,7 @@
 				bindtap="clickOneCategory"
 				data-id="{{item.id}}"
 			>{{item.title}}</view>
+			<view class="class-view-item">【{{testIndex}}】</view>
 		</view>
 	</view>
 
@@ -28,7 +29,7 @@
 			<scroll-view
 				class="category-view"
 				catchtouchmove="true"
-				scroll-y="{{true}}"
+				scroll-y
 				scroll-with-animation="{{true}}"
 				scroll-into-view="select-category{{selectLeftCategoryId}}"
 			>
@@ -73,23 +74,22 @@
 			<!--商品区-->
 			<view class="goods-view-group">
 				<scroll-view
-					scroll-x="{{false}}"
-					scroll-y="{{true}}"
+					scroll-y
 					scroll-top="{{y}}"
 					scroll-with-animation="{{true}}"
 					enable-back-to-top="{{true}}"
 					scroll-into-view="category-title{{selectTwoCategoryId}}"
 					bindscroll="scrollItem"
 					class="goods-view"
+					scroll-anchoring
 				>
-					<block wx:for="{{dataItem.items}}" wx:for-item="category" wx:for-index="categoryIndex">
+					<block wx:for="{{dataItem.items}}" wx:for-item="category" wx:for-index="categoryIndex" wx:key="categoryIndex">
 						<!--二级分类标题-->
 						<view class="category-title" data-id="{{category.id}}" id="category-title{{category.id}}">{{category.title}}</view>
-						<block wx:for="{{category.items}}">
+						<block wx:for="{{category.items}}" wx:key="index">
 							<!--在可视区内才显示商品-->
 							<view
 								wx:if="{{showItemIds[item.id]}}"
-								wx:key="index"
 								data-id="{{item.id}}"
 								bindtap="toItemDetail"
 								class="goods-item"
@@ -132,7 +132,7 @@
 										</view>
 										<view class="goods-limt">
 											<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-											<text wx:if="{{item.order_num_max}}">限购{{item.order_num_max}}件</text>
+											<text wx:if="{{item.order_num_max < 1000}}">限购{{item.order_num_max}}件</text>
 											<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
 										</view>
 									</view>
@@ -161,7 +161,7 @@
 								</view>
 							</view>
 							<!--不在可视区不显示-->
-							<view class="goods-item hide-info" data-id="{{item.id}}" wx:else></view>
+							<view class="goods-item hide-info" data-id="{{item.id}}" wx:else bind:tap="showItem"></view>
 						</block>
 					</block>
 					<view class="load-more">已加载所有</view>

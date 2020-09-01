@@ -13,7 +13,10 @@ Page({
       page_size: Constant.PAGE_SIZE,
       item_tag_id: '', //运营专区中今日主推ID
     },
-    detail: {},
+    detail: {
+      topic_image_header: [],
+      topic_image_detail: []
+    },
     dataItem: {
       items: [],
       num: 0
@@ -34,9 +37,10 @@ Page({
       if(ad && ad.id){
         let num = app.getShoppingCartNum();//获取购物车数量
         query.store_id = ad.id;
-        query.item_tag_id = this.options.id || '';
+        query.item_tag_id = this.options.id;
         this.setData({ query: query, shoppingCartNum: num, }, () => {
           this.itemQuery();
+          this.itemTagsDetail();
         });
       }
     });
@@ -46,6 +50,15 @@ Page({
     let that = this;
     let num = app.getShoppingCartNum();//获取购物车数量
     that.setData({ shoppingCartNum: num });
+  },
+
+  itemTagsDetail(){
+    let that = this;
+    Http.get(Config.api.itemTagsDetail, {
+      id: that.data.query.item_tag_id
+    }).then(res => {
+      that.setData({ detail: res.data });
+    });
   },
 
   //获取商品列表

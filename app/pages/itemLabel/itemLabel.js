@@ -1,4 +1,3 @@
-// pages/itemLabel/itemLabel.js
 //获取应用实例
 const app = getApp();
 import { Constant, Config } from './../../utils/index';
@@ -25,28 +24,8 @@ Page({
       title: '最近购买'
     }],
     dataItem: {
-      items: (() => {
-        //初始化骨架数据
-        let items = [];
-        for (let i = 0; i < 4; i++) {
-          let d = {
-            code: "123456",
-            frame_id: "20",
-            gross_weight: 0,
-            id: i + 1,
-            images: [],
-            is_quoted: false,
-            item_spec: "123",
-            item_stock: 123,
-            origin_place: "123",
-            package_spec: "123",
-            price_sale: 123,
-            title: "xxxxxxxx",
-          };
-          items.push(d);
-        }
-        return items;
-      })()
+      items: [],
+      num: 0
     },
     searchSrc: './../../assets/img/search_s.png',
     homeSrc: './../../assets/img/home.png',
@@ -55,39 +34,34 @@ Page({
     account: './../../assets/img/my.png',
     collectSSrc: './../../assets/img/collect_s.png',
     collectSrc: './../../assets/img/collect.png',
-    showSkeleton: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    let that = this;
-    
-    
     //判断登录
     app.signIsLogin(() => {
       let address = app.getSelectStore(); //当前选择的地址
-      let { query } = that.data;
+      let { query } = this.data;
       query.province_code = address.province_code || '';
       query.store_id = address.id || '';
       query.sort = options.sort || '';
       query.tag = options.tag || '收藏商品';
 
       let num = app.getShoppingCartNum(); //获取购物车数量
-      that.setData({
+      this.setData({
         query: query,
         shoppingCartNum: num,
         system: app.globalData.system
       }, () => {
         // that.getTagsList(); //获取标签
-        that.itemQuery();
+        this.itemQuery();
       });
     });
   },
   onShow(){
-    let that = this
-    that.itemQuery();
+    
   },
   //加入购物车
   joinShoppingCart() {

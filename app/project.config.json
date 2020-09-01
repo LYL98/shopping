@@ -27,7 +27,7 @@
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -107,7 +107,7 @@
 					"id": 6,
 					"name": "商品详情",
 					"pathName": "pages/itemDetail/itemDetail",
-					"query": "id=16688",
+					"query": "id=16536",
 					"scene": null
 				},
 				{
@@ -240,7 +240,7 @@
 					"id": 25,
 					"name": "运营专区",
 					"pathName": "pages/itemTag/itemTag",
-					"query": "",
+					"query": "id=36",
 					"scene": null
 				}
 			]

@@ -430,7 +430,7 @@
 .goods_info--label{
   font-size: 24rpx;
   color: #989797;
-  width:118rpx;
+  width: 144rpx;
   flex-shrink: 0;
 }
 .goods_info--label--auto_width{
@@ -440,15 +440,13 @@
 .goods_info--label--top{
   width:80rpx;
 }
-.goods_info--label--single{
-  width:190rpx;
-}
 .goods_info--label--reback{
-  width: 168rpx;
+  width: 200rpx;
 }
 .goods_info--value{
   font-size: 24rpx;
   color: #151515;
+  margin-right: 24rpx;
 }
 .send_title{
   margin-right: 20rpx;
@@ -522,16 +520,6 @@
 .goods_attr--box{
   height: 82rpx;
 }
-// .goods_header_attr--other{
-//   .goods_attr--box{
-
-//     padding-left: 24rpx;
-//   }
-//   .goods_info--label{
-//     padding-left: 24rpx;
-//   }
-  
-// }
 .pl24{
   
   padding-left: 24rpx;

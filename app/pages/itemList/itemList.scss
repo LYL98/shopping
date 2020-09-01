@@ -3,7 +3,6 @@
 .page-view{
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
   display: flex;
   flex-flow: column;
   >.top-view{
@@ -12,6 +11,7 @@
   >.bottom-view{
     flex: 1;
     display: flex;
+    height: calc(100vh - 190rpx); //必须，否则真机可能失效
   }
 }
 
@@ -97,6 +97,7 @@
     overflow: hidden;
     .goods-view{
       height: 100%;
+      overflow-anchor: auto; //重要，防止重新流动
     }
   }
 }

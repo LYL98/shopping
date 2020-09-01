@@ -3,9 +3,9 @@
 <import src="itemTag.skeleton.wxml"/>
 <template is="skeleton" wx-if="{{showSkeleton}}" />
 
-<view wx:else>
-	<view class="top-bg">
-		<image src="/assets/img/service_weixin.png" style="width: 100vw; height: 100vw;" />
+<view wx:elif="{{dataItem.num > 0}}">
+	<view class="top-bg" wx:if="{{detail.topic_image_header.length > 0}}">
+		<image src="{{tencentPath + detail.topic_image_header[0] + '_min750x750'}}" style="width: 100vw; height: 100vw;" />
 	</view>
 	<view class="goods-list">
 		<view
@@ -17,7 +17,8 @@
 		>
 			<view class="goods-item-img">
 				<view class="tags-mask">
-					<view
+					<!-- 不用显示 -->
+					<!-- <view
 						class="tags-item"
 						wx:for="{{tools.returnTags(item.tags)}}"
 						wx:for-item="t"
@@ -28,7 +29,7 @@
 						<text>{{tools.returnSpecStr(t,0,2)}}</text>
 						<image wx:if="{{i == 0}}" src="/assets/img/index/label0.png"></image>
 						<image wx:else src="/assets/img/index/label1.png"></image>
-					</view>
+					</view> -->
 					<view class="tags-item" wx:if="{{item.is_presale}}">
 						<text>预售</text>
 						<image wx:if="{{item.tags.length == 0}}" src="/assets/img/index/label0.png"></image>
@@ -49,7 +50,7 @@
 					</view>
 					<view class="goods-limt">
 						<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-						<text wx:if="{{item.min_num_per_order}}">限购{{item.order_num_max}}件</text>
+						<text wx:if="{{item.order_num_max < 1000}}">限购{{item.order_num_max}}件</text>
 						<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
 					</view>
 				</view>
@@ -84,9 +85,8 @@
 		</view>
 	</view>
 	<view class="load-more" hover-class="link-hover" bind:tap="loadMore" wx:if="{{dataItem.num / query.page_size > query.page}}">{{loading ? '加载中...' : '点击加载更多'}}</view>
-	<view class="bottom-bg">
-		<image src="/assets/img/service_weixin.png" style="width: 100vw; height: 100vw;" />
-		<image src="/assets/img/service_weixin.png" style="width: 100vw; height: 100vw;" />
+	<view class="bottom-bg" wx:if="{{detail.topic_image_detail.length > 0}}">
+		<image wx:for="{{detail.topic_image_detail}}" wx:key="index" src="{{tencentPath + item + '_min750x750'}}" style="width: 100vw; height: 100vw;" />
 	</view>
 
 	<navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="shopping-btn">
@@ -94,3 +94,5 @@
 		<span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
 	</navigator>
 </view>
+
+<defaultPage wx:else currentPage="itemList"></defaultPage>

@@ -16,6 +16,7 @@ Page({
       sort: '-other',
       display_class_id: ''
     },
+    testIndex: 0,
     dataItem: {
       items: []
     },
@@ -66,7 +67,7 @@ Page({
     this.setData({
       'query.display_class_id': id
     }, () => {
-      this.itemListDisplayClassNew();
+      this.itemListDisplayClassNew(true);
     });
     this.setData({ y: 0 });
 
@@ -118,9 +119,14 @@ Page({
     Http.get(Config.api.displayClassQuery, {
       province_code: that.address.province_code
     }).then((res) => {
+      let twoCategoryId = '';
       //如果是从首页的banner进来
       if(app.globalData.urlJump){
-        query.display_class_id = Number(app.globalData.urlJump);
+        let urlJump = app.globalData.urlJump.split('_');
+        if(urlJump.length >= 2){
+          query.display_class_id = Number(urlJump[0]);
+          twoCategoryId = Number(urlJump[1]);
+        }
         delete app.globalData.urlJump;
       }else{
         query.display_class_id = that.data.query.display_class_id || res.data[0].id; //如果未有选择，默认选择第一
@@ -130,27 +136,19 @@ Page({
         query,
         oneCategoryList: res.data,
       }, () => {
-        this.itemListDisplayClassNew();
+        this.itemListDisplayClassNew(true, twoCategoryId);
       });
     });
   },
 
-  //获取商品列表
-  itemListDisplayClassNew() {
+  //获取商品列表(isReset:是否重新定位，twoCategoryId:二级分类)
+  itemListDisplayClassNew(isReset, twoCategoryId) {
     let that = this;
-    let { query } = that.data;
+    let { query, selectTwoCategoryId, selectLeftCategoryId } = that.data;
     wx.showNavigationBarLoading();
     Http.get(Config.api.itemListDisplayClassNew, query).then(res => {
       wx.hideNavigationBarLoading();
       let rd = res.data, showItemIds = {};
-      //把没有商品的二级分类剔除
-      rd = {
-        vip_discount: rd.vip_discount,
-        vip_level: rd.vip_level,
-        vip_title: rd.vip_title,
-        items: rd.items.filter(item => item.items.length > 0)
-      };
-
       //处理当前显示商品
       for(let i = 0; i < rd.items.length; i++){
         if(Object.keys(showItemIds).length > 10){
@@ -164,11 +162,26 @@ Page({
         }
       }
 
+      //重新定位
+      if(isReset){
+        if(twoCategoryId){
+          selectTwoCategoryId = twoCategoryId;
+          selectLeftCategoryId = twoCategoryId;
+        }else if(rd.items.length > 0){
+          selectTwoCategoryId = rd.items[0].id;
+          selectLeftCategoryId = rd.items[0].id;
+        }else{
+          selectTwoCategoryId = '';
+          selectLeftCategoryId = '';
+        }
+      }
+
       that.setData({
         showItemIds,
         dataItem: rd,
         showSkeleton: false,
-        selectTwoCategoryId: rd.items.length > 0 ? rd.items[0].id : ''
+        selectTwoCategoryId,
+        selectLeftCategoryId,
       });
       that.flag = false;
     }).catch(error => {
@@ -179,10 +192,18 @@ Page({
 
   //跳转详情
   toItemDetail(e) {
-    const { id }  = e.currentTarget.dataset
+    let id = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: `/pages/itemDetail/itemDetail?id=${id}`,
-    })
+    });
+  },
+
+  //强制显示商品
+  showItem(e){
+    let id = e.currentTarget.dataset.id;
+    let { showItemIds } = this.data;
+    showItemIds[id] = true;
+    this.setData({ showItemIds });
   },
 
   scrollItem(e){
@@ -193,7 +214,7 @@ Page({
       //获取所商品列的标题
       wx.createSelectorQuery().selectAll('.category-title').boundingClientRect(cts => {
         let selectTwoCategoryId = null;
-        let top = this.factor * 275; //100 + 88 + 84 + 3
+        let top = this.factor * 375; //100 + 88 + 84 + 3 + 占位100
         cts.map(item => {
           if(item.top <= top){
             selectTwoCategoryId = item.dataset.id;
@@ -208,12 +229,12 @@ Page({
       let showItemIds = {};
       wx.createSelectorQuery().selectAll('.goods-item').boundingClientRect(gis => {
         gis.map(item => {
-          if(item.top > -1000 && item.top <= this.screenHeight + 1000){
+          if(item.top > -1000 && item.top < this.screenHeight + 1000){
             showItemIds[item.dataset.id] = true;
           }
         });
-        // console.log('获取滚动情况', showItemIds);
-        this.setData({ showItemIds });
+        //console.log('获取滚动情况', this.scrollTop);
+        this.setData({ showItemIds, testIndex: this.data.testIndex + 1 });
       }).exec();
       if(this.scrollInterval) clearInterval(this.scrollInterval);
       this.scrollInterval = undefined;

@@ -239,7 +239,6 @@ Page({
       let rd = res.data;
       //运营专区
       rd.kingkong.forEach((item, index) => {
-        item.iamge = that.data.tencentPath + item.image + '_min200x200'
         /*===== 埋点 start ======*/
         app.gioActionRecordAdd('positionView', {
           moduleTitle_var: 'icon区', //楼层
@@ -252,7 +251,6 @@ Page({
 
       //卡片专区
       rd.card.forEach((item, index) => {
-        item.iamge = that.data.tencentPath + item.image + '_min200x200'
         /*===== 埋点 start ======*/
         app.gioActionRecordAdd('positionView', {
           moduleTitle_var: '卡片区', //楼层
@@ -379,10 +377,10 @@ Page({
   scrollTags(e){
     if(this.scrollTagTime) clearTimeout(this.scrollTagTime);
     this.scrollTagTime = setTimeout(() => {
-      let l = e.detail.scrollLeft * this.factor;
-      let w = e.detail.scrollWidth * this.factor;
-      let tagsListX = l * (50 / w); //50：滚动条总宽度
-      this.setData({ tagsListX });
+      let l = e.detail.scrollLeft;
+      let w = e.detail.scrollWidth;
+      let tagsListX = l * (90 / this.factor / w); //60 + 30：滚动条总宽度
+      this.setData({ tagsListX: tagsListX * this.factor });
     }, 200);
   },
 

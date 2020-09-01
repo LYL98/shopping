@@ -76,20 +76,22 @@
 
 		<!--运营专区标签-->
 		<scroll-view
-			wx:if="{{tagsList.kingkong.length > 1}}"
+			wx:if="{{tagsList.kingkong.length > 0}}"
 			class="tags-list-body"
 			scroll-x
 			style="height: {{tagsList.kingkong.length >= 5 ? 364 : 182}}rpx;"
 			bindscroll="scrollTags"
+			enhanced
+			show-scrollbar="{{false}}"
 		>
 			<view class="tags-list">
-				<!--第二个 - 第九个-->
+				<!--第一个 - 第八个-->
 				<view class="left">
 					<block wx:for="{{tagsList.kingkong}}" wx:key="index">
 						<view
 							class="tags-item"
 							hover-class="link-hover"
-							wx:if="{{index > 0 && index <= 7}}"
+							wx:if="{{index >= 0 && index <= 7}}"
 							bind:tap="clickTags"
 							data-type="kingkong"
 							data-index="{{index}}"
@@ -106,12 +108,12 @@
 						<view
 							class="tags-item"
 							hover-class="link-hover"
-							wx:if="{{index > 8}}"
+							wx:if="{{index > 7}}"
 							bind:tap="clickTags"
 							data-index="{{index}}"
 							data-item="{{item}}"
 						>
-							<image src="{{item.image}}"></image>
+							<image src="{{tencentPath + item.image + '_min200x200'}}"></image>
 							<text>{{item.title}}</text>
 						</view>
 					</block>
@@ -123,26 +125,26 @@
 		</view>
 
 		<!--卡片区-->
-		<view class="cards" wx:if="{{tagsList.card.length > 1}}">
+		<view class="cards" wx:if="{{tagsList.card.length > 0}}">
 			<!--第一个-->
-			<view class="item" hover-class="link-hover" data-type="card" data-index="{{0}}" bind:tap="clickTags">
-				<image class="image" src="{{tencentPath + tagsList.card[0].cover_image}}" style="width: 100%;" mode="top" />
+			<view class="item" hover-class="link-hover" data-type="card" data-index="{{0}}" data-item="{{tagsList.card[0]}}" bind:tap="clickTags">
+				<image class="image" src="{{tencentPath + tagsList.card[0].cover_image + '_min200x200'}}" style="width: 233.33rpx; height: 233.33rpx;"/>
 			</view>
 
 			<!--第二个-->
-			<view class="item" wx:if="{{tagsList.card.length > 1}}" hover-class="link-hover" data-type="card" data-index="{{1}}" bind:tap="clickTags">
-				<image class="image" src="{{tencentPath + tagsList.card[1].cover_image}}" style="width: 100%;" mode="top" />
+			<view class="item" wx:if="{{tagsList.card.length > 1}}" hover-class="link-hover" data-type="card" data-index="{{1}}" data-item="{{tagsList.card[1]}}" bind:tap="clickTags">
+				<image class="image" src="{{tencentPath + tagsList.card[1].cover_image + '_min200x200'}}" style="width: 233.33rpx; height: 233.33rpx;"/>
 			</view>
 			<view class="item" wx:else>
-				<image class="image" src="/assets/img/hotSale/hot_sale_entry.png" style="width: 100%;" mode="top" />
+				<image class="image" src="/assets/img/card_default.png" style="width: 233.33rpx; height: 233.33rpx;"/>
 			</view>
 
 			<!--第三个-->
-			<view class="item" wx:if="{{tagsList.card.length > 2}}" hover-class="link-hover" data-type="card" data-index="{{2}}" bind:tap="clickTags">
-				<image class="image" src="{{tencentPath + tagsList.card[2].cover_image}}" style="width: 100%;" mode="top" />
+			<view class="item" wx:if="{{tagsList.card.length > 2}}" hover-class="link-hover" data-type="card" data-index="{{2}}" data-item="{{tagsList.card[2]}}" bind:tap="clickTags">
+				<image class="image" src="{{tencentPath + tagsList.card[2].cover_image + '_min200x200'}}" style="width: 233.33rpx; height: 233.33rpx;"/>
 			</view>
 			<view class="item" wx:else>
-				<image class="image" src="/assets/img/hotSale/hot_sale_entry.png" style="width: 100%;" mode="top" />
+				<image class="image" src="/assets/img/card_default.png" style="width: 233.33rpx; height: 233.33rpx;"/>
 			</view>
 		</view>
 
@@ -200,7 +202,7 @@
 							</view>
 							<view class="goods-limt">
 								<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-								<text wx:if="{{item.min_num_per_order}}">限购{{item.order_num_max}}件</text>
+								<text wx:if="{{item.order_num_max < 1000}}">限购{{item.order_num_max}}件</text>
 								<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
 							</view>
 						</view>

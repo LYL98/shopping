@@ -1,5 +1,5 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<view>
+<view catchtap>
   <!--预定-->
   <view wx:if="{{itemData.is_presale}}">
     <navigator wx:if="{{tools.judgeItemStock(itemData) && itemData.order_num_max > 0 && isCanPresale}}" url="/pages/itemDetail/itemDetail?id={{itemData.id}}" class="presale-btn">立即预订</navigator>

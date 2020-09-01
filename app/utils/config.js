@@ -75,6 +75,7 @@ module.exports = {
     noticeList: apiC + '/order/marquee', //banner首页
     itemTagsList: apiC + '/item/tags/list', //tags首页
     itemTagsListNew: apiC + '/item/tags/list_new', //tags首页
+    itemTagsDetail: apiC + '/item/tags/detail', //tags详情
     itemCollectionAdd: apiC + '/item/collection/add',//商品收藏信息添加
     itemCollectionCancel: apiC + '/item/collection/cancel',//商品收藏信息取消
     itemCollectionQuery: apiC + '/item/collection/query',//收藏商品展示
