@@ -121,6 +121,7 @@ Page({
           vidoes[i] = vidoes[i].replace(/"/g,'')
         }
         rd.content = rd.content.replace(/<img/g, '<img style="width:100%;height:auto" ');
+        rd.content = this.convert(rd.content);
       }
       if(rd.is_vip_item && rd.vip_level > 0 && rd.vip_discount > 0 ){
         this.setData({
@@ -165,6 +166,16 @@ Page({
       wx.hideNavigationBarLoading();
     });
   },
+  convert(htmlText) {
+		let str = htmlText.replace(/<img[^>]*>/gi, function (match) {
+			return match.replace(
+				/style\s*?=\s*?([‘"])[\s\S]*?\1/gi,
+				'style="width:100%;max-width:100%;height:auto;"'
+			); // 替换style
+		});
+
+		return str;
+	},
   //全场活动
   promotion(){
     let that = this;
