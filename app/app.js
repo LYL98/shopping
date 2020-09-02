@@ -74,8 +74,9 @@ App({
               that.gioActionRecordAdd('setUserId', rd.id);
               that.globalData.gioIsSetUserId = true;
             }
-            if(!that.globalData.gioIsSetUser){
-              that.gioSetUser(rd.store_id);
+            let address = that.getSelectStore();
+            if(!that.globalData.gioIsSetUser && address.id){
+              that.gioSetUser(address.id);
             }
             typeof callBack == "function" && callBack(rd);
           } else {
@@ -296,7 +297,6 @@ App({
   //小程序初始化完成时触发，全局只触发一次。
   onLaunch() {
     this.screenSize();//获取屏宽高
-    this.getBrand();
   },
 
   //全局显示时
@@ -358,24 +358,6 @@ App({
       }
     })
   },
-  //获取品牌
-  getBrand: function(callBack) {
-    let that = this;
-    wx.request({
-        url: Config.api.sysBrand,
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function (res) {
-          if (res.statusCode == 200 && res.data.code == 0) {
-            let d = res.data.data;
-            that.globalData.brand_icon = d.brand_icon;
-            that.globalData.brand_name = d.brand_name;
-            typeof callBack === 'function' && callBack(d);
-          }
-        }
-    });
-  },
   //获取页面（页面路由）
   getPage(route){
     if(!route) return null;
@@ -403,6 +385,7 @@ App({
   },
   //gio数据埋点(event事件，data数据)
   gioActionRecordAdd(event, data){
+    if(Config.comm !== 'pro') return; //不是生产环境，不埋点上传
     let events = {
       'setUserId': { type: '', data: data },
       'setUser': { type: '', data: data },

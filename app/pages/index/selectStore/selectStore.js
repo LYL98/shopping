@@ -1,8 +1,7 @@
 
-// components/selectStore/selectStore.js
 //获取应用实例
 const app = getApp();
-import config from './../../utils/config';
+import { Config, Http } from './../../../utils/index';
 
 Component({
   /**
@@ -15,9 +14,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    closeSrc: './../../assets/img/close2.png',
-    checkSrc: './../../assets/img/checked.png',
-    checkedSrc: './../../assets/img/checked_s.png',
     address: {},
     addressTemp: {},
     isShow: false,
@@ -47,53 +43,33 @@ Component({
     //获取地址列表
     merchantStoreList(isNotCallback) {
       let that = this;
-      wx.request({
-        url: config.api.merchantStoreList,
-        header: {
-          'content-type': 'application/json',
-          'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-        },
-        data: {
-          is_freeze: 0
-        },
-        success: function(res) {
-          if (res.statusCode == 200 && res.data.code === 0) {
-            let rd = res.data.data;
-            let address = app.getSelectStore(); //当前选择的地址
-            //如果地址列表只有一个，默认选择
-            if (rd.length === 1){
-              address = rd[0];
-              wx.setStorageSync('addOrderSelectAddress', rd[0]);
-            } else if(rd.length === 0){
-              // 无地址列表，则清除本地缓存门店数据
-              address = {}
-              wx.removeStorageSync('addOrderSelectAddress')
-            }
-            //如果没有选择地址
-            if(!address.id){
-              that.showSelect(); //显示选择地址
-            }else{
-              if(!isNotCallback) {
-                that.triggerEvent('callback', address);//触发回调事件
-              }
-              
-            }
-            
-            that.setData({
-              dataItem: rd,
-              address: address,
-              addressTemp: address
-            });
-          } else {
-            app.requestResultCode(res); //处理异常
-          }
-        },
-        complete: function(res) {
-          //判断是否网络超时
-          app.requestTimeout(res, () => {
-            that.merchantStoreList();
-          });
+      Http.get(Config.api.merchantStoreList, {is_freeze: 0}).then(res => {
+        let rd = res.data;
+        let address = app.getSelectStore(); //当前选择的地址
+        //如果地址列表只有一个，默认选择
+        if (rd.length === 1){
+          address = rd[0];
+          wx.setStorageSync('addOrderSelectAddress', rd[0]);
+        } else if(rd.length === 0){
+          // 无地址列表，则清除本地缓存门店数据
+          address = {}
+          wx.removeStorageSync('addOrderSelectAddress')
         }
+        //如果没有选择地址
+        if(!address.id){
+          that.showSelect(); //显示选择地址
+        }else{
+          if(!isNotCallback) {
+            that.triggerEvent('callback', address);//触发回调事件
+          }
+          
+        }
+        
+        that.setData({
+          dataItem: rd,
+          address: address,
+          addressTemp: address
+        });
       });
     },
     //显示选择

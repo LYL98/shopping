@@ -1,4 +1,3 @@
-<!--components/selectStore/selectStore.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <view class="select-store">
 	<view class="location">

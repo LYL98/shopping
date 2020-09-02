@@ -12,164 +12,82 @@ Page({
       //   item_id:1
       // }
     ],
-    socketData:null,
+    socketData: null,
     socketOpen: false, 
     socketTimeout:null,
     tencentPath: Config.tencentPath,
     rightSrc: './../../assets/img/right.png',
     bannerList: [],
-    tagsImg: [
-      './../../assets/img/tags_icon1.png',
-      './../../assets/img/tags_icon2.png',
-      './../../assets/img/tags_icon3.png',
-      './../../assets/img/tags_icon4.png',
-      './../../assets/img/tags_icon5.png',
-      './../../assets/img/tags_icon6.png',
-      './../../assets/img/tags_icon7.png',
-      './../../assets/img/tags_icon8.png',
-    ],
-    tagsList: (()=>{
-      //初始化骨架数据
-      let items = [];
-      for(let i = 0; i < 9; i++){
-        let d = {
-          id: i + 1,
-          image: '',
-          title: '今日主推'
-        };
-        items.push(d);
-      }
-      return items;
-    })(),
+    tagsList: {
+      kingkong: [],
+      card: [],
+      recommend: []
+    },
     query: {
       store_id: 0,
-      // tag: '今日主推',
       sort: '-tags_edited',
       page: 1,
       page_size: Constant.PAGE_SIZE,
       item_tag_id: '', //运营专区中今日主推ID
-      // item_tag_id: this.data.tagsList[0].id //运营专区中今日主推ID
-
     },
     dataItem: {
-      items: [
-        {
-          frame_id: '00',
-          gross_weight: 0,
-          id: 1,
-          images: [],
-          item_spec: "10g",
-          item_stock: 0,
-          order_num_max: 0,
-          origin_place: "......",
-          package_spec: "纸箱",
-          price_sale: 2000,
-          title: "xxxxxxxxxx"
-        },{
-          frame_id: '00',
-          gross_weight: 0,
-          id: 2,
-          images: [],
-          item_spec: "10g",
-          item_stock: 0,
-          order_num_max: 0,
-          origin_place: "......",
-          package_spec: "纸箱",
-          price_sale: 2000,
-          title: "xxxxxxxxxx"
-        }
-      ]
+      items: [],
+      num: 0
     },
-    //瀑布流数据(骨架屏数据)
-
-    currentSwiper: 0,
     initLoad: true,
     closeStore: true,
     showSkeleton: true,
     userInfo: {}, //当前登录用户
     address: {},
     isShowSelect: false,
-    navBarLoding: false,
+    tagsListX: 0
   },
 
-  swiperChange: function(e) {
-    this.setData({
-      currentSwiper: e.detail.current
-    })
-  },
   //页面装载时
   onLoad() {
-
-
-    let that = this;
-    let { brand_name, system } = app.globalData;
-    if(brand_name){
-      wx.setNavigationBarTitle({
-        title: brand_name
-      });
-    }else{
-      app.getBrand((rd)=>{
-        wx.setNavigationBarTitle({
-          title: rd.brand_name
-        });
-      });
-    }
-    that.setData({
-      system: system
-    });
-
-
+    this.screenWidth = wx.getSystemInfoSync().windowWidth;
+    this.screenHeight = wx.getSystemInfoSync().windowHeight;
+    this.factor = this.screenWidth / 750;
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-
-    let that = this;
-
+  onShow() {
     //判断登录
     app.signIsLogin((res) => {
       //保存登录用户信息
-      that.setData({
+      this.setData({
         userInfo: res,
       });
-      let { query, address } = that.data;
+      let { query, address } = this.data;
       if(address && address.id){
         let ad = app.getSelectStore(); //当前选择的地址
         query.store_id = ad.id;
         if (query.page !== 1) {
           query.page_size = query.page_size * query.page;
           query.page = 1;
-          that.setData({
+          this.setData({
             query: query,
             address: ad
           }, () => {
-            that.getTagsList(true);//里面包含获取商品列表
-            // that.itemQuery(true); //获取商品列表 (isInit是否进入页面)
-            that.getWorkTime();
-            that.getBanner(); //显示ad
+            this.getTagsList(true);//里面包含获取商品列表
+            this.getWorkTime();
+            this.getBanner(); //显示ad
           });
         } else {
-          that.setData({
+          this.setData({
             query: query,
             address: ad
           }, () => {
-            that.getTagsList()//里面包含获取商品列表
-            // that.itemQuery();
-            that.getWorkTime();
-            that.getBanner(); //显示ad
+            this.getTagsList()//里面包含获取商品列表
+            this.getWorkTime();
+            this.getBanner(); //显示ad
             this.getNoticeList()
           });
         }
         app.shoppingCartNum();
       }
     });
-
-    // this.connectSocket()
-    // this.setData({
-    //   noticeList:wx.getStorageSync('noticeList')
-    // })
-   
   },
   // 获取订单通高
   getNoticeList(){
@@ -178,15 +96,9 @@ Page({
       province_code: address.province_code,
       handleError:false
     }).then((res) => {
-      if(res.code === 0){
-        this.setData({
-          noticeList:res.data
-        })
-      }
-      console.log('res: ', res);
-      
-    }).catch(err => {
-      console.log('err',err)
+      this.setData({
+        noticeList: res.data
+      });
     });
   },
   onHide(){
@@ -251,51 +163,32 @@ Page({
   getWorkTime() {
     let that = this;
     let { address } = that.data;
-    wx.request({
-      url: Config.api.isOrderTime,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        province_code: address.province_code
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          that.setData({
-            closeStore: rd.is_time_order,
-            order_end_time: rd.order_end_time,
-            order_start_time: rd.order_start_time
-          })
-          let iscwp = wx.getStorageSync('is_click_wait_pay')
-          if (rd.is_debited && !iscwp) {
-            wx.showModal({
-              title: '提示',
-              content: '您有订单未付款，请先完成付款，否则无法购买商品！',
-              confirmColor: '#00AE66',
-              success: function(res) {
-                if (res.confirm) {
-                  wx.navigateTo({
-                    url: '/pages/order/order?type=wait_complete'
-                  });
-                }
-              },
-              complete(e) {
-                wx.setStorageSync('is_click_wait_pay', true)
-              }
-            })
+    Http.get(Config.api.isOrderTime, {
+      province_code: address.province_code
+    }).then(res => {
+      let rd = res.data;
+      that.setData({
+        closeStore: rd.is_time_order,
+        order_end_time: rd.order_end_time,
+        order_start_time: rd.order_start_time
+      })
+      let iscwp = wx.getStorageSync('is_click_wait_pay')
+      if (rd.is_debited && !iscwp) {
+        wx.showModal({
+          title: '提示',
+          content: '您有订单未付款，请先完成付款，否则无法购买商品！',
+          confirmColor: '#00AE66',
+          success: function(res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '/pages/order/order?type=wait_complete'
+              });
+            }
+          },
+          complete(e) {
+            wx.setStorageSync('is_click_wait_pay', true)
           }
-
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function(res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.getWorkTime();
-        });
+        })
       }
     });
   },
@@ -304,53 +197,35 @@ Page({
   getBanner() {
     let that = this;
     let { address } = that.data;
-    wx.request({
-      url: Config.api.banner,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        province_code: address.province_code
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          /*===== 埋点 start ======*/
-          for(let i = 0; i < rd.length; i++){
-            let item = rd[i];
-            let productName = '', tab = item.url.match(/\/\/|(\w+)/g);
-            if(item.url.indexOf('itemDetail') >= 0){
-              productName = `商品ID${tab[4]}`;
-            }else if(item.url.indexOf('itemLabel') >= 0){
-              tab = item.url.match(/([^\=]+)$/g);
-              productName = `跳转商品标签-标签-${tab[0]}`;
-            }else if(item.url.indexOf('itemList') >= 0){
-              productName = `跳转商品列表-分类-${tab[3]}`;
-            }else{
-              productName = '没有链接';
-            }
-            app.gioActionRecordAdd('positionView', {
-              moduleTitle_var: '首页banner', //楼层
-              position_var: i + 1, //坑位
-              positonName_var: `bannerID${item.id}`, //流量位名称(暂取banner_id)
-              productName: productName, //商品名称
-            });
-          }
-          /*===== 埋点 end ======*/
-          that.setData({
-            bannerList: rd
-          });
-        } else {
-          app.requestResultCode(res); //处理异常
+    Http.get(Config.api.banner, {
+      province_code: address.province_code
+    }).then(res => {
+      let rd = res.data;
+      /*===== 埋点 start ======*/
+      for(let i = 0; i < rd.length; i++){
+        let item = rd[i];
+        let productName = '', tab = item.url.match(/\/\/|(\w+)/g);
+        if(item.url.indexOf('itemDetail') >= 0){
+          productName = `商品ID${tab[4]}`;
+        }else if(item.url.indexOf('itemLabel') >= 0){
+          tab = item.url.match(/([^\=]+)$/g);
+          productName = `跳转商品标签-标签-${tab[0]}`;
+        }else if(item.url.indexOf('itemList') >= 0){
+          productName = `跳转商品列表-分类-${tab[3]}`;
+        }else{
+          productName = '没有链接';
         }
-      },
-      complete: function(res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.getBanner();
+        app.gioActionRecordAdd('positionView', {
+          moduleTitle_var: '首页banner', //楼层
+          position_var: i + 1, //坑位
+          positonName_var: `bannerID${item.id}`, //流量位名称(暂取banner_id)
+          productName: productName, //商品名称
         });
       }
+      /*===== 埋点 end ======*/
+      that.setData({
+        bannerList: rd
+      });
     });
   },
 
@@ -358,131 +233,98 @@ Page({
   getTagsList(isInit){
     let that = this;
     let { query,address } = that.data;
-    wx.request({
-      url: Config.api.itemTagsList,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: {
-        province_code: address.province_code
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          let { tencentPath } = that.data;
-          
-          if(rd.length > 9) rd.length = 9; //限制最长8个,但是第一个不显示
-          let rdTemp = [];
-          rd.forEach((item, index) => {
-            if(item.image){
-              rdTemp.push({
-                ...item,
-                image: tencentPath + item.image
-              });
-            }else{
-              rdTemp.push(item);
-            }
-            /*===== 埋点 start ======*/
-            if(index > 0){
-              app.gioActionRecordAdd('positionView', {
-                moduleTitle_var: 'icon区', //楼层
-                position_var: index + 1, //坑位
-                positonName_var: item.title, //流量位名称
-                productName: `跳转商品列表-展示分类-${item.title}`, //商品名称
-              });
-            }
-            /*===== 埋点 end ======*/
-          });
-          //默认选择运营专区第一个
-          query.item_tag_id = rdTemp[0] && rdTemp[0].id;
-          that.setData({
-            tagsList: rdTemp,
-            query:query
-          });
-         //先取得item_tag_id,再请求获得商品 
-          that.itemQuery(isInit);
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-      },
-      complete: function(res) {
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.getTagsList();
+    Http.get(Config.api.itemTagsListNew, {
+      province_code: address.province_code
+    }).then(res => {
+      let rd = res.data;
+      //运营专区
+      rd.kingkong.forEach((item, index) => {
+        /*===== 埋点 start ======*/
+        app.gioActionRecordAdd('positionView', {
+          moduleTitle_var: 'icon区', //楼层
+          position_var: index + 1, //坑位
+          positonName_var: item.title, //流量位名称
+          productName: `跳转运营专区-${item.title}`, //商品名称
         });
+        /*===== 埋点 end ======*/
+      });
+
+      //卡片专区
+      rd.card.forEach((item, index) => {
+        /*===== 埋点 start ======*/
+        app.gioActionRecordAdd('positionView', {
+          moduleTitle_var: '卡片区', //楼层
+          position_var: index + 1, //坑位
+          positonName_var: item.title, //流量位名称
+          productName: `跳转运营专区-${item.title}`, //商品名称
+        });
+        /*===== 埋点 end ======*/
+      });
+
+      //推荐专区
+      if(rd.recommend.length > 0){
+        //默认选择运营专区第一个
+        query.item_tag_id = rd.recommend[0] && rd.recommend[0].id;
       }
+      
+      that.setData({
+        tagsList: rd,
+        query: query,
+        showSkeleton: false
+      }, () => {
+        //先取得item_tag_id,再请求获得商品 
+        if(rd.card.length > 0) that.itemQuery(isInit);
+      });
     });
   },
   //获取商品列表
   itemQuery(isInit) {
     let that = this;
-    let {
-      query,
-      dataItem,
-      initLoad,
-    } = that.data;
-    //判断是否第一次加载，或没数据；如果是：显示loading   否则静默更新数据
-    if (initLoad || !dataItem.num) {
-      wx.showNavigationBarLoading();
+    let { query, dataItem, initLoad } = that.data;
+    wx.showNavigationBarLoading();
+    let initFun = () => {
+      //重新恢复数据
+      if (isInit) {
+        if (query.page_size > Constant.PAGE_SIZE) {
+          query.page = Math.ceil(query.page_size / Constant.PAGE_SIZE); //向上取整
+          query.page_size = Constant.PAGE_SIZE;
+          that.setData({
+            query: query
+          });
+        }
+      }
     }
-    wx.request({
-      url: Config.api.itemQuery,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      data: query,
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          /*===== 埋点 start ======*/
-          let dotFun = (item, index) => {
-            app.gioActionRecordAdd('positionView', {
-              moduleTitle_var: '今日主推', //楼层
-              position_var: index + 1, //坑位
-              positonName_var: item.title, //流量位名称
-              productName: item.title, //商品名称
-            });
-          }
-          /*===== 埋点 end ======*/
-          let rd = res.data.data;
-          if (query.page === 1) {
-            that.setData({
-              dataItem: rd,
-            });
-          } else {
-            dataItem.items = dataItem.items.concat(rd.items);
-            that.setData({
-              dataItem: dataItem,
-            });
-          }
-        } else {
-          app.requestResultCode(res); //处理异常
-        }
-
-        //重新恢复数据
-        if (isInit) {
-          if (query.page_size > Constant.PAGE_SIZE) {
-            query.page = Math.ceil(query.page_size / Constant.PAGE_SIZE); //向上取整
-            query.page_size = Constant.PAGE_SIZE;
-            that.setData({
-              query: query
-            });
-          }
-        }
-
-      },
-      complete: function(res) {
-        that.setData({
-          initLoad: false,
-          showSkeleton: false
-        });
-        wx.hideNavigationBarLoading();
-        //判断是否网络超时
-        app.requestTimeout(res, () => {
-          that.itemQuery(isInit);
+    Http.get(Config.api.itemQuery, query).then(res => {
+      wx.hideNavigationBarLoading();
+      /*===== 埋点 start ======*/
+      let dotFun = (item, index) => {
+        app.gioActionRecordAdd('positionView', {
+          moduleTitle_var: '今日主推', //楼层
+          position_var: index + 1, //坑位
+          positonName_var: item.title, //流量位名称
+          productName: item.title, //商品名称
         });
       }
+      /*===== 埋点 end ======*/
+      let rd = res.data;
+      if (query.page === 1) {
+        that.setData({
+          dataItem: rd,
+        });
+      } else {
+        dataItem.items = dataItem.items.concat(rd.items);
+        that.setData({
+          dataItem,
+          initLoad: false
+        });
+      }
+      initFun();
+    }).catch(error => {
+      wx.hideNavigationBarLoading();
+      that.setData({
+        initLoad: false
+      });
+      initFun();
     });
   },
   
@@ -530,19 +372,31 @@ Page({
     app.gioActionRecordAdd('secBuyEntrance_evar', '首页banner');
     /*===== 埋点 end ======*/
   },
+
+  //滑动tags
+  scrollTags(e){
+    if(this.scrollTagTime) clearTimeout(this.scrollTagTime);
+    this.scrollTagTime = setTimeout(() => {
+      let l = e.detail.scrollLeft;
+      let w = e.detail.scrollWidth;
+      let tagsListX = l * (90 / this.factor / w); //60 + 30：滚动条总宽度
+      this.setData({ tagsListX: tagsListX * this.factor });
+    }, 200);
+  },
+
   //点击tags
   clickTags(e){
     let item = e.currentTarget.dataset.item;
     let index = e.currentTarget.dataset.index;
-    app.globalData.indexTagId = item.id; //保存itemList页面要用到，
-    app.globalData.indexTagIndex = index; //保存itemList页面要用到
-    wx.switchTab({
-      url: '/pages/itemList/itemList',
-    })
+    let type = e.currentTarget.dataset.type;
+
+    wx.navigateTo({
+      url: `/pages/itemTag/itemTag?id=${item.id}`,
+    });
 
     /*===== 埋点 start ======*/
     app.gioActionRecordAdd('positionClick', {
-      moduleTitle_var: 'icon区', //楼层
+      moduleTitle_var: type === 'kingkong' ? 'icon区' : '卡片区', //楼层
       position_var: index, //坑位
       positonName_var: item.title, //流量位名称
       productName: `跳转商品列表-展示分类-${item.title}`, //商品名称

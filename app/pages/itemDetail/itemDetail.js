@@ -85,9 +85,6 @@ Page({
 
     
   },
-  onShow(){
-    
-  },
 
   //获取商品详情
   getItemDetail() {

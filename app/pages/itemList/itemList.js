@@ -1,6 +1,6 @@
 //获取应用实例
 const app = getApp();
-import { Constant, Config, Http } from './../../utils/index';
+import { Config, Http } from './../../utils/index';
 
 Page({
 
@@ -9,99 +9,38 @@ Page({
    */
   data: {
     tencentPath: Config.tencentPath,
-    rankSrc: './../../assets/img/itemList/rank.png',
-    rankSSrc: './../../assets/img/itemList/rank_s.png',
-    rankSl: './../../assets/img/itemList/rank_l.png',
-    screenSrc: './../../assets/img/screen.png',
-    downSrc: './../../assets/img/down.png',
-    categoryList: [],
+    selectTwoCategoryId: '',
+    selectLeftCategoryId: '',
     query: {
       store_id: 0,
       sort: '-other',
-      display_class_id: '',
-      page: 1,
-      page_size: Constant.PAGE_SIZE,
-      item_tag_id: '',//运营专区ID
+      display_class_id: ''
     },
+    testIndex: 0,
     dataItem: {
-      items: (() => {
-        //初始化骨架数据
-        let items = [];
-        for (let i = 0; i < 4; i++) {
-          let d = {
-            code: "123456",
-            frame_id: "20",
-            gross_weight: 0,
-            id: i + 1,
-            images: [],
-            is_quoted: false,
-            item_spec: "123",
-            item_stock: 123,
-            origin_place: "123",
-            package_spec: "123",
-            price_sale: 123,
-            title: "xxxxxxxx",
-          };
-          items.push(d);
-        }
-        return items;
-      })()
+      items: []
     },
-    initLoad: true,
     showSkeleton: true,
-    activeIndex: '', //选中运营专区显示的样式
-    x: '', //选中运营专区后滑动的距离
-    tagsList: [], //运营专区数据
-    changedown: true, //点击下拉按钮的判断
+    oneCategoryList: [], //一级品类数据
+    showItemIds: {}, //{1: true, 2: false} //为了优化速度
   },
   onLoad(option) {
-    this.flag = false; //防止快速点击运营专区
+    this.flag = false; //防止快速点击一级品类
+    this.scrollTop = 0;
     this.address = {}; //当前选择的地址
+    this.screenWidth = wx.getSystemInfoSync().windowWidth;
+    this.screenHeight = wx.getSystemInfoSync().windowHeight;
+    this.factor = this.screenWidth / 750;
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow() {
     app.shoppingCartNum();
-    let that = this;
     this.address = app.getSelectStore(); //当前选择的地址
     //判断登录
     app.signIsLogin(() => {
-      let { query } = this.data;
-      //如果是从首页的banner进来
-      if(app.globalData.urlJump){
-        query.display_class_id = Number(app.globalData.urlJump);
-        query.item_tag_id = '';
-        this.setData({ activeIndex: '' });
-        delete app.globalData.urlJump;
-      }
-      //如果是从首页icon区进来
-      if(app.globalData.indexTagId){
-        query.item_tag_id = app.globalData.indexTagId;
-        query.display_class_id = '';
-        this.setData({ activeIndex: app.globalData.indexTagIndex });
-        delete app.globalData.indexTagId;
-        delete app.globalData.indexTagIndex;
-      }
-      query.store_id = that.address.id || '';
-      that.displayClassQuery();//获取商品分类
-      that.getTagsList()//得到运营专区分类
-      if (query.page !== 1) {
-        query.page_size = query.page_size * query.page;
-        query.page = 1;
-        that.setData({
-          query: query
-        }, () => {
-          that.itemListDisplayClass(true);//获取商品列表 (isInit是否进入页面)
-        });
-      } else {
-        //如果搜索页是1
-        that.setData({
-          query: query
-        }, () => {
-          that.itemListDisplayClass();
-        });
-      }
+      this.displayClassQuery();//获取商品分类
     });
   },
 
@@ -120,28 +59,32 @@ Page({
     /*===== 埋点 end ======*/
   },
 
-  //选择商品分类
-  selectCategory(e) {
-    let { query, categoryList } = this.data;
-    let param = e.target.dataset.category;
-    query.display_class_id = param;
-    query.item_tag_id = '';
-    query.page = 1;
+  //点击一级品类
+  clickOneCategory(e) {
+    if (this.flag) return;
+    this.flag = true;
+    let id = e.currentTarget.dataset.id;
     this.setData({
-      query: query,
-      activeIndex: '',
-      x: ''
+      'query.display_class_id': id
     }, () => {
-      this.itemListDisplayClass();//获取商品列表
+      this.itemListDisplayClassNew(true);
     });
-
-    this.goTop();
+    this.setData({ y: 0 });
 
     /*===== 埋点 start ======*/
-    let con = categoryList.filter(item => item.id === param);
+    let con = this.data.oneCategoryList.filter(item => item.id === id);
     app.gioActionRecordAdd('firstBuyEntrance_evar', '商品');
     app.gioActionRecordAdd('secBuyEntrance_evar', con.length > 0 ? con[0].title : '全部');
     /*===== 埋点 end ======*/
+  },
+
+  //选择展示二级分类
+  selectTwoCategory(e) {
+    let id = e.target.dataset.id;
+    this.setData({
+      selectTwoCategoryId: id,
+      selectLeftCategoryId: id
+    });
   },
 
   //排序
@@ -153,10 +96,8 @@ Page({
     this.setData({
       query: query
     }, () => {
-      this.itemListDisplayClass();//获取商品列表
+      this.itemListDisplayClassNew();//获取商品列表
     });
-
-    this.goTop();
 
     /*===== 埋点 start ======*/
     let sorts = {
@@ -174,48 +115,74 @@ Page({
   //获取商品分类
   displayClassQuery() {
     let that = this;
+    let { query } = this.data;
     Http.get(Config.api.displayClassQuery, {
       province_code: that.address.province_code
     }).then((res) => {
+      let twoCategoryId = '';
+      //如果是从首页的banner进来
+      if(app.globalData.urlJump){
+        let urlJump = app.globalData.urlJump.split('_');
+        if(urlJump.length >= 2){
+          query.display_class_id = Number(urlJump[0]);
+          twoCategoryId = Number(urlJump[1]);
+        }
+        delete app.globalData.urlJump;
+      }else{
+        query.display_class_id = that.data.query.display_class_id || res.data[0].id; //如果未有选择，默认选择第一
+      }
+      query.store_id = this.address.id || '';
       that.setData({
-        categoryList: res.data
+        query,
+        oneCategoryList: res.data,
+      }, () => {
+        this.itemListDisplayClassNew(true, twoCategoryId);
       });
-    }).catch(() => {
-
     });
   },
 
-  //获取商品列表
-  itemListDisplayClass(isInit) {
+  //获取商品列表(isReset:是否重新定位，twoCategoryId:二级分类)
+  itemListDisplayClassNew(isReset, twoCategoryId) {
     let that = this;
-    let { query, dataItem } = that.data;
+    let { query, selectTwoCategoryId, selectLeftCategoryId } = that.data;
     wx.showNavigationBarLoading();
-    Http.get(Config.api.itemListDisplayClass, query).then(res => {
+    Http.get(Config.api.itemListDisplayClassNew, query).then(res => {
       wx.hideNavigationBarLoading();
-      let rd = res.data;
-      if (query.page === 1) {
-        that.setData({
-          dataItem: rd,
-          showSkeleton: false
-        });
-      } else {
-        dataItem.items = dataItem.items.concat(rd.items);
-        that.setData({
-          dataItem: dataItem,
-          showSkeleton: false
-        });
-      }
-      //重新恢复数据
-      if (isInit) {
-        if (query.page_size > Constant.PAGE_SIZE) {
-          query.page = Math.ceil(query.page_size / Constant.PAGE_SIZE);//向上取整
-          query.page_size = Constant.PAGE_SIZE;
-          that.setData({
-            query: query
-          });
+      let rd = res.data, showItemIds = {};
+      //处理当前显示商品
+      for(let i = 0; i < rd.items.length; i++){
+        if(Object.keys(showItemIds).length > 10){
+          break;
+        }
+        for(let j = 0; j < rd.items[i].items.length; j++){
+          if(Object.keys(showItemIds).length > 10){
+            break;
+          }
+          showItemIds[rd.items[i].items[j].id] = true;
         }
       }
-      that.setData({ initLoad: false });
+
+      //重新定位
+      if(isReset){
+        if(twoCategoryId){
+          selectTwoCategoryId = twoCategoryId;
+          selectLeftCategoryId = twoCategoryId;
+        }else if(rd.items.length > 0){
+          selectTwoCategoryId = rd.items[0].id;
+          selectLeftCategoryId = rd.items[0].id;
+        }else{
+          selectTwoCategoryId = '';
+          selectLeftCategoryId = '';
+        }
+      }
+
+      that.setData({
+        showItemIds,
+        dataItem: rd,
+        showSkeleton: false,
+        selectTwoCategoryId,
+        selectLeftCategoryId,
+      });
       that.flag = false;
     }).catch(error => {
       wx.hideNavigationBarLoading();
@@ -223,112 +190,54 @@ Page({
     });
   },
 
-  //获取商品运营专区
-  getTagsList() {
-    let that = this;
-    Http.get(Config.api.itemTagsList, {
-      province_code: that.address.province_code
-    }).then(res => {
-      let rd = res.data;
-      if (rd.length > 16) rd.length = 16 //长度限制16个
-      that.setData({
-        tagsList: rd
-      }, () => {
-        that.handleTags();
-      });
-    });
-  },
-  
-  //点击运营专区
-  clickTag(e) {
-    if (this.flag) return;
-    this.flag = true;
-
-    let v = e.currentTarget.dataset.index;
-    let id = e.currentTarget.dataset.tagid;
-    let { query, activeIndex } = this.data;
-    //判断是否选中运营专区
-    if (activeIndex !== v) {
-      query.item_tag_id = id;
-    } else {
-      query.item_tag_id = '';
-    }
-    query.page = 1;
-    this.setData({
-      query: query,
-      activeIndex: v,
-    }, () => {
-      changedown: true,
-      this.handleTags();
-      this.itemListDisplayClass();
-    });
-    this.goTop();
-  },
-
-  //点击下拉按钮
-  clickdown() {
-    this.setData({
-      changedown: !this.data.changedown
-    }, () => {
-      if(this.data.changedown){
-        this.handleTags();
-      }
-    });
-  },
-
-  //处理tags位置
-  handleTags() {
-    let { tagsList, activeIndex } = this.data;
-    let scrollX = '';
-    if(activeIndex !== ''){
-      let screenWidth = wx.getSystemInfoSync().windowWidth;
-      let itemWidth = screenWidth / 4;
-      scrollX = itemWidth * activeIndex - itemWidth * 2;
-      let maxScrollX = (tagsList.length + 1) * itemWidth;
-      if (scrollX < 0) {
-        scrollX = 0;
-      } else if (scrollX >= maxScrollX) {
-        scrollX = maxScrollX;
-      }
-    }
-    this.setData({ x: scrollX })
-  },
-
+  //跳转详情
   toItemDetail(e) {
-    const { id }  = e.currentTarget.dataset
+    let id = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: `/pages/itemDetail/itemDetail?id=${id}`,
-    })
+    });
   },
 
-  // 回到顶部
-  goTop() {
-    if (wx.pageScrollTo) {
-      wx.pageScrollTo({
-        scrollTop: 0,
-        duration: 0
-      });
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
-      });
-    }
+  //强制显示商品
+  showItem(e){
+    let id = e.currentTarget.dataset.id;
+    let { showItemIds } = this.data;
+    showItemIds[id] = true;
+    this.setData({ showItemIds });
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    let that = this;
-    let { query, dataItem } = that.data;
-    if (dataItem.num / query.page_size > query.page) {
-      query.page = query.page + 1;
-      that.setData({
-        query: query
-      }, () => {
-        that.itemListDisplayClass();
-      });
-    }
+  scrollItem(e){
+    this.scrollTop = e.detail.scrollTop;
+    if(this.scrollInterval) return;
+
+    this.scrollInterval = setInterval(() => {
+      //获取所商品列的标题
+      wx.createSelectorQuery().selectAll('.category-title').boundingClientRect(cts => {
+        let selectTwoCategoryId = null;
+        let top = this.factor * 375; //100 + 88 + 84 + 3 + 占位100
+        cts.map(item => {
+          if(item.top <= top){
+            selectTwoCategoryId = item.dataset.id;
+          }
+        });
+        if(this.data.selectLeftCategoryId !== selectTwoCategoryId){
+          this.setData({ selectLeftCategoryId: selectTwoCategoryId });
+        }
+      }).exec();
+      
+      //获取所有商品列
+      let showItemIds = {};
+      wx.createSelectorQuery().selectAll('.goods-item').boundingClientRect(gis => {
+        gis.map(item => {
+          if(item.top > -1000 && item.top < this.screenHeight + 1000){
+            showItemIds[item.dataset.id] = true;
+          }
+        });
+        //console.log('获取滚动情况', this.scrollTop);
+        this.setData({ showItemIds, testIndex: this.data.testIndex + 1 });
+      }).exec();
+      if(this.scrollInterval) clearInterval(this.scrollInterval);
+      this.scrollInterval = undefined;
+    }, 500);
   },
 })

@@ -1,162 +1,173 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
-<skeleton
- selector="skeleton"
- bgcolor="transparent"
- wx:if="{{showSkeleton}}"
-></skeleton>
+<!--骨架屏-->
+<import src="itemList.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{showSkeleton}}" />
 
-<!--搜索组件start-->
-<search style="position: fixed; top: 0; left: 0; right: 0; z-index: 99;" bind:tap="clickSearch" />
+<view wx:else class="page-view">
+	<view class="top-view">
+		<!--搜索组件-->
+		<search bind:tap="clickSearch" />
 
-<scroll-view
- catchtouchmove="true"
- class="{{changedown?'scroll-view':'scroll-view-down' }}"
- scroll-x="{{changedown}}"
- scroll-left="{{x}}"
- scroll-with-animation="{{true}}"
->
-	<view
-	 class="tags-view-item {{activeIndex === index && 'tagActive'}}"
-	 wx:for="{{tagsList}}"
-	 wx:key='index'
-	 bindtap="clickTag"
-	 data-index="{{index}}"
-	 data-tagid="{{item.id}}"
-	>
-		<text >{{item.title}}</text>
-	</view>
-	<!-- 遮罩层 -->
-	<view
-	 class="mask"
-	 wx:if="{{!changedown}}"
-	 catchtouchmove="true"
-	 bindtap="clickdown"
-	></view>
-</scroll-view>
-<!-- 下拉按钮 -->
-<view class="down-img" bindtap="clickdown">
-	<image src="{{downSrc}}"></image>
-</view>
-
-<!--搜索组件end-->
-<view class="category-view">
-	<view
-	 class="link-active {{query.display_class_id == '' && 'active'}}"
-	 bindtap="selectCategory"
-	 data-category=""
-	>全部
-	</view>
-	<view
-	 class="link-active {{query.display_class_id === item.id && 'active'}}"
-	 wx:for="{{categoryList}}"
-	 wx:key="index"
-	 bindtap="selectCategory"
-	 data-category="{{item.id}}"
-	 wx:if="{{item.title}}"
-	>{{item.title}}
-	</view>
-</view>
-<view class="head-view">
-	<view bindtap="changeSort" data-sort="{{query.sort === 'other' ? '-other' : 'other'}}">
-		综合
-		<image src="{{rankSSrc}}" wx:if="{{query.sort === 'other' }}"></image>
-		<image src="{{rankSl}}" wx:elif="{{query.sort === '-other'}}"></image>
-		<image src="{{rankSrc}}" wx:if="{{query.sort != '-other' && query.sort != 'other'}}"></image>
-	</view>
-	<view class="interval"></view>
-	<view bindtap="changeSort" data-sort="{{query.sort === 'price' ? '-price' : 'price'}}">
-		单价
-		<image src="{{rankSSrc}}" wx:if="{{query.sort === 'price' }}"></image>
-		<image src="{{rankSl}}" wx:elif="{{query.sort === '-price'}}"></image>
-		<image src="{{rankSrc}}" wx:if="{{query.sort != '-price' && query.sort != 'price'}}"></image>
-	</view>
-	<view class="interval"></view>
-	<view bindtap="changeSort" data-sort="{{query.sort === 'count' ? '-count' : 'count'}}">
-		销售
-		<image src="{{rankSSrc}}" wx:if="{{query.sort === 'count' }}"></image>
-		<image src="{{rankSl}}" wx:elif="{{query.sort === '-count'}}"></image>
-		<image src="{{rankSrc}}" wx:else="{{query.sort != '-count' && query.sort != 'count'}}"></image>
-	</view>
-</view>
-<view class="goods-view skeleton">
-	<view
-	 class="goods-item"
-	 wx:for="{{dataItem.items}}"
-	 wx:key="index"
-	 data-id="{{item.id}}"
-	 bindtap="toItemDetail"
-	>
-		<view class="goods-item-img">
-			<view class="tags-mask">
-				<view class="tags-item" wx:if="{{item.is_presale}}">
-					<text>预售</text>
-					<image src="/assets/img/index/label0.png"></image>
-				</view>
-			</view>
-			<image
-			 lazy-load="{{index > 4 ? true : false}}"
-			 wx:if="{{item.images.length > 0}}"
-			 src="{{tencentPath + item.images[0]}}_watermark200x200"
-			></image>
-			<image class="bg-img-container-item" wx:else></image>
+		<!--展示一级分类-->
+		<view class="class-view">
+			<view
+				class="class-view-item {{query.display_class_id === item.id && 'active'}}"
+				hover-class="link-hover"
+				wx:for="{{oneCategoryList}}"
+				wx:key='index'
+				bindtap="clickOneCategory"
+				data-id="{{item.id}}"
+			>{{item.title}}</view>
+			<view class="class-view-item">【{{testIndex}}】</view>
 		</view>
-		<view class="goods-item-info">
-			<view class="goods-item-info-top">
-				<view class="goods-titles skeleton-rect">
-					<view
-					 class="icon-tag"
-					 wx:for="{{tools.returnTags(item.tags)}}"
-					 wx:for-item="t"
-					 wx:for-index="i"
-					 wx:key="i"
-					 wx:if="{{t}}"
-					>
-						{{t}}
-					</view>
-					<text>{{item.title}}</text>
+	</view>
+
+	<!--二级分类、筛选、商品-->
+	<view wx:if="{{dataItem.items.length > 0}}" class="bottom-view">
+		<!--展示二级分类-->
+		<view class="category-view-body">
+			<scroll-view
+				class="category-view"
+				catchtouchmove="true"
+				scroll-y
+				scroll-with-animation="{{true}}"
+				scroll-into-view="select-category{{selectLeftCategoryId}}"
+			>
+				<view
+					id="select-category{{item.id}}"
+					class="item {{selectLeftCategoryId === item.id && 'active'}}"
+					hover-class="link-hover"
+					wx:for="{{dataItem.items}}"
+					wx:key="index"
+					bindtap="selectTwoCategory"
+					data-id="{{item.id}}"
+					wx:if="{{item.title}}"
+				>{{item.title}}</view>
+			</scroll-view>
+		</view>
+
+		<view class="goods-view-body">
+			<!--筛选-->
+			<view class="head-view">
+				<view bindtap="changeSort" data-sort="{{query.sort === 'other' ? '-other' : 'other'}}">
+					综合
+					<image src="./../../assets/img/itemList/rank_s.png" wx:if="{{query.sort === 'other' }}"></image>
+					<image src="./../../assets/img/itemList/rank_l.png" wx:elif="{{query.sort === '-other'}}"></image>
+					<image src="./../../assets/img/itemList/rank.png" wx:if="{{query.sort != '-other' && query.sort != 'other'}}"></image>
 				</view>
-				<view class="goods-sku skeleton-rect">
-					<text wx:if="{{item.is_quoted && item.gross_weight}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-					<text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-					<text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
-					<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-					<text wx:if="{{item.frame_id}}">有筐</text>
+				<view class="interval"></view>
+				<view bindtap="changeSort" data-sort="{{query.sort === 'price' ? '-price' : 'price'}}">
+					单价
+					<image src="./../../assets/img/itemList/rank_s.png" wx:if="{{query.sort === 'price' }}"></image>
+					<image src="./../../assets/img/itemList/rank_l.png" wx:elif="{{query.sort === '-price'}}"></image>
+					<image src="./../../assets/img/itemList/rank.png" wx:if="{{query.sort != '-price' && query.sort != 'price'}}"></image>
 				</view>
-				<view class="goods-limt skeleton-rect">
-					<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-					<text wx:if="{{item.order_num_max}}">限购{{item.order_num_max}}件</text>
-					<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
+				<view class="interval"></view>
+				<view bindtap="changeSort" data-sort="{{query.sort === 'count' ? '-count' : 'count'}}">
+					销售
+					<image src="./../../assets/img/itemList/rank_s.png" wx:if="{{query.sort === 'count' }}"></image>
+					<image src="./../../assets/img/itemList/rank_l.png" wx:elif="{{query.sort === '-count'}}"></image>
+					<image src="./../../assets/img/itemList/rank.png" wx:else="{{query.sort != '-count' && query.sort != 'count'}}"></image>
 				</view>
 			</view>
-			<priceBox
-			 vipLevel="{{dataItem.vip_level}}"
-			 vipTitle="{{dataItem.vip_title}}"
-			 vipDiscount="{{dataItem.vip_discount}}"
-			 isVipItem="{{item.is_vip_item}}"
-			 isQuoted="{{item.is_quoted}}"
-			 priceSale="{{item.price_sale}}"
-			 priceOrigin="{{item.price_origin}}"
-			 priceNoVip="{{item.price_novip}}"
-			/>
-			<view class="goods-item-info-bottom skeleton-rect">
 
-				<view class="store-type">
-					<block wx:if="{{item.sale_type == '平台'}}">
-						<text class="type-label" >商家</text>
-						<text>{{item.supplier}}门店</text>
+			<!--商品区-->
+			<view class="goods-view-group">
+				<scroll-view
+					scroll-y
+					scroll-top="{{y}}"
+					scroll-with-animation="{{true}}"
+					enable-back-to-top="{{true}}"
+					scroll-into-view="category-title{{selectTwoCategoryId}}"
+					bindscroll="scrollItem"
+					class="goods-view"
+					scroll-anchoring
+				>
+					<block wx:for="{{dataItem.items}}" wx:for-item="category" wx:for-index="categoryIndex" wx:key="categoryIndex">
+						<!--二级分类标题-->
+						<view class="category-title" data-id="{{category.id}}" id="category-title{{category.id}}">{{category.title}}</view>
+						<block wx:for="{{category.items}}" wx:key="index">
+							<!--在可视区内才显示商品-->
+							<view
+								wx:if="{{showItemIds[item.id]}}"
+								data-id="{{item.id}}"
+								bindtap="toItemDetail"
+								class="goods-item"
+							>
+								<view class="goods-item-img">
+									<view class="tags-mask">
+										<view class="tags-item" wx:if="{{item.is_presale}}">
+											<text>预售</text>
+											<image src="/assets/img/index/label0.png"></image>
+										</view>
+									</view>
+									<image
+									lazy-load="{{index > 4 ? true : false}}"
+									wx:if="{{item.images.length > 0}}"
+									src="{{tencentPath + item.images[0]}}_watermark200x200"
+									></image>
+									<image class="bg-img-container-item" wx:else></image>
+								</view>
+								<view class="goods-item-info">
+									<view class="goods-item-info-top">
+										<view class="goods-titles">
+											<view
+											class="icon-tag"
+											wx:for="{{tools.returnTags(item.tags)}}"
+											wx:for-item="t"
+											wx:for-index="i"
+											wx:key="i"
+											wx:if="{{t}}"
+											>
+												{{t}}
+											</view>
+											<text>{{item.title}}</text>
+										</view>
+										<view class="goods-sku">
+											<text wx:if="{{item.is_quoted && item.gross_weight}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+											<text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
+											<text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+											<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+											<text wx:if="{{item.frame_id}}">有筐</text>
+										</view>
+										<view class="goods-limt">
+											<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+											<text wx:if="{{item.order_num_max < 1000}}">限购{{item.order_num_max}}件</text>
+											<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
+										</view>
+									</view>
+									<priceBox
+										vipLevel="{{dataItem.vip_level}}"
+										vipTitle="{{dataItem.vip_title}}"
+										vipDiscount="{{dataItem.vip_discount}}"
+										isVipItem="{{item.is_vip_item}}"
+										isQuoted="{{item.is_quoted}}"
+										priceSale="{{item.price_sale}}"
+										priceOrigin="{{item.price_origin}}"
+										priceNoVip="{{item.price_novip}}"
+									/>
+									<view class="goods-item-info-bottom">
+										<view class="store-type">
+											<block wx:if="{{item.sale_type == '平台'}}">
+												<text class="type-label" >商家</text>
+												<text>{{item.supplier}}门店</text>
+											</block>
+											<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
+										</view>
+										<view class="cart-wrapper">
+											<handleShopCart itemData="{{item}}" />
+										</view>
+									</view>
+								</view>
+							</view>
+							<!--不在可视区不显示-->
+							<view class="goods-item hide-info" data-id="{{item.id}}" wx:else bind:tap="showItem"></view>
+						</block>
 					</block>
-					<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
-				</view>
-				<view class="cart-wrapper skeleton-rect">
-					<handleShopCart itemData="{{item}}" />
-				</view>
+					<view class="load-more">已加载所有</view>
+				</scroll-view>
 			</view>
-
 		</view>
 	</view>
-
-	<view class="load-more" wx:if="{{dataItem.num > 0 && !showSkeleton}}">{{tools.returnMore(dataItem.num, query)}}</view>
-	<!--<view class="load-none" wx:elif="{{!showSkeleton}}">暂无数据</view>-->
 	<defaultPage wx:elif="{{!showSkeleton}}" currentPage="itemList"></defaultPage>
 </view>
-

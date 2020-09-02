@@ -10,6 +10,7 @@
     "pages/myMessage/myMessage",
     "pages/search/search",
     "pages/itemLabel/itemLabel",
+    "pages/itemTag/itemTag",
     "pages/loginGuide/loginGuide",
     "pages/login/login",
     "pages/loginBind/loginBind",
@@ -68,7 +69,7 @@
     "wx1653f76966571193"
   ],
   "tabBar": {
-    "color": "#616161",
+    "color": "#989797",
     "selectedColor": "#FFD426",
     "borderStyle": "black",
     "backgroundColor": "#fff",
@@ -106,7 +107,7 @@
     ]
   },
   "networkTimeout": {
-    "request": 10000,
+    "request": 30000,
     "downloadFile": 100000
   },
   "permission": {

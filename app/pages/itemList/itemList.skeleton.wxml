@@ -1,0 +1,276 @@
+<!--
+此文件为开发者工具生成，生成时间: 2020/8/30 下午10:07:03 
+使用方法：
+在 pages/itemList/itemList.wxml 引入模板
+
+```
+<import src="itemList.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 pages/itemList/itemList.wxss 中引入样式
+```
+@import "./itemList.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view class="page-view">
+      <view class="top-view">
+        <view is="components/search/search">
+          <view class="search--search-body">
+            <navigator class="search--search">
+              <view class="search--input sk-transparent">
+                <image class="search--image sk-image">
+                </image>
+                搜索商品
+              </view>
+            </navigator>
+          </view>
+        </view>
+        <view class="class-view" style="border: none;">
+          <view class="class-view-item active sk-transparent sk-text-23-0769-520 sk-text" data-id="109" hover-class="link-hover" style="background-position-x: 50%;">
+            水果
+          </view>
+          <view class="class-view-item false sk-transparent sk-text-23-0769-511 sk-text" data-id="111" hover-class="link-hover" style="background-position-x: 50%;">
+            零食
+          </view>
+        </view>
+      </view>
+      <view class="bottom-view">
+        <view class="category-view-body">
+          <scroll-view class="category-view" scroll-into-view="select-category" scroll-with-animation="true" scroll-y="true">
+            <view class="item false sk-transparent sk-text-18-7500-967 sk-text" data-id="102" hover-class="link-hover" id="select-category102">
+              开发分类
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-850 sk-text" data-id="72" hover-class="link-hover" id="select-category72">
+              包装辅材
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-463 sk-text" data-id="71" hover-class="link-hover" id="select-category71">
+              休闲/饮品
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-591 sk-text" data-id="70" hover-class="link-hover" id="select-category70">
+              烘焙/糕点
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-838 sk-text" data-id="69" hover-class="link-hover" id="select-category69">
+              辣食/熟食
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-384 sk-text" data-id="68" hover-class="link-hover" id="select-category68">
+              坚果/果脯
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-34 sk-text" data-id="67" hover-class="link-hover" id="select-category67">
+              应季爆品
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-534 sk-text" data-id="66" hover-class="link-hover" id="select-category66">
+              石榴/冬枣
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-2 sk-text" data-id="54" hover-class="link-hover" id="select-category54">
+              橙柚
+            </view>
+            <view class="item false sk-transparent sk-text-18-7500-388 sk-text" data-id="63" hover-class="link-hover" id="select-category63">
+              猕猴桃
+            </view>
+          </scroll-view>
+        </view>
+        <view class="goods-view-body">
+          <view class="head-view" style="border: none;">
+            <view data-sort="other" class="sk-transparent">
+              综合
+              <image class="sk-image">
+              </image>
+            </view>
+            <view class="interval">
+            </view>
+            <view data-sort="price" class="sk-transparent">
+              单价
+              <image class="sk-image">
+              </image>
+            </view>
+            <view class="interval">
+            </view>
+            <view data-sort="count" class="sk-transparent">
+              销售
+              <image class="sk-image">
+              </image>
+            </view>
+          </view>
+          <view class="goods-view-group">
+            <scroll-view class="goods-view" enable-back-to-top="true" scroll-into-view="category-title102" scroll-top="0" scroll-with-animation="true" scroll-y="true">
+              <view class="category-title sk-transparent sk-text-31-2500-316 sk-text" data-id="102" id="category-title102" style="border: none;">
+                开发分类
+              </view>
+              <view class="goods-item" data-id="34724">
+                <view class="goods-item-img">
+                  <view class="tags-mask">
+                  </view>
+                  <image class="sk-image">
+                  </image>
+                </view>
+                <view class="goods-item-info" style="border: none;">
+                  <view class="goods-item-info-top">
+                    <view class="goods-titles">
+                      <text class="sk-transparent sk-text-8-3333-729 sk-text">
+                        开发测试商品
+                      </text>
+                    </view>
+                    <view class="goods-sku">
+                      <text class="sk-transparent sk-text-8-3333-895 sk-text sk-pseudo sk-pseudo-circle">
+                        1
+                      </text>
+                      <text class="sk-transparent sk-text-8-3333-893 sk-text sk-pseudo sk-pseudo-circle">
+                        1
+                      </text>
+                      <text class="sk-transparent sk-text-8-3333-748 sk-text sk-pseudo sk-pseudo-circle">
+                        约1斤
+                      </text>
+                      <text class="sk-transparent sk-text-8-3333-437 sk-text">
+                        有筐
+                      </text>
+                    </view>
+                    <view class="goods-limt">
+                      <text class="sk-transparent sk-text-18-7500-934 sk-text" style="border: none;">
+                        限购999件
+                      </text>
+                      <text class="sk-transparent sk-text-18-7500-375 sk-text" style="border: none;">
+                        库存不足
+                      </text>
+                    </view>
+                  </view>
+                  <view is="components/priceBox/priceBox">
+                    <view class="priceBox--price-box">
+                      <view class="priceBox--no-price sk-transparent sk-text-18-7500-681 sk-text">
+                        今日未报价
+                      </view>
+                    </view>
+                  </view>
+                  <view class="goods-item-info-bottom">
+                    <view class="store-type">
+                      <text class="type-label sk-transparent sk-text-18-7500-582 sk-text">
+                        商家
+                      </text>
+                      <text class="sk-transparent sk-text-18-7500-443 sk-text">
+                        刘俊供应商门店
+                      </text>
+                    </view>
+                    <view class="cart-wrapper">
+                      <view is="components/handleShopCart/handleShopCart">
+                        <view>
+                          <view>
+                            <view class="handleShopCart--add-cart">
+                              <image class="handleShopCart--image sk-image">
+                              </image>
+                            </view>
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view class="category-title sk-transparent sk-text-31-2500-516 sk-text" data-id="72" id="category-title72" style="border: none;">
+                包装辅材
+              </view>
+              <view class="goods-item" data-id="25761">
+                <view class="goods-item-img">
+                  <view class="tags-mask">
+                  </view>
+                  <image class="sk-image">
+                  </image>
+                </view>
+                <view class="goods-item-info" style="border: none;">
+                  <view class="goods-item-info-top">
+                    <view class="goods-titles">
+                      <text class="sk-transparent sk-text-8-3333-922 sk-text">
+                        港威保鲜膜25cm*300A
+                      </text>
+                    </view>
+                    <view class="goods-sku">
+                      <text class="sk-transparent sk-text-8-3333-700 sk-text sk-pseudo sk-pseudo-circle">
+                        宽25cm，长300A,6卷/件
+                      </text>
+                      <text class="sk-transparent sk-text-8-3333-572 sk-text sk-pseudo sk-pseudo-circle">
+                        江苏
+                      </text>
+                      <text class="sk-transparent sk-text-8-3333-12 sk-text">
+                        约6斤
+                      </text>
+                    </view>
+                    <view class="goods-limt">
+                      <text class="sk-transparent sk-text-18-7500-767 sk-text" style="border: none;">
+                        限购999件
+                      </text>
+                      <text class="sk-transparent sk-text-18-7500-600 sk-text" style="border: none;">
+                        仅剩8件
+                      </text>
+                    </view>
+                  </view>
+                  <view is="components/priceBox/priceBox">
+                    <view class="priceBox--price-box">
+                      <view class="priceBox--no-price sk-transparent sk-text-18-7500-239 sk-text">
+                        今日未报价
+                      </view>
+                    </view>
+                  </view>
+                  <view class="goods-item-info-bottom">
+                    <view class="store-type">
+                      <text class="type-label type-label-self sk-transparent sk-text-18-7500-741 sk-text">
+                        优选
+                      </text>
+                    </view>
+                    <view class="cart-wrapper">
+                      <view is="components/handleShopCart/handleShopCart">
+                        <view>
+                          <view>
+                            <view class="handleShopCart--add-cart">
+                              <image class="handleShopCart--image sk-image">
+                              </image>
+                            </view>
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view class="goods-item" data-id="24588">
+                <view class="goods-item-img">
+                  <view class="tags-mask">
+                  </view>
+                  <image class="sk-image">
+                  </image>
+                </view>
+                <view class="goods-item-info" style="border: none;">
+                  <view class="goods-item-info-top">
+                    <view class="goods-titles">
+                      <text class="sk-transparent sk-text-8-3333-451 sk-text">
+                        水果叉
+                      </text>
+                    </view>
+                    <view class="goods-sku">
+                      <text class="sk-transparent sk-text-8-3333-949 sk-text sk-pseudo sk-pseudo-circle">
+                        150把/包，20包/件
+                      </text>
+                      <text class="sk-transparent sk-text-8-3333-441 sk-text sk-pseudo sk-pseudo-circle">
+                        湖北
+                      </text>
+                      <text class="sk-transparent sk-text-8-3333-944 sk-text">
+                        约2.5斤
+                      </text>
+                    </view>
+                    <view class="goods-limt">
+                      <text class="sk-transparent sk-text-18-7500-601 sk-text" style="border: none;">
+                        限购999件
+                      </text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

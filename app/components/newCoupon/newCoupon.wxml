@@ -2,7 +2,7 @@
 <view class="coupon-body" wx:if="{{isShow}}">
 	<view class="coupon">
 		<view class="title">
-			<image src="./img/top.png" style="width: 470rpx; height: 192rpx;" />
+			<image class="image" src="./img/top.png" style="width: 470rpx; height: 192rpx;" />
 		</view>
 		<view class="coupon-list">
 			<view
@@ -52,7 +52,7 @@
 		 hover-class="link-hover"
 		 bind:tap="hideCoupon"
 		>
-			<image src="./img/close.png" style="width: 64rpx; height: 64rpx;" />
+			<image class="image" src="./img/close.png" style="width: 64rpx; height: 64rpx;" />
 		</view>
 	</view>
 </view>

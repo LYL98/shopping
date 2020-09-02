@@ -23,7 +23,7 @@ Page({
       './../../assets/img/customer_manager.png',
       './../../assets/img/complain.png',
       './../../assets/img/group_buy.png',
-      './../../assets/img/tags_icon7.png',
+      './../../assets/img/collect.png',
       './../../assets/img/icon_suggestions.png',
       './../../assets/img/return_qrcode.png'
     ],

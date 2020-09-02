@@ -107,7 +107,7 @@
 					"id": 6,
 					"name": "商品详情",
 					"pathName": "pages/itemDetail/itemDetail",
-					"query": "id=16688",
+					"query": "id=16536",
 					"scene": null
 				},
 				{
@@ -230,24 +230,17 @@
 					"scene": null
 				},
 				{
-					"id": 24,
-					"name": "首页【新】",
-					"pathName": "pages/index/index",
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/coupon/coupon",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": 25,
-					"name": "分类【新】",
-					"pathName": "pages/itemList/itemList",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "优惠券",
-					"pathName": "pages/coupon/coupon",
-					"query": "",
+					"name": "运营专区",
+					"pathName": "pages/itemTag/itemTag",
+					"query": "id=36",
 					"scene": null
 				}
 			]

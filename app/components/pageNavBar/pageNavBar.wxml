@@ -2,15 +2,15 @@
 	<view class="page-nav-bar__inner {{ios ? 'ios' : 'android'}} {{fixed?'page-nav-bar__fixed':''}}" style="{{navigationbarinnerStyle}}">
 		<view class="page-nav-bar__left" style="{{navBarLeft}}">
 			<!-- 只展示返回 -->
-			<block wx:if="{{back&&!home}}">
+			<block wx:if="{{back && !home}}">
 				<view class="page-nav-bar__button page-nav-bar__btn_goback" catchtap="tapBack"></view>
 			</block>
 			<!-- 只展示回到首页 -->
-			<block wx:elif="{{!back&&home}}">
+			<block wx:elif="{{!back && home}}">
 				<view class="page-nav-bar__button page-nav-bar__btn_gohome" catchtap="tapHome"></view>
 			</block>
 			<!-- 返回和首页 -->
-			<block wx:elif="{{back&&home}}">
+			<block wx:elif="{{back && home}}">
 				<view class="page-nav-bar__buttons ">
 					<view class="page-nav-bar__button page-nav-bar__btn_goback" catchtap="tapBack"></view>
 					<view class="page-nav-bar__button page-nav-bar__btn_gohome" catchtap="tapHome"></view>
