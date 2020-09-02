@@ -221,6 +221,7 @@
 					<image
 					 class="start_image"
 					 src="../../assets/img/star.png"
+					 wx:key="index"
 					 wx:for="{{detail.toast}}"
 					/>
 				</view>
@@ -235,6 +236,7 @@
 					 class="start_image"
 					 src="../../assets/img/star.png"
 					 wx:for="{{detail.appearance}}"
+					 wx:key="index"
 					/>
 				</view>
 				<view class="goods_info--value" wx:else> - </view>
@@ -246,6 +248,7 @@
 					 class="start_image"
 					 src="../../assets/img/star.png"
 					 wx:for="{{detail.shape}}"
+					 wx:key="index"
 					/>
 				</view>
 				<view class="goods_info--value" wx:else> - </view>
@@ -259,6 +262,7 @@
 					 class="start_image"
 					 src="../../assets/img/star.png"
 					 wx:for="{{detail.fresh}}"
+					 wx:key="index"
 					/>
 				</view>
 				<view class="goods_info--value" wx:else> - </view>
