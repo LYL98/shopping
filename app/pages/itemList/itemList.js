@@ -16,7 +16,6 @@ Page({
       sort: '-other',
       display_class_id: ''
     },
-    testIndex: 0,
     dataItem: {
       items: []
     },
@@ -26,7 +25,6 @@ Page({
   },
   onLoad(option) {
     this.flag = false; //防止快速点击一级品类
-    this.scrollTop = 0;
     this.address = {}; //当前选择的地址
     this.screenWidth = wx.getSystemInfoSync().windowWidth;
     this.screenHeight = wx.getSystemInfoSync().windowHeight;
@@ -67,9 +65,11 @@ Page({
     this.setData({
       'query.display_class_id': id
     }, () => {
-      this.itemListDisplayClassNew(true);
+      this.itemListDisplayClassNew({
+        type: 'top', //滚到顶
+        id: 0
+      });
     });
-    this.setData({ y: 0 });
 
     /*===== 埋点 start ======*/
     let con = this.data.oneCategoryList.filter(item => item.id === id);
@@ -80,6 +80,10 @@ Page({
 
   //选择展示二级分类
   selectTwoCategory(e) {
+    if(this.scrollInterval){
+      clearInterval(this.scrollInterval);
+      this.scrollInterval = undefined;
+    }
     let id = e.target.dataset.id;
     this.setData({
       selectTwoCategoryId: id,
@@ -96,7 +100,10 @@ Page({
     this.setData({
       query: query
     }, () => {
-      this.itemListDisplayClassNew();//获取商品列表
+      this.itemListDisplayClassNew({
+        type: 'not', //不滚动
+        id: 0
+      });
     });
 
     /*===== 埋点 start ======*/
@@ -115,38 +122,75 @@ Page({
   //获取商品分类
   displayClassQuery() {
     let that = this;
-    let { query } = this.data;
+    let { query } = that.data;
     Http.get(Config.api.displayClassQuery, {
       province_code: that.address.province_code
     }).then((res) => {
-      let twoCategoryId = '';
+      let rd = res.data;
+      //如果没有一级分类
+      if(rd.length === 0){
+        that.setData({
+          showSkeleton: false,
+          dataItem: []
+        });
+        return;
+      }
+
+      //否则
+      let rollTo = {type: '', id: 0}; //滚动到位置
       //如果是从首页的banner进来
       if(app.globalData.urlJump){
         let urlJump = app.globalData.urlJump.split('_');
         if(urlJump.length >= 2){
           query.display_class_id = Number(urlJump[0]);
-          twoCategoryId = Number(urlJump[1]);
+          rollTo = {
+            type: 'known', //滚动到已知位置
+            id: Number(urlJump[1])
+          };
         }
         delete app.globalData.urlJump;
       }else{
-        query.display_class_id = that.data.query.display_class_id || res.data[0].id; //如果未有选择，默认选择第一
+        //判断当前选择的一级分类是否在返回列表中，否则默认选择第一个
+        let con = rd.filter(item => item.id === query.display_class_id);
+        if(con.length > 0){
+          query.display_class_id = con[0].id;
+          rollTo = {
+            type: 'not', //不滚动
+            id: 0
+          };
+        }else{
+          query.display_class_id = rd[0].id;
+          rollTo = {
+            type: 'top', //滚到顶
+            id: 0
+          };
+        }
       }
       query.store_id = this.address.id || '';
       that.setData({
         query,
         oneCategoryList: res.data,
       }, () => {
-        this.itemListDisplayClassNew(true, twoCategoryId);
+        this.itemListDisplayClassNew(rollTo);
       });
     });
   },
 
-  //获取商品列表(isReset:是否重新定位，twoCategoryId:二级分类)
-  itemListDisplayClassNew(isReset, twoCategoryId) {
+  //获取商品列表(rollTo: { id: 0, type: '' })
+  /*
+   * 商品列表场景
+   * 1、第一次进来【跳到顶部】
+   * 2、banner进来【跳到二级相应位置】
+   * 3、点一级品类【跳到顶部】
+   * 4、点二级品类【跳到二级相应位置】
+   * 5、点排序【不动】
+   * 6、别的tab进来【不动】
+   * 7、从详情、搜索返回【不动】
+   */
+  itemListDisplayClassNew(rollTo) {
     let that = this;
-    let { query, selectTwoCategoryId, selectLeftCategoryId } = that.data;
     wx.showNavigationBarLoading();
-    Http.get(Config.api.itemListDisplayClassNew, query).then(res => {
+    Http.get(Config.api.itemListDisplayClassNew, that.data.query).then(res => {
       wx.hideNavigationBarLoading();
       let rd = res.data, showItemIds = {};
       //处理当前显示商品
@@ -162,27 +206,51 @@ Page({
         }
       }
 
-      //重新定位
-      if(isReset){
-        if(twoCategoryId){
-          selectTwoCategoryId = twoCategoryId;
-          selectLeftCategoryId = twoCategoryId;
-        }else if(rd.items.length > 0){
-          selectTwoCategoryId = rd.items[0].id;
-          selectLeftCategoryId = rd.items[0].id;
-        }else{
-          selectTwoCategoryId = '';
-          selectLeftCategoryId = '';
+      //重新滚动定位
+      if(rollTo){
+        switch(rollTo.type){
+          //滚到已知位置
+          case 'known':
+            that.setData({
+              selectTwoCategoryId: rollTo.id,
+              selectLeftCategoryId: rollTo.id,
+              showItemIds,
+              dataItem: rd,
+              showSkeleton: false
+            });
+            break;
+          //滚动顶
+          case 'top':
+            that.setData({
+              selectTwoCategoryId: rd.items.length > 0 ? rd.items[0].id : '',
+              selectLeftCategoryId: rd.items.length > 0 ? rd.items[0].id : '',
+              showItemIds,
+              dataItem: rd,
+              showSkeleton: false
+            });
+            break;
+          //不滚动
+          case 'not':
+            that.setData({
+              dataItem: rd,
+              showSkeleton: false
+            });
+            break;
+          //默认
+          default:
+            // console.log('不滚动');
+            that.setData({
+              dataItem: rd,
+              showSkeleton: false
+            });
         }
+      }else{
+        that.setData({
+          dataItem: rd,
+          showSkeleton: false
+        });
       }
-
-      that.setData({
-        showItemIds,
-        dataItem: rd,
-        showSkeleton: false,
-        selectTwoCategoryId,
-        selectLeftCategoryId,
-      });
+      
       that.flag = false;
     }).catch(error => {
       wx.hideNavigationBarLoading();
@@ -207,7 +275,6 @@ Page({
   },
 
   scrollItem(e){
-    this.scrollTop = e.detail.scrollTop;
     if(this.scrollInterval) return;
 
     this.scrollInterval = setInterval(() => {
@@ -229,15 +296,27 @@ Page({
       let showItemIds = {};
       wx.createSelectorQuery().selectAll('.goods-item').boundingClientRect(gis => {
         gis.map(item => {
-          if(item.top > -1000 && item.top < this.screenHeight + 1000){
+          if(item.top > -1000 && item.top < this.screenHeight + 1000 && Object.keys(showItemIds).length <= 10){
             showItemIds[item.dataset.id] = true;
           }
         });
-        //console.log('获取滚动情况', this.scrollTop);
-        this.setData({ showItemIds, testIndex: this.data.testIndex + 1 });
+        //console.log('获取滚动情况', e.detail.scrollTop);
+        this.setData({ showItemIds });
+
+        /*==== 开发测试环境 测试性能+1 start ====*/
+        if(Config.conn === 'dev' || Config.conn === 'test'){
+          if(!this.testIndex) this.testIndex = 0;
+          this.testIndex = this.testIndex + 1;
+          wx.setNavigationBarTitle({
+            title: `商品列表【${this.testIndex}】`
+          });
+        }
+        /*==== 开发测试环境 测试性能+1 end ====*/
       }).exec();
-      if(this.scrollInterval) clearInterval(this.scrollInterval);
-      this.scrollInterval = undefined;
-    }, 500);
+      if(this.scrollInterval){
+        clearInterval(this.scrollInterval);
+        this.scrollInterval = undefined;
+      }
+    }, 200);
   },
 })

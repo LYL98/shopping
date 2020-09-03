@@ -47,7 +47,7 @@ export const Version = 'V4.2.0';
 export const GioConfig = {
     projectId: 'a2dac281ef3539e4', //'你的 GrowingIO 项目ID',
     appId: 'wx70a3bf5f7a69987d', //'你的小程序AppID',
-    version: Version //'小程序版本'
+    version: Version, //'小程序版本'
 };
 
 /**

@@ -106,15 +106,15 @@
   margin: 0 24rpx;
   font-size: 28rpx;
   height: 74rpx;
-  line-height: 74rpx;
+  line-height: 90rpx;
   color: #989797;
-  border-bottom: 1rpx solid #eee;
+  overflow: hidden;
 }
 .goods-item {
   display: flex;
   padding: 16rpx 24rpx 16rpx 0;
   &.hide-info{
-    background: #F9F8F8;
+    background: rgba($color: #F9F8F8, $alpha: 0.4);
     height: 200rpx;
     margin: 0 24rpx 36rpx;
     border-radius: 8rpx;
