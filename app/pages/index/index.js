@@ -377,10 +377,10 @@ Page({
   scrollTags(e){
     if(this.scrollTagTime) clearTimeout(this.scrollTagTime);
     this.scrollTagTime = setTimeout(() => {
-      let l = e.detail.scrollLeft;
-      let w = e.detail.scrollWidth;
-      let tagsListX = l * (90 / this.factor / w); //60 + 30：滚动条总宽度
-      this.setData({ tagsListX: tagsListX * this.factor });
+      let l = e.detail.scrollLeft * this.factor;
+      let w = e.detail.scrollWidth * this.factor;
+      let tagsListX = l * (60 / (700 - w) ); //60：滚动条总宽度
+      this.setData({ tagsListX });
     }, 200);
   },
 

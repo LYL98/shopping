@@ -18,7 +18,6 @@
 				bindtap="clickOneCategory"
 				data-id="{{item.id}}"
 			>{{item.title}}</view>
-			<view class="class-view-item">【{{testIndex}}】</view>
 		</view>
 	</view>
 
