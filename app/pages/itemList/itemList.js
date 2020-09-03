@@ -26,9 +26,9 @@ Page({
   onLoad(option) {
     this.flag = false; //防止快速点击一级品类
     this.address = {}; //当前选择的地址
-    this.screenWidth = wx.getSystemInfoSync().windowWidth;
-    this.screenHeight = wx.getSystemInfoSync().windowHeight;
-    this.factor = this.screenWidth / 750;
+    this.windowWidth = wx.getSystemInfoSync().windowWidth;
+    this.windowHeight = wx.getSystemInfoSync().windowHeight;
+    this.factor = this.windowWidth / 750;
   },
   /**
    * 生命周期函数--监听页面显示
@@ -296,7 +296,7 @@ Page({
       let showItemIds = {};
       wx.createSelectorQuery().selectAll('.goods-item').boundingClientRect(gis => {
         gis.map(item => {
-          if(item.top > -1000 && item.top < this.screenHeight + 1000 && Object.keys(showItemIds).length <= 10){
+          if(item.top > -1000 && item.top < this.windowHeight + 1000 && Object.keys(showItemIds).length <= 15){
             showItemIds[item.dataset.id] = true;
           }
         });
