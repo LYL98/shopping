@@ -274,7 +274,7 @@ Page({
         showSkeleton: false
       }, () => {
         //先取得item_tag_id,再请求获得商品 
-        if(rd.card.length > 0) that.itemQuery(isInit);
+        if(rd.recommend.length > 0) that.itemQuery(isInit);
       });
     });
   },

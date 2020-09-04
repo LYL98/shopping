@@ -24,6 +24,8 @@
   background-color: #fff;
   overflow-x: auto;
   box-shadow: 0 8rpx 16rpx 0 rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 2;
   >.class-view-item{
     width: 148rpx;
     height: 48rpx;
