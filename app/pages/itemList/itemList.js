@@ -186,26 +186,14 @@ Page({
    * 5、点排序【不动】
    * 6、别的tab进来【不动】
    * 7、从详情、搜索返回【不动】
+   * 8、新增商品后，重新进入
    */
   itemListDisplayClassNew(rollTo) {
     let that = this;
     wx.showNavigationBarLoading();
     Http.get(Config.api.itemListDisplayClassNew, that.data.query).then(res => {
       wx.hideNavigationBarLoading();
-      let rd = res.data, showItemIds = {};
-      //处理当前显示商品
-      for(let i = 0; i < rd.items.length; i++){
-        if(Object.keys(showItemIds).length > 10){
-          break;
-        }
-        for(let j = 0; j < rd.items[i].items.length; j++){
-          if(Object.keys(showItemIds).length > 10){
-            break;
-          }
-          showItemIds[rd.items[i].items[j].id] = true;
-        }
-      }
-
+      let rd = res.data;
       //重新滚动定位
       if(rollTo){
         switch(rollTo.type){
@@ -214,9 +202,10 @@ Page({
             that.setData({
               selectTwoCategoryId: rollTo.id,
               selectLeftCategoryId: rollTo.id,
-              showItemIds,
               dataItem: rd,
               showSkeleton: false
+            }, () => {
+              this.handleShowItem();
             });
             break;
           //滚动顶
@@ -224,9 +213,10 @@ Page({
             that.setData({
               selectTwoCategoryId: rd.items.length > 0 ? rd.items[0].id : '',
               selectLeftCategoryId: rd.items.length > 0 ? rd.items[0].id : '',
-              showItemIds,
               dataItem: rd,
               showSkeleton: false
+            }, () => {
+              this.handleShowItem();
             });
             break;
           //不滚动
@@ -234,20 +224,25 @@ Page({
             that.setData({
               dataItem: rd,
               showSkeleton: false
+            }, () => {
+              this.handleShowItem();
             });
             break;
-          //默认
+          //默认(不滚动)
           default:
-            // console.log('不滚动');
             that.setData({
               dataItem: rd,
               showSkeleton: false
+            }, () => {
+              this.handleShowItem();
             });
         }
       }else{
         that.setData({
           dataItem: rd,
           showSkeleton: false
+        }, () => {
+          this.handleShowItem();
         });
       }
       
@@ -268,55 +263,77 @@ Page({
 
   //强制显示商品
   showItem(e){
-    let id = e.currentTarget.dataset.id;
-    let { showItemIds } = this.data;
-    showItemIds[id] = true;
-    this.setData({ showItemIds });
+    this.handleShowItem();
   },
 
+  //页面滚动
   scrollItem(e){
     if(this.scrollInterval) return;
 
     this.scrollInterval = setInterval(() => {
-      //获取所商品列的标题
-      wx.createSelectorQuery().selectAll('.category-title').boundingClientRect(cts => {
-        let selectTwoCategoryId = null;
-        let top = this.factor * 375; //100 + 88 + 84 + 3 + 占位100
-        cts.map(item => {
-          if(item.top <= top){
-            selectTwoCategoryId = item.dataset.id;
-          }
-        });
-        if(this.data.selectLeftCategoryId !== selectTwoCategoryId){
-          this.setData({ selectLeftCategoryId: selectTwoCategoryId });
-        }
-      }).exec();
-      
-      //获取所有商品列
-      let showItemIds = {};
-      wx.createSelectorQuery().selectAll('.goods-item').boundingClientRect(gis => {
-        gis.map(item => {
-          if(item.top > -1000 && item.top < this.windowHeight + 1000 && Object.keys(showItemIds).length <= 15){
-            showItemIds[item.dataset.id] = true;
-          }
-        });
-        //console.log('获取滚动情况', e.detail.scrollTop);
-        this.setData({ showItemIds });
-
-        /*==== 开发测试环境 测试性能+1 start ====*/
-        if(Config.conn === 'dev' || Config.conn === 'test'){
-          if(!this.testIndex) this.testIndex = 0;
-          this.testIndex = this.testIndex + 1;
-          wx.setNavigationBarTitle({
-            title: `商品列表【${this.testIndex}】`
-          });
-        }
-        /*==== 开发测试环境 测试性能+1 end ====*/
-      }).exec();
+      this.handleSelectLeftMenu(e); //选择左边菜单
+      this.handleShowItem(); //显示商品
       if(this.scrollInterval){
         clearInterval(this.scrollInterval);
         this.scrollInterval = undefined;
       }
     }, 200);
   },
+
+  //选择左边菜单
+  handleSelectLeftMenu(e){
+    //获取所商品列的标题
+    wx.createSelectorQuery().selectAll('.category-title').boundingClientRect(cts => {
+      let selectTwoCategoryId = null;
+      let top = 375; //100 + 88 + 84 + 3 + 占位100 rpx
+      let wh = this.windowHeight / this.factor - top + 200;
+      let t = e.detail.scrollTop / this.factor;
+      let h = e.detail.scrollHeight / this.factor;
+      //如果滚到顶
+      if(e.detail.scrollTop <= 0){
+        selectTwoCategoryId = cts[0].dataset.id;
+      }
+      //如果滚动底
+      else if(t >= h - wh){
+        selectTwoCategoryId = cts[cts.length - 1].dataset.id;
+      }
+      //否则
+      else{
+        cts.map(item => {
+          if(item.top / this.factor <= top){
+            selectTwoCategoryId = item.dataset.id;
+          }
+        });
+      }
+      
+      if(this.data.selectLeftCategoryId !== selectTwoCategoryId){
+        this.setData({ selectLeftCategoryId: selectTwoCategoryId });
+      }
+    }).exec();
+  },
+
+  //显示商品
+  handleShowItem(){
+    //获取所有商品列
+    let showItemIds = {};
+    wx.createSelectorQuery().selectAll('.goods-item').boundingClientRect(gis => {
+      gis.map(item => {
+        if(item.top > -1000 && item.top < this.windowHeight + 1000 && Object.keys(showItemIds).length <= 15){
+          showItemIds[item.dataset.id] = true;
+        }
+      });
+      //console.log('获取滚动情况', e.detail.scrollTop);
+      this.setData({ showItemIds });
+
+      /*==== 开发测试环境 测试性能+1 start ====*/
+      if(Config.conn === 'dev' || Config.conn === 'test'){
+        if(!this.testIndex) this.testIndex = 0;
+        this.testIndex = this.testIndex + 1;
+        wx.setNavigationBarTitle({
+          title: `商品列表【${this.testIndex}】`
+        });
+      }
+      /*==== 开发测试环境 测试性能+1 end ====*/
+    }).exec();
+  }
 })
