@@ -45,9 +45,10 @@ Page({
 
   //页面装载时
   onLoad() {
-    this.screenWidth = wx.getSystemInfoSync().windowWidth;
-    this.screenHeight = wx.getSystemInfoSync().windowHeight;
-    this.factor = this.screenWidth / 750;
+    console.log(wx.getSystemInfoSync());
+    this.windowWidth = wx.getSystemInfoSync().windowWidth;
+    this.windowHeight = wx.getSystemInfoSync().windowHeight;
+    this.factor = this.windowWidth / 750;
   },
   /**
    * 生命周期函数--监听页面显示
@@ -94,7 +95,7 @@ Page({
     let address = app.getSelectStore(); 
     Http.get(Config.api.noticeList, {
       province_code: address.province_code,
-      handleError:false
+      handleError: false
     }).then((res) => {
       this.setData({
         noticeList: res.data
@@ -377,9 +378,9 @@ Page({
   scrollTags(e){
     if(this.scrollTagTime) clearTimeout(this.scrollTagTime);
     this.scrollTagTime = setTimeout(() => {
-      let l = e.detail.scrollLeft * this.factor;
-      let w = e.detail.scrollWidth * this.factor;
-      let tagsListX = l * (60 / (700 - w) ); //60：滚动条总宽度
+      let l = e.detail.scrollLeft / this.factor;
+      let w = e.detail.scrollWidth / this.factor;
+      let tagsListX = l * (30 / (w - 700)); //30：滚动条总宽度
       this.setData({ tagsListX });
     }, 200);
   },
