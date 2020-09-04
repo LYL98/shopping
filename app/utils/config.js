@@ -160,7 +160,7 @@ module.exports = {
   serviceTel: ServiceTel, //服务电话
   weiXinAppIds: WeiXinAppIds, //要打开的微信appids
   conn: Conn,
-  requestWs:requestWs, // wensocket
+  requestWs: requestWs, // wensocket
   version: Version,
   gioConfig: GioConfig
 }
