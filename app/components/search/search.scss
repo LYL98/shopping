@@ -1,0 +1,28 @@
+/* components/search/search.wxss */
+.search-body{
+  overflow: hidden;
+  background: #fff;
+  height: 100rpx;
+  > .search{
+    margin: 18rpx 30rpx;
+    background:#F7F7F8;
+    color: #999;
+    border-radius: 34rpx;
+    text-align: center;
+    > .input{
+      width: 200rpx;
+      height: 64rpx;
+      line-height: 64rpx;
+      margin: 0 auto;
+      font-size: 28rpx;
+      letter-spacing:-1rpx;
+      text-align: center;
+      > .image{
+        width: 30rpx;
+        height: 30rpx;
+        position: relative;
+        top: 5rpx;
+      }
+    }
+  }
+}

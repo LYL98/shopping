@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "joinShopCart": "/components/joinShopCart/joinShopCart",
+    "search": "/components/search/search",
+    "defaultPage": "/components/defaultPage/defaultPage"
+  }
+}

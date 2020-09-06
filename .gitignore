@@ -4,4 +4,6 @@
 .idea/
 *.css
 *.wxss
+/app/analyzer
 /config.js
+node_modules

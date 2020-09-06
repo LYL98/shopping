@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "满天星门店申请",
+  "usingComponents": {
+    "locationAuth": "/components/locationAuth/locationAuth"
+  }
+}

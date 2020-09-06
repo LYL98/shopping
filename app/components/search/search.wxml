@@ -1,0 +1,9 @@
+<!--components/search/search.wxml-->
+<view class="search-body">
+  <navigator url="/pages/search/search" class="search">
+    <view class="input">
+        <image class="image" src="{{searchSrc}}"></image>
+        搜索商品
+    </view>
+  </navigator>
+</view>

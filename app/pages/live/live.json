@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "直播",
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "defaultPage": "/components/defaultPage/defaultPage"
+  }
+}

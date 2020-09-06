@@ -1,6 +1,0 @@
-<!--components/loading/loading.wxml-->
-<view class="loading-body" wx:if="{{loading}}" catchtouchmove>
-  <view class="loading">
-    <image src="{{loadingSrc}}"></image>
-  </view>
-</view>

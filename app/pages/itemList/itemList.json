@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "商品列表",
+  "usingComponents": {
+    "search": "/components/search/search",
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "navbar": "/components/navbar/navbar",
+    "priceBox": "/components/priceBox/priceBox",
+    "handleShopCart": "/components/handleShopCart/handleShopCart"
+  }
+}

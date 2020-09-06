@@ -1,0 +1,405 @@
+<!--pages/orderAdd/orderAdd.wxml-->
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<skeleton
+ selector="skeleton"
+ bgcolor="#fff"
+ wx:if="{{showSkeleton}}"
+></skeleton>
+
+<view class="skeleton">
+	<view class="banner-hint-body" wx:if="{{dataItem.has_ordered}}">
+		<view class="banner-hint">您今天已有成功的下单记录，请确认是否继续下单！</view>
+	</view>
+
+	<navigator
+	 url="/pages/shop/shop?option_type=select"
+	 class="address-view"
+	 wx:if="{{address && address.id}}"
+	>
+		<view class="content">
+			<view class="store">
+				<text class="skeleton-rect">门店: {{address.title}}</text>
+			</view>
+			<view class="city">
+				<text class="skeleton-rect">所在仓: {{address.province.title +' '+ address.city.title}}</text>
+			</view>
+			<view class="name-phone">
+				<text class="skeleton-rect">收件人: {{address.linkman}} {{address.phone}}</text>
+			</view>
+			<view class="address-str">
+				<text class="skeleton-rect">{{address.address}}</text>
+			</view>
+		</view>
+		<view class="img">
+			<image src="{{rightSrc}}"></image>
+		</view>
+	</navigator>
+
+	<navigator
+	 url="/pages/shop/shop?option_type=select"
+	 class="address-none"
+	 wx:else
+	>
+		<text class="skeleton-rect">请选择门店地址</text>
+		<image class="right" src="{{rightSrc}}"></image>
+	</navigator>
+
+	<view class="bottom-border1">
+		<image src="{{orderAddBgSrc}}"></image>
+	</view>
+	<block wx:if="{{selfGoods.length > 0}}">
+		<view class="border-top"></view>
+		<view class="item-view">
+			<view class="platform align-center">
+				<view class="platform_tag platform_tag--self">优选</view>
+				<view>蒲公英优选</view>
+			</view>
+			<view
+			 class="item"
+			 wx:for="{{selfGoods}}"
+			 wx:key="index"
+			>
+				<view class="no-nav">
+					<view class="img">
+						<view class="mark">
+							<text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+						</view>
+						<image
+						 class="skeleton-rect"
+						 lazy-load="{{index > 4 ? true : false}}"
+						 wx:if="{{item.images.length > 0}}"
+						 src="{{tencentPath + item.images[0]}}_watermark200x200"
+						></image>
+						<view class="image skeleton-rect" wx:else></view>
+					</view>
+					<view class="content">
+						<view class="title skeleton-rect">
+							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
+							{{item.title}}
+						</view>
+						<view class="goods_label">
+							<text class="skeleton-rect tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+							<text class="skeleton-rect" wx:if="{{item.item_spec}}"> | {{item.item_spec}}</text>
+							<text class="skeleton-rect" wx:if="{{item.origin_place}}"> | {{item.origin_place}}</text>
+							<text class="skeleton-rect" wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+							<text class="skeleton-rect frame" wx:if="{{item.frame_id}}"> | 有筐</text>
+						</view>
+						<view class="item_bottom_price">
+							<block wx:if="{{item.is_vip_item && discount > 0}}">
+								<view class="vip_card align-center">
+									<view class="vip_card--type card_type--{{level}}">{{title}}价</view>
+									<view class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(item.price_sale)}}</view>
+								</view>
+								<view class="normal_price " style="line-height: 10rpx;">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
+							</block>
+							<view class="price-unit skeleton-rect" wx:else>
+								￥{{tools.returnPrice(item.price_sale)}}
+							</view>
+							<view class="num-price">
+								<text class="num-str skeleton-rect">× {{item.number}}</text>
+								<text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale * item.number)}}</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="item_all_price justify-end align-center">
+				<view class="align-center" style="margin-right:24rpx">
+					<view>商品金额: </view>
+					<view>￥{{tools.returnPrice(dataItem.self_total_price)}}</view>
+				</view>
+				<view class="align-center">
+					<view>运费金额: </view>
+					<view>￥{{tools.returnPrice(dataItem.self_delivery_fee)}}</view>
+				</view>
+
+			</view>
+		</view>
+	</block>
+	<block wx:if="{{supplierGoods.length > 0}}">
+		<view class="border-top"></view>
+
+		<view class="item-view">
+			<view class="platform align-center">
+				<view class="platform_tag platform_tag--supplier">平台</view>
+				<view>商家直供</view>
+			</view>
+			<view
+			 class="item"
+			 wx:for="{{supplierGoods}}"
+			 wx:key="index"
+			>
+				<view class="no-nav">
+					<view class="img">
+						<view class="mark">
+							<text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+						</view>
+						<image
+						 class="skeleton-rect"
+						 lazy-load="{{index > 4 ? true : false}}"
+						 wx:if="{{item.images.length > 0}}"
+						 src="{{tencentPath + item.images[0]}}_watermark200x200"
+						></image>
+						<view class="image skeleton-rect" wx:else></view>
+					</view>
+					<view class="content">
+						<view class="title skeleton-rect">
+							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
+							{{item.title}}
+						</view>
+						<view class="goods_label">
+							<text class="skeleton-rect tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+							<text class="skeleton-rect" wx:if="{{item.item_spec}}"> | {{item.item_spec}}</text>
+							<text class="skeleton-rect" wx:if="{{item.origin_place}}"> | {{item.origin_place}}</text>
+							<text class="skeleton-rect" wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+							<text class="skeleton-rect frame" wx:if="{{item.frame_id}}"> | 有筐</text>
+						</view>
+						<view class="item_bottom_price">
+							<block wx:if="{{item.is_vip_item && discount > 0}}">
+								<view class="vip_card align-center">
+									<view class="vip_card--type card_type--{{level}}">{{title}}价</view>
+									<view class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(item.price_sale)}}</view>
+								</view>
+								<view class="normal_price " style="line-height: 10rpx;">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
+							</block>
+							<view class="price-unit skeleton-rect" wx:else>
+								￥{{tools.returnPrice(item.price_sale)}}
+							</view>
+							<view class="store-type">
+								<text class="type-label" >商家</text>
+								<text2>{{item.supplier}}门店</text2>
+							</view>
+							<view class="num-price">
+								<text class="num-str skeleton-rect">× {{item.number}}</text>
+								<text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale * item.number)}}</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="item_all_price justify-end align-center">
+				<view class="align-center" style="margin-right:24rpx">
+					<view>商品金额: </view>
+					<view>￥{{tools.returnPrice(dataItem.supplier_total_price)}}</view>
+				</view>
+				<view class="align-center">
+					<view>运费金额: </view>
+					<view>￥{{tools.returnPrice(dataItem.supplier_delivery_fee)}}</view>
+				</view>
+
+			</view>
+		</view>
+	</block>
+	<view class="border-top"></view>
+
+	<view class="input-item ">
+		<view class="title">
+			<text class="skeleton-rect">商品小计：</text>
+		</view>
+		<view class="content">
+
+			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">￥{{tools.returnPrice(dataItem.item_total_price)}}
+			</view>
+		</view>
+	</view>
+	<!--优惠券start-->
+	<view class="input-item" bindtap="selectGoodsCoupon">
+		<view class="title">
+			<text class="skeleton-rect">商品优惠券</text>
+		</view>
+		<view class="content">
+			<image
+			 class="right-img f-r price-right-img"
+			 style="top: 8rpx;"
+			 src="{{rightPriceSrc}}"
+			 wx:if="{{couponGoodsListData.length > 0}}"
+			></image>
+			<view
+			 class="skeleton-rect add-dot f-r"
+			 style="width: 480rpx; color:#A5A5A5;"
+			 wx:if="{{couponGoodsListData.length === 0}}"
+			>无可用优惠券
+			</view>
+			<view
+			 class="skeleton-rect add-dot f-r"
+			 style="width: 480rpx;"
+			 wx:elif="{{couponGoodsListData.length > 0 && couponGoodsSelectData && couponGoodsSelectData.id}}"
+			>
+				<!--满减-->
+				<text class="price_color" wx:if="{{couponGoodsSelectData.coupon.coupon_type === 'type_reduction'}}">-￥{{tools.returnPrice(couponGoodsSelectData.coupon.benefit)}}</text>
+				<!--折扣-->
+				<text class="price_color"  wx:elif="{{couponGoodsSelectData.coupon.coupon_type === 'type_discount'}}">-￥{{tools.returnPrice(dataItem.coupon_reduction)}}</text>
+				<!--赠送-->
+				<text wx:else>送{{couponGoodsSelectData.coupon.benefit}}件{{couponGoodsSelectData.gift_item.title}}</text>
+			</view>
+			<view
+			 class="skeleton-rect add-dot f-r price_color"
+			 style="width: 480rpx;"
+			 wx:else
+			>{{couponGoodsListData.length}}张可用的优惠券
+			</view>
+		</view>
+	</view>
+	<!--优惠券end-->
+	<!--优惠活动start-->
+	<view class="input-item" wx:if="{{dataItem.promotion && dataItem.promotion.id}}">
+		<view class="title">
+			<text class="skeleton-rect" wx:if="{{dataItem.promotion.promotion_type === 'scope_discount'}}">全场满折</text>
+			<text class="skeleton-rect" wx:else>全场满减</text>
+		</view>
+		<view class="content">
+			<text class="skeleton-rect">-￥{{tools.returnPrice(dataItem.promotion_reduction)}}</text>
+		</view>
+	</view>
+	<!--优惠活动end-->
+	<!--预定日期start-->
+	<view class="input-item" wx:if="{{orderType === 'presale'}}">
+		<view class="title">
+			<text class="skeleton-rect">配送日期</text>
+		</view>
+		<view class="content">
+			<text class="skeleton-rect">{{deliveryDate}}</text>
+		</view>
+	</view>
+	<!--预定日期end-->
+
+	<!--筐费用-->
+	<view
+	 class="input-item"
+	 style="border-bottom:none!important"
+	 wx:if="{{dataItem.fram_total_price}}"
+	 bind:tap="skipPage"
+	 data-page="/pages/orderFram/orderFram"
+	>
+		<view class="title">
+			<text class="skeleton-rect">筐费用</text>
+			<text style="color: #a5a5a5; font-size: 24rpx; margin-left: 8rpx;">(退筐后费用将返还到您的账户余额)</text>
+		</view>
+		<view class="content">
+			<image
+			 class="right-img f-r"
+			 style="top: 8rpx;"
+			 src="{{rightSrc}}"
+			></image>
+			<text class="skeleton-rect">+￥{{tools.returnPrice(dataItem.fram_total_price)}}</text>
+		</view>
+	</view>
+
+	<view class="send_price">
+		<view class="send_item justify-between">
+			<view class="send_item--label">运费总计</view>
+			<view class="send_item--value align-center" bindtap="showFreight">
+
+				<text>￥{{tools.returnPrice(dataItem.total_delivery_fee)}} </text>
+				<image
+				 class="right-img f-r price-right-img"
+				 style="top: 8rpx;"
+				 src="{{rightPriceSrc}}"
+				></image>
+			</view>
+		</view>
+		<view class="send_item justify-between">
+			<view class="send_item--label">运费优惠券</view>
+			<view
+			 class="skeleton-rect add-dot f-r"
+			 style="width: 480rpx; color:#A5A5A5;text-align: right;"
+			 wx:if="{{couponDeliveryListData.length === 0}}"
+			>无可用优惠券
+			</view>
+			<view wx:else bindtap="selectDeliveryCoupon">
+				<view class="send_item--value align-center" wx:if="{{couponDeliveryListData.length > 0 && couponDeliverySelectData && couponDeliverySelectData.id}}">
+					<text>-￥{{tools.returnPrice(couponDeliverySelectData.coupon.benefit)}} </text>
+					<image
+					 wx:if="{{couponDeliveryListData.length > 0}}"
+					 class="right-img f-r price-right-img align-center"
+					 style="top: 8rpx;"
+					 src="{{rightPriceSrc}}"
+					></image>
+				</view>
+				<view
+				 class="skeleton-rect f-r price_color align-center"
+				 style="width: 480rpx;text-align:right;justify-content:flex-end"
+				 wx:else
+				>
+					<view>{{couponDeliveryListData.length}}张可用的优惠券</view>
+
+					<image
+					 class="right-img f-r price-right-img"
+					 style="top: 8rpx;"
+					 src="{{rightPriceSrc}}"
+					></image>
+				</view>
+			</view>
+
+		</view>
+		<view class="send_item justify-between">
+			<view class="send_item--label">运费满额优惠</view>
+			<view class="send_item--value align-center">
+
+				<text>-￥{{tools.returnPrice(dataItem.delivery_reduction)}} </text>
+			</view>
+		</view>
+	</view>
+
+	<view class="input-item" style="border-bottom:none!important">
+		<view class="title">
+			<text class="skeleton-rect">运费实收：</text>
+		</view>
+		<view class="content">
+
+			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">￥{{tools.returnPrice(dataItem.delivery_fee)}}
+			</view>
+		</view>
+	</view>
+
+	<!--运费start-->
+	<!-- <view class="input-item">
+		<view class="title">
+			<text class="skeleton-rect">运费</text>
+		</view>
+		<view class="content" wx:if="{{dataItem.delivery_fee }}">
+			<text class="skeleton-rect">￥{{tools.returnPrice(dataItem.delivery_fee)}}</text>
+		</view>
+		<view class="content" wx:else>
+			<text class="skeleton-rect">免运费</text>
+		</view> -->
+	<!-- </view> -->
+	<!--运费end-->
+	<view class="bottom-border2" style="position: relative; top: -1rpx;"></view>
+
+	<view style="height: 119rpx;"></view>
+	<view class="bottom-view b-cfff">
+		<view class="total-price">
+			<view>
+				合计：
+				<text class="price">￥{{tools.returnPrice(dataItem.order_price)}}</text>
+			</view>
+		</view>
+		<view class="btn">
+			<!--判断orderAddData.items.length, 因dataItem默认有骨架数据-->
+			<button
+			 class="btn1"
+			 loading="{{orderLoading}}"
+			 disabled="{{orderAddData.items.length <= 0 || orderLoading}}"
+			 bindtap="submitOrder"
+			>去结算
+			</button>
+		</view>
+	</view>
+
+	<pay
+	 payData="{{payData}}"
+	 warning="{{ payWarning }}"
+	 callback="{{payCallBack}}"
+	 wx:if="{{isShowPay}}"
+	 bind:close="onClose"
+	/>
+
+	<freight
+	 wx:if="{{showFreight}}"
+	 bind:onFreightClose="onFreightClose"
+	 freightData="{{dataItem.delivery_detail}}"
+	 totalDeliveryFee="{{dataItem.total_delivery_fee}}"
+	/>
+</view>
+

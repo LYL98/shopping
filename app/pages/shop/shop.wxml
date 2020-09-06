@@ -1,0 +1,24 @@
+<!--pages/shop/shop.wxml-->
+<view wx:for="{{dataItem}}" wx:key="item.id" data-item="{{item}}" class="item link-active" bindtap="skipPage">
+  <view class="title">
+    <view class="left">门店: {{item.title}}</view>
+    <view class="right"><text class="is-freeze" wx:if="{{item.is_freeze}}">已冻结</text></view>
+  </view>
+  <view class="title">
+    <view class="left">所在仓: {{item.province.title +' '+item.city.title}}</view>
+    <view class="right"><text class="frame-num">可退框数:{{item.frame_num}}</text></view>
+  </view>
+  <view class="name-phone">
+    收件人: {{item.linkman}} <text>{{item.phone}}</text>
+  </view>
+  <view class="address">
+    收货地址: {{item.address}}
+  </view>
+  <!-- <view class="location" hover-stop-propagation="{{true}}">
+    <locationAuth openMap="{{false}}" itemIndex="{{index}}" bind:getlocation="getLocationCB"></locationAuth>
+  </view> -->
+</view>
+<view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view>
+<defaultPage wx:else currentPage="shop"></defaultPage>
+
+<loading loading="{{loading}}"/>

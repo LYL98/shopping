@@ -1,0 +1,47 @@
+.item-view {
+  padding: 100rpx 0 0 0;
+}
+
+.shopping-btn {
+  z-index: 1;
+  height: 82rpx;
+  width: 82rpx;
+  background: #fff;
+  position: fixed;
+  bottom: 100rpx;
+  left: 36rpx;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.20);
+  border-radius: 50rpx;
+  > image {
+    width: 48rpx;
+    height: 48rpx;
+    margin: 17rpx 0 0 17rpx;
+    display: block;
+  }
+  > .sh-cart-num {
+    position: absolute;
+    top: -5rpx;
+    right: -10rpx;
+    background: #00AE66;
+    color: #fff;
+    padding: 0 12rpx;
+    border-radius: 16rpx;
+    font-size: 22rpx;
+    height: 34rpx;
+    line-height: 34rpx;
+  }
+}
+
+.load-none.loadtag {
+  margin: 0;
+  font-size: 12px;
+  color: #a2a2a2;
+}
+
+.cancelCollection {
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: middle;
+  margin-right: 14rpx;
+  margin-top: -10rpx;
+}

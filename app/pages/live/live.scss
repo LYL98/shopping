@@ -1,0 +1,129 @@
+page {
+  background: #F7F7F8;
+}
+.page-live {
+  background: #F7F7F8;
+  padding: 30rpx 30rpx 0 30rpx;
+  .living {
+    color: #989797;
+    position: relative;
+    padding-left: 40rpx;
+
+    &:before {
+      position: absolute;
+      display: inline-block;
+      content: '';
+      left: 0;
+      top: 5rpx;  // 行高 / 2
+      width: 24rpx;
+      height: 24rpx;
+      background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAbFBMVEUAAAD/1Sj/2zb/1ib/1Sb/1if/1Sb/1Sb/1Sb/2Cn/1Sf/1Cf/1Sf/1Sf/1if/1Sf/1if/1if/1yj/1Sv/2in/2Sz/1Sv/1Cb/1Cb/1Cb/1Sf/1Sf/1ib/1Sf/1Cf/1Sj/1Cf/1if/2yz/1CYuh2xYAAAAI3RSTlMAbQ6g23zP6b0p+vXj2WNiW008MB8UBu/d1sa2ppiVh4N2I6Ly3fgAAACKSURBVDjL7dO5DoMwFETRZ5LYmCXs2Vf8//8IA0KCwlNRUDDV1dMpbVlMJfGjEv8q108TcHbYxQ/UAIItApvlDQNF5Ny1JiDE8UdAiuOBgKMP1AEFpcGVAI0sCIiQfwKGPO1gTaBRH8Gy2ceJkQr1RuWCWaSePbQS1byS23f6e3cT2jHbp0mVrLEORqIrzWpuBuwAAAAASUVORK5CYII=") no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  .soon {
+    color: #989797;
+    position: relative;
+    padding-left: 40rpx;
+
+    &:before {
+      position: absolute;
+      display: inline-block;
+      content: '';
+      left: 0;
+      top: 5rpx;  // 行高 / 2
+      width: 24rpx;
+      height: 24rpx;
+      background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAVFBMVEUAAACZl5eZl5ebl5eamJiZmJiZl5eal5ednZ2ZmJifmpqnp6eZmJiZmJiZmZmamZmampqYl5eZl5eZmJiYmJiZl5eYmJiZmZmZmZmbmJiZmZmYl5dcWWQhAAAAG3RSTlMAwIBAierfYCPHGwvwcmZKSdjRu66ghnh1WTLZzZ7YAAAAwElEQVQ4y62TWQ7DIBBDJw2QhYTsq+9/z7ZRG2BA4qN9X7ZkxMgM9CcqhFRuAE3GaeAFMuJkfkA9OMoLSIRIN1DnAiK/uVxNHgUK5hgHjOMMDh44IRwncPKARuUVp4kzo791j5kCSqjyKxUuyWghu0t0Ei3FMMCQUz4AhqLUI7DSCoysI3vz1L8nnOw0Llph+8gNSsdmFLan2JRS2lNaykgNi+OWsIgOu+N2vCpJPnd6YdIrl17a9NqnP0766/3OE4YGEpmGksl4AAAAAElFTkSuQmCC") no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  .end {
+    color: #808080;
+    position: relative;
+    padding-left: 40rpx;
+
+    &:before {
+      position: absolute;
+      content: '';
+      left: 0;
+      top: 7rpx;  // 行高 / 2
+      width: 32rpx;
+      height: 32rpx;
+      background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAe1BMVEUAAACbm5vBwcGZmJiZmZmfn5+ZmJiZl5eZmJiamZmhoaGZmJiZmJiZmZmamJiZmJiYmJiYmJiZl5eYmJiYmJiamJiampqYmJiZmZmZmJiZmJiampqamZmbm5ucnJyZmJiZmJiZmJiZmJiYmJiZmJiZmJiYmJiampqYl5fovLUPAAAAKHRSTlMALQP5Oxj07ehaCtbSYk/x5NvNx7loQ8COhX1HPyggk3p1NK6lcKFTjRzjKgAAASNJREFUOMutkklygzAQRUEigJkHY8DGjsfk3f+ESRACbGmTKv8N3fxXPajaeauufVv6edzuXau9KZmVZIZ9rAD/1j0u3VYC7enZP+SQZJFKor9ioffkS2QjllxcJHJFHHPC63PJ3e+v08wn+NpfCEmr4xRS1dzzopm4QDYVKKhV5IK7zFGSqGiAgwVwNjrrCIQNiCTnMai4OzbA2bIdvyF7O/CphhCQ2oEzgQmk3qhoAowWWkfVIp6G/DIBPaQCw2lN8aEl1Jqq9A52ziLzoURIbfFFTDyFDWxM4AHfC+sbdzrIVV3Xp3ghvIBgdZYZ+OsuopHIwVkp86E+6G2zBIKXzdwYCO590/S3HKhOxlZpwaxy7GcgQ1cVUhZ1rw/eSjn/1Q/OrR8eqwRyrgAAAABJRU5ErkJggg==") no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  .btn-round {
+    width: 160rpx;
+    height: 64rpx;
+    line-height: 64rpx;
+    background-color: #FFD426;
+    border-radius: 32rpx;
+    color: #FFFFFF;
+    font-size: 28rpx;
+    text-align: center;
+  }
+
+}
+
+.page-live .main {
+
+  .item {
+    background: #fff;
+    margin-bottom: 30rpx;
+    border-radius: 13rpx;
+  }
+
+  .item .prev-img {
+    width: 690rpx;
+    height: 517rpx;
+    border-radius: 8rpx;
+    overflow: hidden;
+
+    image {
+      width: 690rpx;
+      height: 517rpx;
+    }
+  }
+
+  .item .footer {
+    padding: 24rpx 24rpx 32rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .item .footer .title {
+    font-size: 30rpx;
+    font-weight: 600;
+    line-height: 50rpx;
+    color: #242424;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 440rpx;
+  }
+
+  .item .footer .status {
+    display: flex;
+    align-items: center;
+    font-size: 28rpx;
+  }
+
+  .item .footer .action {
+    padding: 14rpx 0 14rpx 33rpx;
+  }
+
+}
+
+.page-live .load-more {
+  text-align: center;
+  color: #999;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 12px;
+}

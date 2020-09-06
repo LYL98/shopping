@@ -1,0 +1,42 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<view class="select-store">
+	<view class="location">
+		<image src="./img/location_icon.png" />
+	</view>
+	<view class="title">运费明细</view>
+	<view class="down">
+		<image src="./img/arrow_down.png" />
+	</view>
+</view>
+<view class="store-body" bindtap="onFreightClose">
+	<view class="store" catchtap>
+		<view class="title">
+			<view class="str">运费明细</view>
+			<view class="close-btn link-active" bindtap="onFreightClose">
+				<image src="./../../assets/img/close2.png"></image>
+			</view>
+		</view>
+		<view class="content">
+			<view
+			 class="freight_item align-center"
+			 wx:for="{{freightData}}"
+			 wx:key="index"
+			>
+				<view class="freight_item--label">{{item.piece_spec}}:</view>
+				<view class="freight_item--box">
+					<view class="freight_item--value">{{item.item_num}}件</view>
+					<view class="freight_item--value">{{tools.returnPrice(item.delivery_price)}}元/件</view>
+					<view class="freight_item--value">￥{{tools.returnPrice(item.fee)}}</view>
+				</view>
+
+			</view>
+			<view class="freight_all">
+				<view class="freight_all--label">总计</view>
+				<view class="freight_all--value">￥ {{tools.returnPrice(totalDeliveryFee)}}</view>
+			</view>
+		</view>
+
+	</view>
+
+</view>
+

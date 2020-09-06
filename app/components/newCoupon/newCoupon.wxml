@@ -1,0 +1,59 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+<view class="coupon-body" wx:if="{{isShow}}">
+	<view class="coupon">
+		<view class="title">
+			<image class="image" src="./img/top.png" style="width: 470rpx; height: 192rpx;" />
+		</view>
+		<view class="coupon-list">
+			<view
+			 class="item"
+			 wx:for="{{dataItems}}"
+			 wx:key="index"
+			>
+				<view class="left">
+					<block wx:if="{{item.coupon_type === 'type_reduction'}}">
+						<text class="symbol">￥</text>
+						<text class="price">{{tools.returnPrice(item.benefit)}}</text>
+					</block>
+					<block wx:elif="{{item.coupon_type === 'type_discount'}}">
+						<text class="price">{{tools.returnDiscount(item.benefit)}}</text>
+						<text class="symbol">折</text>
+					</block>
+					<block wx:elif="{{item.coupon_type === 'type_gift'}}">
+						<text class="symbol">送</text>
+						<text class="price">{{item.benefit}}</text>
+						<text class="symbol">件</text>
+					</block>
+					<block wx:if="{{item.coupon_type === 'type_delivery'}}">
+						<text class="symbol">￥</text>
+						<text class="price">{{tools.returnPrice(item.benefit)}}</text>
+					</block>
+				</view>
+				<view class="right">
+					<view class="title">{{item.coupon_type === 'type_delivery' ? '运费' : ''}} 满{{tools.returnPrice(item.amount_full)}}元可用</view>
+					<view class="date">{{tools.returnDateFormat(item.time_start, 'yyyy-MM-dd')}}至{{tools.returnDateFormat(item.time_end, 'yyyy-MM-dd')}}</view>
+				</view>
+			</view>
+		</view>
+		<view class="bottom">
+			<image
+			 class="bg"
+			 src="./img/bottom.png"
+			 style="width: 470rpx; height: 89rpx;"
+			/>
+			<image
+			 class="money"
+			 src="./img/money.png"
+			 style="width: 164rpx; height: 110rpx;"
+			/>
+		</view>
+		<view
+		 class="close-btn"
+		 hover-class="link-hover"
+		 bind:tap="hideCoupon"
+		>
+			<image class="image" src="./img/close.png" style="width: 64rpx; height: 64rpx;" />
+		</view>
+	</view>
+</view>
+

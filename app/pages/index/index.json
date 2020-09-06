@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "蒲公英",
+  "navigationBarBackgroundColor": "#FFE05C",
+  "usingComponents": {
+    "handleShopCart": "/components/handleShopCart/handleShopCart",
+    "priceBox": "/components/priceBox/priceBox",
+    "newCoupon": "/components/newCoupon/newCoupon",
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "selectStore": "/pages/index/selectStore/selectStore",
+    "gio-marketing": "/utils/gio-minp/components/gio-marketing/gio-marketing"
+  }
+}

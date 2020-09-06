@@ -1,0 +1,3 @@
+<view class="detail">
+  <rich-text nodes="{{detail || '暂无介绍'}}"></rich-text>
+</view>
