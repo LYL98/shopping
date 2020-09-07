@@ -45,7 +45,6 @@ Page({
 
   //页面装载时
   onLoad() {
-    console.log(wx.getSystemInfoSync());
     this.windowWidth = wx.getSystemInfoSync().windowWidth;
     this.windowHeight = wx.getSystemInfoSync().windowHeight;
     this.factor = this.windowWidth / 750;

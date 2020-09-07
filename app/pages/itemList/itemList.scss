@@ -6,56 +6,36 @@
   display: flex;
   flex-flow: column;
   >.top-view{
-    height: 190rpx;
+    height: 100rpx;
+    border-bottom: 1rpx solid #f3f4f6;
   }
   >.bottom-view{
     flex: 1;
     display: flex;
-    height: calc(100vh - 190rpx); //必须，否则真机可能失效
+    height: calc(100vh - 101rpx); //必须，否则真机可能失效
   }
 }
 
-.class-view{
-  border-top: 1rpx solid #f3f4f6;
-  border-bottom: 1rpx solid #f3f4f6;
-  white-space: nowrap;
-  width: 100vw;
-  height: 88rpx;
-  background-color: #fff;
-  overflow-x: auto;
-  box-shadow: 0 8rpx 16rpx 0 rgba(0, 0, 0, 0.04);
-  position: relative;
-  z-index: 2;
-  >.class-view-item{
-    width: 148rpx;
-    height: 48rpx;
-    line-height: 48rpx;
-    text-align: center;
-    display: inline-block;
-    white-space: normal;
-    border-radius: 24rpx;
-    margin-top: 20rpx;
-    margin-right: 18rpx;
-    font-size: 26rpx;
-    color: #616161;
-    &:last-child{
-      margin-right: 12rpx !important;
-    }
-    &:nth-child(1){
-      margin-left: 30rpx;
-    }
-    &.active{
-      background-color: #FFD426;
-      color: #fff;
-    }
-  }
-}
-
-.category-view-body{
+.category-one-body{
   width: 190rpx;
   height: 100%;
-  .category-view{
+  .category-one{
     height: 100%;
+    width: 190rpx;
+    background: #F9F8F8;
+    color: #616161;
+    overflow-y: auto;
+    font-size: 26rpx;
+    .item{
+      text-align: left;
+      padding: 30rpx 35rpx;
+      overflow: hidden;
+      &.active{
+        color: #020202;
+        background: #fff;
+        font-weight: bold;
+      }
+    }
   }
 }
 
@@ -66,10 +46,15 @@
   display: flex;
   flex-flow: column;
   overflow: hidden;
+  >.category-two-body{
+    height: 88rpx;
+    overflow: hidden;
+  }
   >.head-view{
     background: #fff;
     display: flex;
     height: 84rpx;
+    border-top: 1rpx solid #f3f4f6;
     border-bottom: 1rpx solid #f3f4f6;
     align-items: center;
     > view{
@@ -104,6 +89,40 @@
   }
 }
 
+.category-two{
+  white-space: nowrap;
+  height: 88rpx;
+  background-color: #fff;
+  position: relative;
+  z-index: 2;
+  .category-two-item{
+    height: 48rpx;
+    line-height: 48rpx;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    border-radius: 8rpx;
+    margin-top: 20rpx;
+    margin-right: 10rpx;
+    font-size: 26rpx;
+    color: #989797;
+    overflow: hidden;
+    padding: 0 16rpx;
+    border: 1rpx solid #DBDBDB;
+    &:last-child{
+      margin-right: 10rpx !important;
+    }
+    &:nth-child(1){
+      margin-left: 10rpx;
+    }
+    &.active{
+      color: #FFD426;
+      background: rgba(253, 202, 31, 0.10);
+      border: 1rpx solid #FDCA1F;
+    }
+  }
+}
+
 .category-title{
   margin: 0 24rpx;
   font-size: 28rpx;
@@ -115,10 +134,10 @@
 .goods-item {
   display: flex;
   padding: 16rpx 24rpx 16rpx 0;
+  height: 275rpx;
   &.hide-info{
     background: rgba($color: #F9F8F8, $alpha: 0.4);
-    height: 200rpx;
-    margin: 0 24rpx 36rpx;
+    height: 275rpx;
     border-radius: 8rpx;
   }
   >.goods-item-img {
@@ -168,13 +187,15 @@
     flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
-    min-height: 258rpx;
+    height: 258rpx;
     border-bottom: 1rpx solid #eee;
     .goods-item-info-top {
+      height: 154rpx;
+      margin-bottom: 16rpx;
       .goods-titles {
-        line-height: 1.2;
+        line-height: 40rpx;
         font-size: 30rpx;
-        margin-bottom: 14rpx;
+        margin-bottom: 8rpx;
         color: #242424;
         overflow: hidden;
         > text{
@@ -198,7 +219,7 @@
         }
       }
       .goods-sku {
-        line-height: 1.2;
+        line-height: 34rpx;
         margin-top: 8rpx;
         font-size: 24rpx;
         color: #999999;
