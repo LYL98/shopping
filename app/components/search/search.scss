@@ -9,7 +9,7 @@
     color: #999;
     border-radius: 34rpx;
     text-align: center;
-    > view.input{
+    > .input{
       width: 200rpx;
       height: 64rpx;
       line-height: 64rpx;
@@ -17,7 +17,7 @@
       font-size: 28rpx;
       letter-spacing:-1rpx;
       text-align: center;
-      > image{
+      > .image{
         width: 30rpx;
         height: 30rpx;
         position: relative;

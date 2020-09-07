@@ -55,7 +55,6 @@ Component({
 
 	methods: {
 		getSystemInfo() {
-			console.log(app.globalSystemInfo);
 			if (app.globalSystemInfo && app.globalSystemInfo.capsulePosition) {
 			} else {
 				let systemInfo = wx.getSystemInfoSync();

@@ -52,7 +52,7 @@
     z-index: 2;
     background: #000;
     width: 100vw;
-    height: 750rpxs;
+    height: 750rpx;
     >video{
       width: 100vw;
       height: 640rpx;
@@ -373,16 +373,8 @@
 }
 .goods_top--weight{
   font-size: 28rpx;
-color: #989797;
-margin-left: 16rpx;
-}
-.goods_top--share{
-  // width: 187rpx;
-  // color:#00AE66;
-  // border:1rpx solid #00AE66;
-  // font-size: 28rpx;
-  // border-radius: 30rpx;
-  // padding: 12rpx 20rpx;
+  color: #989797;
+  margin-left: 16rpx;
 }
 .share_btn{
   color:#FDCA1F;
@@ -392,15 +384,14 @@ margin-left: 16rpx;
   padding-left: 14rpx;
   padding-right: 14rpx;
   height:62rpx;
-  // transform: scale();
-  // width: 186rpx;
-
+  position: absolute;
+  z-index: 10;
+  top: 32rpx;
+  right: 22rpx;
   background-color: white !important;
   &::after{
     border:none !important;
-
   }
-  // padding-left: 10rpx;
 }
 .goods_info--title{
   font-family: PingFangSC-Medium;
@@ -433,30 +424,29 @@ margin-left: 16rpx;
   height: 64rpx;
   border-bottom: 1rpx solid #F9F8F8;
 }
-.label_item{
-
-}
 .laberl_item--right{
   margin-right: 169rpx;
 }
 .goods_info--label{
   font-size: 24rpx;
   color: #989797;
-  width:118rpx;
+  width: 144rpx;
   flex-shrink: 0;
+}
+.goods_info--label--auto_width{
+  width:auto!important;
+  margin-right:28rpx;
 }
 .goods_info--label--top{
   width:80rpx;
 }
-.goods_info--label--single{
-  width:190rpx;
-}
 .goods_info--label--reback{
-  width: 168rpx;
+  width: 200rpx;
 }
 .goods_info--value{
   font-size: 24rpx;
   color: #151515;
+  margin-right: 24rpx;
 }
 .send_title{
   margin-right: 20rpx;
@@ -529,6 +519,9 @@ margin-left: 16rpx;
 }
 .goods_attr--box{
   height: 82rpx;
+}
+.pl24{
+  
   padding-left: 24rpx;
 }
 .goods_attr--box--more{
@@ -624,4 +617,20 @@ left: 28rpx;
 .cart_num{
   height:81rpx !important;
   line-height:81rpx !important;
+}
+
+.store-type {
+  font-size: 18rpx;
+  color: #989797;
+  margin-top: 6rpx;
+  .type-label {
+    color: #FFF;
+    background: #FF8F1F;
+    border-radius: 4rpx;
+    padding: 0rpx 3rpx;
+    margin-right: 6rpx;
+  }
+  .type-label-self {
+    background: #FF6010;
+  }
 }

@@ -9,6 +9,7 @@ import {
   RequestHttpPre,
   RequestHttpPro,
   RequestWsDev,
+  RequestWsTest,
   RequestWsPre,
   RequestWsPro,
   TencentBucketDev,
@@ -34,9 +35,8 @@ switch(Conn){
     tencentPath = TencentPathDev;
     break;
   case 'test':
-    // lsRequestHttp = LSRequestHttpDev,
     requestHttp = RequestHttpTest;
-    requestWs = RequestWsDev
+    requestWs = RequestWsTest
     tencentBucket = TencentBucketDev;
     tencentRegion = TencentRegionDev;
     tencentPath = TencentPathDev;
@@ -74,12 +74,15 @@ module.exports = {
     banner: apiC + '/item/banner', //banner首页
     noticeList: apiC + '/order/marquee', //banner首页
     itemTagsList: apiC + '/item/tags/list', //tags首页
+    itemTagsListNew: apiC + '/item/tags/list_new', //tags首页
+    itemTagsDetail: apiC + '/item/tags/detail', //tags详情
     itemCollectionAdd: apiC + '/item/collection/add',//商品收藏信息添加
     itemCollectionCancel: apiC + '/item/collection/cancel',//商品收藏信息取消
     itemCollectionQuery: apiC + '/item/collection/query',//收藏商品展示
     itemDetail: apiC + '/item/detail',//商品详情
     displayClassQuery: apiC + '/display_class/list',//商品分类展示
     itemListDisplayClass: apiC + '/item/query/by_display_class',//用户端商品浏览(根据展示分类code)
+    itemListDisplayClassNew: apiC + '/item/query/by_display_class_new', //用户端商品浏览(根据展示分类code)new
     itemQuery: apiC + '/item/query',//商品搜索
     itemCartQuery: apiC + '/item/cart/list',//商品库存查询(购物车用)
     itemRecoentlyBuy: apiC + '/item/list/recent_buy',//最近购买商品
@@ -145,8 +148,8 @@ module.exports = {
     
     
     hotSaleItems: apiC + '/item/top', // 热销榜单
-    storeApply: apiC + '/included/apply', // 门店自提点申请
-    storeApplyStatus: apiC + '/included/apply/status', // 自提点申请状态
+    storeApply: apiC + '/included/apply', // 门店申请
+    storeApplyStatus: apiC + '/included/apply/status', // 门店申请状态
 
   },
   //腾讯Bucket、Region
@@ -157,7 +160,7 @@ module.exports = {
   serviceTel: ServiceTel, //服务电话
   weiXinAppIds: WeiXinAppIds, //要打开的微信appids
   conn: Conn,
-  requestWs:requestWs, // wensocket
+  requestWs: requestWs, // wensocket
   version: Version,
   gioConfig: GioConfig
 }

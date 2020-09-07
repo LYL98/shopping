@@ -1,5 +1,5 @@
 // pages/complain/complain.js
-import config from './../../utils/config';
+import { Config } from './../../utils/index';
 const app = getApp();
 
 Page({
@@ -7,32 +7,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    serviceTel: config.serviceTel,
-    qrCode: './../../assets/img/service_weixin.png',
+    serviceTel: '400 825 8522',
+    qrCode: Config.tencentPath + '/common/service_weixin.png',
   },
   //拨打电话
   makePhoneCall(){
     wx.makePhoneCall({
-      phoneNumber: this.data.serviceTel
+      phoneNumber: '4008258522'
     });
   },
   onLoad: function() {
-    let that = this;
-    wx.request({
-      url: config.api.sysService,
-      header: {
-        'content-type': 'application/json',
-        'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
-      },
-      success: function(res) {
-        if (res.statusCode == 200 && res.data.code == 0) {
-          let rd = res.data.data;
-          that.setData({
-            serviceTel: rd.complaint_hotline,
-            qrCode: config.tencentPath + rd.qr_code
-          })
-        }
-      }
+    
+  },
+  previewImg() {
+    const { qrCode } = this.data
+    wx.previewImage({
+      urls: [qrCode],
     })
   }
 })

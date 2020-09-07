@@ -1,7 +1,3 @@
-view, navigator {
-  box-sizing: border-box;
-}
-
 .presale-btn {
   width: 104rpx;
   height: 48rpx;
@@ -36,7 +32,7 @@ view, navigator {
     transform: translate(50%, -50%);
     transform-origin: 100%;
   }
-  > image {
+  > .image {
     width: 48rpx;
     height: 48rpx;
     display: block;
@@ -79,7 +75,7 @@ view, navigator {
         position: absolute;
         right: 0rpx;
         top: 60rpx;
-        > image{
+        > .image{
           width: 24rpx;
           height: 24rpx;
           margin: 10rpx 0 0 10rpx;
@@ -102,7 +98,7 @@ view, navigator {
         >.left{
           flex: initial;
           width: 68rpx;
-          > image{
+          > .image{
             display: block;
           }
         }

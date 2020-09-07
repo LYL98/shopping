@@ -1,6 +1,5 @@
 <view class="top">
-  <image class="icon" wx:if="{{brandInfo.brand_icon}}" src="{{tencentPath + brandInfo.brand_icon + '_min200x200'}}" style="width: 140rpx; height: 140rpx;"/>
-  <view class="icon" wx:else style="width: 140rpx; height: 140rpx;"></view>
+  <image class="icon" src="./../../assets/img/logo.png" style="width: 140rpx; height: 140rpx;"/>
   <view class="ver font-size30">版本号{{version}}</view>
 </view>
 

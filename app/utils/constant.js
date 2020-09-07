@@ -77,6 +77,7 @@ module.exports = {
   COUPON_TYPE: {
     type_reduction: '订单满减券',
     type_discount: '订单满折券',
-    type_gift: '订单满赠券'
+    type_gift: '订单满赠券',
+    type_delivery: '运费优惠券'
   }
 }

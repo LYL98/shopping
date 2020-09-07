@@ -141,6 +141,16 @@ var returnDateFormat = function(dateStr, format) {
   }
 }
 
+var returnTimeFormat = function(timeStr, format) {
+  if (!timeStr) {
+    return '';
+  } else if (format === 'HH:mm') {
+    return timeStr.substring(0, 5);
+  } else {
+    return timeStr;
+  }
+}
+
 //返回库存提示
 var returnItemStock = function(item) {
   if (item.item_stock < item.min_num_per_order || item.item_stock === 0) {
@@ -226,6 +236,7 @@ module.exports = {
   returnPayPrice: returnPayPrice,
   returnPayType: returnPayType,
   returnDateFormat: returnDateFormat,
+  returnTimeFormat: returnTimeFormat,
   returnItemStock: returnItemStock,
   judgeItemStock: judgeItemStock,
   returnShowPayType: returnShowPayType,

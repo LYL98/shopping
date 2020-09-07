@@ -59,7 +59,7 @@
     >.add-cart-icon{
       width: 54rpx;
       height: 54rpx;
-      >image{
+      >.image{
         width: 54rpx;
         height: 54rpx;
       }
@@ -70,7 +70,7 @@
       align-items: center;
       >.btn{
         flex: initial;
-        > image{
+        > .image{
           float: left;
         }
         &.unusable{
@@ -107,7 +107,7 @@
         >.btn{
           width: 50rpx;
           height: 50rpx;
-          >image{
+          >.image{
             width: 50rpx;
             height: 50rpx;
           }
@@ -136,7 +136,7 @@
         >.btn{
           width: 82rpx;
           height: 58rpx;
-          >image{
+          >.image{
             width: 82rpx;
             height: 58rpx;
           }
@@ -165,7 +165,7 @@
         >.btn{
           width: 82rpx;
           height: 82rpx;
-          >image{
+          >.image{
             width: 82rpx;
             height: 82rpx;
           }
@@ -202,7 +202,7 @@
     font-size: 30rpx;
     height: 54rpx;
     // line-height: 54rpx;
-    > text{
+    > .text{
       color: #A5A5A5;
       font-size: 24rpx;
     }
@@ -262,7 +262,7 @@
         position: absolute;
         right: 0rpx;
         top: 60rpx;
-        > image{
+        > .image{
           width: 24rpx;
           height: 24rpx;
           margin: 10rpx 0 0 10rpx;
@@ -285,7 +285,7 @@
         >.left{
           flex: initial;
           width: 68rpx;
-          > image{
+          > .image{
             display: block;
           }
         }
@@ -344,7 +344,7 @@
     align-items: center;
     >.left{
       flex: 1;
-      >input{
+      >.input{
         text-align: left;
         height: 82rpx;
         line-height: 82rpx;
@@ -395,11 +395,11 @@
   padding:2rpx 8rpx;
 }
 .card_type--1{
-   background-image: linear-gradient(135deg,   #F9CB85 0%, #AD6629 100%) !important;
-      box-shadow: inset 0 1rpx 3rpx 0 #828893 !important;
+   background-image: linear-gradient(-41deg,   #F9CB85 0%, #AD6629 100%) !important;
+      box-shadow: inset 0 1rpx 3rpx 0 #A37044 !important;
 }
 .card_type--2{
-  background-image: linear-gradient(135deg, #EDEEF0 0%, #808691 100%) !important;
+  background-image: linear-gradient(-41deg, #EDEEF0 0%, #808691 100%) !important;
   box-shadow: inset 0 1rpx 3rpx 0 #FDC126 !important;
 }
 .card_type--3{
@@ -413,7 +413,7 @@ background-image: linear-gradient(-41deg, #76D6FD, #01B8FF, #9AE2FF);
    color: #01B8FF;
 }
 .price_type--1{
-  color: #A37044 !important;
+  color: #D79E5C !important;
 }
 .price_type--2{
   color: #828893 !important;

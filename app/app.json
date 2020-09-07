@@ -1,23 +1,24 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/shoppingCart/shoppingCart",
-    "pages/browser/browser",
     "pages/order/order",
+    "pages/orderAdd/orderAdd",
+    "pages/shoppingCart/shoppingCart",
+    "pages/itemList/itemList",
+    "pages/browser/browser",
     "pages/about/about",
     "pages/myMessage/myMessage",
     "pages/search/search",
     "pages/itemLabel/itemLabel",
+    "pages/itemTag/itemTag",
     "pages/loginGuide/loginGuide",
     "pages/login/login",
     "pages/loginBind/loginBind",
-    "pages/itemList/itemList",
     "pages/itemDetail/itemDetail",
     "pages/account/account",
     "pages/accountRecord/accountRecord",
     "pages/password/password",
     "pages/shop/shop",
-    "pages/orderAdd/orderAdd",
     "pages/orderFram/orderFram",
     "pages/coupon/coupon",
     "pages/payResult/payResult",
@@ -51,7 +52,7 @@
   ],
   "plugins": {
     "live-player-plugin": {
-      "version": "1.0.16",
+      "version": "1.1.7",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -68,7 +69,7 @@
     "wx1653f76966571193"
   ],
   "tabBar": {
-    "color": "#616161",
+    "color": "#989797",
     "selectedColor": "#FFD426",
     "borderStyle": "black",
     "backgroundColor": "#fff",
@@ -106,7 +107,7 @@
     ]
   },
   "networkTimeout": {
-    "request": 10000,
+    "request": 30000,
     "downloadFile": 100000
   },
   "permission": {

@@ -13,6 +13,9 @@
   border-bottom: 1rpx solid #eee;
   padding: 20rpx 30rpx;
   background-color: white;
+
+  font-size: 26rpx;
+color: #242424;
   > view{
     flex: 1;
     font-size: 28rpx;
@@ -81,6 +84,7 @@
   border-top: 1rpx solid #eee;
   text-align: center;
   background: #fff;
+  z-index: 10;
   >.coupon-item{
     height: 62rpx;
     background: #FFE1E1;
@@ -120,7 +124,7 @@
   align-items: center;
   border-top: 1rpx solid #eee;
   padding: 0 30rpx;
-  z-index: 2;
+  z-index: 10;
   > view{
     flex: 1;
     font-size: 26rpx;
@@ -284,7 +288,7 @@
 }
 
 .cart_type{
-  margin-top: 24rpx;
+  padding-top: 24rpx;
   
 	.title{
 		font-size: 30rpx;
@@ -354,4 +358,20 @@
 
 .cart_content{
   margin: 0 24rpx;
+}
+
+.store-type {
+  font-size: 18rpx;
+  color: #989797;
+  margin-top: 6rpx;
+  .type-label {
+    color: #FFF;
+    background: #FF8F1F;
+    border-radius: 4rpx;
+    padding: 0rpx 3rpx;
+    margin-right: 6rpx;
+  }
+  .type-label-self {
+    background: #FF6010;
+  }
 }

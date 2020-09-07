@@ -1,18 +1,20 @@
 <!--pages/shoppingCart/shoppingCart.wxml-->
 <wxs src="./../../utils/tools.wxs" module="tools" />
+
 <view class="container">
 	<view class="top-hint" wx:if="{{!closeStore}}">
 		营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
 	</view>
-	<view class="cart_content">
-
-		<view class="work-field">
+	<view class="work-field" wx:if="{{couponNum > 0}}">
+		<navigator url="/pages/coupon/coupon?from=shoppingCart">
 			<view class="align-center">
 				<view class="discounts_text">优惠</view>
-				<view>运费{{tools.returnPrice(activity.amount_delivery)}}元,满{{tools.returnPrice(activity.discount_delivery_line)}}元免运费</view>
-
+				<view style="margin-top:6rpx">{{couponNum}}张可用优惠券></view>
 			</view>
-		</view>
+		</navigator>
+
+	</view>
+	<view class="cart_content">
 
 		<view class="item-view item-view-box">
 
@@ -68,7 +70,7 @@
 										<view style="height: 30rpx;"></view>
 									</view>
 								</navigator>
-								<view class="join" style="bottom:16rpx; left: 244rpx;">
+								<view class="join" style="bottom:60rpx; left: 244rpx;">
 									<view style="min-height:36rpx;">
 										<joinShopCart
 										 id="joinShopCart"
@@ -86,11 +88,22 @@
 										 bind:traggleStepPriceHint="traggleStepPriceHint"
 										/>
 									</view>
+
+								</view>
+								<view class="store-type" style="position:absolute;bottom:10rpx;left: 244rpx;">
+									<view class="store-type">
+										<block wx:if="{{item.sale_type == '平台'}}">
+											<text class="type-label" >商家</text>
+											<text>{{item.supplier}}门店</text>
+										</block>
+										<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
+									</view>
 								</view>
 								<view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
 									<text class="shop_type"></text>
 									<text class="shop_stock" wx:if="{{item.item_stock < 10}}">剩余{{item.item_stock}}件</text>
 								</view>
+
 							</view>
 						</view>
 
@@ -177,7 +190,7 @@
 			></defaultPage>
 		</view>
 
-		<block wx:if="{{couponNum > 0 && isShowCouponHint}}">
+		<!-- <block wx:if="{{couponNum > 0 && isShowCouponHint}}">
 			<view style="height: 89rpx;"></view>
 			<view class="coupon-hint" style="bottom: {{dataItem.length > 0 ? 120 : 0}}rpx;">
 				<navigator url="/pages/coupon/coupon?from=shoppingCart" class="coupon-item">
@@ -189,7 +202,7 @@
 					<image src="./../../assets/img/close2.png" style="width: 24rpx; height: 24rpx;" />
 				</view>
 			</view>
-		</block>
+		</block> -->
 
 		<view style="height: 120rpx;"></view>
 		<view class="bottom-view b-cfff" wx:if="{{dataItem.length > 0}}">

@@ -1,0 +1,145 @@
+<!--
+此文件为开发者工具生成，生成时间: 2020/9/1 上午11:57:02 
+使用方法：
+在 pages/index/index.wxml 引入模板
+
+```
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 pages/index/index.wxss 中引入样式
+```
+@import "./index.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view>
+      <view style="background: #FFE05C;">
+        <view is="pages/index/selectStore/selectStore">
+          <view class="selectStore--select-store">
+            <view class="selectStore--location">
+              <image class="selectStore--image sk-image">
+              </image>
+            </view>
+            <view class="selectStore--title sk-transparent sk-text-18-7500-760 sk-text">
+              科技园门店
+            </view>
+            <view class="selectStore--down">
+              <image class="selectStore--image sk-image">
+              </image>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view>
+        <view class="index-header sk-image">
+          <view class="search-box">
+            <view class="search" hover-class="view-hover">
+              <image class="search-icon sk-image">
+              </image>
+              <text class="search-placeholder sk-transparent sk-text-18-7500-839 sk-text">
+                搜索商品
+              </text>
+            </view>
+          </view>
+          <swiper autoplay="true" indicator-dots="true" class="banner" indicator-active-color="#FDCD50" current="0" current-item-id="true">
+            <swiper-item style="position: absolute; width: 100%; height: 100%; transform: translate(0%, 0px) translateZ(0px);">
+              <image data-index="0" data-item="[object Object]" mode="widthFix" style="height: 331.188px;" class="sk-image">
+              </image>
+            </swiper-item>
+            <swiper-item style="position: absolute; width: 100%; height: 100%; transform: translate(100%, 0px) translateZ(0px);">
+              <image data-index="1" data-item="[object Object]" mode="widthFix" style="height: 386px;" class="sk-image">
+              </image>
+            </swiper-item>
+          </swiper>
+          <view class="bottom-ph-bg">
+          </view>
+        </view>
+        <scroll-view scroll-x="true" class="tags-list-body" style="height: 200px;">
+          <view class="tags-list">
+            <view class="left">
+              <view class="tags-item" data-index="0" data-item="[object Object]" data-type="kingkong" hover-class="link-hover">
+                <image class="sk-image">
+                </image>
+                <text class="sk-transparent sk-text-18-7500-498 sk-text">
+                  品牌专区
+                </text>
+              </view>
+              <view class="tags-item" data-index="1" data-item="[object Object]" data-type="kingkong" hover-class="link-hover">
+                <image class="sk-image">
+                </image>
+                <text class="sk-transparent sk-text-18-7500-377 sk-text">
+                  无退赔区
+                </text>
+              </view>
+              <view class="tags-item" data-index="2" data-item="[object Object]" data-type="kingkong" hover-class="link-hover">
+                <image class="sk-image">
+                </image>
+                <text class="sk-transparent sk-text-18-7500-546 sk-text">
+                  每日最低
+                </text>
+              </view>
+              <view class="tags-item" data-index="3" data-item="[object Object]" data-type="kingkong" hover-class="link-hover">
+                <image class="sk-image">
+                </image>
+                <text class="sk-transparent sk-text-18-7500-718 sk-text">
+                  预售专区
+                </text>
+              </view>
+              <view class="tags-item" data-index="4" data-item="[object Object]" data-type="kingkong" hover-class="link-hover">
+                <image class="sk-image">
+                </image>
+                <text class="sk-transparent sk-text-18-7500-535 sk-text">
+                  礼盒专区
+                </text>
+              </view>
+              <view class="tags-item" data-index="5" data-item="[object Object]" data-type="kingkong" hover-class="link-hover">
+                <image class="sk-image">
+                </image>
+                <text class="sk-transparent sk-text-18-7500-242 sk-text">
+                  进口水果
+                </text>
+              </view>
+              <view class="tags-item" data-index="6" data-item="[object Object]" data-type="kingkong" hover-class="link-hover">
+                <image class="sk-image">
+                </image>
+                <text class="sk-transparent sk-text-18-7500-776 sk-text">
+                  国产精品
+                </text>
+              </view>
+              <view class="tags-item" data-index="7" data-item="[object Object]" data-type="kingkong" hover-class="link-hover">
+                <image class="sk-image">
+                </image>
+                <text class="sk-transparent sk-text-18-7500-105 sk-text">
+                  大众水果
+                </text>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+        <view class="cards">
+          <view class="item" data-index="0" data-item="[object Object]" data-type="card" hover-class="link-hover" style="border: none;">
+            <image class="image sk-image" style="width: 128px; height: 128px;">
+            </image>
+          </view>
+          <view class="item" data-index="1" data-item="[object Object]" data-type="card" hover-class="link-hover" style="border: none;">
+            <image class="image sk-image" style="width: 128px; height: 128px;">
+            </image>
+          </view>
+          <view class="item">
+            <image class="image sk-image" style="width: 128px; height: 128px;">
+            </image>
+          </view>
+        </view>
+        <navigator class="hot-sale-entry">
+          <image class="sk-image">
+          </image>
+        </navigator>
+      </view>
+    </view>
+  </view>
+</template>

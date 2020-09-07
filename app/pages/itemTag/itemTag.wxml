@@ -1,0 +1,98 @@
+<wxs src="./../../utils/tools.wxs" module="tools" />
+
+<import src="itemTag.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{showSkeleton}}" />
+
+<view wx:elif="{{dataItem.num > 0}}">
+	<view class="top-bg" wx:if="{{detail.topic_image_header.length > 0}}">
+		<image src="{{tencentPath + detail.topic_image_header[0] + '_min750x750'}}" style="width: 100vw; height: 100vw;" />
+	</view>
+	<view class="goods-list">
+		<view
+			class="goods-item"
+			wx:for="{{dataItem.items}}"
+			wx:key="index"
+			bind:tap="clickItem"
+			data-item="{{item}}"
+		>
+			<view class="goods-item-img">
+				<view class="tags-mask">
+					<!-- 不用显示 -->
+					<!-- <view
+						class="tags-item"
+						wx:for="{{tools.returnTags(item.tags)}}"
+						wx:for-item="t"
+						wx:for-index="i"
+						wx:key="i"
+						wx:if="{{t}}"
+					>
+						<text>{{tools.returnSpecStr(t,0,2)}}</text>
+						<image wx:if="{{i == 0}}" src="/assets/img/index/label0.png"></image>
+						<image wx:else src="/assets/img/index/label1.png"></image>
+					</view> -->
+					<view class="tags-item" wx:if="{{item.is_presale}}">
+						<text>预售</text>
+						<image wx:if="{{item.tags.length == 0}}" src="/assets/img/index/label0.png"></image>
+						<image wx:else src="/assets/img/index/label1.png"></image>
+					</view>
+				</view>
+				<image src="{{tencentPath + item.images[0]}}_watermark375x375" lazy-load="{{index > 2 ? true : false}}"></image>
+			</view>
+			<view class="goods-item-info">
+				<view class="goods-item-info-top">
+					<view class="goods-title">{{item.title}}</view>
+					<view class="goods-sku">
+						<text wx:if="{{item.is_quoted  && item.gross_weight}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+						<text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
+						<text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+						<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+						<text wx:if="{{item.frame_id}}">有筐</text>
+					</view>
+					<view class="goods-limt">
+						<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+						<text wx:if="{{item.order_num_max < 1000}}">限购{{item.order_num_max}}件</text>
+						<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
+					</view>
+				</view>
+				<view>
+					<priceBox
+						vipLevel="{{dataItem.vip_level}}"
+						vipTitle="{{dataItem.vip_title}}"
+						vipDiscount="{{dataItem.vip_discount}}"
+						isVipItem="{{item.is_vip_item}}"
+						isQuoted="{{item.is_quoted}}"
+						priceSale="{{item.price_sale}}"
+						priceOrigin="{{item.price_origin}}"
+						priceNoVip="{{item.price_novip}}"
+					/>
+					<view class="goods-item-info-bottom">
+						<view class="store-type">
+							<block wx:if="{{item.sale_type == '平台'}}">
+								<text class="type-label" >商家</text>
+								<text>{{item.supplier}}门店</text>
+							</block>
+							<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
+						</view>
+
+						<view class="cart-wrapper">
+							<handleShopCart itemData="{{item}}" bindcallback="joinShoppingCart"/>
+						</view>
+					</view>
+
+				</view>
+
+			</view>
+		</view>
+	</view>
+	<view class="load-more" hover-class="link-hover" bind:tap="loadMore" wx:if="{{dataItem.num / query.page_size > query.page}}">{{loading ? '加载中...' : '点击加载更多'}}</view>
+	<view class="bottom-bg" wx:if="{{detail.topic_image_detail.length > 0}}">
+		<image wx:for="{{detail.topic_image_detail}}" wx:key="index" src="{{tencentPath + item + '_min750x750'}}" style="width: 100vw; height: 100vw;" />
+	</view>
+
+	<navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="shopping-btn">
+		<image src="/assets/img/shop_cart.png"></image>
+		<span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
+	</navigator>
+</view>
+
+<defaultPage wx:else currentPage="itemList"></defaultPage>

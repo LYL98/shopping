@@ -18,7 +18,11 @@
 		<!--以下不是预定的-->
 		<view wx:else>
 			<!--数量大于0的情况start-->
-			<view class="plus-minus {{size}}" wx:if="{{num > 0}}">
+			<view
+			 class="plus-minus {{size}}"
+			 wx:if="{{num > 0}}"
+			 style="margin-top:{{ isFromCartPage ? '40rpx' : 0}}"
+			>
 				<!--阶梯优惠提示-->
 				<!-- <view class="step-prices-hint {{sourcePage === 'itemDetail' && 'item-detail'}} {{sourcePage === 'shoppingCart' && 'shopping-cart'}}" wx:if="{{stepPricesHint}}">
 					{{stepPricesHint}}
@@ -26,22 +30,22 @@
 
 				<view class="plus-minus-view">
 					<view class="btn minus" bindtap="down">
-						<image src="{{size =='medium' ? minusIndexSrc : minusSrc}}"></image>
+						<image class="image"  src="{{size =='medium' ? minusIndexSrc : minusSrc}}"></image>
 					</view>
-					<view  class="cart_num num" bind:tap="showInput">{{num}}</view>
+					<view class="cart_num num" bind:tap="showInput">{{num}}</view>
 					<view
 					 wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}"
 					 class="btn add unusable"
 					 bindtap="upUnusable"
 					>
-						<image src="{{size =='medium' ? addIndexSrc : addSrc}}"></image>
+						<image class="image"  src="{{size =='medium' ? addIndexSrc : addSrc}}"></image>
 					</view>
 					<view
 					 wx:else
 					 class="btn add"
 					 bindtap="up"
 					>
-						<image src="{{size =='medium' ? addIndexSrc : addSrc}}"></image>
+						<image class="image"  src="{{size =='medium' ? addIndexSrc : addSrc}}"></image>
 					</view>
 				</view>
 			</view>
@@ -51,7 +55,7 @@
 			<view class="plus-minus {{size}}" wx:else>
 				<view class="join-btn" catchtap="up">加入购物车</view>
 				<view class="add-cart-icon" catchtap="up">
-					<image src="./../../assets/img/cart_icon.png" />
+					<image class="image"  src="./../../assets/img/cart_icon.png" />
 				</view>
 			</view>
 			<!--数量等于0的情况end-->
@@ -68,10 +72,10 @@
 
 	<!--购物车专用start-->
 	<view class="shopping-cart-page" wx:if="{{sourcePage === 'shoppingCart'}}">
-		<view class="price-unit">
-			<text wx:if="{{!itemData.is_quoted}}">今日未报价</text>
-			<text wx:elif="{{itemData.item_stock < itemData.min_num_per_order || itemData.item_stock === 0}}">库存不足</text>
-			<text wx:elif="{{!itemData.is_on_sale}}">已下架</text>
+		<view class="price-unit" style="margin-top:8rpx">
+			<text class="text" wx:if="{{!itemData.is_quoted}}">今日未报价</text>
+			<text class="text" wx:elif="{{itemData.item_stock < itemData.min_num_per_order || itemData.item_stock === 0}}">库存不足</text>
+			<text class="text" wx:elif="{{!itemData.is_on_sale}}">已下架</text>
 			<view wx:elif="{{itemData.is_on_sale && tools.judgeItemStock(itemData) && itemData.is_quoted}}">
 				<block wx:if="{{itemData.is_vip_item && discount > 0}}">
 					<view class="vip_card align-center">
@@ -86,9 +90,9 @@
 				<text class="price" wx:else>￥{{tools.returnPrice(itemData.price_sale)}}</text>
 			</view>
 		</view>
-		<view class="discount-repertory" wx:if="{{itemData.item_stock > 0 && itemData.item_stock >= itemData.min_num_per_order}}">
+		<!-- <view class="discount-repertory" wx:if="{{itemData.item_stock > 0 && itemData.item_stock >= itemData.min_num_per_order}}">
 			<view class="repertory">{{tools.returnItemStock(itemData)}}</view>
-		</view>
+		</view> -->
 	</view>
 	<!--购物车专用end-->
 </view>
@@ -106,13 +110,14 @@
 	>
 		<view class="left">
 			<input
-			 type="number"
-			 placeholder="请输入件数"
-			 focus
-			 adjust-position="{{false}}"
-			 bindinput="inputChange"
-			 bindkeyboardheightchange="inputHeightChange"
-			 bindblur="inputBlur"
+				class="input"
+				type="number"
+				placeholder="请输入件数"
+				focus
+				adjust-position="{{false}}"
+				bindinput="inputChange"
+				bindkeyboardheightchange="inputHeightChange"
+				bindblur="inputBlur"
 			/>
 		</view>
 		<view class="right">
@@ -140,7 +145,7 @@
 			 hover-class="link-active"
 			 bindtap="cancelSelectStepPrices"
 			>
-				<image src="./../../assets/img/close2.png"></image>
+				<image class="image"  src="./../../assets/img/close2.png"></image>
 			</view>
 		</view>
 		<view class="content">
@@ -151,12 +156,12 @@
 			>
 				<view class="item">
 					<view class="left">
-						<image
+						<image class="image" 
 						 src="./../../assets/img/checked_s.png"
 						 wx:if="{{stepPricesIndex === -1}}"
 						 style="width: 38rpx; height: 38rpx;"
 						/>
-						<image
+						<image class="image" 
 						 src="./../../assets/img/checked.png"
 						 wx:else
 						 style="width: 38rpx; height: 38rpx;"
@@ -174,12 +179,12 @@
 			>
 				<view class="item {{item.num > itemData.order_num_max || item.num < itemData.min_num_per_order || item.num > itemData.item_stock ? 'disabled' : ''}}">
 					<view class="left">
-						<image
+						<image class="image" 
 						 src="./../../assets/img/checked_s.png"
 						 wx:if="{{stepPricesIndex=== index}}"
 						 style="width: 38rpx; height: 38rpx;"
 						/>
-						<image
+						<image class="image" 
 						 src="./../../assets/img/checked.png"
 						 wx:else
 						 style="width: 38rpx; height: 38rpx;"

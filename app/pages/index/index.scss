@@ -1,3 +1,5 @@
+@import "./index.skeleton.scss";
+
 .show-select{
   width: 100vw;
   height: 100vh;
@@ -83,28 +85,82 @@ view, navigator, text {
   }
 }
 
-.tags-list {
+.tags-list-body{
   width: 700rpx;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  .tags-item {
-    width: 25%;
-    height: 182rpx;
+  overflow: hidden;
+}
+.tags-list-step-body{
+  background: rgba($color: #FFD426, $alpha: .2);
+  width: 60rpx;
+  height: 8rpx;
+  margin: 0 auto;
+  border-radius: 4rpx;
+  position: relative;
+  top: -5rpx;
+  overflow: hidden;
+  >.step{
+    width: 30rpx;
+    height: 8rpx;
+    background: #FFD426;
+    border-radius: 4rpx;
+  }
+}
+.tags-list {
+  max-height: 364rpx;
+  white-space: nowrap;
+  width: max-content;
+  >.left, >.right{
+    float: left;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    image {
-      width: 102rpx;
-      height: 102rpx;
-      display: block;
-      margin-bottom: 10rpx;
+    flex-wrap: wrap;
+    max-height: 364rpx;
+    &.left{
+      width: 700rpx;
     }
-    text {
-      font-size: 26rpx;
-      font-weight: 400;
-      color: #616161;
+    &.right{
+      width: auto;
+      flex-direction: column;
+    }
+    >.tags-item {
+      width: 175rpx;
+      height: 182rpx;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      >image {
+        width: 102rpx;
+        height: 102rpx;
+        display: block;
+        margin-bottom: 10rpx;
+      }
+      >text {
+        font-size: 26rpx;
+        font-weight: 400;
+        color: #616161;
+      }
+    }
+  }
+}
+
+.cards{
+  width: 700rpx;
+  margin: 40rpx auto 0;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx 0 rgba($color: #000, $alpha: 0.04);
+  >.item{
+    height: 233.33rpx;
+    flex: 1;
+    border-right: 1rpx solid #FAF8F8;
+    &:last-child{
+      border-right: 0;
+    }
+    >.image{
+      display: block;
     }
   }
 }
@@ -112,9 +168,7 @@ view, navigator, text {
 .hot-sale-entry {
   width: 700rpx;
   height: 170rpx;
-  margin: 0 auto;
-  // margin-bottom: 22rpx;
-  margin-top: 20rpx;
+  margin: 40rpx auto 0;
   image {
     width: 100%;
     height: 100%;
@@ -123,31 +177,26 @@ view, navigator, text {
   }
 }
 
-.title-box {
-  display: flex;
-  margin-bottom: 24rpx;
-  .title-box-body {
-    margin: auto;
-    margin-top: 39rpx;
+.title-box-body {
+  margin: 39rpx auto 24rpx;
+  text-align: center;
+  position: relative;
+  >.title {
+    font-size: 36rpx;
+    line-height: 36rpx;
+    color: #151515;
     position: relative;
-    .title {
-      font-family: "PingFangSC-Semibold";
-      font-size: 36rpx;
-      color: #151515;
-      letter-spacing: 2.25px;
-      background: transparent;
-      z-index: 2;
-      position: relative;
-    }
-    .base-line {
-      position: absolute;
-      bottom: 4rpx;
-      right: 6rpx;
-      display: inline-block;
-      width: 140rpx;
-      height: 8rpx;
-      background: #FFD426;
-    }
+    z-index: 1;
+  }
+  >.base-line {
+    width: 120rpx;
+    height: 8rpx;
+    background: #FFD426;
+    display: block;
+    position: absolute;
+    bottom: 6rpx;
+    left: 50%;
+    margin-left: -60rpx;
   }
 }
 
@@ -241,37 +290,30 @@ view, navigator, text {
         }
       }
       .goods-item-info-bottom {
-
         display: flex;
         align-items: center;
         justify-content: space-between;
-
-        .store-type {
-          font-size: 18rpx;
-          color: #989797;
-          .type-label {
-            color: #FFF;
-            background: #FF8F1F;
-            border-radius: 4rpx;
-            padding: 0rpx 3rpx;
-            margin-right: 6rpx;
-          }
-          .type-label-self {
-            background: #FF6010;
-          }
-        }
-      }
-  
-      .cart-wrapper {
-          // position: absolute;
-          // bottom: 22rpx;
-          // right: 22rpx;
       }
     }
 
   }
 }
 
+.store-type {
+  font-size: 18rpx;
+  color: #989797;
+  margin-top: 6rpx;
+  .type-label {
+    color: #FFF;
+    background: #FF8F1F;
+    border-radius: 4rpx;
+    padding: 0rpx 3rpx;
+    margin-right: 6rpx;
+  }
+  .type-label-self {
+    background: #FF6010;
+  }
+}
 .load-more, .load-none{
   background:#fff;
   color: #EEE;
@@ -279,21 +321,18 @@ view, navigator, text {
 
 .notice{
   padding: 0 24rpx;
-box-shadow: 0 0 6rpx #eee;
-position: absolute;
-width: 464rpx;
-height: 54rpx;
-top: 162rpx;
-left:25rpx;
-z-index: 10;
-background: rgba(0,0,0,0.5);
-color: white;
-border-radius: 27rpx;
-font-size: 24rpx;
-padding-top: 11rpx;
-
-
-
+  box-shadow: 0 0 6rpx #eee;
+  position: absolute;
+  width: 464rpx;
+  height: 54rpx;
+  top: 110rpx;
+  left:25rpx;
+  z-index: 10;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 27rpx;
+  font-size: 24rpx;
+  padding-top: 11rpx;
 }
 .notice_text{
   overflow: hidden;
@@ -307,8 +346,8 @@ padding-top: 11rpx;
 .notice_logo{
   font-size: 28rpx;
   font-weight: bold;
-color: #151515;
-margin-right: 33rpx;
+  color: #151515;
+  margin-right: 33rpx;
 }
 .notice_label{
   background: #FF6010;
@@ -320,7 +359,6 @@ margin-right: 33rpx;
   margin-right: 12rpx;
 }
 .notice_right{
- width: 14rpx;
-height: 18rpx;
-
+  width: 14rpx;
+  height: 18rpx;
 }

@@ -168,7 +168,7 @@ Page({
     }).then(res => {
       // 更新状态
       wx.showToast({
-        title: '自提点申请提交成功',
+        title: '满天星门店申请提交成功',
         icon: 'none'
       })
       this.getApplyStatus()
