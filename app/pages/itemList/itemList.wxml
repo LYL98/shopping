@@ -7,45 +7,55 @@
 	<view class="top-view">
 		<!--搜索组件-->
 		<search bind:tap="clickSearch" />
-
-		<!--展示一级分类-->
-		<view class="class-view">
-			<view
-				class="class-view-item {{query.display_class_id === item.id && 'active'}}"
-				hover-class="link-hover"
-				wx:for="{{oneCategoryList}}"
-				wx:key='index'
-				bindtap="clickOneCategory"
-				data-id="{{item.id}}"
-			>{{item.title}}</view>
-		</view>
 	</view>
 
-	<!--二级分类、筛选、商品-->
-	<view wx:if="{{dataItem.items.length > 0}}" class="bottom-view">
-		<!--展示二级分类-->
-		<view class="category-view-body">
+	<!--一级分类、筛选、商品-->
+	<view class="bottom-view">
+		<!--展示一级分类-->
+		<view class="category-one-body">
 			<scroll-view
-				class="category-view"
+				class="category-one"
 				catchtouchmove="true"
 				scroll-y
 				scroll-with-animation="{{true}}"
-				scroll-into-view="select-category{{selectLeftCategoryId}}"
+				scroll-into-view="select-one-category{{selectOneCategoryId}}"
 			>
 				<view
-					id="select-category{{item.id}}"
-					class="item {{selectLeftCategoryId === item.id && 'active'}}"
+					id="select-one-category{{item.id}}"
+					class="item {{query.display_class_id === item.id && 'active'}}"
 					hover-class="link-hover"
-					wx:for="{{dataItem.items}}"
+					wx:for="{{oneCategoryList}}"
 					wx:key="index"
-					bindtap="selectTwoCategory"
+					bindtap="selectOneCategory"
 					data-id="{{item.id}}"
 					wx:if="{{item.title}}"
 				>{{item.title}}</view>
 			</scroll-view>
 		</view>
 
-		<view class="goods-view-body">
+		<!--右边区-->
+		<view class="goods-view-body" wx:if="{{dataItem.items.length > 0}}">
+			<!--展示二级分类-->
+			<view class="category-two-body">
+				<scroll-view
+					class="category-two"
+					catchtouchmove="true"
+					scroll-x
+					scroll-with-animation="{{true}}"
+					scroll-into-view="select-two-category{{rollTwoCategoryId}}"
+				>
+					<view
+						id="select-two-category{{item.id}}"
+						class="category-two-item {{rollTwoCategoryId === item.id && 'active'}}"
+						hover-class="link-hover"
+						wx:for="{{dataItem.items}}"
+						wx:key="index"
+						bindtap="selectTwoCategory"
+						data-id="{{item.id}}"
+					>{{item.title}}</view>
+				</scroll-view>
+			</view>
+
 			<!--筛选-->
 			<view class="head-view">
 				<view bindtap="changeSort" data-sort="{{query.sort === 'other' ? '-other' : 'other'}}">
@@ -120,19 +130,11 @@
 											>
 												{{t}}
 											</view>
-											<text>{{item.title}}</text>
+											<text>{{item.grade ? '【' + item.grade + '】' : ''}}{{item.title}}</text>
 										</view>
-										<view class="goods-sku">
-											<text wx:if="{{item.is_quoted && item.gross_weight}}" >{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-											<text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-											<text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
+										<view class="goods-sku add-dot2">
 											<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-											<text wx:if="{{item.frame_id}}">有筐</text>
-										</view>
-										<view class="goods-limt">
-											<text wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-											<text wx:if="{{item.order_num_max < 1000}}">限购{{item.order_num_max}}件</text>
-											<text wx:if="{{tools.returnItemStock(item)}}">{{tools.returnItemStock(item)}}</text>
+											<text wx:if="{{item.selling_points}}">{{item.selling_points}}</text>
 										</view>
 									</view>
 									<priceBox
@@ -163,10 +165,19 @@
 							<view class="goods-item hide-info" data-id="{{item.id}}" wx:else bind:tap="showItem"></view>
 						</block>
 					</block>
-					<view class="load-more">已加载所有</view>
+					<view
+						class="load-more"
+						hover-class="link-active"
+						wx:if="{{query.display_class_id !== oneCategoryList[oneCategoryList.length - 1].id}}"
+						bind:tap="nextOneCategory"
+					>点击加载下一个品类</view>
+					<view class="load-more" wx:else>已加载所有</view>
 				</scroll-view>
 			</view>
 		</view>
+		<!--默认-->
+		<view wx:else class="goods-view-body">
+			<defaultPage currentPage="itemList"></defaultPage>
+		</view>
 	</view>
-	<defaultPage wx:elif="{{!showSkeleton}}" currentPage="itemList"></defaultPage>
 </view>

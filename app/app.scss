@@ -203,24 +203,7 @@ $f-s: ( 18, 20, 22, 24, 26, 28, 30, 34, 36, 40, 42, 48, 60, 72, 94 );
     }
   }
 }
-/*商品列表、标签共用分类菜单*/
-.category-view{
-  width: 190rpx;
-  background: #F9F8F8;
-  color: #616161;
-  overflow-y: auto;
-  font-size: 26rpx;
-  .item{
-    text-align: left;
-    padding: 30rpx 35rpx;
-    overflow: hidden;
-    &.active{
-      color: #020202;
-      background: #fff;
-      font-weight: bold;
-    }
-  }
-}
+
 /*共用商品列表*/
 .item-view{
   padding: 10rpx 0;

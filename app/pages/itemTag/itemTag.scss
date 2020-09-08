@@ -1,6 +1,7 @@
 @import "./itemTag.skeleton.scss";  
   .top-bg{
     height: 100vw;
+    margin-bottom: 30rpx;
     >image{
       display: block;
     }
@@ -8,20 +9,20 @@
       background: #efefef;
     }
   }
+  
   .goods-list {
     width: 700rpx;
-    margin: 50rpx auto;
+    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    min-height: 500rpx;
-    >.goods-item{
+    .goods-item{
       width: 340rpx;
       border-radius: 10rpx;
       margin-bottom: 24rpx;
-      box-shadow: 4rpx 0 16rpx rgba($color: #000000, $alpha: 0.08);
-      line-height: 1.25;
-      >.goods-item-img {
+      box-shadow: 4rpx 0 16rpx rgba($color: #000, $alpha: 0.08);
+      height: 646rpx;
+      .goods-item-img {
         width: 340rpx;
         height: 340rpx;
         position: relative;
@@ -29,15 +30,16 @@
           width: 100%;
           height: 100%;
           display: block;
-          border-radius: 10rpx;
+          border-top-left-radius: 10rpx;
+          border-top-right-radius: 10rpx;
         }
-        >.tags-mask {
+        .tags-mask {
           display: flex;
           flex-wrap: wrap;
           position: absolute;
           top: 0;
           left: 0;
-          >.tags-item {
+          .tags-item {
             width: 64rpx;
             height: 62rpx;
             margin-right: 8rpx;
@@ -66,35 +68,25 @@
       .goods-item-info {
         position: relative;
         min-height: 286rpx;
-        padding: 12rpx 16rpx 16rpx 16rpx;
+        padding: 12rpx 16rpx 16rpx;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        .goods-item-info-top {
-          .goods-title {
+        >.goods-item-info-top {
+          height: 154rpx;
+          margin-bottom: 16rpx;
+          >.goods-title {
             font-size: 28rpx;
-            color: #333333;
+            color: #333;
+            line-height: 40rpx;
+            margin-bottom: 8rpx;
           }
-          .goods-sku {
-            margin-top: 8rpx;
+          >.goods-sku {
             font-size: 24rpx;
-            color: #999999;
+            color: #999;
+            line-height: 34rpx;
             > text:not(:last-child)::after {
               content: " | ";
-            }
-          }
-          .goods-limt {
-            margin-top: 10rpx;
-            color: #FF6010;
-            font-size: 16rpx;
-            display: flex;
-            flex-wrap: wrap;
-            > text {
-              display: inline-block;
-              border-radius: 4rpx;
-              border: 1rpx solid #FF6010;
-              padding: 2rpx 4rpx;
-              margin-right: 6rpx;
             }
           }
         }
@@ -130,11 +122,12 @@
 
   .load-more{
     text-align: center;
-    color: #000;
+    color: #999;
     font-size: 30rpx;
   }
     
   .bottom-bg{
+    margin-top: 30rpx;
     >image{
       display: block;
     }

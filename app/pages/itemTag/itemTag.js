@@ -30,6 +30,9 @@ Page({
     // wx.setNavigationBarTitle({
     //   title: '运营专区'
     // });
+    this.windowWidth = wx.getSystemInfoSync().windowWidth;
+    this.windowHeight = wx.getSystemInfoSync().windowHeight;
+    this.factor = this.windowWidth / 750;
     //判断登录
     app.signIsLogin((res) => {
       let { query } = this.data;
@@ -100,6 +103,20 @@ Page({
     wx.navigateTo({
       url: `/pages/itemDetail/itemDetail?id=${item.id}`,
     });
+  },
+
+  onPageScroll(e){
+    if(this.scrollInterval) return;
+
+    this.scrollInterval = setInterval(() => {
+      wx.createSelectorQuery().selectAll('.load-more').boundingClientRect(lmv => {
+        if(lmv.length > 0 && lmv[0].top - 400 <= this.windowHeight){
+          this.loadMore();
+        }
+      }).exec();
+      if(this.scrollInterval) clearInterval(this.scrollInterval);
+      this.scrollInterval = undefined;
+    }, 200);
   },
   
   /**

@@ -28,7 +28,7 @@
 		},
 		"bundle": false,
 		"useIsolateContext": true,
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -241,7 +241,7 @@
 					"id": 25,
 					"name": "运营专区",
 					"pathName": "pages/itemTag/itemTag",
-					"query": "id=36",
+					"query": "id=41",
 					"scene": null
 				}
 			]

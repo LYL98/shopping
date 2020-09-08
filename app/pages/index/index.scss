@@ -202,7 +202,7 @@ view, navigator, text {
 
 .goods-list {
   width: 700rpx;
-  margin:0 auto;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -210,8 +210,8 @@ view, navigator, text {
     width: 340rpx;
     border-radius: 10rpx;
     margin-bottom: 24rpx;
-    box-shadow: 4rpx 0 16rpx rgba($color: #000000, $alpha: 0.08);
-    line-height: 1.25;
+    box-shadow: 4rpx 0 16rpx rgba($color: #000, $alpha: 0.08);
+    height: 626rpx;
     .goods-item-img {
       width: 340rpx;
       height: 340rpx;
@@ -220,7 +220,8 @@ view, navigator, text {
         width: 100%;
         height: 100%;
         display: block;
-        border-radius: 10rpx;
+        border-top-left-radius: 10rpx;
+        border-top-right-radius: 10rpx;
       }
       .tags-mask {
         display: flex;
@@ -257,35 +258,25 @@ view, navigator, text {
     .goods-item-info {
       position: relative;
       min-height: 286rpx;
-      padding: 12rpx 16rpx 16rpx 16rpx;
+      padding: 12rpx 16rpx 16rpx;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      .goods-item-info-top {
-        .goods-title {
+      >.goods-item-info-top {
+        height: 154rpx;
+        margin-bottom: 16rpx;
+        >.goods-title {
           font-size: 28rpx;
-          color: #333333;
+          color: #333;
+          line-height: 40rpx;
+          margin-bottom: 8rpx;
         }
-        .goods-sku {
-          margin-top: 8rpx;
+        >.goods-sku {
           font-size: 24rpx;
-          color: #999999;
+          color: #999;
+          line-height: 34rpx;
           > text:not(:last-child)::after {
             content: " | ";
-          }
-        }
-        .goods-limt {
-          margin-top: 10rpx;
-          color: #FF6010;
-          font-size: 16rpx;
-          display: flex;
-          flex-wrap: wrap;
-          > text {
-            display: inline-block;
-            border-radius: 4rpx;
-            border: 1rpx solid #FF6010;
-            padding: 2rpx 4rpx;
-            margin-right: 6rpx;
           }
         }
       }

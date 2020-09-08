@@ -9,8 +9,9 @@ Page({
    */
   data: {
     tencentPath: Config.tencentPath,
+    selectOneCategoryId: '',
     selectTwoCategoryId: '',
-    selectLeftCategoryId: '',
+    rollTwoCategoryId: '',
     query: {
       store_id: 0,
       sort: '-other',
@@ -57,13 +58,37 @@ Page({
     /*===== 埋点 end ======*/
   },
 
-  //点击一级品类
-  clickOneCategory(e) {
+  //下一个分类
+  nextOneCategory(){
+    if (this.flag) return;
+    this.flag = true;
+    let { oneCategoryList, query } = this.data;
+    let id = '';
+    for(let i = 0; i < oneCategoryList.length; i++){
+      if(oneCategoryList[i].id === query.display_class_id && i !== oneCategoryList.length - 1){
+        id = oneCategoryList[i + 1].id;
+        break;
+      }
+    }
+    this.setData({
+      'query.display_class_id': id,
+      selectOneCategoryId: id
+    }, () => {
+      this.itemListDisplayClassNew({
+        type: 'top', //滚到顶
+        id: 0
+      });
+    });
+  },
+
+  //选择展示一级品类
+  selectOneCategory(e) {
     if (this.flag) return;
     this.flag = true;
     let id = e.currentTarget.dataset.id;
     this.setData({
-      'query.display_class_id': id
+      'query.display_class_id': id,
+      selectOneCategoryId: id
     }, () => {
       this.itemListDisplayClassNew({
         type: 'top', //滚到顶
@@ -85,10 +110,7 @@ Page({
       this.scrollInterval = undefined;
     }
     let id = e.target.dataset.id;
-    this.setData({
-      selectTwoCategoryId: id,
-      selectLeftCategoryId: id
-    });
+    this.setData({ selectTwoCategoryId: id, rollTwoCategoryId: id });
   },
 
   //排序
@@ -147,6 +169,12 @@ Page({
             type: 'known', //滚动到已知位置
             id: Number(urlJump[1])
           };
+        }else if(urlJump.length === 1){
+          query.display_class_id = Number(urlJump[0]);
+          rollTo = {
+            type: 'top', //滚动顶
+            id: 0
+          };
         }
         delete app.globalData.urlJump;
       }else{
@@ -194,6 +222,13 @@ Page({
     Http.get(Config.api.itemListDisplayClassNew, that.data.query).then(res => {
       wx.hideNavigationBarLoading();
       let rd = res.data;
+      //处理数据
+      for(let i = 0; i < rd.items.length; i++){
+        if(rd.items[i].id === 0){
+          rd.items.length === 1 ? rd.items[i].title = '全部' : rd.items[i].title = '其它';
+        }
+      }
+
       //重新滚动定位
       if(rollTo){
         switch(rollTo.type){
@@ -201,7 +236,7 @@ Page({
           case 'known':
             that.setData({
               selectTwoCategoryId: rollTo.id,
-              selectLeftCategoryId: rollTo.id,
+              rollTwoCategoryId: rollTo.id,
               dataItem: rd,
               showSkeleton: false
             }, () => {
@@ -212,7 +247,7 @@ Page({
           case 'top':
             that.setData({
               selectTwoCategoryId: rd.items.length > 0 ? rd.items[0].id : '',
-              selectLeftCategoryId: rd.items.length > 0 ? rd.items[0].id : '',
+              rollTwoCategoryId: rd.items.length > 0 ? rd.items[0].id : '',
               dataItem: rd,
               showSkeleton: false
             }, () => {
@@ -271,7 +306,7 @@ Page({
     if(this.scrollInterval) return;
 
     this.scrollInterval = setInterval(() => {
-      this.handleSelectLeftMenu(e); //选择左边菜单
+      this.handleSelectLeftMenu(e); //选择二级菜单
       this.handleShowItem(); //显示商品
       if(this.scrollInterval){
         clearInterval(this.scrollInterval);
@@ -280,34 +315,34 @@ Page({
     }, 200);
   },
 
-  //选择左边菜单
+  //选择二级菜单
   handleSelectLeftMenu(e){
     //获取所商品列的标题
     wx.createSelectorQuery().selectAll('.category-title').boundingClientRect(cts => {
-      let selectTwoCategoryId = null;
+      let rollTwoCategoryId = null;
       let top = 375; //100 + 88 + 84 + 3 + 占位100 rpx
       let wh = this.windowHeight / this.factor - top + 200;
       let t = e.detail.scrollTop / this.factor;
       let h = e.detail.scrollHeight / this.factor;
       //如果滚到顶
       if(e.detail.scrollTop <= 0){
-        selectTwoCategoryId = cts[0].dataset.id;
+        rollTwoCategoryId = cts[0].dataset.id;
       }
       //如果滚动底
       else if(t >= h - wh){
-        selectTwoCategoryId = cts[cts.length - 1].dataset.id;
+        rollTwoCategoryId = cts[cts.length - 1].dataset.id;
       }
       //否则
       else{
         cts.map(item => {
           if(item.top / this.factor <= top){
-            selectTwoCategoryId = item.dataset.id;
+            rollTwoCategoryId = item.dataset.id;
           }
         });
       }
       
-      if(this.data.selectLeftCategoryId !== selectTwoCategoryId){
-        this.setData({ selectLeftCategoryId: selectTwoCategoryId });
+      if(this.data.rollTwoCategoryId !== rollTwoCategoryId){
+        this.setData({ rollTwoCategoryId: rollTwoCategoryId });
       }
     }).exec();
   },
