@@ -71,14 +71,19 @@ Page({
       }
     }
     this.setData({
-      'query.display_class_id': id,
-      selectOneCategoryId: id
+      'query.display_class_id': id
     }, () => {
       this.itemListDisplayClassNew({
         type: 'top', //滚到顶
         id: 0
       });
+      this.rollOneCategory(id);
     });
+    /*===== 埋点 start ======*/
+    let con = this.data.oneCategoryList.filter(item => item.id === id);
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '商品 - 点击下一个品类');
+    app.gioActionRecordAdd('secBuyEntrance_evar', con.length > 0 ? con[0].title : '全部');
+    /*===== 埋点 end ======*/
   },
 
   //选择展示一级品类
@@ -87,20 +92,38 @@ Page({
     this.flag = true;
     let id = e.currentTarget.dataset.id;
     this.setData({
-      'query.display_class_id': id,
-      selectOneCategoryId: id
+      'query.display_class_id': id
     }, () => {
       this.itemListDisplayClassNew({
         type: 'top', //滚到顶
         id: 0
       });
+      this.rollOneCategory(id);
     });
 
     /*===== 埋点 start ======*/
     let con = this.data.oneCategoryList.filter(item => item.id === id);
-    app.gioActionRecordAdd('firstBuyEntrance_evar', '商品');
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '商品 - 点击左边菜单');
     app.gioActionRecordAdd('secBuyEntrance_evar', con.length > 0 ? con[0].title : '全部');
     /*===== 埋点 end ======*/
+  },
+
+  //滚动定位一级品类
+  rollOneCategory(id){
+    wx.createSelectorQuery().selectAll('.one-category-item').boundingClientRect(ocis => {
+      for(let i = 0; i < ocis.length; i++){
+        let itemId = ocis[i].dataset.id;
+        if(itemId === id){
+          let top = 100;
+          if(ocis[i].top >= this.windowHeight || ocis[i].top - this.factor * top <= 0){
+            this.setData({
+              selectOneCategoryId: id
+            });
+          }
+          break;
+        }
+      }
+    }).exec();
   },
 
   //选择展示二级分类
