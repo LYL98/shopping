@@ -22,7 +22,7 @@
 			>
 				<view
 					id="select-one-category{{item.id}}"
-					class="item {{query.display_class_id === item.id && 'active'}}"
+					class="item {{query.display_class_id === item.id && 'active'}} one-category-item"
 					hover-class="link-hover"
 					wx:for="{{oneCategoryList}}"
 					wx:key="index"
