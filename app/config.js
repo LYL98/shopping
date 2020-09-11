@@ -41,7 +41,7 @@ export const ServiceTel = '4008258522';
 export const WeiXinAppIds = ['wxd71d35efcb08acc8', 'wx1653f76966571193'];
 
 //版本
-export const Version = 'V4.2.0';
+export const Version = 'V4.2.2';
 
 //growingio配置
 export const GioConfig = {

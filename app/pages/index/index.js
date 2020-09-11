@@ -396,14 +396,14 @@ Page({
 
     /*===== 埋点 start ======*/
     app.gioActionRecordAdd('positionClick', {
-      moduleTitle_var: type === 'kingkong' ? 'icon区' : '卡片区', //楼层
+      moduleTitle_var: type === 'kingkong' ? '金刚区' : '卡片区', //楼层
       position_var: index, //坑位
       positonName_var: item.title, //流量位名称
       productName: `跳转商品列表-展示分类-${item.title}`, //商品名称
     });
 
     app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
-    app.gioActionRecordAdd('secBuyEntrance_evar', 'icon');
+    app.gioActionRecordAdd('secBuyEntrance_evar', type === 'kingkong' ? '金刚区' : '卡片区');
     /*===== 埋点 end ======*/
   },
   //点击商品
@@ -423,13 +423,13 @@ Page({
       }
     }
     app.gioActionRecordAdd('positionClick', {
-      moduleTitle_var: '今日主推', //楼层
+      moduleTitle_var: '推荐区', //楼层
       position_var: index, //坑位
       positonName_var: item.title, //流量位名称
       productName: item.title, //商品名称
     });
     app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
-    app.gioActionRecordAdd('secBuyEntrance_evar', '今日主推');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '推荐区');
     /*===== 埋点 end ======*/
   },
   //点击页面底下的tab
