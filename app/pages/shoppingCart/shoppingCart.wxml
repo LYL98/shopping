@@ -5,11 +5,29 @@
 	<view class="top-hint" wx:if="{{!closeStore}}">
 		营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
 	</view>
-	<view class="work-field" wx:if="{{couponNum > 0}}">
+	<view class="cart_coupon get_coupon align-center justify-between">
+		<view class="align-center">
+			<text class="label">领券</text>
+			<view class="coupon_info" wx:for="{{3}}">满100减10</view>
+		</view>
+
+		<text class="right_i--F59725"></text>
+	</view>
+	<view class="cart_coupon reback_coupon align-center justify-between">
+		<view class="align-center ">
+			<view class="label">返券</view>
+			<view class="reback_content">
+				<text class="reback_info" wx:for="{{2}}">商品金额满69元返券；</text>
+			</view>
+		</view>
+
+		<text class="right_i--989797"></text>
+	</view>
+	<view class=" coupon_num justify-end align-center " wx:if="{{couponNum > 0}}">
 		<navigator url="/pages/coupon/coupon?from=shoppingCart">
 			<view class="align-center">
-				<view class="discounts_text">优惠</view>
-				<view style="margin-top:6rpx">{{couponNum}}张可用优惠券></view>
+				<view>{{couponNum}}张可用优惠券</view>
+				<text class="right_i--F59725"></text>
 			</view>
 		</navigator>
 

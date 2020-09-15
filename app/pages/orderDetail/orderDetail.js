@@ -136,6 +136,8 @@ Page({
     },
     countDownStr: '--分--秒后自动取消订单', //倒计时
     showSkeleton: true, //骨架屏
+    selfGoods:[], // 自营的商品
+    supplierGoods:[], // 供应商那个商品
   },
 
   /**
@@ -251,12 +253,16 @@ Page({
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;
-          rd.items.map( function (ele, index, arr) {
+          let selfGoods = rd.items.filter(item => item.sale_type === '自营')
+          let supplierGoods = rd.items.filter(item => item.sale_type != '自营')
+        rd.items.map( function (ele, index, arr) {
             ele.arrow = true;
           });
           that.setData({
             detail: rd,
-            showSkeleton: false
+            showSkeleton: false,
+            selfGoods,
+            supplierGoods
           });
           //如果不是协议客户，且支付为0
           if (rd.status === 'wait_confirm' && (!rd.is_post_pay || rd.to_be_canceled) && rd.amount_pay === 0){

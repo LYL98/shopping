@@ -18,8 +18,8 @@ Page({
     isShowVideo: false,
     loginUserInfo:{},
     isOnSale:true,
-    isShowVipInfo:false
-
+    isShowVipInfo:false,
+    couponList:[],
   },
   //播放视频
   playVideo(){
@@ -162,6 +162,32 @@ Page({
       /*===== 埋点 end ======*/
     }).catch(error => {
       wx.hideNavigationBarLoading();
+    });
+  },
+
+  getCoupon(){
+    Http.get(Config.api.itemDetailCoupon, {
+      id: id,
+      store_id: address.id || ''
+      province_code:address.province_code
+    }).then(res => {
+      let rd = res.data;
+      rd.items.forEach(item => {
+        if(item.coupon_type == 'goods_gift'){
+          item.gift_info.forEach(itemChild=> {
+            if(itemChild.title.length > 3){
+              itemChild.title = itemChild.title.split(0,3) + '*'
+            }
+          })
+        }
+       
+      })
+      this.setData({
+        couponList:rd.items.slice(0,2) : []
+      })
+     
+    }).catch(error => {
+      console.log('error',error)
     });
   },
   convert(htmlText) {

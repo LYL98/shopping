@@ -9,9 +9,9 @@
 
 .order-title{
   font-size: 26rpx;
-  background: #F7F7F8;
+  background: #FFDF0D;
   color: #999;
-  height: 210rpx;
+  height: 180rpx;
   position: relative;
   image{
     width: 100vw;
@@ -21,29 +21,29 @@
     left: 0;
     right: 0;
   }
+  color: #151515;
   .title{
     position: absolute;
-    top: 37rpx;
-    left: 60rpx;
-    color: #fff;
-    font-size: 32rpx;
+    top: 35rpx;
+    left: 28rpx;
+    font-size: 36rpx;
   }
   .content{
     position: absolute;
-    top: 84rpx;
-    left: 60rpx;
-    color: #fff;
-    font-size: 26rpx;
+    top: 90rpx;
+    left: 28rpx;
+    font-size: 24rpx;
   }
 }
 
 .address-body{
-  margin: 0 30rpx;
+  // margin: 0 30rpx;
   box-shadow: 0 4px 8px 0 rgba(159,159,159,0.14);
-  border-radius: 8px;
+  border-top-left-radius: 30rpx;
+  border-top-right-radius: 30rpx;
   background: #FFFFFF;
   position: relative;
-  top: -65rpx;
+  top: -20rpx;
   .address{
     padding: 36rpx 30rpx;
     position: relative;
@@ -205,13 +205,15 @@
 
 .total-price{
   padding-top: 24rpx;
-  margin: 0 30rpx;
-  border-top: 1rpx solid #EEE;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  background: #F9F9F9;
   .row{
-    font-size:28rpx;
+    font-size:24rpx;
     padding-bottom:20rpx;
     display: flex;
     align-items: center;
+    color: #989797;
     > .left{
       flex: initial;
     }
@@ -457,4 +459,63 @@
 
 .item-view .item{
   margin-bottom:30rpx;
+}
+
+
+.item_label{
+  font-size: 24rpx;
+  color: #999999;
+  margin-top: 8rpx;
+}
+
+.order_input_item{
+  font-size: 30rpx!important;
+    .title{
+      color: #242424!important;
+
+    }
+}
+
+.img {
+       width: 100%;
+    position: absolute;
+    bottom: -12rpx;
+    image{
+          width: 100%;
+    height: 10rpx;
+    }
+  }
+.item-view{
+      // margin-top: 40rpx;
+}
+.platform{
+  height: 96rpx;
+  font-size: 30rpx;
+color: #151515;
+border-bottom: 1rpx solid #EEEEEE;
+margin-bottom:18rpx;
+}
+.platform_tag{
+  border-radius: 4rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  padding: 0  4rpx;
+  margin-right: 20rpx;
+
+}
+.platform_tag--self{
+  background: #FF6010;
+}
+.platform_tag--supplier{
+  
+  background: #FF8F1F;
+}
+.item_content{
+  display:flex;
+ flex-direction: column;
+  justify-content: space-between;
+}
+.num-price{
+  bottom:6rpx !important;
+  right:0!important;
 }
