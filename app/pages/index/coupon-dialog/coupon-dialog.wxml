@@ -1,0 +1,35 @@
+<!--pages/index/coupon-dialog/coupon-dialog.wxml-->
+<wxs src="./../../../utils/tools.wxs" module="tools"></wxs>
+
+<view class="coupon-dialog custom-class" catchtap="closeCouponDialog">
+  <view class="coupon-dialog-body">
+    <view class="coupon-dialog-title">一 恭喜你获得 一</view>
+    <view class="coupon-dialog-subtitle">你的优惠券已放入卡包</view>
+    <view class="coupon-list">
+      <view class="coupon-item" wx:for="{{[1,2,3]}}">
+        <view class="coupon-item-left">
+          <!-- 满减券 -->
+          <block>
+              <view class="coupon-value mj" style="font-family: 'DINAlternate-Bold';">80</view>
+              <view class="coupon-limit">满¥500可用</view>
+          </block>
+          <!-- 满折券 -->
+          <!-- 赠品券 -->
+          <!-- 运费券 -->
+        </view>
+        <view class="coupon-item-right">
+          <view class="coupon-title add-dot">
+            [新人券]20元新人红包20元新人红包新人红包但是
+          </view>
+          <view class="coupon-validity">2020.09.03-2020.10.31</view>
+        </view>
+      </view>
+    </view>
+    <image class="coupon-top-logo" src="./img/coupon_dialog_top.png"></image>
+    <view class="coupon-bottom-entry" catchtap="toMyCouponPage">
+      <image src="./img/coupon_dialog_bottom.png"></image>
+      <view class="all-entry">查看所有优惠券</view>
+    </view>
+  </view>
+  <image class="coupon-dialog-close" catchtap="closeCouponDialog" src="./img/coupon_dialog_close.png" ></image>
+</view>

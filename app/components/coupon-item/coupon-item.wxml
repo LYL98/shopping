@@ -1,0 +1,56 @@
+<wxs src="./../../utils/tools.wxs" module="tools"></wxs>
+
+<view class="coupon-item custom-class {{status}}">
+      <view class="coupon-item-top" bindtap="tapCoupon">
+        <view class="counpon-item-tl">
+          <view class="v-line"></view>
+          <view class="coupon-denomination center">
+            <!-- 满减券 -->
+             <block>
+              <view class="coupon-value mj" style="font-family: 'DINAlternate-Bold';">80</view>
+              <view class="coupon-limit">满¥500可用</view>
+            </block>
+            <!-- 满折券 -->
+            <!-- <block>
+              <view class="coupon-value zk" style="font-family: 'DINAlternate-Bold';">8</view>
+              <view class="coupon-limit">满¥500可用</view>
+            </block> -->
+            <!-- 赠品券 -->
+            <!-- <block>
+              <view class="coupon-value" style="font-family: 'PingFangSC-Semibold';">赠</view>
+              <view class="coupon-limit">满2件可用</view>
+            </block> -->
+
+            <!-- 运费券 -->
+            
+
+          </view>
+          <view class="v-dashline"></view>
+        </view>
+        <view class="counpon-item-tc">
+          <view class="coupon-title add-dot2">
+            [商品券]20元新人红包20元新人红包新人红包但是
+          </view>
+          <view class="coupon-validity">2020.09.03-2020.10.31</view>
+        </view>
+        <view class="counpon-item-tr">
+          <!-- 优惠券领取页面 -->
+          <block wx:if="{{currentPage==='coupon-get'}}">
+            <view wx:if="{{itemData.is_receive}}" class="btn-get-already" hover-class="view-hover">已领取</view>
+            <view wx:else class="btn-get" hover-class="view-hover" catchtap="receiveCoupon">立即领取</view>
+          </block>
+          <block wx:if="{{currentPage==='coupon-mine'}}">
+            <image wx:if="{{ status ==='used' }}" class="coupon-label-img" src="./img/coupon_used.png"></image>
+            <image wx:if="{{ status ==='expired' }}" class="coupon-label-img" src="./img/coupon_expired.png"></image>
+          </block>
+          <!-- <view class="overdue">快过期</view> -->
+        </view>
+      </view>
+      <view class="coupon-item-bottom" bindtap="expandHandle">
+        <view class="coupon-desc {{isExpand? 'flex-column': 'add-dot'}}">
+          <text>赠品:养乐多*1，商品全称*1</text>
+          <text>适用范围：仅可吧吧吧吧哈哈哈哈哈商品使用但是绝对是第三届大会上讲话的精神的黄金时代黄金时代好时机但还是觉得很是激动是对还是觉得很</text>
+        </view>
+        <image class="{{isExpand? 'rotate' : ''}}" style="margin-top:6rpx;width:24rpx;height:24rpx;transition: all .3s linear;" src="./img/open.png"></image>
+      </view>
+</view>

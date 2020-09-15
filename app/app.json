@@ -48,7 +48,11 @@
     "pages/hotSaleList/hotSaleList",
     "pages/applyStore/applyStore",
     "pages/gradeDetail/gradeDetail",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/coupon-mine/coupon-mine",
+    "pages/coupon-get/coupon-get",
+    "pages/coupon-select/coupon-select",
+    "pages/coupon-return/coupon-return"
   ],
   "plugins": {
     "live-player-plugin": {

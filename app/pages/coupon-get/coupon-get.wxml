@@ -1,0 +1,5 @@
+<view class="coupon-get-page">
+  <coupon-item currentPage="coupon-get"/>
+</view>
+
+<coupon-dialog />

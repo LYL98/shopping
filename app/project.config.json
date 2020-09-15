@@ -243,6 +243,33 @@
 					"pathName": "pages/itemTag/itemTag",
 					"query": "id=41",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "返券明细",
+					"pathName": "pages/coupon-return/coupon-return",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券选择(商品券｜运费券)",
+					"pathName": "pages/coupon-select/coupon-select",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券领取",
+					"pathName": "pages/coupon-get/coupon-get",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的优惠券",
+					"pathName": "pages/coupon-mine/coupon-mine",
+					"scene": null
 				}
 			]
 		}

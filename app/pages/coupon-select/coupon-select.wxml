@@ -1,0 +1,8 @@
+<view class="coupon-select-page">
+  <view class="no-select" hover-class="view-hover">
+    不使用优惠券
+  </view>
+  <view>
+    <coupon-item currentPage="coupon-select"/>
+  </view>
+</view>
