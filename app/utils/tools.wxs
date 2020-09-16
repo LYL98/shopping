@@ -226,6 +226,32 @@ var returnSpecStr = function(str, start, end) {
   return str.substring(start, end);
 }
 
+// 返回优惠券适用范围
+var returnCouponScopeText = function(scopeType, usableScopeList = [], unusableScopeList = []) {
+  var str = '';
+  switch (scopeType) {
+    case 'all': 
+      str = '全场可用'
+      break;
+    case 'goods':
+    case 'category':
+      var a = usableScopeList.length > 0 ? '仅限' + usableScopeList.join('、') + '可用' : '';
+      var b = unusableScopeList.length > 0 ? '' + unusableScopeList.join('、') + '不可用': '';
+      str = a + b;
+      break;
+  }
+  return str;
+}
+
+// 返回赠品列表字符串
+var returnGiftInfoText = function(gift_info = []) {
+  var str =''
+  gift_info.forEach(function(item){
+    str = item.title + '*' + item.gift_num + ' '
+  })
+  return str;
+}
+
 module.exports = {
   returnPrice: returnPrice,
   returnPriceAbs: returnPriceAbs,
@@ -244,5 +270,7 @@ module.exports = {
   returnOmissionText: returnOmissionText,
   returnTags:returnTags,
   returnSpecStr: returnSpecStr,
-  returnVIPLevelClassName: returnVIPLevelClassName
+  returnVIPLevelClassName: returnVIPLevelClassName,
+  returnCouponScopeText: returnCouponScopeText,
+  returnGiftInfoText: returnGiftInfoText
 }

@@ -3,9 +3,8 @@
 <navbar list="{{couponStatusLabels}}" bindnavtouch="clickTab" defaultIndex="{{activeIndex}}" slider="{{0.2}}"></navbar>
 
 <view class="coupon-list">
-  <!-- <coupon-item wx:for="{{coupons.items}}" itemData="{{item}}" wx:key="index" currentPage="coupon-mine" status="{{query.status}}"></coupon-item> -->
-  <coupon-item currentPage="coupon-mine" status="used" />
-  <coupon-item currentPage="coupon-mine" status="expired" />
+  <coupon-item wx:for="{{coupons.items}}" itemData="{{item}}" wx:key="index" currentPage="coupon-mine" status="{{query.status}}">
+  </coupon-item>
 </view>
 
 <defaultPage wx:if="{{ !isFirstIn && coupons.items.length <= 0 }}" currentPage="coupon"></defaultPage>
