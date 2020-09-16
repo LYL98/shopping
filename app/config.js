@@ -3,7 +3,7 @@
  */
 
 //是否开发(dev开发、test测试；pre预发布；pro生产)
-export const Conn = 'pro';
+export const Conn = 'test';
 
 //测试环境api地址
 export const RequestHttpDev = 'https://vestadev.pgyscm.com';
@@ -41,7 +41,7 @@ export const ServiceTel = '4008258522';
 export const WeiXinAppIds = ['wxd71d35efcb08acc8', 'wx1653f76966571193'];
 
 //版本
-export const Version = 'V4.2.2';
+export const Version = 'V4.2.0';
 
 //growingio配置
 export const GioConfig = {

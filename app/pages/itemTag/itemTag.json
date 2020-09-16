@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "运营专区",
+  "navigationBarTitleText": "",
   "usingComponents": {
     "defaultPage": "/components/defaultPage/defaultPage",
     "handleShopCart": "/components/handleShopCart/handleShopCart",

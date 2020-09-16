@@ -27,9 +27,6 @@ Page({
 
   //页面装载时
   onLoad() {
-    // wx.setNavigationBarTitle({
-    //   title: '运营专区'
-    // });
     this.windowWidth = wx.getSystemInfoSync().windowWidth;
     this.windowHeight = wx.getSystemInfoSync().windowHeight;
     this.factor = this.windowWidth / 750;
@@ -61,6 +58,9 @@ Page({
       id: that.data.query.item_tag_id
     }).then(res => {
       that.setData({ detail: res.data });
+      wx.setNavigationBarTitle({
+        title: res.data.title
+      });
     });
   },
 
