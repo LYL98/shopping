@@ -1,5 +1,8 @@
+<wxs src="./../../utils/tools.wxs" module="tools"></wxs>
+
 <view class="coupon-get-page">
-  <coupon-item currentPage="coupon-get"/>
+  <coupon-item wx:for="{{coupons.items}}" wx:key="index" itemData="{{item}}" itemIndex="{{index}}" custom-class="coupon-item" currentPage="coupon-get" bind:handleReceiveCoupon="handleReceiveCouponCB"></coupon-item>
 </view>
 
-<coupon-dialog />
+<defaultPage wx:if="{{ !isFirstIn && coupons.items.length <= 0 }}" currentPage="coupon"></defaultPage>
+<view class="load-none" wx:if="{{coupons.num > 0}}">{{tools.returnMore(coupons.num, query)}}</view>

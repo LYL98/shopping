@@ -458,6 +458,12 @@ Page({
     }
   },
 
+  tapCouponGet() {
+    wx.navigateTo({
+      url: '/pages/coupon-get/coupon-get',
+    })
+  },
+
 
   toDetail(e){
     const dataset = e.currentTarget.dataset;

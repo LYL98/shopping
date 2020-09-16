@@ -58,7 +58,6 @@ switch(Conn){
 
 let apiC = requestHttp + '/c';
 let apiCommon = requestHttp + '/common';
-let apiGB = requestHttp + '/gb';
 
 
 module.exports = {
@@ -139,8 +138,9 @@ module.exports = {
     // v4.3
     myCoupon: apiC + '/coupon/mine', // 我的优惠券
     getCoupon: apiC + '/coupon/receive', // 立即领取优惠券
-    queryCoupon: apiGB + '/coupon/gain/query', // 查询获取优惠券（弹窗）
-    availableCoupon : apiC + '/coupon/receive/query', // 可领取的优惠券列表
+    queryCoupon: apiC + '/coupon/gain/list', // 查询获取优惠券（弹窗）
+    availableAllCoupon : apiC + '/coupon/receive/query', // 可领取的优惠券列表(所有)
+    availableCoupon : apiC + '/coupon/item/available/query', // 可领取的优惠券列表（商品）
 
 
     sysBrand: apiC + '/basicdata/constant/brand', //获取品牌

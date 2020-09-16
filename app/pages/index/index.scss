@@ -353,3 +353,16 @@ view, navigator, text {
   width: 14rpx;
   height: 18rpx;
 }
+
+.coupon-entry-fixed {
+  position: fixed;
+  bottom: 114rpx;
+  right: 0;
+  width: 118rpx;
+  height: 162rpx;
+  > image {
+    width: 118rpx;
+    height: 162rpx;
+    display: block;
+  }
+}

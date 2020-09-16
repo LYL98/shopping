@@ -234,14 +234,24 @@
 			<defaultPage wx:else currentPage="itemList" style="position: relative; top: -100rpx;"></defaultPage>
 		</block>
 
-		<newCoupon
+		<!-- <newCoupon
 			wx:if="{{userInfo.id && address.id}}"
-			wx:if="{{true}}"
 			storeId="{{address.id}}"
 			bindtoggle="showHideToggle"
+		/> -->
+
+		<coupon-dialog 
+			wx:if="{{userInfo.id && address.id}}"
+			storeId="{{address.id}}"
+			provinceCode="{{address.province_code}}"
 		/>
+
 
 		<gio-marketing/>
 	</view>
+</view>
+
+<view class="coupon-entry-fixed" catchtap="tapCouponGet">
+	<image  src="./../../assets/img/coupon/coupon_entry.png"></image>
 </view>
 

@@ -2,6 +2,6 @@
   "navigationBarTitleText": "领取优惠券",
   "usingComponents": {
     "coupon-item": "/components/coupon-item/coupon-item",
-    "coupon-dialog": "/pages/index/coupon-dialog/coupon-dialog"
+    "defaultPage": "/components/defaultPage/defaultPage"
   }
 }
