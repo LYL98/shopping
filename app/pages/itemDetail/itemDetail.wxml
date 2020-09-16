@@ -314,9 +314,9 @@
 	<view class="goods_reback" wx:if="{{detail.compensated && detail.sale_type == '平台'}}">
 		<view class="goods_header ">退赔规则</view>
 		<view class="align-center goods_attr--box goods_attr--box--gray">
-			<view class="align-start label_item">
+			<view class="align-start label_item pre">
 				<view class="goods_info--label goods_info--label--reback">可赔付范围</view>
-				<view class="goods_info--value">{{detail.compensated}}</view>
+				<view class="goods_info--value pre" style="width: 500rpx;">{{detail.compensated}}</view>
 			</view>
 		</view>
 	</view>
