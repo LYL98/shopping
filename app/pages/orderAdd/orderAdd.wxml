@@ -61,8 +61,8 @@
 			>
 				<view class="no-nav">
 					<view class="img">
-						<view class="mark">
-							<text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+						<view class="mark" wx:if="{{item.is_presale}}">
+							<text  class="is-presale">预</text>
 						</view>
 						<image
 						 class="skeleton-rect"
@@ -73,6 +73,7 @@
 						<view class="image skeleton-rect" wx:else></view>
 					</view>
 					<view class="content">
+						
 						<view class="title skeleton-rect">
 							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
 							{{item.title}}

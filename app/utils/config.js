@@ -80,7 +80,8 @@ module.exports = {
     itemCollectionCancel: apiC + '/item/collection/cancel',//商品收藏信息取消
     itemCollectionQuery: apiC + '/item/collection/query',//收藏商品展示
     itemDetail: apiC + '/item/detail',//商品详情
-    itemDetailCoupon: apiC + '/coupon/item/available/list',//商品详情优惠券
+    itemDetailCoupon: apiC + '/coupon/item/available/query',//商品详情优惠券
+    receiveCoupon: apiC + '/coupon/receive/query',//可领取优惠券列表
     displayClassQuery: apiC + '/display_class/list',//商品分类展示
     itemListDisplayClass: apiC + '/item/query/by_display_class',//用户端商品浏览(根据展示分类code)
     itemListDisplayClassNew: apiC + '/item/query/by_display_class_new', //用户端商品浏览(根据展示分类code)new

@@ -109,7 +109,6 @@ Page({
           isOnSale:true
         })
       }
-      
       let vidoes= [];
       if(rd.content){
         let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] : '';
@@ -168,8 +167,8 @@ Page({
   getCoupon(){
     Http.get(Config.api.itemDetailCoupon, {
       id: id,
-      store_id: address.id || ''
-      province_code:address.province_code
+      store_id: this.data.address.id || '',
+      province_code:this.address.province_code
     }).then(res => {
       let rd = res.data;
       rd.items.forEach(item => {
@@ -183,7 +182,7 @@ Page({
        
       })
       this.setData({
-        couponList:rd.items.slice(0,2) : []
+        couponList : rd.items.slice(0,2) ||  []
       })
      
     }).catch(error => {

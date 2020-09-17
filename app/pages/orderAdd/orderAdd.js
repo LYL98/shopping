@@ -165,6 +165,7 @@ Page({
           data.push({
             id: shoppingCartData[i].id,
             "number": shoppingCartData[i].num,
+            price: shoppingCartData[i].price
           });
         }
       }
@@ -266,7 +267,23 @@ Page({
         is_presale: orderType === 'presale' ? true : false //是否预售订单
       },
       success: function(res) {
-
+        console.log('res',res.data)
+        // if(res.data.code != 0){
+        //    wx.showModal({
+        //     title:'提示',
+        //     content:'商品价格有变动,请重新提交订单',
+        //     showCancel:false,
+        //     confirmColor: '#FDCA1F',
+        //     success(res) {
+        //       if (res.confirm) {
+        //         wx.navigateBack()
+        //       } 
+        //     }
+        //   });
+          
+        //   reutrn
+        // }
+        
         //共用提示
         let msgBox = (str, callback) => {
           wx.showModal({

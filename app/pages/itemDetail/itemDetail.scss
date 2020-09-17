@@ -409,7 +409,8 @@
   color:white;
 }
 .goods_info--limit{
-  font-size: 22rpx;
+  border-top:1rpx solid #eee;
+  font-size: 24rpx;
   color: #A5A5A5;
   .cicle{
     width: 4rpx;
@@ -452,13 +453,11 @@
   flex-shrink:0;
 }
 .activity-item{
-  display: flex;
-  border-bottom: 1rpx solid #eee;
-  align-items: flex-start;
+  border-top: 1rpx solid #eee;
   font-size: 28rpx;
-  padding: 35rpx 0;
+  // padding: 35rpx 0;
   .content{
-    margin-left:24rpx;
+    margin-left:28rpx;
     // text-align: right;
     color: #242424;
   }
@@ -620,18 +619,25 @@ left: 28rpx;
 }
 
 .store-type {
-  font-size: 18rpx;
+  font-size: 22rpx;
   color: #989797;
-  margin-top: 6rpx;
   .type-label {
-    color: #FFF;
-    background: #FF8F1F;
     border-radius: 4rpx;
-    padding: 0rpx 3rpx;
-    margin-right: 6rpx;
+  padding: 0 10rpx;
+  line-height:32rpx;
+  margin-right: 8rpx;
+  font-size: 22rpx;
+  color:white;
   }
   .type-label-self {
     background: #FF6010;
+  }
+  .type-label-vendor{
+    background:#FF8F1F;
+
+  }
+  .type-label-spplier{
+    margin-top:4rpx;
   }
 }
 .coupon_item{
@@ -652,4 +658,22 @@ font-size: 28rpx;
       color: #989797;
       flex-shrink:0;
     }
+  }
+
+  .goods_header--conetnt{
+    height:89rpx;
+  }
+
+  .goods_info_points{
+    font-size: 28rpx;
+    color: #989797
+  }
+  .goods_value--weight{
+    font-size: 28rpx;
+color: #151515;
+margin-right:48rpx;
+  }
+  .goods_info--delivery{
+    font-size: 24rpx;
+color: #A5A5A5;
   }

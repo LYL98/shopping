@@ -169,7 +169,7 @@
 
 .item_bottom_price{
   position: absolute;
-  bottom: -48rpx;
+  bottom: -8rpx;
   left: 184rpx;
   right: -30rpx;
 }
@@ -240,11 +240,11 @@ padding-right: 32rpx;
   font-size: 20rpx;
   color: #F54F3F;
   position: absolute;
-  bottom: -82rpx;
+  bottom: -48rpx;
   right: 0;
 }
 .item{
-  height:260rpx!important;
+  height:240rpx!important;
 }
 .pay_coupon{
   font-size: 26rpx;
@@ -254,4 +254,10 @@ padding:32rpx;
 .submit{
   font-size: 32rpx;
 color: #151515;
+}
+.present{
+  background: #E8541E!important;
+    color: white!important;
+    padding: 2rpx 4rpx!important;
+    border-radius: 4rpx!important;
 }

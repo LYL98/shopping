@@ -42,6 +42,7 @@
 		</view>
 	</view>
 
+
 	<view class="express-body-wrapper">
 		<view class="express-body" wx:if="{{ detail.express && detail.express.shipper_code }}">
 			<view class="header">
@@ -160,12 +161,13 @@
 				<view
 				 class="amount-pannel"
 				 data-index="{{index}}"
+				 data-type="selfGoods"
 				 bindtap="showArrow"
 				>
-					<text class="flex">价格变动</text>
-					<view class="flex amount-price">
-						<text class="up" wx:if="{{d.amount_real - d.amount_pre > 0}}">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
-						<text class="down" wx:else>{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
+				<text class="flex">价格变动</text>
+					<view class="flex amount-price justify-end align-center">
+						<view class="up" wx:if="{{d.amount_real - d.amount_pre > 0}}">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</view>
+						<view class="down" wx:else>{{tools.returnPrice(d.amount_real - d.amount_pre)}}</view>
 						<image src="{{d.arrow ? iconDownSrc : iconUpSrc}}"></image>
 					</view>
 				</view>
@@ -176,7 +178,7 @@
 						</view>
 						<view class="line">
 							<view class="price2" wx:if="{{d.amount_real - d.amount_pre < 0}}">
-								<text style="color:#0fd564">{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
+								<text style="color:#FDCA1F">{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
 							</view>
 							<view class="price2" wx:else>
 								<text style="color:#f30">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
@@ -194,7 +196,7 @@
 						<view class="line">
 							<view class="price2" wx:if="{{d.count_real - d.count_pre < 0}}">
 								减少：
-								<text style="color:#0fd564">{{d.count_real - d.count_pre}}件</text>
+								<text style="color:#FDCA1F">{{d.count_real - d.count_pre}}件</text>
 							</view>
 							<view class="price2" wx:else>
 								增加：
@@ -262,12 +264,13 @@
 				<view
 				 class="amount-pannel"
 				 data-index="{{index}}"
-				 bindtap="showArrow"
+				 data-type="selfGoods"
+				 bindtap="supplierGoods"
 				>
 					<text class="flex">价格变动</text>
-					<view class="flex amount-price">
-						<text class="up" wx:if="{{d.amount_real - d.amount_pre > 0}}">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
-						<text class="down" wx:else>{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
+					<view class="flex amount-price justify-end align-center">
+						<view class="up" wx:if="{{d.amount_real - d.amount_pre > 0}}">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</view>
+						<view class="down" wx:else>{{tools.returnPrice(d.amount_real - d.amount_pre)}}</view>
 						<image src="{{d.arrow ? iconDownSrc : iconUpSrc}}"></image>
 					</view>
 				</view>
@@ -278,7 +281,7 @@
 						</view>
 						<view class="line">
 							<view class="price2" wx:if="{{d.amount_real - d.amount_pre < 0}}">
-								<text style="color:#0fd564">{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
+								<text style="color:#FDCA1F">{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
 							</view>
 							<view class="price2" wx:else>
 								<text style="color:#f30">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</text>
@@ -296,7 +299,7 @@
 						<view class="line">
 							<view class="price2" wx:if="{{d.count_real - d.count_pre < 0}}">
 								减少：
-								<text style="color:#0fd564">{{d.count_real - d.count_pre}}件</text>
+								<text style="color:#FDCA1F">{{d.count_real - d.count_pre}}件</text>
 							</view>
 							<view class="price2" wx:else>
 								增加：
@@ -373,7 +376,7 @@
 				</view>
 				<view class="right">
 					<text class="skeleton-rect" style="color:#FF6868" wx:if="{{ detail.delivery_fee_chg > 0 }}">+￥{{tools.returnPriceAbs(detail.delivery_fee_chg)}}</text>
-					<text class="skeleton-rect" style="color:#0fd564" wx:if="{{ detail.delivery_fee_chg < 0 }}">-￥{{tools.returnPriceAbs(detail.delivery_fee_chg)}}</text>
+					<text class="skeleton-rect" style="color:#FDCA1F" wx:if="{{ detail.delivery_fee_chg < 0 }}">-￥{{tools.returnPriceAbs(detail.delivery_fee_chg)}}</text>
 				</view>
 			</view>
 			<view class="row" wx:if="{{detail.check_chg  + detail.fram_total_price_chg !== 0}}">
@@ -382,8 +385,8 @@
 					<text class="hint skeleton-rect">因商品数量/重量发生变化</text>
 				</view>
 				<view class="right">
-					<text class="skeleton-rect" style="color: #0fd564;">-</text>
-					<text class="skeleton-rect" style="color: #0fd564;">￥{{tools.returnPriceAbs(detail.check_chg  + detail.fram_total_price_chg)}}</text>
+					<text class="skeleton-rect" style="#FDCA1F">-</text>
+					<text class="skeleton-rect" style="#FDCA1F">￥{{tools.returnPriceAbs(detail.check_chg  + detail.fram_total_price_chg)}}</text>
 				</view>
 			</view>
 		</view>
@@ -545,7 +548,7 @@
 			<button
 			 size="mini"
 			 class="btn3"
-			 style="background-color: #00AE66; color: #fff;"
+			 style="background-color: #FDCA1F; color: #fff;"
 			 wx:if="{{ detail.status !== 'order_canceled' && detail.pay_status !== 'wait_complete' && detail.status === 'deliveried' }}"
 			 bindtap="confirmReceive"
 			>确认收货

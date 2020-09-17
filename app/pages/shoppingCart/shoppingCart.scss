@@ -392,12 +392,16 @@ color: #242424;
 }
 .get_coupon{
   .coupon_info{
-    border: 1rpx solid #F59725;
-    padding: 0 10rpx;
+   
+    
     font-size: 21rpx;
     color: #F59725;
     border-radius: 4rpx;
     margin-right: 12rpx;
+  }
+  .coupon_info--text{
+    padding: 0 10rpx;
+     border: 1rpx solid #F59725;
   }
 }
 .reback_coupon{
@@ -406,6 +410,7 @@ color: #242424;
     color: #989797;
   }
   .reback_content{
+    font-size:22rpx;
     line-height: 26rpx;
     overflow: hidden;
     text-overflow: ellipsis;

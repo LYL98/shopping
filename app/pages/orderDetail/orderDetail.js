@@ -164,10 +164,11 @@ Page({
   },
   showArrow(e) {
     let index = e.currentTarget.dataset.index;
+    let type = e.currentTarget.dataset.type
+    let temp= type == 'supplierGoods' ? `supplierGoods[${index}].arrow` : `selfGoods[${index}].arrow`
     let {items} = this.data.detail;
-    items[index].arrow = !items[index].arrow;
     this.setData({
-      detail: this.data.detail
+      [temp]: !this.data.selfGoods[index].arrow
     })
   },
   showHideMoreExpress() {

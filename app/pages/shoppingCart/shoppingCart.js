@@ -51,6 +51,9 @@ Page({
     discount:0,
     level:0,
     title:'',
+    receiveCouponList:[],
+    autoCouponList:[],
+    address:{}
   },
   onLoad() {
     this.address = {}; //当前选择地址
@@ -67,11 +70,61 @@ Page({
     //判断登录
     app.signIsLogin(() => {
       // this.activity();
+      this.setData({
+        address: app.getSelectStore()
+      })
+      let address = app.getSelectStore(); //当前选择的地址
       this.getWorkTime();
       this.getShoppingCartData();
       this.couponList(); //获取优惠券列表
       this.getUserLevel()
+      this.getReceiveCoupon()
+      this.getAutoCoupon()
+    });
+  },
+  getReceiveCoupon(){
+    const that = this;
+    console.log('this.data.address.province_code',this.data.address.province_code)
+    Http.get(Config.api.receiveCoupon, {
+      page:1,
+      page_size:3,
+      store_id: this.data.address.id || '',
+      province_code:this.data.address.province_code
+    }, { handleError: false }).then((res) => {
+      res.data.items.forEach(item => {
+        if(item.coupon_type == 'goods_gift'){
+          item.gift_info.forEach(itemChild=> {
+            if(itemChild.title.length > 3){
+              itemChild.title = itemChild.title.split(0,3) + '*'
+            }
+          })
+        }
+      })
+      console.log('手动领取',res.data.items)
+      that.setData({ receiveCouponList: res.data.items });
+    });
+  },
+  getAutoCoupon(){
+    const that = this;
+    Http.get(Config.api.receiveCoupon, {
+      page:1,
+      page_size:3,
+      grant_way:'auto',
+      store_id: this.data.address.id || '',
+      province_code:this.data.address.province_code
 
+    }, { handleError: false }).then((res) => {
+      res.data.items.forEach(item => {
+        if(item.coupon_type == 'goods_gift'){
+          item.gift_info.forEach(itemChild=> {
+            if(itemChild.title.length > 3){
+              itemChild.title = itemChild.title.split(0,3) + '*'
+            }
+          })
+        }
+      })
+      console.log('res.data.items',res.data.items)
+      that.setData({ autoCouponList: res.data.items });
     });
   },
   //点击页面底下的tab
@@ -373,6 +426,7 @@ Page({
       if (d[i].id == item.id) {
         d[i].is_select = item.is_select;
         d[i].num = 0;
+        d[i].price = item.price_sale
       }
     }
     wx.setStorageSync('shoppingCartData', d);
@@ -520,7 +574,7 @@ Page({
         ids.push(d[i].id);
         item.push({
           id: d[i].id,
-          num: d[i].num
+          num: d[i].num,
         })
       }
 
@@ -580,6 +634,22 @@ Page({
       })
     });
   },
+
+  onSubmit(){
+    let d = wx.getStorageSync('shoppingCartData');
+    this.data.validCartList.map(item => {
+        d.forEach(itemChild => {
+          if(item.id == itemChild.id){
+            itemChild.price = item.price_sale
+          }
+        })
+    })
+    wx.setStorageSync('shoppingCartData',d);
+    wx.navigateTo({
+			url: `/pages/orderAdd/orderAdd`
+		});
+    this.submitClearing()
+  },  
   //结算
   submitClearing() {
     /*===== 埋点 start ======*/

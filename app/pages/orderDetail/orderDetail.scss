@@ -356,7 +356,7 @@
   }
   > .amount-pannel{
     display: flex;
-    padding: 0 30rpx;
+    // padding: 0 30rpx;
     height: 80rpx;
     line-height: 80rpx;
     .flex{
@@ -370,11 +370,11 @@
       text-align: right;
       .down{
         font-size: 28rpx;
-        color: #28BE3E;
+        color: #FDCA1F;
       }
       .up{
         font-size: 28rpx;
-        color: #FF3B00;
+        color: #FDCA1F;
       }
       image {
         width: 26rpx;
@@ -518,4 +518,11 @@ margin-bottom:18rpx;
 .num-price{
   bottom:6rpx !important;
   right:0!important;
+}
+
+.present{
+  background: #E8541E!important;
+    color: white!important;
+    padding: 2rpx 4rpx!important;
+    border-radius: 4rpx!important;
 }
