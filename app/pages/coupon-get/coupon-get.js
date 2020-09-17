@@ -20,6 +20,7 @@ Page({
     goods_id: '',
     store_id: '',
     province_code: '',
+    
   },
 
   onLoad: function (options) {

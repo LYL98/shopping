@@ -1,4 +1,5 @@
 <wxs src="./../../utils/tools.wxs" module="tools"></wxs>
+
 {{tools.returnCouponDetailName('delivery')}}
 <view class="coupon-return-page">
   <view class="coupon-return-item" wx:for="{{coupons.items}}" wx:key="id">
@@ -7,9 +8,9 @@
         <text class="type">{{tools.returnCouponTypeText(item.coupon_type, item.discount_type)}}</text>
       </view>
       <view class="item-info">
-        <view class="title">{{returnCouponDetailName(item)}}</view>
+        <view class="title">{{tools.returnCouponDetailName(item)}}</view>
         <!-- 可用范围 -->
-        <view class="desc add-dot">{{tools.returnCouponScopeText(item.scope_type, item.usable_scope, item.unusable_scope)}}</view>
+        <view class="desc add-dot">{{item.scope_type == 'all' ? '' :tools.returnCouponScopeText(item.scope_type, item.usable_scope, item.unusable_scope)}}</view>
         <view class="num">X 1</view>
       </view>
   </view>

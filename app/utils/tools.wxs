@@ -347,13 +347,13 @@ var returnCouponDetailName = function(item) {
       str = str + '全场无门槛' + tempFaceValue
       break;
     case 'amount':
-      str = str + '满' + returnPrice(threshold) + tempFaceValue
+      str = str + '满' + returnPrice(threshold)+ '元' + tempFaceValue
       break;
     case 'num':
       str = str + '购买数量满' + threshold + '件' + tempFaceValue
       break;
     case 'delivery_fee':
-      str = str + '运费满' + returnPrice(threshold) + tempFaceValue
+      str = str + '运费满' + returnPrice(threshold) + '元' + tempFaceValue
       break;
     default:
       break;

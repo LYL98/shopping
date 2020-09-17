@@ -21,6 +21,7 @@ Page({
   onLoad: function (options) {
     let store = app.getSelectStore()
     this.data.province_code = store.province_code
+    this.data.store_id = store.id
 
     this.getCouponDetailList()
   },
@@ -31,12 +32,13 @@ Page({
   },
 
   getCouponDetailList() {
-    const { query, coupons, province_code } = this.data;
+    const { query, coupons, province_code, store_id } = this.data;
     wx.showNavigationBarLoading();
     
     Http.get(Config.api.availableAllCoupon, {
       ...query,
-      province_code: province_code,
+      province_code,
+      store_id,
       grant_way: 'auto', //自动发放
     }).then(res => {
       let rd = res.data || {items:[], num: 0 }
