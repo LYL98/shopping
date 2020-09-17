@@ -1,13 +1,19 @@
+<wxs src="./../../utils/tools.wxs" module="tools"></wxs>
+{{tools.returnCouponDetailName('delivery')}}
 <view class="coupon-return-page">
-  <view class="coupon-return-item">
+  <view class="coupon-return-item" wx:for="{{coupons.items}}" wx:key="id">
       <view class="item-img-wraper">
         <image src="./../../assets/img/coupon/coupon_return_detail.png"></image>
-        <text class="type">运费券</text>
+        <text class="type">{{tools.returnCouponTypeText(item.coupon_type, item.discount_type)}}</text>
       </view>
       <view class="item-info">
-        <view class="title">商品总金额满50元，获（益力多12瓶装；精选红花生；鲜活净化沙甲350g）</view>
-        <view class="desc add-dot">限肉禽蛋海鲜水产蔬菜豆制品用限肉禽蛋海鲜水产蔬菜豆制品用</view>
+        <view class="title">{{returnCouponDetailName(item)}}</view>
+        <!-- 可用范围 -->
+        <view class="desc add-dot">{{tools.returnCouponScopeText(item.scope_type, item.usable_scope, item.unusable_scope)}}</view>
         <view class="num">X 1</view>
       </view>
   </view>
 </view>
+
+<defaultPage wx:if="{{ !isFirstIn && coupons.items.length <= 0 }}" currentPage="coupon"></defaultPage>
+<view class="load-none" wx:if="{{coupons.num > 0}}">{{tools.returnMore(coupons.num, query)}}</view>

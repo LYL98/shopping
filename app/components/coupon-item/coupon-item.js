@@ -34,7 +34,6 @@ Component({
 
   data: {
     isExpand: false,
-
   },
 
   /**

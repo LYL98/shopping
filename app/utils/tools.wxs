@@ -252,6 +252,117 @@ var returnGiftInfoText = function(gift_info = []) {
   return str;
 }
 
+// 返回优惠券类型
+var returnCouponTypeText = function(coupon_type, discount_type) {
+  var str = ''
+  if(coupon_type == 'delivery') {
+    return '运费券';
+  }
+  if(coupon_type == 'goods') {
+    switch(discount_type) {
+      case 'reduce':
+        str = '满减券'
+        break;
+      case 'discount':
+        str = '满折券'
+        break;
+      case 'gift':
+        str = '赠品券'
+        break;
+      default:
+        str = '优惠券'
+    }
+    return str;
+  }
+}
+
+// 返回优惠券明细 名称
+var returnCouponDetailName = function(item) {
+  // return returnCouponTypeText(coupon_type);
+  // 原型图：发放条件 + 获【优惠券类型（使用限制）】 + 【发放张数】
+  // ui图 ： 发放条件 + 获【优惠券类型】
+  var condition = item.condition
+  var condition_thr = item.condition_thr || 0
+  var condition_items = item.condition_items || []
+  var coupon_type = item.coupon_type
+  var benefit = item.benefit
+  var threshold = item.threshold
+  var discount_type = item.discount_type
+  var use_type = item.use_type
+  var gift_info = item.gift_info
+
+  var str = ''
+  // 发放条件
+  switch (condition) {
+    case 'order':
+     str = '单笔订单金额满' + returnPrice(condition_thr) + '元'
+     break;
+    case 'register':
+      str = '新用户注册'
+      break;
+    case 'goods_num':
+      str = '商品数量满' + condition_thr + '件'
+      break;
+    case 'delivery_fee':
+      str = '运费金额满' + returnPrice(condition_thr) + '元'
+      break;
+    case 'goods':
+      str = '商品总金额满' + returnPrice(condition_thr) + '元'
+      break;
+    case 'goods_operation':
+      str = '商品总金额(自营商品)满' + returnPrice(condition_thr) + '元'
+      break;
+    case 'goods_merchant':
+      str = '商品总金额(优选商品)满' + returnPrice(condition_thr) + '元'
+      break;
+    case 'goods_custom':
+      //指定商品
+      str = '商品总金额(' + condition_items.join(',') + ')满' + returnPrice(condition_thr) + '元'
+      break;
+    default: 
+      break;
+  }
+
+  var tempFaceValue = 0; //优惠券面额
+  switch(coupon_type) {
+    case 'delivery':
+      str = str + ', 获运费券'
+      tempFaceValue = '减' + returnPrice(benefit) + '元';
+    break;
+    case 'goods':
+      str = str + ', 获商品券'
+      if(discount_type == 'reduce') {
+        tempFaceValue = '减' + returnPrice(benefit) + '元'
+      } else if(discount_type == 'discount'){
+        tempFaceValue = returnDiscount(benefit) + '折'
+      } else if(discount_type == 'gift') {
+        tempFaceValue = '赠' + '(' + returnGiftInfoText(gift_info) + ')' //补充赠品新鲜
+      } else {
+        tempFaceValue = ''
+      }
+  }
+
+  switch(use_type) {
+    case 'any':
+      str = str + '全场无门槛' + tempFaceValue
+      break;
+    case 'amount':
+      str = str + '满' + returnPrice(threshold) + tempFaceValue
+      break;
+    case 'num':
+      str = str + '购买数量满' + threshold + '件' + tempFaceValue
+      break;
+    case 'delivery_fee':
+      str = str + '运费满' + returnPrice(threshold) + tempFaceValue
+      break;
+    default:
+      break;
+  }
+
+  return str;
+
+}
+
 module.exports = {
   returnPrice: returnPrice,
   returnPriceAbs: returnPriceAbs,
@@ -272,5 +383,6 @@ module.exports = {
   returnSpecStr: returnSpecStr,
   returnVIPLevelClassName: returnVIPLevelClassName,
   returnCouponScopeText: returnCouponScopeText,
-  returnGiftInfoText: returnGiftInfoText
+  returnGiftInfoText: returnGiftInfoText,
+  returnCouponDetailName: returnCouponDetailName
 }

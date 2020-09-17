@@ -42,12 +42,12 @@ Page({
     wx.showNavigationBarLoading();
     let goodsQueryParams = goods_id ? {
         item_id: goods_id,
-        store_id: store_id,
       } : {};
 
     Http.get(api, {
       ...query,
       ...goodsQueryParams,
+      store_id: store_id,
       province_code: province_code
     }).then(res => {
       let rd = res.data || {items:[], num: 0 }
