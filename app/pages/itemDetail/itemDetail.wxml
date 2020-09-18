@@ -77,9 +77,12 @@
 			<text>{{detail.title}}</text>
 			
 		</view>
-		<view class="goods_info_points" wx:if="{{detail.selling_points.length > 0}}">
-			卖点: {{detail.selling_points}}
+		<view class="goods_info_points add-dot2 " >
+			卖点: 我就打算就立刻安静的拉开打算几点案例三等奖奥斯卡的骄傲圣诞节爱神的箭啊是大家啊三件大事大家啊凉快圣诞节啦可视对讲
 		</view>
+		<!-- <view class="goods_info_points" wx:if="{{detail.selling_points.length > 0}}">
+			卖点: {{detail.selling_points}}
+		</view> -->
 		
 		<view class="goods_info--tag justify-between align-center">
 			<view class="align-center">

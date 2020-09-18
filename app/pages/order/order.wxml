@@ -126,13 +126,13 @@
 		</view>
 	</view>
 
-	<view class="total align-center justify-end">
-		<view class="price-str">共{{item.piece_num}}
+	<view class="total ">
+		<view class="price-str align-center justify-end">共{{item.piece_num}}
 			件商品，订单价格：
 			<text>￥{{tools.returnPrice(item.order_price)}}</text>
 			<!-- <block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block> -->
 		</view>
-		<view class="amout-pay" wx:if="{{item.remain_pay > 0 && item.status != 'order_canceled'}}">
+		<view class="amout-pay align-center justify-end" wx:if="{{item.remain_pay > 0 && item.status != 'order_canceled'}}">
 			已付款：￥{{tools.returnPrice(item.amount_pay)}}，待补款：
 			<text class="price">￥{{tools.returnPrice(item.remain_pay)}}</text>
 			<block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block>
