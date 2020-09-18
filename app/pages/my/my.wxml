@@ -54,7 +54,7 @@
 			<view class="interval"></view>
 			<navigator
 			 hover-class="none"
-			 url="/pages/coupon/coupon"
+			 url="/pages/coupon-mine/coupon-mine"
 			 class="coupon"
 			>
 				<view class="title">{{myInfo.merchant.coupon_num}}</view>
