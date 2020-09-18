@@ -127,7 +127,7 @@ Page({
     let { couponGoodsListData } = this.data;
     if(couponGoodsListData.length  > 0){
       wx.navigateTo({
-        url: '/pages/orderCoupon/orderCoupon?type=goods'
+        url: '/pages/coupon-select/coupon-select?type=goods'
       });
     }
   },
@@ -137,7 +137,7 @@ Page({
     let { couponDeliveryListData } = this.data;
     if(couponDeliveryListData.length  > 0){
       wx.navigateTo({
-        url: '/pages/orderCoupon/orderCoupon?type=delivery'
+        url: '/pages/coupon-select/coupon-select?type=delivery'
       });
     }
   },

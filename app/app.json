@@ -29,7 +29,6 @@
     "pages/avatar/index",
     "pages/reply/reply",
     "pages/afterSale/afterSale",
-    "pages/orderCoupon/orderCoupon",
     "pages/afterSaleRecord/afterSaleRecord",
     "pages/afterSaleDetail/afterSaleDetail",
     "pages/afterSaleQrCode/afterSaleQrCode",
