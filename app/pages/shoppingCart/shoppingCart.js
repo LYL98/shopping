@@ -108,7 +108,7 @@ Page({
     const that = this;
     Http.get(Config.api.receiveCoupon, {
       page:1,
-      page_size:3,
+      page_size:6,
       grant_way:'auto',
       store_id: this.data.address.id || '',
       province_code:this.data.address.province_code

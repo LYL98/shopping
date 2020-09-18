@@ -374,7 +374,8 @@ Page({
           msgBox('您所购买的商品有少于最小订货数，请在购物车修改购买数量', ()=>{
             wx.navigateBack();
           });
-        } else {
+        } 
+        else {
           app.requestResultCode(res); //处理异常
         }
       },

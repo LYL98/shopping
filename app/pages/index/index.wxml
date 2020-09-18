@@ -35,10 +35,10 @@
 				<swiper-item wx:for="{{bannerList}}" wx:key="index">
 					<image
 						data-index="{{index}}"
-						mode="widthFix"
+						mode="aspectFill"
 						data-item="{{item}}"
 						bindtap="urlJump"
-						src="{{tencentPath + item.image}}"
+						src="{{tencentPath + item.image + '_min750'}}"
 					></image>
 				</swiper-item>
 			</swiper>
