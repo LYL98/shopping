@@ -377,8 +377,7 @@
   margin-left: 16rpx;
 }
 .share_btn{
-  color:#FDCA1F;
-  border:1px solid #FDCA1F;
+  color:white;
   font-size: 28rpx;
   border-radius: 50rpx;
   padding-left: 14rpx;
@@ -388,7 +387,7 @@
   z-index: 10;
   top: 32rpx;
   right: 22rpx;
-  background-color: white !important;
+  background: rgba(0, 0, 0, 0.5) !important;
   &::after{
     border:none !important;
   }
@@ -410,7 +409,8 @@
   color:white;
 }
 .goods_info--limit{
-  font-size: 22rpx;
+  border-top:1rpx solid #eee;
+  font-size: 24rpx;
   color: #A5A5A5;
   .cicle{
     width: 4rpx;
@@ -450,15 +450,14 @@
 }
 .send_title{
   margin-right: 20rpx;
+  flex-shrink:0;
 }
 .activity-item{
-  display: flex;
-  border-bottom: 1rpx solid #eee;
-  align-items: flex-start;
+  border-top: 1rpx solid #eee;
   font-size: 28rpx;
-  padding: 35rpx 0;
+  // padding: 35rpx 0;
   .content{
-    margin-left:24rpx;
+    margin-left:28rpx;
     // text-align: right;
     color: #242424;
   }
@@ -620,17 +619,61 @@ left: 28rpx;
 }
 
 .store-type {
-  font-size: 18rpx;
+  font-size: 22rpx;
   color: #989797;
-  margin-top: 6rpx;
   .type-label {
-    color: #FFF;
-    background: #FF8F1F;
     border-radius: 4rpx;
-    padding: 0rpx 3rpx;
-    margin-right: 6rpx;
+  padding: 0 10rpx;
+  line-height:32rpx;
+  margin-right: 8rpx;
+  font-size: 22rpx;
+  color:white;
   }
   .type-label-self {
     background: #FF6010;
   }
+  .type-label-vendor{
+    background:#FF8F1F;
+
+  }
+  .type-label-spplier{
+    margin-top:4rpx;
+  }
 }
+.coupon_item{
+font-size: 28rpx;
+  color: #FB5853;
+  margin-right: 16rpx;
+  border-radius: 4rpx;
+  padding:0rpx 12rpx;
+  position: relative;
+  background-size: 100% 100%;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ4AAAAsCAMAAACjWfE3AAAAb1BMVEUAAAD8WVP8WFT8WVT7WVT9WlT/WVn8WFP/oGD9WFP8WFP7WVT8WFT8WVP8WFP9WFT/W1X/W1v////7WFP+wb/+vbv/9PT9n5z8aWT8Wlb9iYX9gn//+vr/4uH+sK78Y17+x8X9qqj9paL9oZ78dXE87/ZwAAAAEnRSTlMAkPnozD4U9QJv58u/spx8LQ5rAAgfAAAA9ElEQVRYw+3ZSa6DMBBF0WfA2KRPFQZMm27/a/xI+UmmkTJ5A58VXBkJW1UASlNkSicrTImVzbs21HRC2+UWKPO+EUpNn5cwHWnd2tcZFK3QagtkQWiFDFoLrVpTXsr7SsqjkvJ+zWO+NRQah0koTUNU2GobZyE0x21lAfijXoTORY8eT4eF7s3XLAe8nB3d553dGW+7QcgMO3yYh5B5GHzs+U5vjze/uQuZ+8bjpYp0f+YpVvhn3VXoXJ3Fyp9M7EehM/bRnDycLqSPgrCog94Ij+5pvPG/91JeyvtCyqPCn0c+fiQf3pKPvskXB+RrF+6l1R/x4OWIHunVGgAAAABJRU5ErkJggg==);
+
+  }
+
+  .coupon{
+    .get{
+      font-size: 24rpx;
+      color: #989797;
+      flex-shrink:0;
+    }
+  }
+
+  .goods_header--conetnt{
+    height:89rpx;
+  }
+
+  .goods_info_points{
+    font-size: 28rpx;
+    color: #989797
+  }
+  .goods_value--weight{
+    font-size: 28rpx;
+color: #151515;
+margin-right:48rpx;
+  }
+  .goods_info--delivery{
+    font-size: 24rpx;
+color: #A5A5A5;
+  }

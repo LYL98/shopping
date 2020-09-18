@@ -1,9 +1,11 @@
 {
   "pages": [
+    "pages/shoppingCart/shoppingCart",
     "pages/index/index",
     "pages/order/order",
+    "pages/my/my",
+    "pages/member/member",
     "pages/orderAdd/orderAdd",
-    "pages/shoppingCart/shoppingCart",
     "pages/itemList/itemList",
     "pages/browser/browser",
     "pages/about/about",
@@ -24,7 +26,6 @@
     "pages/payResult/payResult",
     "pages/orderResult/orderResult",
     "pages/orderDetail/orderDetail",
-    "pages/member/member",
     "pages/avatar/index",
     "pages/reply/reply",
     "pages/afterSale/afterSale",
@@ -47,8 +48,7 @@
     "pages/suggestionsResult/suggestionsResult",
     "pages/hotSaleList/hotSaleList",
     "pages/applyStore/applyStore",
-    "pages/gradeDetail/gradeDetail",
-    "pages/my/my"
+    "pages/gradeDetail/gradeDetail"
   ],
   "plugins": {
     "live-player-plugin": {

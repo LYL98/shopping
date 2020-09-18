@@ -61,8 +61,8 @@
 			>
 				<view class="no-nav">
 					<view class="img">
-						<view class="mark">
-							<text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+						<view class="mark" wx:if="{{item.is_presale}}">
+							<text  class="is-presale">预</text>
 						</view>
 						<image
 						 class="skeleton-rect"
@@ -73,6 +73,7 @@
 						<view class="image skeleton-rect" wx:else></view>
 					</view>
 					<view class="content">
+						
 						<view class="title skeleton-rect">
 							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
 							{{item.title}}
@@ -96,10 +97,11 @@
 								￥{{tools.returnPrice(item.price_sale)}}
 							</view>
 							<view class="num-price">
-								<text class="num-str skeleton-rect">× {{item.number}}</text>
+								<text class="num-str skeleton-rect">X {{item.number}}</text>
 								<text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale * item.number)}}</text>
 							</view>
 						</view>
+							<view class="reason">库存不足，已自动为您调整为最大可购买数量</view>
 					</view>
 				</view>
 			</view>
@@ -351,6 +353,11 @@
 			</view>
 		</view>
 	</view>
+	<block>
+		<view class="border-top"></view>
+	<view class="pay_coupon">支付成功后，将获得满120元减20元(蒲公英优选用)1张，可在我的优惠券中查看</view>
+	</block>
+	
 
 	<!--运费start-->
 	<!-- <view class="input-item">
@@ -371,18 +378,18 @@
 	<view class="bottom-view b-cfff">
 		<view class="total-price">
 			<view>
-				合计：
+				<text>合计：</text>
 				<text class="price">￥{{tools.returnPrice(dataItem.order_price)}}</text>
 			</view>
 		</view>
 		<view class="btn">
 			<!--判断orderAddData.items.length, 因dataItem默认有骨架数据-->
 			<button
-			 class="btn1"
+			 class="btn1 submit"
 			 loading="{{orderLoading}}"
 			 disabled="{{orderAddData.items.length <= 0 || orderLoading}}"
 			 bindtap="submitOrder"
-			>去结算
+			>提交订单
 			</button>
 		</view>
 	</view>
