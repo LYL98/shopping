@@ -32,7 +32,6 @@ Page({
   },
   //获取下单优惠券列表
   getCouponList(){
-
     let d = wx.getStorageSync(this.data.couponCategory === 'goods' ? 'orderCouponGoodsListData' : 'orderCouponDeliveryListData');
     this.setData({
       dataItem: d

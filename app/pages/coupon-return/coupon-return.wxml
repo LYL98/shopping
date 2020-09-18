@@ -1,6 +1,5 @@
 <wxs src="./../../utils/tools.wxs" module="tools"></wxs>
 
-{{tools.returnCouponDetailName('delivery')}}
 <view class="coupon-return-page">
   <view class="coupon-return-item" wx:for="{{coupons.items}}" wx:key="id">
       <view class="item-img-wraper">
