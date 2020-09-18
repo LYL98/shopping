@@ -35,10 +35,10 @@
 				<swiper-item wx:for="{{bannerList}}" wx:key="index">
 					<image
 						data-index="{{index}}"
-						mode="widthFix"
+						mode="aspectFill"
 						data-item="{{item}}"
 						bindtap="urlJump"
-						src="{{tencentPath + item.image}}"
+						src="{{tencentPath + item.image + '_min750'}}"
 					></image>
 				</swiper-item>
 			</swiper>
@@ -208,24 +208,21 @@
 								priceSale="{{item.price_sale}}"
 								priceOrigin="{{item.price_origin}}"
 								priceNoVip="{{item.price_novip}}"
+								saleType="{{item.sale_type}}"
+								supplier="{{item.supplier}}"
 							/>
-							<view class="goods-item-info-bottom">
-								<view class="store-type">
-									<block wx:if="{{item.sale_type == '平台'}}">
-										<text class="type-label" >商家</text>
-										<text>{{item.supplier}}门店</text>
-									</block>
-									<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
-								</view>
+							
+						</view>
+
+					</view>
+					<view class="goods-item-info-bottom">
+								
 
 								<view class="cart-wrapper">
 									<handleShopCart itemData="{{item}}" />
 								</view>
 							</view>
 
-						</view>
-
-					</view>
 				</view>
 			</view>
 

@@ -174,7 +174,8 @@ Component({
         data = [{
           id: itemData.id,
           num: num,
-          is_select: true
+          is_select: true,
+          price:itemData.price_sale
         }];
       }
       wx.setStorageSync('shoppingCartPresaleData', data);

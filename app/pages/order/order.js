@@ -16,7 +16,7 @@ Page({
       page_size: Constant.PAGE_SIZE
     },
     dataItem: {
-      items: []
+      items: [],
     },
     statusColor: {
       wait_confirm: '#70ACF0',
@@ -83,20 +83,22 @@ Page({
   //展开更多
   openMore(e){
     let index = e.currentTarget.dataset.index;
-    let { openMap } = this.data;
-    openMap[index] = true;
+    let tempItem = `dataItem.items[${index}].itemsModify`
+    let tempIsShowMore = `dataItem.items[${index}].isShowMore`
     this.setData({
-      openMap: openMap
+      [tempItem]: this.data.dataItem.items[index].items,
+      [tempIsShowMore]: true
     });
   },
 
   //隐藏更多
   hideMore(e) {
     let index = e.currentTarget.dataset.index;
-    let { openMap } = this.data;
-    openMap[index] = false;
+    let tempItem = `dataItem.items[${index}].itemsModify`
+    let tempIsShowMore = `dataItem.items[${index}].isShowMore`
     this.setData({
-      openMap: openMap
+      [tempItem]: this.data.dataItem.items[index].items.slice(0,2),
+      [tempIsShowMore]: false
     });
   },
 
@@ -196,6 +198,10 @@ Page({
       success: function (res) {
         if (res.statusCode == 200 && res.data.code == 0) {
           let rd = res.data.data;
+          rd.items.forEach(item => {
+            item.itemsModify = item.items.slice(0,2)
+            item.isShowAll = false
+          })
           if (query.page === 1) {
             that.setData({
               dataItem: rd

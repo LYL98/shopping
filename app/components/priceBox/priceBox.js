@@ -40,6 +40,14 @@ Component({
     isVipItem: {
       type: Boolean,
       value: false
+    },
+    saleType: {
+      type: String,
+      value: ''
+    },
+    supplier: {
+      type: String,
+      value: ''
     }
   },
 
@@ -52,6 +60,9 @@ Component({
   pageLifetimes: {
     show:function() {
     },
+  },
+  options:{
+    addGlobalClass: true,
   },
 
   methods: {

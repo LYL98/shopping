@@ -169,9 +169,9 @@
 
 .item_bottom_price{
   position: absolute;
-  bottom: -48rpx;
+  bottom: -8rpx;
   left: 184rpx;
-  right: 0;
+  right: -30rpx;
 }
 .content .num-price{
   bottom: 4rpx !important;
@@ -235,4 +235,29 @@ padding-right: 32rpx;
   .type-label-self {
     background: #FF6010;
   }
+}
+.reason{
+  font-size: 20rpx;
+  color: #F54F3F;
+  position: absolute;
+  bottom: -48rpx;
+  right: 0;
+}
+.item{
+  height:240rpx!important;
+}
+.pay_coupon{
+  font-size: 26rpx;
+color: #989797;
+padding:32rpx;
+}
+.submit{
+  font-size: 32rpx;
+color: #151515;
+}
+.present{
+  background: #E8541E!important;
+    color: white!important;
+    padding: 2rpx 4rpx!important;
+    border-radius: 4rpx!important;
 }

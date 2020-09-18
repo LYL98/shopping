@@ -1,0 +1,59 @@
+var returnCouponType = function(data) {
+  switch (data) {
+    case 'reduce':
+      return '满减'
+    case 'discount':
+      return '满折'
+    case 'gift':
+      return '赠品'
+    
+    default:
+      return data
+  }
+}
+var returnPrice = function(data) {
+  //var v = data?parseFloat(data/100).toFixed(2) : '0.00';
+  var pr = data ? parseFloat(data / 100).toString() : '0';
+  var index = pr.indexOf(".");
+  if (index > 0) {
+    pr = pr.substring(0, index + 3);
+  }
+  return pr;
+}
+
+
+var returnAutoCouponText = function(data){
+  console.log('data',data)
+  switch (data.condition) {
+    case 'goods':
+      return '商品金额满' + returnPrice(data.condition_thr) + '元返' + returnCouponType(data.discount_type) + '券;';
+    case 'goods_operation':
+      return '自营商品金额满'+ returnPrice(data.condition_thr) + '元返' + returnCouponType(data.discount_type) + '券;';
+    case 'goods_merchant':
+      return '平台商品金额商品满'+ returnPrice(data.condition_thr) + '元返' + returnCouponType(data.discount_type) + '券;';
+    case 'goods_custom':
+      return data.condition_items[0] + '等金额商品金额满' + returnPrice(data.condition_thr) + '元返' + returnCouponType(data.discount_type) + '券;';
+    case 'order':
+      return '单笔订单金额满'+ returnPrice(data.condition_thr) + '元返' + returnCouponType(data.discount_type) + '券;';
+    case 'register':
+      return '新用户注册返' + returnCouponType(data.discount_type) + '券;';
+    case 'goods_num':
+      return '商品数量满'+ data.condition_thr + '元返' + returnCouponType(data.discount_type) + '券;';
+    case 'delivery_fee':
+      return '运费满'+ returnPrice(data.condition_thr) + '元返' + returnCouponType(data.discount_type) + '券;';
+  }
+}
+
+var getAutoCouponText = function(data){
+  var str = '';
+  for(var i =0; i< data.length; i++){
+
+    str = str +   returnAutoCouponText(data[i]);
+  }
+  return str;
+}
+module.exports = {
+  returnCouponType:returnCouponType,
+  returnAutoCouponText:returnAutoCouponText,
+  getAutoCouponText:getAutoCouponText
+}

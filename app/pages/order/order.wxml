@@ -2,97 +2,181 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 
 <view class="tab-menu-body">
-  <view class="tab-menu">
-    <view class="{{ query.status === '' && 'active' }}" bindtap="clickTab" data-index="">全部</view>
-    <view class="{{ query.pay_status === 'wait_complete' && 'active' }}" bindtap="clickTab" data-index="wait_complete">未付清</view>
-    <view class="{{ query.status === 'wait_confirm' && 'active' }}" bindtap="clickTab" data-index="wait_confirm">待确认</view>
-    <view class="{{ (query.status === 'confirmed' || query.status === 'assigned' || query.status === 'wait_delivery') && 'active' }}" bindtap="clickTab" data-index="wait_delivery">待发货</view>
-    <view class="{{ query.status === 'deliveried' && 'active' }}" bindtap="clickTab" data-index="deliveried">待收货</view>
-    <view class="{{ (query.status === 'received' || query.status === 'order_done') && 'active' }}" bindtap="clickTab" data-index="order_done">已完成</view>
-    <view class="{{ query.status === 'order_canceled' && 'active' }}" bindtap="clickTab" data-index="order_canceled">已取消</view>
-  </view>
+	<view class="tab-menu tab-menu--order">
+		<view
+		 class="{{ query.status === '' && 'active' }}"
+		 bindtap="clickTab"
+		 data-index=""
+		>全部
+		</view>
+		<view
+		 class="{{ query.pay_status === 'wait_complete' && 'active' }}"
+		 bindtap="clickTab"
+		 data-index="wait_complete"
+		>未付清
+		</view>
+		<view
+		 class="{{ query.status === 'wait_confirm' && 'active' }}"
+		 bindtap="clickTab"
+		 data-index="wait_confirm"
+		>待确认
+		</view>
+		<view
+		 class="{{ (query.status === 'confirmed' || query.status === 'assigned' || query.status === 'wait_delivery') && 'active' }}"
+		 bindtap="clickTab"
+		 data-index="wait_delivery"
+		>待发货
+		</view>
+		<view
+		 class="{{ query.status === 'deliveried' && 'active' }}"
+		 bindtap="clickTab"
+		 data-index="deliveried"
+		>待收货
+		</view>
+		<view
+		 class="{{ (query.status === 'received' || query.status === 'order_done') && 'active' }}"
+		 bindtap="clickTab"
+		 data-index="order_done"
+		>已完成
+		</view>
+		<view
+		 class="{{ query.status === 'order_canceled' && 'active' }}"
+		 bindtap="clickTab"
+		 data-index="order_canceled"
+		>已取消
+		</view>
+	</view>
 </view>
 <view style="height: 80rpx;"></view>
+<view style="background:#F7F7F8;height:24rpx;width:100vw"></view>
+<view
+ wx:for="{{dataItem.items}}"
+ wx:key="index"
+ class="order-item"
+>
+	<navigator url="/pages/orderDetail/orderDetail?id={{item.id}}">
+		<view class="order_item--top justify-between align-center">
+			<view class="item_created">{{item.created}}</view>
+			<view class="item_status">{{orderStatus[item.status]}}</view>
+		</view>
+		<view class="order-content">
+			<view class="item-view">
+				<view
+				 class="item"
+				 wx:for-item="d"
+				 wx:for="{{item.itemsModify}}"
+				 wx:key="i"
+				 wx:for-index="i"
+				>
+					<view class="no-nav" wx:if="{{!openMap[index] && i >= 3 ? false : true}}">
+						<!-- <view class="mark">
+								<text wx:if="{{item.is_presale && !d.is_gift}}" class="is-presale">预</text>
+								<text wx:if="{{item.is_gb_order}}" class="is-gb-order">团</text>
+							</view> -->
+						<image
+						 class="item_img"
+						 wx:if="{{d.item_image}}"
+						 src="{{tencentPath + d.item_image}}_watermark200x200"
+						></image>
+						<view class="item_img bg-img-container-item" wx:else></view>
+						<view class="content">
+							<view class="item_title">
+								<text class="present" wx:if="{{d.is_gift}}">赠品</text>
+								{{d.item_title}}
+							</view>
+							<view class="item_label">
+								<text wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}} | </text>
+								<text  wx:if="{{d.frame_id}}">有筐</text>
+							</view>
+							<view class="item_price">
+								￥{{tools.returnPrice(d.item_price_sale)}}
+							</view>
+							<view class="store-type">
+								<block wx:if="{{item.sale_type == '平台'}}">
+									<text class="type-label" >供应商</text>
+									<text>{{item.supplier}}</text>
+								</block>
+								<text wx:else class="type-label type-label-self">优选</text>
+							</view>
+							<view class="item_num-price">
+								<text class="num-str skeleton-rect">X{{d.count_real}}</text>
+								<text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</navigator>
 
-<view wx:for="{{dataItem.items}}" wx:key="index" class="order-item">
-  <navigator url="/pages/orderDetail/orderDetail?id={{item.id}}">
-    <view class="store-status">
-      <view class="store" data-id="{{item.store_id}}">
-        <text class="stroe-round"></text>
-        <text class="store-str">{{ tools.returnOmissionText(item.store_title, 20) }}</text>
-      </view>
-      <view class="status" style="color: {{statusColor[item.status]}}">{{orderStatus[item.status]}}</view>
-    </view>
-    <view class="order-content">
-      <view class="item-view">
-        <view class="item" wx:for-item="d" wx:for="{{item.items}}" wx:key="i" wx:for-index="i" >
-          <view class="no-nav" wx:if="{{!openMap[index] && i >= 3 ? false : true}}">
-            <view class="img">
-              <view class="mark">
-                <text wx:if="{{item.is_presale && !d.is_gift}}" class="is-presale">预</text>
-                <text wx:if="{{item.is_gb_order}}" class="is-gb-order">团</text>
-              </view>
-              <image wx:if="{{d.item_image}}" src="{{tencentPath + d.item_image}}_watermark200x200"></image>
-              <view class="image bg-img-container-item" wx:else></view>
-            </view>
-            <view class="content">
-              <view class="title"><text class="present" wx:if="{{d.is_gift}}">赠品</text>{{d.item_title}}</view>
-              <view class="label">
-                <text wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}}</text>
-                <text class="frame" wx:if="{{d.frame_id}}">有筐</text>
-              </view>
-              <view class="price-unit">
-                ￥{{tools.returnPrice(d.item_price_sale)}}
-              </view>
-              <view class="num-price">
-                <text class="num-str skeleton-rect">× {{d.count_real}}</text>
-                <text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </navigator>
+	<view wx:if="{{item.items.length > 2}}" class="more-view">
+		<view
+		 wx:if="{{!item.isShowMore}}"
+		 bindtap="openMore"
+		 data-index="{{index}}"
+		>
+			展开更多
+		</view>
+		<view
+		 wx:else
+		 bindtap="hideMore"
+		 data-index="{{index}}"
+		>
+			隐藏
+		</view>
+	</view>
 
-  <view wx:if="{{item.items.length > 3}}" class="more-view">
-    <view wx:if="{{!openMap[index]}}" bindtap="openMore" data-index="{{index}}">
-      展开更多
-    </view>
-    <view wx:else bindtap="hideMore" data-index="{{index}}">
-      隐藏
-    </view>
-  </view>
+	<view class="total ">
+		<view class="price-str align-center justify-end">共{{item.piece_num}}
+			件商品，订单价格：
+			<text>￥{{tools.returnPrice(item.order_price)}}</text>
+			<!-- <block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block> -->
+		</view>
+		<view class="amout-pay align-center justify-end" wx:if="{{item.remain_pay > 0 && item.status != 'order_canceled'}}">
+			已付款：￥{{tools.returnPrice(item.amount_pay)}}，待补款：
+			<text class="price">￥{{tools.returnPrice(item.remain_pay)}}</text>
+			<block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block>
+		</view>
+	</view>
 
-  <view class="total">
-    <view class="price-str">共{{item.piece_num}}
-      件商品，订单价格：<text>￥{{tools.returnPrice(item.order_price)}}</text>
-      <block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block>
-    </view>
-    <view class="amout-pay" wx:if="{{item.remain_pay > 0 && item.status != 'order_canceled'}}">
-      已付款：￥{{tools.returnPrice(item.amount_pay)}}，待补款：<text class="price">￥{{tools.returnPrice(item.remain_pay)}}</text>
-      <block wx:if="{{item.fram_total_price + item.fram_total_price_chg !== 0}}">（含筐费用：￥{{tools.returnPrice(item.fram_total_price + item.fram_total_price_chg)}}）</block>
-    </view>
-  </view>
-
-  <view class="order-bottom">
-    <view class="left">{{item.created}}</view>
-    <view class="right">
-      <button class="btn3" wx:if="{{!item.is_presale}}" size="mini" bindtap="againOrder" data-index="{{index}}">再次下单</button>
-      <button
-          size="mini"
-          class="btn3"
-          style="background-color: #00AE66; color: #fff;"
-          wx:if="{{ item.status !== 'order_canceled' && item.pay_status !== 'wait_complete' && item.status === 'deliveried' }}"
-          data-index="{{index}}"
-          bindtap="confirmReceive">确认收货</button>
-      <button class="btn4" wx:if="{{item.status !== 'order_canceled' && item.pay_status === 'wait_complete'}}" bindtap="orderPay" data-index="{{index}}" size="mini">付款</button>
-    </view>
-  </view>
+	<view class="order-bottom justify-end">
+		<view class="right">
+			<button
+			 class="btn3"
+			 wx:if="{{!item.is_presale}}"
+			 size="mini"
+			 bindtap="againOrder"
+			 data-index="{{index}}"
+			>再次下单
+			</button>
+			<button
+			 size="mini"
+			 class="btn3"
+			 style="background-color: #00AE66; color: #fff;"
+			 wx:if="{{ item.status !== 'order_canceled' && item.pay_status !== 'wait_complete' && item.status === 'deliveried' }}"
+			 data-index="{{index}}"
+			 bindtap="confirmReceive"
+			>确认收货
+			</button>
+			<button
+			 class="btn4"
+			 wx:if="{{item.status !== 'order_canceled' && item.pay_status === 'wait_complete'}}"
+			 bindtap="orderPay"
+			 data-index="{{index}}"
+			 size="mini"
+			>付款
+			</button>
+		</view>
+	</view>
 </view>
 
 <view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
 <defaultPage wx:if="{{ !initLoad && dataItem.num <= 0 }}" currentPage="order"></defaultPage>
-  
-<pay payData="{{payData}}" callback="{{payCallBack}}" wx:if="{{isShowPay}}"/>
-<loading loading="{{loading}}"/>
+
+<pay
+ payData="{{payData}}"
+ callback="{{payCallBack}}"
+ wx:if="{{isShowPay}}"
+/>
+<loading loading="{{loading}}" />
+
