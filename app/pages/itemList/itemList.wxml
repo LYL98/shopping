@@ -119,7 +119,7 @@
 								</view>
 								<view class="goods-item-info">
 									<view class="goods-item-info-top">
-										<view class="goods-titles">
+										<view class="goods-titles add-dot2">
 											<view
 											class="icon-tag"
 											wx:for="{{tools.returnTags(item.tags)}}"
@@ -130,7 +130,7 @@
 											>
 												{{t}}
 											</view>
-											<text>{{item.grade ? '【' + item.grade + '】' : ''}}{{item.title}}</text>
+											<text class="main-title">{{item.grade ? '【' + item.grade + '】' : ''}}{{item.title}}</text>
 										</view>
 										<view class="goods-sku add-dot2">
 											<text wx:if="{{item.gross_weight}}">约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>

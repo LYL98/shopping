@@ -80,7 +80,7 @@
 					<mp-cell>
 						<view class="item-view">
 							<view class="item">
-								<navigator url="/pages/itemDetail/itemDetail?id={{item.id}}">
+								<navigator class="item-nav" url="/pages/itemDetail/itemDetail?id={{item.id}}">
 									<view
 									 class="checked"
 									 catch:tap="redioSelect"
@@ -98,7 +98,7 @@
 										<view class="image bg-img-container-item" wx:else></view>
 									</view>
 									<view class="content">
-										<view class="title goods_title">{{item.title}}</view>
+										<view class="title goods_title add-dot">{{item.title}}</view>
 										<view class="goods_label">
 											<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 </text>
 											<text wx:if="{{item.item_spec}}">| {{item.item_spec}} </text>
