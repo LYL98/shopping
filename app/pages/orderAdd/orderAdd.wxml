@@ -73,7 +73,7 @@
 						<view class="image skeleton-rect" wx:else></view>
 					</view>
 					<view class="content">
-						
+
 						<view class="title skeleton-rect">
 							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
 							{{item.title}}
@@ -101,7 +101,7 @@
 								<text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale * item.number)}}</text>
 							</view>
 						</view>
-							<view class="reason">库存不足，已自动为您调整为最大可购买数量</view>
+						<view class="reason" wx:if="{{item.remark && item.remark.length > 0 }}">{{item.remark}}</view>
 					</view>
 				</view>
 			</view>
@@ -225,14 +225,14 @@
 			<view
 			 class="skeleton-rect add-dot f-r"
 			 style="width: 480rpx;"
-			 wx:elif="{{couponGoodsListData.length > 0 && couponGoodsSelectData && couponGoodsSelectData.id}}"
+			 wx:elif="{{couponGoodsListData.length > 0 && dataItem.coupon_discount && dataItem.coupon_discount.coupon_detail_id}}"
 			>
 				<!--满减-->
-				<text class="price_color" wx:if="{{couponGoodsSelectData.coupon.coupon_type === 'type_reduction'}}">-￥{{tools.returnPrice(couponGoodsSelectData.coupon.benefit)}}</text>
+				<text class="price_color" wx:if="{{dataItem.coupon_discount.discount_type === 'reduce'}}">-￥{{tools.returnPrice(dataItem.coupon_discount.dis_amount)}}</text>
 				<!--折扣-->
-				<text class="price_color"  wx:elif="{{couponGoodsSelectData.coupon.coupon_type === 'type_discount'}}">-￥{{tools.returnPrice(dataItem.coupon_reduction)}}</text>
+				<text class="price_color"  wx:elif="{{dataItem.coupon_discount.discount_type === 'discount'}}">-￥{{tools.returnPrice(dataItem.coupon_discount.dis_amount)}}</text>
 				<!--赠送-->
-				<text wx:else>送{{couponGoodsSelectData.coupon.benefit}}件{{couponGoodsSelectData.gift_item.title}}</text>
+				<text wx:else>送{{dataItem.coupon_discount.gift_info[0].title}}*</text>
 			</view>
 			<view
 			 class="skeleton-rect add-dot f-r price_color"
@@ -309,8 +309,8 @@
 			>无可用优惠券
 			</view>
 			<view wx:else bindtap="selectDeliveryCoupon">
-				<view class="send_item--value align-center" wx:if="{{couponDeliveryListData.length > 0 && couponDeliverySelectData && couponDeliverySelectData.id}}">
-					<text>-￥{{tools.returnPrice(couponDeliverySelectData.coupon.benefit)}} </text>
+				<view class="send_item--value align-center" wx:if="{{couponDeliveryListData.length > 0 && dataItem.delivery_discount && dataItem.delivery_discount.coupon_detail_id}}">
+					<text>-￥{{tools.returnPrice(dataItem.delivery_discount.benefit)}} </text>
 					<image
 					 wx:if="{{couponDeliveryListData.length > 0}}"
 					 class="right-img f-r price-right-img align-center"
@@ -353,11 +353,10 @@
 			</view>
 		</view>
 	</view>
-	<block>
+	<block wx:if="{{dataItem.coupon_bonus && dataItem.coupon_bonus.length > 0}}">
 		<view class="border-top"></view>
-	<view class="pay_coupon">支付成功后，将获得满120元减20元(蒲公英优选用)1张，可在我的优惠券中查看</view>
+		<view class="pay_coupon">{{dataItem.coupon_bonus}}</view>
 	</block>
-	
 
 	<!--运费start-->
 	<!-- <view class="input-item">

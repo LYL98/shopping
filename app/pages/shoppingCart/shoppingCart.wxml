@@ -6,25 +6,37 @@
 	<view class="top-hint" wx:if="{{!closeStore}}">
 		营业时间：{{tools.returnTimeFormat(order_start_time, 'HH:mm')}} - {{tools.returnTimeFormat(order_end_time, 'HH:mm')}}，其他时间无法下单
 	</view>
-	<view class="cart_coupon get_coupon align-center justify-between" wx:if="{{receiveCouponList.length > 0}}">
+	<view
+	 bindtap="toGetCoupon"
+	 class="cart_coupon get_coupon align-center justify-between"
+	 wx:if="{{receiveCouponList.length > 0}}"
+	>
 		<view class="align-center">
 			<text class="label">领券</text>
-			<view class="coupon_info" wx:for="{{receiveCouponList}}" wx:key="index">
+			<view
+			 class="coupon_info"
+			 wx:for="{{receiveCouponList}}"
+			 wx:key="index"
+			>
 				<view class="coupon_info--text" wx:if="{{item.discount_type == 'reduce'}}">
 					满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}
-				</view>	
+				</view>
 				<view class="coupon_info--text" wx:elif="{{item.discount_type == 'discount'}}">
 					{{item.benefit / 10}}折
-				</view>	
+				</view>
 				<view class="coupon_info--text" wx:elif="{{item.discount_type == 'gift'}}">
 					赠{{item.gift_info[0].title}}
-				</view>	
+				</view>
 			</view>
 		</view>
 
 		<text class="right_i--F59725"></text>
 	</view>
-	<view class="cart_coupon reback_coupon align-center justify-between" wx:if="{{autoCouponList.length > 0}}">
+	<view
+	 bindtap="toReturnCoupon"
+	 class="cart_coupon reback_coupon align-center justify-between"
+	 wx:if="{{autoCouponList.length > 0}}"
+	>
 		<view class="align-center ">
 			<view class="label">返券</view>
 			<view class="reback_content">
@@ -35,7 +47,7 @@
 		<text class="right_i--989797"></text>
 	</view>
 	<view class=" coupon_num justify-end align-center " wx:if="{{couponNum > 0}}">
-		<navigator url="/pages/coupon/coupon?from=shoppingCart">
+		<navigator url="/pages/coupon-mine/coupon-mine">
 			<view class="align-center">
 				<view>{{couponNum}}张可用优惠券</view>
 				<text class="right_i--F59725"></text>

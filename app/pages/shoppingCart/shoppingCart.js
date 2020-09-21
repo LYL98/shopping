@@ -148,13 +148,13 @@ Page({
   },
   //获取优惠券列表
   couponList() {
+    console.log('**************')
     let that = this;
-    Http.get(Config.api.couponList, {
-      avaiable: 1,
-      avaiable_now: 1,
-      is_no_prompt: true,
-      store_id: that.address.id
+    Http.get(Config.api.myCoupon, {
+      status: 'unused',
+      store_id: this.data.address.id || ''
     }, { handleError: false }).then((res) => {
+      console.log('获取可用优惠券',res.data.num)
       that.setData({ couponNum: res.data.num, isShowCouponHint: true });
     });
   },
@@ -582,7 +582,7 @@ Page({
       that.setData({ loading: true }, ()=>{
         Http.post(Config.api.itemCartQuery, {
           ids: ids,
-          store_id: this.address.id || ''
+          store_id: this.data.address.id || ''
         }).then((res) => {
           let rd = res.data;
           if (rd.length === 0) {
@@ -658,6 +658,18 @@ Page({
     app.gioActionRecordAdd('firstBuyEntrance_evar', '购物车');
     app.gioActionRecordAdd('secBuyEntrance_evar', '-');
     /*===== 埋点 end ======*/
+  },
+
+  toGetCoupon(){
+    wx.navigateTo({
+			url: `/pages/coupon-get/coupon-get`
+		});
+  },
+
+  toReturnCoupon(){
+    wx.navigateTo({
+			url: `/pages/coupon-get/coupon-get`
+		});
   },
   /**
    * 页面上拉触底事件的处理函数
