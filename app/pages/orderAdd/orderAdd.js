@@ -98,7 +98,8 @@ Page({
       that.setData({
         address: address
       }, ()=>{
-        that.getCoupon(); //获取优惠券
+        that.orderPre(); //订单预生成
+        // that.getCoupon(); //获取优惠券
         this.getUserLevel()
       });
     });
@@ -231,7 +232,7 @@ Page({
             couponDeliveryListData: couponDeliveryUseData, //只有可用的
             couponDeliverySelectData: couponDeliverySelectData
           }, ()=>{
-            that.orderPre(); //订单预生成
+            // that.orderPre(); //订单预生成
           });
         });
       });
@@ -249,6 +250,28 @@ Page({
   //预生成订单
   orderPre() {
     let that = this;
+
+      //判断是预售或正常订单
+      let shoppingCartData = wx.getStorageSync(orderType === 'presale' ? 'shoppingCartPresaleData' : 'shoppingCartData');
+
+      if (shoppingCartData && shoppingCartData.length > 0) {
+        let data = [];
+        for (let i = 0; i < shoppingCartData.length; i++) {
+          if (shoppingCartData[i].is_select) {
+            data.push({
+              id: shoppingCartData[i].id,
+              "number": shoppingCartData[i].num,
+              price: shoppingCartData[i].price
+            });
+          }
+        }
+  
+        that.setData({
+          orderAddData: {
+            items: data
+          }
+        })
+      }
     let { address, orderType, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
     wx.showNavigationBarLoading();
     wx.request({

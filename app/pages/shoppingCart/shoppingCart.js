@@ -637,6 +637,7 @@ Page({
 
   onSubmit(){
     let d = wx.getStorageSync('shoppingCartData');
+    console.log('valid',this.data.validCartList);
     this.data.validCartList.map(item => {
         d.forEach(itemChild => {
           if(item.id == itemChild.id){
@@ -644,6 +645,7 @@ Page({
           }
         })
     })
+    console.log('d',d)
     wx.setStorageSync('shoppingCartData',d);
     wx.navigateTo({
 			url: `/pages/orderAdd/orderAdd`
