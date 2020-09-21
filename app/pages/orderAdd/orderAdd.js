@@ -75,6 +75,7 @@ Page({
     title:'',
     selfGoods:[], // 自营的商品
     supplierGoods:[], // 供应商那个商品
+    isNoUseCoupon:false
   },
 
   /**
@@ -98,8 +99,7 @@ Page({
       that.setData({
         address: address
       }, ()=>{
-        that.orderPre(); //订单预生成
-        // that.getCoupon(); //获取优惠券
+        that.getCoupon(); //获取优惠券
         this.getUserLevel()
       });
     });
@@ -149,6 +149,26 @@ Page({
     wx.navigateTo({
       url: page
     });
+  },  
+
+  // 不使用优惠券
+  noUseCoupon(e){
+    console.log('使用优惠券',e)
+    this.setData({
+      isNoUseCoupon:e
+    })
+  },
+
+  getUseCouponInfo(info){
+    let value;
+    if(info.id){
+      value = info.id
+    }else if(this.data.isNoUseCoupon){
+      value = 0;
+    }else{
+      value = ''
+    }
+    return value;
   },
 
   //获取优惠券列表
@@ -200,10 +220,12 @@ Page({
                //如果选择不使用优惠券
               couponGoodsSelectData = {}
             }
-          }else{
-            //如刚进页面未有选择，自动选择最最优的
-            couponGoodsSelectData = couponGoodsUseData.length > 0 ? couponGoodsUseData[0] : {};
           }
+          
+          // else{
+          //   //如刚进页面未有选择，自动选择最最优的
+          //   couponGoodsSelectData = couponGoodsUseData.length > 0 ? couponGoodsUseData[0] : {};
+          // }
 
           //如果已选择运费优惠券
           if(typeof couponDeliveryStorageSelectData === 'object'){
@@ -218,10 +240,11 @@ Page({
                //如果选择不使用优惠券
               couponDeliverySelectData = {}
             }
-          }else{
-            //如刚进页面未有选择，自动选择最最优的
-            couponDeliverySelectData = couponDeliveryUseData.length > 0 ? couponDeliveryUseData[0] : {};
           }
+          // else{
+          //   //如刚进页面未有选择，自动选择最最优的
+          //   couponDeliverySelectData = couponDeliveryUseData.length > 0 ? couponDeliveryUseData[0] : {};
+          // }
 
           wx.setStorageSync('orderCouponGoodsListData', rd.filter(item => item.coupon.coupon_type != 'type_delivery')); //所有商品优惠券
           wx.setStorageSync('orderCouponDeliveryListData', rd.filter(item => item.coupon.coupon_type == 'type_delivery')); //所有运费优惠券
@@ -232,7 +255,7 @@ Page({
             couponDeliveryListData: couponDeliveryUseData, //只有可用的
             couponDeliverySelectData: couponDeliverySelectData
           }, ()=>{
-            // that.orderPre(); //订单预生成
+            that.orderPre(); //订单预生成
           });
         });
       });
@@ -274,6 +297,9 @@ Page({
       }
     let { address, orderType, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
     wx.showNavigationBarLoading();
+    let goodsCouponData = that.getUseCouponInfo(couponGoodsSelectData)
+    let deliveryCouponData = that.getUseCouponInfo(couponDeliverySelectData)
+    console.log('goodsCouponData: ', goodsCouponData);
     wx.request({
       url: Config.api.orderPre,
       header: {
@@ -283,40 +309,25 @@ Page({
       method: 'POST',
       data: {
         items: orderAddData.items,
-        coupon_merchant_id: couponGoodsSelectData.id || '',
-        delivery_coupon_id: couponDeliverySelectData.id || '',
+        coupon_merchant_id: goodsCouponData,
+        delivery_coupon_id: deliveryCouponData,
         store_id: address.id || '',
         delivery_date: deliveryDate,
         is_presale: orderType === 'presale' ? true : false //是否预售订单
       },
       success: function(res) {
         console.log('res',res.data)
-        // if(res.data.code != 0){
-        //    wx.showModal({
-        //     title:'提示',
-        //     content:'商品价格有变动,请重新提交订单',
-        //     showCancel:false,
-        //     confirmColor: '#FDCA1F',
-        //     success(res) {
-        //       if (res.confirm) {
-        //         wx.navigateBack()
-        //       } 
-        //     }
-        //   });
-          
-        //   reutrn
-        // }
-        
+
         //共用提示
         let msgBox = (str, callback) => {
           wx.showModal({
             title: '提示',
             content: str,
             confirmText: '我知道了',
-            confirmColor: '#00AE66',
+            confirmColor: '#FDCA1F',
             showCancel: false,
             success: function() {
-              typeof callback === 'function' && callback();
+              typeof callback === 'function' && callback(); 
             }
           });
         };
@@ -397,6 +408,10 @@ Page({
           msgBox('您所购买的商品有少于最小订货数，请在购物车修改购买数量', ()=>{
             wx.navigateBack();
           });
+        } else if (res.statusCode == 200 && res.data.code == 109) {
+          msgBox('您所购买的商品价格发生改动，请重新提交订单', ()=>{
+            wx.navigateBack();
+          });
         } 
         else {
           app.requestResultCode(res); //处理异常
@@ -425,10 +440,12 @@ Page({
       });
       return false;
     }
+    let goodsCouponData = that.getUseCouponInfo(couponGoodsSelectData)
+    let deliveryCouponData = that.getUseCouponInfo(couponDeliverySelectData)
     let d = {
       store_id: address.id,
-      coupon_merchant_id: couponGoodsSelectData.id || '',
-      delivery_coupon_id: couponDeliverySelectData.id || '',
+      coupon_merchant_id: goodsCouponData,
+      delivery_coupon_id: deliveryCouponData,
       ...orderAddData,
       delivery_date: deliveryDate,
       is_presale: orderType === 'presale' ? true : false //是否预售订单

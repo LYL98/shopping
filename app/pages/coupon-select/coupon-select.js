@@ -31,15 +31,23 @@ Page({
   // 选择优惠券
   handleCouponSelect(e) {
     const { itemIndex } = e.detail
-    let couponItem = coupons[itemIndex]
+    let couponItem = this.data.coupons[itemIndex]
     wx.setStorageSync(this.data.couponCategory === 'goods'?'orderCouponGoodsSelectData':'orderCouponDeliverySelectData', couponItem || {})
-    wx.navigateBack();
+    this.setNoUseCoupon(false)
   },
 
   // 不选择优惠券
   cancelUseCoupon() {
-    wx.setStorageSync(this.data.couponCategory === 'goods'?'orderCouponGoodsSelectData':'orderCouponDeliverySelectData', {})
+    wx.setStorageSync(this.data.couponCategory === 'goods'?'orderCouponGoodsSelectData':'orderCouponDeliverySelectData', {noUse:true})
+    this.setNoUseCoupon(true)
+  },
+
+  setNoUseCoupon(status){
+    let pages = getCurrentPages();
+		let prevPage = pages[pages.length - 2];
+    prevPage.noUseCoupon(status);
     wx.navigateBack();
+
   }
 
 
