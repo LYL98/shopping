@@ -42,7 +42,7 @@
           </view>
           <block>
               <view wx:if="{{itemData.date_type == 'fixed'}}" class="coupon-validity">{{itemData.effective_date}}至{{itemData.expire_date}}</view>
-              <view wx:if="{{itemData.date_type == 'custom'}}" class="coupon-validity">有效期：自领取{{itemData.effective_days}}天后{{itemData.expire_days}}天内有效</view>
+              <view wx:if="{{itemData.date_type == 'offset'}}" class="coupon-validity">有效期：自领取{{itemData.effective_days}}天后{{itemData.expire_days}}天内有效</view>
           </block>
         </view>
       </view>
