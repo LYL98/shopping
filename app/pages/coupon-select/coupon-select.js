@@ -24,7 +24,7 @@ Page({
   getCouponList(){
     let coupons = wx.getStorageSync(this.data.couponCategory === 'goods' ? 'orderCouponGoodsListData' : 'orderCouponDeliveryListData');
     this.setData({
-      coupons
+      coupons: coupons.map(item => ({...item, ...item.coupon}))
     });
   },
 
