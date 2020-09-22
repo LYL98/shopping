@@ -75,7 +75,8 @@ Page({
     title:'',
     selfGoods:[], // 自营的商品
     supplierGoods:[], // 供应商那个商品
-    isNoUseCoupon:false
+    isNoUseGoodsCoupon:false,
+    isNoUseDeliveryCoupon:false
   },
 
   /**
@@ -152,18 +153,36 @@ Page({
   },  
 
   // 不使用优惠券
-  noUseCoupon(e){
+  noUseGoodsCoupon(e){
     console.log('使用优惠券',e)
     this.setData({
-      isNoUseCoupon:e
+      isNoUseGoodsCoupon:e
     })
   },
 
-  getUseCouponInfo(info){
+  noUseDeliveryCoupon(e){
+    this.setData({
+      isNoUseDeliveryCoupon:e
+    })
+  },
+
+  getUseGoodsCouponInfo(info){
     let value;
     if(info.id){
       value = info.id
-    }else if(this.data.isNoUseCoupon){
+    }else if(this.data.isNoUseGoodsCoupon){
+      value = 0;
+    }else{
+      value = ''
+    }
+    return value;
+  },
+
+  getUseDeliveryCouponInfo(info){
+    let value;
+    if(info.id){
+      value = info.id
+    }else if(this.data.isNoUseDeliveryCoupon){
       value = 0;
     }else{
       value = ''
@@ -297,9 +316,8 @@ Page({
       }
     let { address, orderType, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
     wx.showNavigationBarLoading();
-    let goodsCouponData = that.getUseCouponInfo(couponGoodsSelectData)
-    let deliveryCouponData = that.getUseCouponInfo(couponDeliverySelectData)
-    console.log('goodsCouponData: ', goodsCouponData);
+    let goodsCouponData = that.getUseGoodsCouponInfo(couponGoodsSelectData)
+    let deliveryCouponData = that.getUseDeliveryCouponInfo(couponDeliverySelectData)
     wx.request({
       url: Config.api.orderPre,
       header: {
@@ -440,8 +458,8 @@ Page({
       });
       return false;
     }
-    let goodsCouponData = that.getUseCouponInfo(couponGoodsSelectData)
-    let deliveryCouponData = that.getUseCouponInfo(couponDeliverySelectData)
+    let goodsCouponData = that.getUseGoodsCouponInfo(couponGoodsSelectData)
+    let deliveryCouponData = that.getUseDeliveryCouponInfo(couponDeliverySelectData)
     let d = {
       store_id: address.id,
       coupon_merchant_id: goodsCouponData,

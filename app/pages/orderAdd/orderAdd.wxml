@@ -225,7 +225,7 @@
 			<view
 			 class="skeleton-rect add-dot f-r"
 			 style="width: 480rpx;"
-			 wx:elif="{{couponGoodsListData.length > 0 && dataItem.coupon_discount && dataItem.coupon_discount.coupon_detail_id}}"
+			 wx:elif="{{couponGoodsListData.length > 0 && dataItem.coupon_discount && dataItem.coupon_discount.coupon_store_id}}"
 			>
 				<!--满减-->
 				<text class="price_color" wx:if="{{dataItem.coupon_discount.discount_type === 'reduce'}}">-￥{{tools.returnPrice(dataItem.coupon_discount.dis_amount)}}</text>
@@ -309,8 +309,8 @@
 			>无可用优惠券
 			</view>
 			<view wx:else bindtap="selectDeliveryCoupon">
-				<view class="send_item--value align-center" wx:if="{{couponDeliveryListData.length > 0 && dataItem.delivery_discount && dataItem.delivery_discount.coupon_detail_id}}">
-					<text>-￥{{tools.returnPrice(dataItem.delivery_discount.benefit)}} </text>
+				<view class="send_item--value align-center" wx:if="{{couponDeliveryListData.length > 0 && dataItem.delivery_discount && dataItem.delivery_discount.coupon_store_id}}">
+					<text>-￥{{tools.returnPrice(dataItem.delivery_discount.dis_fee)}} </text>
 					<image
 					 wx:if="{{couponDeliveryListData.length > 0}}"
 					 class="right-img f-r price-right-img align-center"

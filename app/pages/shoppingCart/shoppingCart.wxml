@@ -19,7 +19,9 @@
 			 wx:key="index"
 			>
 				<view class="coupon_info--text" wx:if="{{item.discount_type == 'reduce'}}">
-					满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}
+					<block wx:if="{{item.threshold > 0}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}元</block>
+					<block wx:else>{{tools.returnPrice(item.benefit)}}元</block>
+
 				</view>
 				<view class="coupon_info--text" wx:elif="{{item.discount_type == 'discount'}}">
 					{{item.benefit / 10}}折
