@@ -80,6 +80,8 @@ Page({
       }, ()=>{
         that.getItemDetail();
         that.promotion();
+        that.getCoupon()
+
       });
     });
 
@@ -166,16 +168,16 @@ Page({
 
   getCoupon(){
     Http.get(Config.api.itemDetailCoupon, {
-      id: id,
+      item_id: this.data.id,
       store_id: this.data.address.id || '',
-      province_code:this.address.province_code
+      province_code:this.data.address.province_code
     }).then(res => {
       let rd = res.data;
       rd.items.forEach(item => {
-        if(item.coupon_type == 'goods_gift'){
+        if(item.coupon_type == 'gift'){
           item.gift_info.forEach(itemChild=> {
             if(itemChild.title.length > 3){
-              itemChild.title = itemChild.title.split(0,3) + '*'
+              itemChild.title = itemChild.title.slice(0,3) + '*'
             }
           })
         }
@@ -198,7 +200,12 @@ Page({
 		});
 
 		return str;
-	},
+  },
+  toGetCoupon(){
+    wx.navigateTo({
+			url: `/pages/coupon-get/coupon-get`
+		});
+  },
   //全场活动
   promotion(){
     let that = this;
