@@ -4,7 +4,7 @@
 
 <view class="container">
 	<view class="top-hint" wx:if="{{!closeStore}}">
-		营业时间：{{order_start_time}} - {{order_end_time}}，其他时间无法下单
+		营业时间：{{tools.returnTimeFormat(order_start_time, 'HH:mm')}} - {{tools.returnTimeFormat(order_end_time, 'HH:mm')}}，其他时间无法下单
 	</view>
 	<view
 	 bindtap="toGetCoupon"
