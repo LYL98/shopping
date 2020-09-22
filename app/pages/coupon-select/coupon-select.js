@@ -45,10 +45,10 @@ Page({
   setNoUseCoupon(status){
     let pages = getCurrentPages();
 		let prevPage = pages[pages.length - 2];
-    prevPage.noUseCoupon(status);
+    this.data.couponCategory === 'goods' ? prevPage.noUseGoodsCoupon(status) : prevPage.noUseDeliveryCoupon(status)
     wx.navigateBack();
-
-  }
+  },
+  
 
 
 
