@@ -74,7 +74,7 @@
 					</view>
 					<view class="content">
 
-						<view class="title skeleton-rect">
+						<view class="title skeleton-rect add-dot">
 							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
 							{{item.title}}
 						</view>
