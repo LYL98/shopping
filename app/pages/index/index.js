@@ -40,7 +40,9 @@ Page({
     userInfo: {}, //当前登录用户
     address: {},
     isShowSelect: false,
-    tagsListX: 0
+    tagsListX: 0,
+    hasCouponEntry: false,
+    showCouponEntry: true,
   },
 
   //页面装载时
@@ -63,6 +65,7 @@ Page({
       if(address && address.id){
         let ad = app.getSelectStore(); //当前选择的地址
         query.store_id = ad.id;
+        this.judgeHasCouponEntry(ad)
         if (query.page !== 1) {
           query.page_size = query.page_size * query.page;
           query.page = 1;
@@ -138,7 +141,7 @@ Page({
     let that = this;
     let rd = res.detail;
     if(rd && rd.id){
-      
+      this.judgeHasCouponEntry(rd);
       let { query } = that.data;
       query.page = 1;
       query.page_size = Constant.PAGE_SIZE;
@@ -457,13 +460,37 @@ Page({
       });
     }
   },
+  timer: setTimeout(()=>{}),
+  onPageScroll() {
+    const { hasCouponEntry, showCouponEntry } = this.data
+    if(!hasCouponEntry) return
+    this.setData({showCouponEntry: false})
+    this.timer && clearTimeout(this.timer)
+    this.timer = setTimeout(()=> {
+      this.setData({showCouponEntry: true})
+    }, 300)
+  },
+  // 判断是否有用户可主动领取的优惠券，有则显示入口
+  judgeHasCouponEntry(store) {
+    const { id, province_code } = store
+    Http.get(Config.api.availableAllCoupon, {
+      store_id: id,
+      province_code: province_code,
+      page: 1,
+      page_size: 1,
+    }).then(res => {
+      let rd = res.data || {items:[], num: 0 }
+      this.setData({
+        hasCouponEntry: rd.num > 0 ? true : false 
+      })
+    })
+  },
 
   tapCouponGet() {
     wx.navigateTo({
       url: '/pages/coupon-get/coupon-get',
     })
   },
-
 
   toDetail(e){
     const dataset = e.currentTarget.dataset;

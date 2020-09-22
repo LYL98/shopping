@@ -2,7 +2,7 @@
 <wxs src="./../../../utils/tools.wxs" module="tools"></wxs>
 
 <view wx:if="{{isShow}}" class="coupon-dialog custom-class" catchtap="closeCouponDialog">
-  <view class="coupon-dialog-body">
+  <view class="coupon-dialog-body" catchtap="toMyCouponPage">
     <view class="coupon-dialog-title">一 恭喜你获得 一</view>
     <view class="coupon-dialog-subtitle">你的优惠券已放入卡包</view>
     <view class="coupon-list">
