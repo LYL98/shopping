@@ -167,22 +167,25 @@
 		<!--全场满折end-->
 
 		<!--优惠券start-->
-		<view class="activity-item coupon" wx:if="{{couponList.length > 0}}">
+		<view
+		 class="activity-item activity-coupon-item align-center"
+		 wx:if="{{couponList.length > 0}}"
+		 bindtap="toGetCoupon"
+		>
 			<view class="send_title">优惠券</view>
 			<view class="justify-between" style="width:100%">
 				<view class="content align-center">
-					<view class="coupon_item" wx:for="{{couponList}}">
-						<text wx:if="{{item.discount_type == 'reduce'}}">
-						<block wx:if="{{item.threshold > 0}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}</block>
-						<block wx:else>{{tools.returnPrice(item.benefit)}}元</block>
-					
-					</text>
-						<text wx:elif="{{item.discount_type == 'discount'}}">
-					{{item.benefit / 10}}折
-				</text>
-						<text wx:elif="{{item.discount_type == 'gift'}}">
-					赠{{item.gift_info[0].title}}
-				</text>
+					<view class="coupon_item align-center" wx:for="{{couponList}}">
+						<block wx:if="{{item.discount_type == 'reduce'}}">
+							<block wx:if="{{item.threshold > 0}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}</block>
+							<block wx:else>全场减{{tools.returnPrice(item.benefit)}}</block>
+						</block>
+						<block wx:elif="{{item.discount_type == 'discount'}}">
+							{{item.benefit / 10}}折
+						</block>
+						<block wx:elif="{{item.discount_type == 'gift'}}">
+							赠{{item.gift_info[0].title}}
+						</block>
 					</view>
 				</view>
 				<view class="get align-center">

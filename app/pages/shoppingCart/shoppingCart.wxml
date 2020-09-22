@@ -20,7 +20,7 @@
 			>
 				<view class="coupon_info--text" wx:if="{{item.discount_type == 'reduce'}}">
 					<block wx:if="{{item.threshold > 0}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}元</block>
-					<block wx:else>{{tools.returnPrice(item.benefit)}}元</block>
+					<block wx:else>全场减{{tools.returnPrice(item.benefit)}}</block>
 
 				</view>
 				<view class="coupon_info--text" wx:elif="{{item.discount_type == 'discount'}}">

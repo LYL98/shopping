@@ -92,15 +92,15 @@ Page({
       province_code:this.data.address.province_code
     }, { handleError: false }).then((res) => {
       res.data.items.forEach(item => {
-        if(item.coupon_type == 'goods_gift'){
+        if(item.discount_type == 'gift'){
           item.gift_info.forEach(itemChild=> {
             if(itemChild.title.length > 3){
-              itemChild.title = itemChild.title.split(0,3) + '*'
+              itemChild.title = itemChild.title.slice(0,3) + '*'
+
             }
           })
         }
       })
-      console.log('手动领取',res.data.items)
       that.setData({ receiveCouponList: res.data.items });
     });
   },
@@ -668,7 +668,7 @@ Page({
 
   toReturnCoupon(){
     wx.navigateTo({
-			url: `/pages/coupon-get/coupon-get`
+			url: `/pages/coupon-return/coupon-return`
 		});
   },
   /**
