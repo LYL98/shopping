@@ -28,7 +28,6 @@ Page({
 
 
   onShow: function () {
-
   },
 
   getCouponDetailList() {

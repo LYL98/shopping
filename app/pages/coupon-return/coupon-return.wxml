@@ -4,7 +4,7 @@
   <view class="coupon-return-item" wx:for="{{coupons.items}}" wx:key="id">
       <view class="item-img-wraper">
         <image src="./../../assets/img/coupon/coupon_return_detail.png"></image>
-        <text class="type">{{tools.returnCouponTypeText(item.coupon_type, item.discount_type)}}</text>
+        <text class="type">{{tools.returnCouponTypeText(item.coupon_type,item.discount_type)}}</text>
       </view>
       <view class="item-info">
         <view class="title">{{tools.returnCouponDetailName(item)}}</view>

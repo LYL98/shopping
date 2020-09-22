@@ -62,7 +62,7 @@
       </view>
       <view class="coupon-item-bottom" bindtap="expandHandle">
         <view class="coupon-desc {{isExpand? 'flex-column': 'add-dot'}}">
-          <text wx:if="{{itemData.coupon_type == 'goods_gift'}}" decode>赠品:{{tools.returnGiftInfoText(itemData.gift_info)}}&nbsp;&nbsp;</text>
+          <text wx:if="{{itemData.coupon_type=='goods' && itemData.discount_type=='gift' }}" decode>赠品:{{tools.returnGiftInfoText(itemData.gift_info)}}&nbsp;&nbsp;</text>
           <text decode>适用范围：{{tools.returnCouponScopeText(itemData.scope_type, itemData.usable_scope, itemData.unusable_scope)}}</text>
         </view>
         <image class="{{isExpand? 'rotate' : ''}}" style="margin-top:6rpx;width:24rpx;height:24rpx;transition: all .3s linear;" src="./img/open.png"></image>

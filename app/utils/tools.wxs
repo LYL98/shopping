@@ -262,7 +262,8 @@ var returnGiftInfoText = function(gift_info = []) {
 var returnCouponTypeText = function(coupon_type, discount_type) {
   var str = ''
   if(coupon_type == 'delivery') {
-    return '运费券';
+    str = '运费券';
+    return str;
   }
   if(coupon_type == 'goods') {
     switch(discount_type) {
@@ -332,11 +333,11 @@ var returnCouponDetailName = function(item) {
   var tempFaceValue = 0; //优惠券面额
   switch(coupon_type) {
     case 'delivery':
-      str = str + ', 获运费券'
+      str = str + ', 获[运费券]'
       tempFaceValue = '减' + returnPrice(benefit) + '元';
     break;
     case 'goods':
-      str = str + ', 获商品券'
+      str = str + ', 获[商品券]'
       if(discount_type == 'reduce') {
         tempFaceValue = '减' + returnPrice(benefit) + '元'
       } else if(discount_type == 'discount'){
@@ -390,5 +391,6 @@ module.exports = {
   returnVIPLevelClassName: returnVIPLevelClassName,
   returnCouponScopeText: returnCouponScopeText,
   returnGiftInfoText: returnGiftInfoText,
-  returnCouponDetailName: returnCouponDetailName
+  returnCouponDetailName: returnCouponDetailName,
+  returnCouponTypeText: returnCouponTypeText
 }
