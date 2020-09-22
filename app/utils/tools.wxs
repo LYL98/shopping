@@ -233,6 +233,12 @@ var returnCouponScopeText = function(scopeType, usableScopeList = [], unusableSc
     case 'all': 
       str = '全场可用'
       break;
+    case 'operation':
+      str = '限自营商品可用'
+      break
+     case 'merchant':
+       str= '限平台商品可用'
+       break
     case 'goods':
     case 'category':
       var a = usableScopeList.length > 0 ? '仅限' + usableScopeList.join('、') + '可用' : '';
