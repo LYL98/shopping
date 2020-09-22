@@ -248,7 +248,7 @@
 	</view>
 </view>
 
-<view class="coupon-entry-fixed" catchtap="tapCouponGet">
-	<image  src="./../../assets/img/coupon/coupon_entry.png"></image>
+<view class="coupon-entry-fixed" catchtap="tapCouponGet" wx:if="{{hasCouponEntry && showCouponEntry}}">
+	<image src="./../../assets/img/coupon/coupon_entry.png"></image>
 </view>
 
