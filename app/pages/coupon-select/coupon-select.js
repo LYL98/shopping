@@ -28,7 +28,7 @@ Page({
     this.setData({
       coupons: coupons.map(item => {
         item.fe_checked = item.id === checkedCoupon.id ? true : false 
-        return {...item.coupon, ...item}
+        return item
       }),
     });
   },
