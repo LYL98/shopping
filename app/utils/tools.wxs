@@ -253,7 +253,7 @@ var returnCouponScopeText = function(scopeType, usableScopeList = [], unusableSc
 var returnGiftInfoText = function(gift_info = []) {
   var str =''
   gift_info.forEach(function(item){
-    str = item.title + '*' + item.gift_num + ' '
+    str += item.title + '*' + item.gift_num + ' '
   })
   return str;
 }

@@ -340,7 +340,6 @@ Page({
           couponGoodsSelectData:{id:res.data.data.coupon_discount.coupon_store_id || ''},
           couponDeliverySelectData:{id:res.data.data.delivery_discount.coupon_store_id || ''}
         },() => {
-          debugger
           wx.setStorageSync('orderCouponGoodsSelectData', that.data.couponGoodsSelectData)
           wx.setStorageSync('orderCouponDeliverySelectData', that.data.couponDeliverySelectData)
         })
