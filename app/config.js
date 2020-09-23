@@ -6,8 +6,7 @@
 export const Conn = 'test';
 
 //测试环境api地址
-// export const RequestHttpDev = 'https://vestadevls.pgyscm.com';
-export const RequestHttpDev = 'https://vestatestls.pgyscm.com';
+export const RequestHttpDev = 'https://vestadevls.pgyscm.com';
 export const RequestWsDev = 'wss://iris.pgyscm.com/connection/websocket';
 
 //测试发布环境api地址

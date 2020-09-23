@@ -22,9 +22,14 @@ Page({
 
   // 获取下单优惠券列表
   getCouponList(){
-    let coupons = wx.getStorageSync(this.data.couponCategory === 'goods' ? 'orderCouponGoodsListData' : 'orderCouponDeliveryListData');
+    const {couponCategory} = this.data
+    let coupons = wx.getStorageSync(couponCategory === 'goods' ? 'orderCouponGoodsListData' : 'orderCouponDeliveryListData') || [];
+    let checkedCoupon = wx.getStorageSync(couponCategory === 'goods'?'orderCouponGoodsSelectData':'orderCouponDeliverySelectData') || {}
     this.setData({
-      coupons: coupons.map(item => ({...item, ...item.coupon}))
+      coupons: coupons.map(item => {
+        item.fe_checked = item.id === checkedCoupon.id ? true : false 
+        return {...item.coupon, ...item}
+      }),
     });
   },
 
