@@ -42,7 +42,6 @@
 		</view>
 	</view>
 
-
 	<view class="express-body-wrapper">
 		<view class="express-body" wx:if="{{ detail.express && detail.express.shipper_code }}">
 			<view class="header">
@@ -115,16 +114,16 @@
 	<view class="bottom-border2"></view>
 	<view class="item-view" wx:if="{{selfGoods.length > 0}}">
 		<view class="platform align-center">
-				<view class="platform_tag platform_tag--self">优选</view>
-				<view>蒲公英优选</view>
-			</view>
+			<view class="platform_tag platform_tag--self">优选</view>
+			<view>蒲公英优选</view>
+		</view>
 		<view
 		 class="item"
 		 wx:for-item="d"
 		 wx:for="{{selfGoods}}"
 		 wx:key="index"
-		>	
-		
+		>
+
 			<view class="no-nav">
 				<view class="img">
 					<view class="mark">
@@ -164,7 +163,7 @@
 				 data-type="selfGoods"
 				 bindtap="showArrow"
 				>
-				<text class="flex">价格变动</text>
+					<text class="flex">价格变动</text>
 					<view class="flex amount-price justify-end align-center">
 						<view class="up" wx:if="{{d.amount_real - d.amount_pre > 0}}">+{{tools.returnPrice(d.amount_real - d.amount_pre)}}</view>
 						<view class="down" wx:else>{{tools.returnPrice(d.amount_real - d.amount_pre)}}</view>
@@ -213,16 +212,16 @@
 	</view>
 	<view class="item-view" wx:if="{{supplierGoods.length > 0}}">
 		<view class="platform align-center">
-				<view class="platform_tag platform_tag--supplier">平台</view>
-				<view>商家直供</view>
-			</view>
+			<view class="platform_tag platform_tag--supplier">平台</view>
+			<view>商家直供</view>
+		</view>
 		<view
 		 class="item"
 		 wx:for-item="d"
 		 wx:for="{{supplierGoods}}"
 		 wx:key="index"
-		>	
-		
+		>
+
 			<view class="no-nav">
 				<view class="img">
 					<view class="mark">
@@ -240,9 +239,9 @@
 				<view class="content item_content">
 					<view>
 						<view class="title skeleton-rect">
-						<text class="present" wx:if="{{d.is_gift}}">赠品</text>
-						{{d.item_title}}
-							</view>
+							<text class="present" wx:if="{{d.is_gift}}">赠品</text>
+							{{d.item_title}}
+						</view>
 						<view class="item_label">
 							<text class="skeleton-rect" wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}} | </text>
 							<text class="skeleton-rect frame" wx:if="{{d.frame_id}}">有筐</text>
@@ -250,14 +249,14 @@
 					</view>
 					<view>
 						<view class="price-unit skeleton-rect">
-						￥{{tools.returnPrice(d.item_price_sale)}}
+							￥{{tools.returnPrice(d.item_price_sale)}}
 						</view>
 						<view class="num-price">
 							<text class="num-str skeleton-rect">X{{d.count_real}}</text>
 							<text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
 						</view>
 					</view>
-					
+
 				</view>
 			</view>
 			<view class="price-log" wx:if="{{d.amount_real - d.amount_pre != 0}}">
@@ -333,6 +332,15 @@
 			</view>
 		</view>
 	</view>
+	<view class="order_input_item input-item" style="border-bottom:none!important">
+		<view class="title">
+			<text class="skeleton-rect">运费优惠券</text>
+		</view>
+		<view class="content">
+			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">-￥{{tools.returnPrice(detail.delivery_fee)}}
+			</view>
+		</view>
+	</view>
 
 	<view class="total-price">
 		<view class="row" wx:if="{{detail.promotion_reduction}}">
@@ -394,10 +402,7 @@
 		<!-- <view class="price-str">共{{detail.piece_num}}件商品，订单价格：
 			<text>￥{{tools.returnPrice(detail.order_price)}}</text>
 		</view> -->
-		<view class="amout-pay" wx:if="{{detail.remain_pay > 0 && detail.status != 'order_canceled'}}">
-			已付款：￥{{tools.returnPrice(detail.amount_pay)}}，待补款：
-			<text class="price">￥{{tools.returnPrice(detail.remain_pay)}}</text>
-		</view>
+
 	</view>
 
 	<view class="bottom-border2"></view>
@@ -419,6 +424,14 @@
 			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">￥{{tools.returnPrice(detail.fram_total_price)}}
 			</view>
 		</view>
+	</view>
+	<view
+	 class="justify-end amout-pay"
+	 style="padding-right: 32rpx;padding-bottom: 20rpx;"
+	 wx:if="{{detail.remain_pay > 0 && detail.status != 'order_canceled'}}"
+	>
+		已付款：￥{{tools.returnPrice(detail.amount_pay)}}，待补款：
+		<text class="price">￥{{tools.returnPrice(detail.remain_pay)}}</text>
 	</view>
 	<view class="bottom-border2"></view>
 

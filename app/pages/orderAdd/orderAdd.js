@@ -224,8 +224,8 @@ Page({
           let couponGoodsSelectData = {}; // 选择的商品优惠券
           let couponDeliverySelectData = {}; // 选择的运费优惠券
           let rd = res.data;
-          let couponGoodsUseData = rd.filter(item => item.is_usable && item.coupon.coupon_type != 'type_delivery'); //可用
-          let couponDeliveryUseData = rd.filter(item => item.is_usable && item.coupon.coupon_type == 'type_delivery'); //可用
+          let couponGoodsUseData = rd.filter(item => item.is_usable && item.coupon.coupon_type == 'goods'); //可用
+          let couponDeliveryUseData = rd.filter(item => item.is_usable && item.coupon.coupon_type == 'delivery'); //可用
           //如果已选择商品优惠券
           if(typeof couponGoodsStorageSelectData === 'object'){
             if(couponGoodsStorageSelectData.id){
@@ -265,8 +265,8 @@ Page({
           //   couponDeliverySelectData = couponDeliveryUseData.length > 0 ? couponDeliveryUseData[0] : {};
           // }
 
-          wx.setStorageSync('orderCouponGoodsListData', rd.filter(item => item.coupon.coupon_type != 'type_delivery')); //所有商品优惠券
-          wx.setStorageSync('orderCouponDeliveryListData', rd.filter(item => item.coupon.coupon_type == 'type_delivery')); //所有运费优惠券
+          wx.setStorageSync('orderCouponGoodsListData', rd.filter(item => item.coupon.coupon_type == 'goods')); //所有商品优惠券
+          wx.setStorageSync('orderCouponDeliveryListData', rd.filter(item => item.coupon.coupon_type == 'delivery')); //所有运费优惠券
 
           that.setData({
             couponGoodsListData: couponGoodsUseData, //只有可用的
@@ -315,6 +315,7 @@ Page({
         })
       }
     let { address, orderType, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
+    console.log('*****couponGoodsSelectData: ', couponGoodsSelectData);
     wx.showNavigationBarLoading();
     let goodsCouponData = that.getUseGoodsCouponInfo(couponGoodsSelectData)
     let deliveryCouponData = that.getUseDeliveryCouponInfo(couponDeliverySelectData)
@@ -334,8 +335,11 @@ Page({
         is_presale: orderType === 'presale' ? true : false //是否预售订单
       },
       success: function(res) {
-        console.log('res',res.data)
-
+        console.log('res: ***', res.data);
+        that.setData({
+          couponGoodsSelectData:{id:res.data.data.coupon_discount.coupon_store_id || ''},
+          couponDeliverySelectData:{id:res.data.data.delivery_discount.coupon_store_id || ''}
+        })
         //共用提示
         let msgBox = (str, callback) => {
           wx.showModal({
