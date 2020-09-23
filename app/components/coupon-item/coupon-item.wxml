@@ -53,10 +53,15 @@
             <view wx:if="{{itemData.is_receive}}" class="btn-get-already" hover-class="view-hover">已领取</view>
             <view wx:else class="btn-get" hover-class="view-hover" catchtap="receiveCoupon">立即领取</view>
           </block>
+          <!-- 我的优惠券页面 -->
           <block wx:if="{{currentPage==='coupon-mine'}}">
             <image wx:if="{{ status ==='used' }}" class="coupon-label-img" src="./img/coupon_used.png"></image>
             <image wx:if="{{ status ==='expired' }}" class="coupon-label-img" src="./img/coupon_expired.png"></image>
             <view wx:if="{{itemData.beWillExpired && status == 'unused'}}" class="overdue">快过期</view>
+          </block>
+          <!-- 选择优惠券页面 -->
+          <block wx:if="{{currentPage==='coupon-select'}}">
+            <image wx:if="{{itemData.fe_checked}}" src="./img/coupon_checked.png" class="coupon-checked"></image>
           </block>
         </view>
       </view>

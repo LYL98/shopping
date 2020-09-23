@@ -127,6 +127,14 @@ view {
         height: 102rpx;
         display: block;
       }
+      .coupon-checked {
+        width: 69rpx;
+        height: 65rpx;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
       .overdue {
         width: 84rpx;
         text-align: center;
