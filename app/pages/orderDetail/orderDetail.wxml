@@ -337,7 +337,7 @@
 			<text class="skeleton-rect">运费优惠券</text>
 		</view>
 		<view class="content">
-			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">-￥{{tools.returnPrice(detail.delivery_fee)}}
+			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">-￥{{tools.returnPrice(detail.delivery_disfee)}}
 			</view>
 		</view>
 	</view>
