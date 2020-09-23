@@ -8,6 +8,7 @@ page {
     display: flex;
     padding: 16rpx;
     border-radius: 10rpx;
+    margin-bottom: 24rpx;
     .item-img-wraper {
       width: 168rpx;
       height: 168rpx;
@@ -45,8 +46,8 @@ page {
       }
       .desc {
         width: 88%;
-        font-size: 24rpx;
-        color: #868686;
+        font-size: 18rpx;
+        color: #CDCDCD;;
         font-weight: 400;
       }
       .num {
