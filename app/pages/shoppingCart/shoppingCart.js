@@ -123,7 +123,6 @@ Page({
           })
         }
       })
-      console.log('res.data.items',res.data.items)
       that.setData({ autoCouponList: res.data.items });
     });
   },
@@ -148,13 +147,11 @@ Page({
   },
   //获取优惠券列表
   couponList() {
-    console.log('**************')
     let that = this;
     Http.get(Config.api.myCoupon, {
       status: 'unused',
       store_id: this.data.address.id || ''
     }, { handleError: false }).then((res) => {
-      console.log('获取可用优惠券',res.data.num)
       that.setData({ couponNum: res.data.num, isShowCouponHint: true });
     });
   },
@@ -511,17 +508,18 @@ Page({
           inValidCartList.push(item)
         }
       })
-      console.log('validCartList',validCartList)
+      console.log('打印更新后的validCartList',validCartList)
      
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
         totalPrice: totalPrice,
         discountsPrice: discountsPrice,
-        validCartList,
+        validCartList: dataItem.filter(item => item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted),
         inValidCartList,
       }, () => {
         that.judgeIsAllSelect();//判断是否全选
+        console.log('***validCartList',this.data.validCartList);
       });
     } else {
       that.setData({

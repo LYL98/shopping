@@ -177,8 +177,9 @@
 				<view class="content align-center">
 					<view class="coupon_item align-center" wx:for="{{couponList}}">
 						<block wx:if="{{item.discount_type == 'reduce'}}">
-							<block wx:if="{{item.threshold > 0}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}</block>
-							<block wx:else>全场减{{tools.returnPrice(item.benefit)}}</block>
+							<block wx:if="{{item.use_type  == 'amount'}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}元</block>
+							<block wx:elif="{{item.use_type == 'any'}}">全场减{{tools.returnPrice(item.benefit)}}元</block>
+							<block wx:elif="{{item.use_type == 'num'}}">满{{item.threshold}}件减{{tools.returnPrice(item.benefit)}}</block>
 						</block>
 						<block wx:elif="{{item.discount_type == 'discount'}}">
 							{{item.benefit / 10}}折

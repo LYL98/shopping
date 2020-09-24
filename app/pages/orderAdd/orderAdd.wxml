@@ -78,7 +78,7 @@
 							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
 							{{item.title}}
 						</view>
-						<view class="goods_label">
+						<view class="goods_label add-dot2">
 							<text class="skeleton-rect tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
 							<text class="skeleton-rect" wx:if="{{item.item_spec}}"> | {{item.item_spec}}</text>
 							<text class="skeleton-rect" wx:if="{{item.origin_place}}"> | {{item.origin_place}}</text>

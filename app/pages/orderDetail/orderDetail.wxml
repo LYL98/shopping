@@ -332,7 +332,7 @@
 			</view>
 		</view>
 	</view>
-	<view class="order_input_item input-item" style="border-bottom:none!important">
+	<!-- <view class="order_input_item input-item" style="border-bottom:none!important">
 		<view class="title">
 			<text class="skeleton-rect">运费优惠券</text>
 		</view>
@@ -340,7 +340,7 @@
 			<view class="skeleton-rect add-dot f-r" style="width: 500rpx;">-￥{{tools.returnPrice(detail.delivery_disfee)}}
 			</view>
 		</view>
-	</view>
+	</view> -->
 
 	<view class="total-price">
 		<view class="row" wx:if="{{detail.promotion_reduction}}">
@@ -357,6 +357,14 @@
 			</view>
 			<view class="right">
 				<text class="skeleton-rect">￥{{tools.returnPrice(detail.total_delivery_fee)}}</text>
+			</view>
+		</view>
+		<view class="row">
+			<view class="left">
+				<text class="skeleton-rect">运费优惠券</text>
+			</view>
+			<view class="right">
+				<text class="skeleton-rect">-￥{{tools.returnPrice(detail.delivery_disfee)}}</text>
 			</view>
 		</view>
 		<view class="row">
