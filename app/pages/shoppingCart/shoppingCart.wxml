@@ -51,7 +51,7 @@
 	<view class=" coupon_num justify-end align-center " wx:if="{{couponNum > 0}}">
 		<navigator url="/pages/coupon-mine/coupon-mine">
 			<view class="align-center">
-				<view>{{couponNum}}张可用优惠券</view>
+				<view>{{couponNum}}张优惠券</view>
 				<text class="right_i--F59725"></text>
 			</view>
 		</navigator>

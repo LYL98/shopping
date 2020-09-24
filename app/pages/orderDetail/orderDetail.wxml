@@ -139,14 +139,16 @@
 					<view class="image skeleton-rect bg-img-container-item" wx:else></view>
 				</view>
 				<view class="content item_content">
-					<view class="title skeleton-rect">
-						<text class="present" wx:if="{{d.is_gift}}">赠品</text>
-						{{d.item_title}}
-					</view>
-					<view class="item_label">
-						<text class="skeleton-rect" wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}} | </text>
-						<text class="skeleton-rect frame" wx:if="{{d.frame_id}}">有筐</text>
-					</view>
+					<block>
+						<view class="title skeleton-rect">
+							{{d.item_title}}
+						</view>
+						<view class="item_label">
+							<text class="skeleton-rect" wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}} | </text>
+							<text class="skeleton-rect frame" wx:if="{{d.frame_id}}">有筐</text>
+						</view>
+					</block>
+
 					<view class="price-unit skeleton-rect">
 						￥{{tools.returnPrice(d.item_price_sale)}}
 					</view>
@@ -210,7 +212,8 @@
 			</view>
 		</view>
 	</view>
-	<view class="item-view" wx:if="{{supplierGoods.length > 0}}">
+	<view class="bottom-border2"></view>
+	<view class="item-view goods_box" wx:if="{{supplierGoods.length > 0}}">
 		<view class="platform align-center">
 			<view class="platform_tag platform_tag--supplier">平台</view>
 			<view>商家直供</view>
@@ -239,7 +242,6 @@
 				<view class="content item_content">
 					<view>
 						<view class="title skeleton-rect">
-							<text class="present" wx:if="{{d.is_gift}}">赠品</text>
 							{{d.item_title}}
 						</view>
 						<view class="item_label">
@@ -309,6 +311,51 @@
 							<view>现数量：{{d.count_real}}件</view>
 						</view>
 					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="bottom-border2"></view>
+	<view class="item-view goods_box" wx:if="{{giftGoods.length > 0}}">
+
+		<view
+		 class="item"
+		 wx:for-item="d"
+		 wx:for="{{giftGoods}}"
+		 wx:key="index"
+		>
+
+			<view class="no-nav">
+				<view class="img">
+					<image
+					 class="skeleton-rect"
+					 lazy-load="{{index > 4 ? true : false}}"
+					 wx:if="{{d.item_image}}"
+					 src="{{tencentPath + d.item_image}}_watermark200x200"
+					></image>
+					<view class="image skeleton-rect bg-img-container-item" wx:else></view>
+				</view>
+				<view class="content item_content">
+					<view>
+						<view class="title skeleton-rect">
+							<text class="present">赠品</text>
+							{{d.item_title}}
+						</view>
+						<view class="item_label">
+							<text class="skeleton-rect" wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}} | </text>
+							<text class="skeleton-rect frame" wx:if="{{d.frame_id}}">有筐</text>
+						</view>
+					</view>
+					<view>
+						<view class="price-unit skeleton-rect">
+							￥{{tools.returnPrice(d.item_price_sale)}}
+						</view>
+						<view class="num-price">
+							<text class="num-str skeleton-rect">X{{d.count_real}}</text>
+							<text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
+						</view>
+					</view>
+
 				</view>
 			</view>
 		</view>
@@ -433,6 +480,11 @@
 			</view>
 		</view>
 	</view>
+
+	<view class="justify-end amout-pay" style="padding-right: 32rpx;padding-bottom: 20rpx;">
+		<text>共{{detail.piece_num}}件商品, 订单价格:￥{{tools.returnPrice(detail.order_price)}}</text>
+	</view>
+
 	<view
 	 class="justify-end amout-pay"
 	 style="padding-right: 32rpx;padding-bottom: 20rpx;"
@@ -441,6 +493,7 @@
 		已付款：￥{{tools.returnPrice(detail.amount_pay)}}，待补款：
 		<text class="price">￥{{tools.returnPrice(detail.remain_pay)}}</text>
 	</view>
+
 	<view class="bottom-border2"></view>
 
 	<view class="record" bindtap="showHidePayRecord">

@@ -84,6 +84,7 @@
 		<view class="goods_info--tag justify-between align-center">
 			<view class="align-center">
 				<view
+				 wx:if="{{detail.tags.length > 0}}"
 				 class="tag_item align-center"
 				 wx:for="{{tools.returnTags(detail.tags)}}"
 				 wx:for-item="t"
@@ -117,7 +118,9 @@
 		<view class="goods_header--conetnt align-center activity-item" wx:if="{{detail.is_presale}}">
 			<view class="send_title">配送时间</view>
 			<view class="content">
-				{{detail.presale_begin}} 至 {{detail.presale_end}}
+				{{detail.presale_begin}}
+				<text style="margin-left: 10rpx;margin-right: 10rpx;">至</text>
+				{{detail.presale_end}}
 			</view>
 		</view>
 		<!--预售商品日期end-->
@@ -134,7 +137,7 @@
 		</view>
 
 		<!--单品优惠start-->
-		<view class="activity-item discount-item" wx:if="{{detail.step_prices && detail.step_prices.length > 0}}">
+		<view class="activity-item discount-item align-center" wx:if="{{detail.step_prices && detail.step_prices.length > 0}}">
 			<view class="title">
 				<text class="discount">优惠</text>
 			</view>
@@ -145,7 +148,7 @@
 		<!--单品优惠end-->
 
 		<!--全场满减start-->
-		<view class="activity-item reduction-item" wx:if="{{promotionData.id && promotionData.promotion_type === 'type_reduction'}}">
+		<view class="activity-item reduction-item align-center" wx:if="{{promotionData.id && promotionData.promotion_type === 'type_reduction'}}">
 			<view class="title">
 				<text class="discount">满减</text>
 			</view>

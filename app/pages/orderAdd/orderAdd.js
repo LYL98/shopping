@@ -74,7 +74,8 @@ Page({
     level:0,
     title:'',
     selfGoods:[], // 自营的商品
-    supplierGoods:[], // 供应商那个商品
+    supplierGoods:[], // 供应商那个商品,
+    giftGoods:[], // 供应商那个商品,
     isNoUseGoodsCoupon:false,
     isNoUseDeliveryCoupon:false
   },
@@ -360,8 +361,9 @@ Page({
         console.log('ssssss',res.data.code)
         if (res.statusCode == 200 && res.data.code === 0) {
           let rd = res.data.data;
-          let selfGoods = rd.items.filter(item => item.sale_type === '自营')
-          let supplierGoods = rd.items.filter(item => item.sale_type === '平台')
+          let selfGoods = rd.items.filter(item => item.sale_type === '自营' && !item.is_gift)
+          let supplierGoods = rd.items.filter(item => item.sale_type === '平台' && !item.is_gift)
+          let giftGoods = rd.items.filter(item => item.is_gift)
           that.setData({
             couponGoodsSelectData:{id:res.data.data.coupon_discount.coupon_store_id || ''},
             couponDeliverySelectData:{id:res.data.data.delivery_discount.coupon_store_id || ''}
@@ -374,7 +376,8 @@ Page({
             dataItem: rd,
             showSkeleton: false,
             selfGoods,
-            supplierGoods
+            supplierGoods,
+            giftGoods
           });
           /*===== 埋点 start ======*/
           app.gioActionRecordAdd('createOrder', {
