@@ -331,13 +331,16 @@ var returnCouponDetailName = function(item) {
   }
 
   var tempFaceValue = 0; //优惠券面额
+  var couponName = '';
   switch(coupon_type) {
     case 'delivery':
-      str = str + ', 获[运费券]'
+      str = str + ', 获'
+      couponName = '的运费券1张'
       tempFaceValue = '减' + returnPrice(benefit) + '元';
     break;
     case 'goods':
-      str = str + ', 获[商品券]'
+      str = str + ', 获'
+      couponName = '的商品券1张'
       if(discount_type == 'reduce') {
         tempFaceValue = '减' + returnPrice(benefit) + '元'
       } else if(discount_type == 'discount'){
@@ -351,16 +354,16 @@ var returnCouponDetailName = function(item) {
 
   switch(use_type) {
     case 'any':
-      str = str + '全场无门槛' + tempFaceValue
+      str = str + '全场无门槛' + tempFaceValue + couponName
       break;
     case 'amount':
-      str = str + '满' + returnPrice(threshold)+ '元' + tempFaceValue
+      str = str + '满' + returnPrice(threshold)+ '元' + tempFaceValue + couponName
       break;
     case 'num':
-      str = str + '购买数量满' + threshold + '件' + tempFaceValue
+      str = str + '购买数量满' + threshold + '件' + tempFaceValue + couponName
       break;
     case 'delivery_fee':
-      str = str + '运费满' + returnPrice(threshold) + '元' + tempFaceValue
+      str = str + '运费满' + returnPrice(threshold) + '元' + tempFaceValue + couponName
       break;
     default:
       break;
