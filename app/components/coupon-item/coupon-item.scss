@@ -24,7 +24,8 @@ view {
         width: 8rpx;
         height: 100%;
         background: #F59725;
-        border-radius: 10rpx 0 0 10rpx;
+        // border-radius: 10rpx 0 0 10rpx;
+        border-top-left-radius: 10rpx;
       }
       .coupon-denomination {
         color: #F59725;

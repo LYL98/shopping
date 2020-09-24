@@ -10,7 +10,6 @@
         <view class="title">{{tools.returnCouponDetailName(item)}}</view>
         <!-- 可用范围 -->
         <view class="desc add-dot">{{item.scope_type == 'all' ? '' :tools.returnCouponScopeText(item.scope_type, item.usable_scope, item.unusable_scope)}}</view>
-        <view class="num">X 1</view>
       </view>
   </view>
 </view>
