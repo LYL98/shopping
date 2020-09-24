@@ -1,6 +1,6 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <import src="index.skeleton.wxml"/>
-
+<pageNavBar title="蒲公英" color="#000" back="{{false}}" home="{{false}}" background="#FFE05C"></pageNavBar>
 <view class="{{isShowSelect ? 'show-select' : ''}}">
 	<!--选择门店组件-->
 	<view class="" style="background: #FFE05C;">
