@@ -84,6 +84,7 @@
 		<view class="goods_info--tag justify-between align-center">
 			<view class="align-center">
 				<view
+				 wx:if="{{detail.tags.length > 0}}"
 				 class="tag_item align-center"
 				 wx:for="{{tools.returnTags(detail.tags)}}"
 				 wx:for-item="t"
@@ -117,7 +118,9 @@
 		<view class="goods_header--conetnt align-center activity-item" wx:if="{{detail.is_presale}}">
 			<view class="send_title">配送时间</view>
 			<view class="content">
-				{{detail.presale_begin}} 至 {{detail.presale_end}}
+				{{detail.presale_begin}}
+				<text style="margin-left: 10rpx;margin-right: 10rpx;">至</text>
+				{{detail.presale_end}}
 			</view>
 		</view>
 		<!--预售商品日期end-->
@@ -125,7 +128,7 @@
 		<view class="goods_info--limit goods_header--conetnt  align-center" wx:if="{{detail.min_num_per_order || detail.order_num_max < 1000}}">
 
 			<block wx:if="{{detail.min_num_per_order}}">
-				<text>起售价{{detail.min_num_per_order}}件</text>
+				<text>起购价{{detail.min_num_per_order}}件</text>
 			</block>
 			<block wx:if="{{detail.order_num_max < 1000}}">
 				<view class="cicle"></view>
@@ -133,8 +136,10 @@
 			</block>
 		</view>
 
+	</view>
+	<view class="goods_attr goods_content">
 		<!--单品优惠start-->
-		<view class="activity-item discount-item" wx:if="{{detail.step_prices && detail.step_prices.length > 0}}">
+		<view class="activity-item discount-item align-center" wx:if="{{detail.step_prices && detail.step_prices.length > 0}}">
 			<view class="title">
 				<text class="discount">优惠</text>
 			</view>
@@ -145,7 +150,7 @@
 		<!--单品优惠end-->
 
 		<!--全场满减start-->
-		<view class="activity-item reduction-item" wx:if="{{promotionData.id && promotionData.promotion_type === 'type_reduction'}}">
+		<view class="activity-item reduction-item align-center" wx:if="{{promotionData.id && promotionData.promotion_type === 'type_reduction'}}">
 			<view class="title">
 				<text class="discount">满减</text>
 			</view>
@@ -177,8 +182,9 @@
 				<view class="content align-center">
 					<view class="coupon_item align-center" wx:for="{{couponList}}">
 						<block wx:if="{{item.discount_type == 'reduce'}}">
-							<block wx:if="{{item.threshold > 0}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}</block>
-							<block wx:else>全场减{{tools.returnPrice(item.benefit)}}</block>
+							<block wx:if="{{item.use_type  == 'amount'}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}元</block>
+							<block wx:elif="{{item.use_type == 'any'}}">全场减{{tools.returnPrice(item.benefit)}}元</block>
+							<block wx:elif="{{item.use_type == 'num'}}">满{{item.threshold}}件减{{tools.returnPrice(item.benefit)}}</block>
 						</block>
 						<block wx:elif="{{item.discount_type == 'discount'}}">
 							{{item.benefit / 10}}折
@@ -196,9 +202,7 @@
 
 		</view>
 		<!--优惠券end-->
-
 	</view>
-
 	<view class="goods_attr">
 		<view class="goods_header goods_header--attr goods_header_attr--other">商品属性</view>
 		<view class="align-center goods_attr--box goods_attr--box--gray pl24">
