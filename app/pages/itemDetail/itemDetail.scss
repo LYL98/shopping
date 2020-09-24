@@ -453,7 +453,7 @@
   flex-shrink:0;
 }
 .activity-item{
-  border-top: 1rpx solid #eee;
+  border-bottom: 1rpx solid #eee;
   font-size: 28rpx;
   height: 88rpx;
   // padding: 35rpx 0;
@@ -680,4 +680,12 @@ margin-right:48rpx;
   .goods_info--delivery{
     font-size: 24rpx;
 color: #A5A5A5;
+  }
+
+  .bottom-border2{
+    border-bottom: 20rpx solid #F7F7F8;
+  }
+  
+  .goods_content{
+    padding: 0 24rpx;
   }

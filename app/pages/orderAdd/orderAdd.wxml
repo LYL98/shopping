@@ -144,7 +144,7 @@
 						<view class="image skeleton-rect" wx:else></view>
 					</view>
 					<view class="content">
-						<view class="title skeleton-rect">
+						<view class="title add-dot skeleton-rect">
 							{{item.title}}
 						</view>
 						<view class="goods_label">
@@ -211,7 +211,7 @@
 						<view class="image skeleton-rect" wx:else></view>
 					</view>
 					<view class="content">
-						<view class="title skeleton-rect">
+						<view class="title skeleton-rect add-dot">
 							<text class="present" >赠品</text>
 							{{item.title}}
 						</view>
