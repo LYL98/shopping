@@ -384,7 +384,7 @@ Page({
       let w = e.detail.scrollWidth / this.factor;
       let tagsListX = l * (30 / (w - 700)); //30：滚动条总宽度
       this.setData({ tagsListX });
-    }, 200);
+    });
   },
 
   //点击tags
