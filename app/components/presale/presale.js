@@ -73,7 +73,7 @@ Component({
     showHideSelect(){
       let that = this;
       let { isShow, itemData, num } = that.data;
-      
+      console.log('显示隐藏',itemData)
       //显示时
       if(!isShow){
         let data = wx.getStorageSync('shoppingCartPresaleData');
@@ -87,10 +87,12 @@ Component({
           }
           data = [{
             id: itemData.id,
+            price:itemData.price_sale,
             num: num,
             is_select: true
           }];
           num = num;
+          console.log('设置',data)
           wx.setStorageSync('shoppingCartPresaleData', data);
         }
       }
@@ -167,6 +169,7 @@ Component({
     //处理增加购物车
     handleUp(num){
       let { itemData } = this.data;
+      console.log('itemData',itemData)
       let data = wx.getStorageSync('shoppingCartPresaleData');
       if (data && data.length > 0) {
         data[0].num = num;
@@ -175,6 +178,7 @@ Component({
           id: itemData.id,
           num: num,
           is_select: true,
+          price:itemData.price_sale,
           price:itemData.price_sale
         }];
       }

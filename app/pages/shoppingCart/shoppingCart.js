@@ -304,11 +304,33 @@ Page({
   inputBlur(e){
     this.setData({ keyHeight: 0 });
   },
+  stepPriceInfo(num,itemData){
+    let d = itemData.step_prices;
+    console.log('d',d)
+    let isStepPrice = false
+    let stepPrice = 0
+    if(d && d.length > 0){
+      console.log('1')
+      for(let i = 0; i < d.length; i++){
+        console.log(2,num >= d[i].num)
+        if(i === d.length - 1 && num >= d[i].num){
+          isStepPrice = true;
+          stepPrice = d[i].price_sale;
+          break;
+        }else if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+          isStepPrice = true;
+          stepPrice = d[i].price_sale;
+          break;
+        }
+      }
+    }
+    return {isStepPrice,stepPrice};
+  },
   setStepPricesHint(num,itemData){
-
     console.log('this.data.discount: ', this.data.discount);
     let sph = '';
     let d = itemData.step_prices;
+
     if(d && d.length > 0){
       for(let i = 0; i < d.length; i++){
         if(i === d.length - 1 && num >= d[i].num){
@@ -639,13 +661,23 @@ Page({
 
   onSubmit(){
     let d = wx.getStorageSync('shoppingCartData');
-    console.log('valid',this.data.validCartList);
     this.data.validCartList.map(item => {
+      if(item.is_select){
         d.forEach(itemChild => {
           if(item.id == itemChild.id){
-            itemChild.price = item.price_sale
+            console.log('item.id',item.id)
+            console.log('itemChild.id',itemChild.id)
+            let stepPriceInfo = this.stepPriceInfo(itemChild.num,item)
+            console.log('stepPriceInfo',stepPriceInfo)
+            if(stepPriceInfo.isStepPrice){
+              itemChild.price = stepPriceInfo.stepPrice < item.price_sale ? stepPriceInfo.stepPrice : item.price_sale
+            }else{
+              itemChild.price = item.price_sale
+            }
           }
         })
+      }
+        
     })
     console.log('d',d)
     wx.setStorageSync('shoppingCartData',d);
