@@ -291,7 +291,7 @@ Page({
   //预生成订单
   orderPre() {
     let that = this;
-
+    let {orderType} = that.data;
       //判断是预售或正常订单
       let shoppingCartData = wx.getStorageSync(orderType === 'presale' ? 'shoppingCartPresaleData' : 'shoppingCartData');
 
@@ -313,7 +313,7 @@ Page({
           }
         })
       }
-    let { address, orderType, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
+    let { address, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
     console.log('*****couponGoodsSelectData: ', couponGoodsSelectData);
     wx.showNavigationBarLoading();
     let goodsCouponData = that.getUseGoodsCouponInfo(couponGoodsSelectData)
@@ -431,11 +431,11 @@ Page({
             wx.navigateBack();
           });
         } else if (res.statusCode == 200 && res.data.code == 107) {
-          msgBox('您所购买的商品有预售商品，请在购物车移除', ()=>{
+          msgBox(`${res.data.message},请在购物车移除`, ()=>{
             wx.navigateBack();
           });
         } else if (res.statusCode == 200 && res.data.code == 108) {
-          msgBox('您所购买的商品有少于最小订货数，请在购物车修改购买数量', ()=>{
+          msgBox(res.data.message, ()=>{
             wx.navigateBack();
           });
         } else if (res.statusCode == 200 && res.data.code == 109) {
@@ -443,7 +443,7 @@ Page({
             wx.navigateBack();
           });
         } else if (res.statusCode == 200 && res.data.code == 110) {
-          msgBox('您所购买的商品有已上架,请重新提交订单', ()=>{
+          msgBox('您所购买的商品已下架,请重新提交订单', ()=>{
             wx.navigateBack();
           });
         }  

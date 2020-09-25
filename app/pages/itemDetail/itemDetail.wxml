@@ -161,7 +161,7 @@
 		<!--全场满减end-->
 
 		<!--全场满折start-->
-		<view class="activity-item reduction-item" wx:if="{{promotionData.id && promotionData.promotion_type === 'scope_discount'}}">
+		<view class="activity-item reduction-item align-center" wx:if="{{promotionData.id && promotionData.promotion_type === 'scope_discount'}}">
 			<view class="title">
 				<text class="discount">满折</text>
 			</view>

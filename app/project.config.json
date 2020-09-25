@@ -1,289 +1,289 @@
 {
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "urlCheck": false,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": false,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
-    "useApiHook": false,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "bundle": false,
-    "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": []
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.6.4",
-  "appid": "wx70a3bf5f7a69987d",
-  "projectname": "selene",
-  "isGameTourist": false,
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "plugin": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "currentL": -1,
-      "list": []
-    },
-    "gamePlugin": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": -1,
-      "list": [
-        {
-          "id": 0,
-          "name": "测试自动更新",
-          "pathName": "pages/index/index",
-          "query": "",
-          "scene": "1001"
-        },
-        {
-          "id": -1,
-          "name": "门店地址",
-          "pathName": "pages/shop/shop",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "我的",
-          "pathName": "pages/my/my",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "我的-商户详情",
-          "pathName": "pages/myDetail/myDetail",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "商品列表",
-          "pathName": "pages/itemList/itemList",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "账号管理",
-          "pathName": "pages/member/member",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 6,
-          "name": "商品详情",
-          "pathName": "pages/itemDetail/itemDetail",
-          "query": "id=16536",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "关于我们",
-          "pathName": "pages/about/about",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "登录",
-          "pathName": "pages/login/login",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 9,
-          "name": "申请售后服务",
-          "pathName": "pages/afterSale/afterSale",
-          "query": "id=702537",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "拍摄视频",
-          "pathName": "pages/shootVideo/shootVideo",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 11,
-          "name": "售后详情",
-          "pathName": "pages/afterSaleDetail/afterSaleDetail",
-          "query": "id=183419",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "购物车",
-          "pathName": "pages/shoppingCart/shoppingCart",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 13,
-          "name": "更新系统",
-          "pathName": "pages/updateSystem/updateSystem",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/itemLabel/itemLabel",
-          "pathName": "pages/itemLabel/itemLabel",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "售后发送信息",
-          "pathName": "pages/reply/reply",
-          "query": "id=702537",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "搜索",
-          "pathName": "pages/search/search",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "售后二维码",
-          "pathName": "pages/afterSaleQrCode/afterSaleQrCode",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "售后列表",
-          "pathName": "pages/afterSaleRecord/afterSaleRecord",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 19,
-          "name": "退货单",
-          "pathName": "pages/afterSaleReturn/afterSaleReturn",
-          "query": "id=1",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "热销榜单",
-          "pathName": "pages/hotSaleList/hotSaleList",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 21,
-          "name": "门店申请",
-          "pathName": "pages/applyStore/applyStore",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 22,
-          "name": "门店地址列表",
-          "pathName": "pages/shop/shop",
-          "query": "id=10840",
-          "scene": null
-        },
-        {
-          "id": 23,
-          "name": "门店详情",
-          "pathName": "pages/shopDetail/shopDetail",
-          "query": "id=21593",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "优惠券",
-          "pathName": "pages/coupon/coupon",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 25,
-          "name": "运营专区",
-          "pathName": "pages/itemTag/itemTag",
-          "query": "id=41",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "返券明细",
-          "pathName": "pages/coupon-return/coupon-return",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "优惠券选择(商品券｜运费券)",
-          "pathName": "pages/coupon-select/coupon-select",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "优惠券领取",
-          "pathName": "pages/coupon-get/coupon-get",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "我的优惠券",
-          "pathName": "pages/coupon-mine/coupon-mine",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "商品分类",
-          "pathName": "pages/itemList/itemList",
-          "query": "",
-          "scene": null
-        }
-      ]
-    }
-  }
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"enhance": true,
+		"postcss": true,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"bundle": false,
+		"useIsolateContext": true,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"useMultiFrameRuntime": false,
+		"useApiHook": false,
+		"packNpmManually": false,
+		"packNpmRelationList": []
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.6.4",
+	"appid": "wx70a3bf5f7a69987d",
+	"projectname": "selene",
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "测试自动更新",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "门店地址",
+					"pathName": "pages/shop/shop",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/my/my",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的-商户详情",
+					"pathName": "pages/myDetail/myDetail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品列表",
+					"pathName": "pages/itemList/itemList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "账号管理",
+					"pathName": "pages/member/member",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "商品详情",
+					"pathName": "pages/itemDetail/itemDetail",
+					"query": "id=16536",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "关于我们",
+					"pathName": "pages/about/about",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录",
+					"pathName": "pages/login/login",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "申请售后服务",
+					"pathName": "pages/afterSale/afterSale",
+					"query": "id=702537",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "拍摄视频",
+					"pathName": "pages/shootVideo/shootVideo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "售后详情",
+					"pathName": "pages/afterSaleDetail/afterSaleDetail",
+					"query": "id=183419",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/shoppingCart/shoppingCart",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 13,
+					"name": "更新系统",
+					"pathName": "pages/updateSystem/updateSystem",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/itemLabel/itemLabel",
+					"pathName": "pages/itemLabel/itemLabel",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后发送信息",
+					"pathName": "pages/reply/reply",
+					"query": "id=702537",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索",
+					"pathName": "pages/search/search",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后二维码",
+					"pathName": "pages/afterSaleQrCode/afterSaleQrCode",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后列表",
+					"pathName": "pages/afterSaleRecord/afterSaleRecord",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 19,
+					"name": "退货单",
+					"pathName": "pages/afterSaleReturn/afterSaleReturn",
+					"query": "id=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "热销榜单",
+					"pathName": "pages/hotSaleList/hotSaleList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 21,
+					"name": "门店申请",
+					"pathName": "pages/applyStore/applyStore",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 22,
+					"name": "门店地址列表",
+					"pathName": "pages/shop/shop",
+					"query": "id=10840",
+					"scene": null
+				},
+				{
+					"id": 23,
+					"name": "门店详情",
+					"pathName": "pages/shopDetail/shopDetail",
+					"query": "id=21593",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/coupon/coupon",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 25,
+					"name": "运营专区",
+					"pathName": "pages/itemTag/itemTag",
+					"query": "id=41",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "返券明细",
+					"pathName": "pages/coupon-return/coupon-return",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券选择(商品券｜运费券)",
+					"pathName": "pages/coupon-select/coupon-select",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券领取",
+					"pathName": "pages/coupon-get/coupon-get",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的优惠券",
+					"pathName": "pages/coupon-mine/coupon-mine",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品分类",
+					"pathName": "pages/itemList/itemList",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }

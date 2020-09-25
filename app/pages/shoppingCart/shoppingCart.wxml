@@ -62,7 +62,7 @@
 		<view class="item-view item-view-box">
 
 			<view
-			 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }} {{index == 0 ? 'item_normal--one' : ''}}"
+			 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }}"
 			 wx:for="{{validCartList}}"
 			 wx:key="{{item.id}}"
 			>
@@ -108,7 +108,6 @@
 											<text wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤 </text>
 											<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
 											<text wx:if="{{item.min_num_per_order}}" class="min-num"> | {{item.min_num_per_order}}件起售</text>
-											<text>{{item.id}}</text>
 										</view>
 
 										<view style="height: 30rpx;"></view>
@@ -146,7 +145,7 @@
 								</view>
 								<view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
 									<text class="shop_type"></text>
-									<text class="shop_stock" wx:if="{{item.item_stock < 10}}">剩余{{item.item_stock}}件</text>
+									<text class="shop_stock" wx:if="{{item.item_stock < 10 && !item.is_presale}}">剩余{{item.item_stock}}件</text>
 								</view>
 
 							</view>
