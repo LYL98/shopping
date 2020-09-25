@@ -38,7 +38,12 @@ Page({
 		query.status = couponStatusIndexObj[index];
 		this.setData(
 			{
-				query
+        query,
+        coupons: {
+          items: [],
+          num: 0
+        },
+        isFirstIn: true
 			},
 			() => {
 				this.getCoupons();
