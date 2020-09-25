@@ -8,4 +8,4 @@
 </view>
 
 <defaultPage wx:if="{{ !isFirstIn && coupons.items.length <= 0 }}" currentPage="coupon"></defaultPage>
-<view class="load-none" wx:if="{{coupons.num > 0}}">{{tools.returnMore(coupons.num, query)}}</view>
+<!-- <view class="load-none" wx:if="{{coupons.num > 0}}">{{tools.returnMore(coupons.num, query)}}</view> -->
