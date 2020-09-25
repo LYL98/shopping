@@ -281,11 +281,12 @@ Page({
     });
   },
   traggleCartInput(e){
-    console.log('进入')
+    console.log('进入',e)
     this.setData({
       isShowInput:true
     })
-    // const { itemData } = e.detail;
+    const { itemData } = e.detail;
+
   },
   traggleCartHideInput(){
     this.setData({ isShowInput: false, inputNum: '' });

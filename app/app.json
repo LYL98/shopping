@@ -1,7 +1,7 @@
 {
   "pages": [
-    
     "pages/index/index",
+    "pages/shoppingCart/shoppingCart",
     "pages/order/order",
     "pages/my/my",
     "pages/member/member",
@@ -51,8 +51,7 @@
     "pages/coupon-mine/coupon-mine",
     "pages/coupon-get/coupon-get",
     "pages/coupon-select/coupon-select",
-    "pages/coupon-return/coupon-return",
-    "pages/shoppingCart/shoppingCart"
+    "pages/coupon-return/coupon-return"
   ],
   "plugins": {
     "live-player-plugin": {

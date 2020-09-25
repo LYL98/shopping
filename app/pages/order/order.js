@@ -85,6 +85,7 @@ Page({
     let index = e.currentTarget.dataset.index;
     let tempItem = `dataItem.items[${index}].itemsModify`
     let tempIsShowMore = `dataItem.items[${index}].isShowMore`
+    console.log('this.data.dataItem.items[index].items: ', this.data.dataItem.items[index].items);
     this.setData({
       [tempItem]: this.data.dataItem.items[index].items,
       [tempIsShowMore]: true

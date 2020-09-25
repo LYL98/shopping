@@ -127,7 +127,7 @@
   color: #FF6868;
 }
 .send_price{
-  padding: 14rpx 32rpx;
+  padding: 0rpx 32rpx;
   background: #F9F9F9;
 
 }
@@ -174,7 +174,7 @@
 
 .item_bottom_price{
   position: absolute;
-  bottom: -8rpx;
+  bottom: -20rpx;
   left: 184rpx;
   right: -30rpx;
 }
@@ -229,7 +229,7 @@ padding-right: 32rpx;
 .store-type {
   font-size: 18rpx;
   color: #989797;
-  margin-top: 12rpx;
+  // margin-top: 12rpx;
   .type-label {
     color: #FFF;
     background: #FF8F1F;
@@ -249,7 +249,7 @@ padding-right: 32rpx;
   right: 0;
 }
 .item{
-  height:240rpx!important;
+  height:210rpx!important;
 }
 .pay_coupon{
   font-size: 26rpx;
@@ -265,4 +265,7 @@ color: #151515;
     color: white!important;
     padding: 2rpx 4rpx!important;
     border-radius: 4rpx!important;
+}
+.item_view--modify{
+  padding: 0!important;
 }

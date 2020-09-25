@@ -2,79 +2,115 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 
 <view class="search-body b-cfff">
-  <view class="search">
-    <view class="icon">
-      <image src="{{searchSrc}}"></image>
-    </view>
-    <view>
-      <input value="{{inputValue}}" focus placeholder="请输入商品名称" bindconfirm="confirm" confirm-type="search"></input>
-    </view>
-  </view>
+	<view class="search">
+		<view class="icon">
+			<image src="{{searchSrc}}"></image>
+		</view>
+		<view>
+			<input
+			 value="{{inputValue}}"
+			 focus
+			 placeholder="请输入商品名称"
+			 bindconfirm="confirm"
+			 confirm-type="search"
+			></input>
+		</view>
+	</view>
 </view>
 <view style="height: 104rpx;"></view>
 <view class="searchHistory" wx:if="{{dataItem.num <= 0 && searchData.length > 0}}">
-  <view class="hisTitle">
-    <text>搜索历史</text>
-    <text bindtap="clearHistory">清除</text>
-  </view>
-  <view class="labels">
-    <text wx:for="{{searchData}}" bindtap="labelEvent" data-key="{{item}}" wx:key="index">{{item}}</text>
-  </view>
+	<view class="hisTitle">
+		<text>搜索历史</text>
+		<text bindtap="clearHistory">清除</text>
+	</view>
+	<view class="labels">
+		<text wx:for="{{searchData}}" bindtap="labelEvent" data-key="{{item}}" wx:key="index">{{item}}</text>
+	</view>
 </view>
 <view class="item-view">
-  <view class="item" wx:for="{{dataItem.items}}" wx:key="index">
-    <navigator url="/pages/itemDetail/itemDetail?id={{item.id}}" bind:tap="clickItem" data-item="{{item}}">
-      <view class="img">
-        <view class="mark">
-          <text wx:if="{{item.is_presale}}" class="is-presale">预</text>
-        </view>
-        <image lazy-load="{{index > 4 ? true : false}}" wx:if="{{item.images.length > 0}}" src="{{tencentPath + item.images[0]}}_watermark200x200"></image>
-        <view class="image bg-img-container-item" wx:else></view>
-      </view>
-      <view class="content">
-        <view class="title">
-          <view class="icon-tag" wx:for="{{tools.returnTags(item.tags)}}" wx:for-item="t" wx:for-index="i" wx:key="i">
-            {{t}}
-          </view>
-          <text>{{item.title}}</text>
-        </view>
-        <view class="label">
-          <text class="tips-price" wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-          <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-          <text>{{item.origin_place}}</text>
-          <text>约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-          <text class="frame" wx:if="{{item.frame_id}}">有筐</text>
-          <text class="min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
-        </view>
-        <view class="price-unit" wx:if="{{item.is_quoted}}">
-          <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</view>
-          <view class="price">
-            <text>￥{{tools.returnPrice(item.price_sale)}}</text>
-          </view>
-        </view>
-        <view class="price-unit" wx:else>
-          <text>今日未报价</text>
-        </view>
-      </view>
-    </navigator>
-     <view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
-      <view style="min-height:36rpx;">
-        <joinShopCart wx:if="{{tools.judgeItemStock(item)}}" size="small" style="float:right;" bindcallback="joinShoppingCart" itemData="{{item}}" sourcePage="search"/>
-      </view>
-      <view style="clear: both;"></view>
-      <view class="repertory">{{tools.returnItemStock(item)}}</view>
-    </view>
-  </view>
+	<view
+	 class="item"
+	 wx:for="{{dataItem.items}}"
+	 wx:key="index"
+	>
+		<navigator
+		 url="/pages/itemDetail/itemDetail?id={{item.id}}"
+		 bind:tap="clickItem"
+		 data-item="{{item}}"
+		>
+			<view class="img">
+				<view class="mark">
+					<text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+				</view>
+				<image
+				 lazy-load="{{index > 4 ? true : false}}"
+				 wx:if="{{item.images.length > 0}}"
+				 src="{{tencentPath + item.images[0]}}_watermark200x200"
+				></image>
+				<view class="image bg-img-container-item" wx:else></view>
+			</view>
+			<view class="content">
+				<view class="title">
+					<view
+					 class="icon-tag"
+					 wx:for="{{tools.returnTags(item.tags)}}"
+					 wx:for-item="t"
+					 wx:for-index="i"
+					 wx:key="i"
+					>
+						{{t}}
+					</view>
+					<text>{{item.title}}</text>
+				</view>
+				<view class="label">
+					<text class="tips-price" wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+					<text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
+					<text>{{item.origin_place}}</text>
+					<text>约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+					<text class="frame" wx:if="{{item.frame_id}}">有筐</text>
+					<text class="min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+				</view>
+				<view class="price-unit" wx:if="{{item.is_quoted}}">
+					<view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</view>
+					<view class="price">
+						<text>￥{{tools.returnPrice(item.price_sale)}}</text>
+					</view>
+				</view>
+				<view class="price-unit" wx:else>
+					<text>今日未报价</text>
+				</view>
+			</view>
+		</navigator>
+		<view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 50rpx' : 'bottom: 0'}}">
+			<view style="min-height:36rpx;">
+				<joinShopCart
+				 wx:if="{{tools.judgeItemStock(item)}}"
+				 size="small"
+				 style="float:right;"
+				 bindcallback="joinShoppingCart"
+				 itemData="{{item}}"
+				 sourcePage="search"
+				/>
+			</view>
+			<view style="clear: both;"></view>
+			<view class="repertory">{{tools.returnItemStock(item)}}</view>
+		</view>
+	</view>
 
-  <view class="load-more" wx:if="{{dataItem.num > 0}}">已加载所有</view>
-  <!--<view class="load-none" wx:elif="{{query.condition}}">未搜到商品</view>-->
-  <defaultPage wx:elif="{{ !loading && query.condition}}" currentPage="search"></defaultPage>
-  <view class="load-none" wx:else></view>
+	<view class="load-more" wx:if="{{dataItem.num > 0}}">已加载所有</view>
+	<!--<view class="load-none" wx:elif="{{query.condition}}">未搜到商品</view>-->
+	<defaultPage wx:elif="{{ !loading && query.condition}}" currentPage="search"></defaultPage>
+	<view class="load-none" wx:else></view>
 </view>
 
-<navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="shopping-btn">
-  <image src="{{cart}}"></image>
-  <span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
+<navigator
+ url="/pages/shoppingCart/shoppingCart"
+ open-type="switchTab"
+ class="shopping-btn"
+>
+	<image src="{{cart}}"></image>
+	<span class="sh-cart-num" wx:if="{{shoppingCartNum}}">{{shoppingCartNum}}</span>
 </navigator>
 
-<loading loading="{{loading}}"/>
+<loading loading="{{loading}}" />
+
