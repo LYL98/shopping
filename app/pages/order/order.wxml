@@ -93,7 +93,7 @@
 							</view>
 							<view class="store-type">
 								<block wx:if="{{d.sale_type == '平台'}}">
-									<text class="type-label" >供应商</text>
+									<text class="type-label" >平台</text>
 									<text>{{d.supplier}}</text>
 								</block>
 								<text wx:else class="type-label type-label-self">优选</text>
