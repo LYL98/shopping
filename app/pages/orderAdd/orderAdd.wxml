@@ -49,7 +49,7 @@
 	</view>
 	<block wx:if="{{selfGoods.length > 0}}">
 		<view class="border-top"></view>
-		<view class="item-view">
+		<view class="item-view item_view--modify">
 			<view class="platform align-center">
 				<view class="platform_tag platform_tag--self">优选</view>
 				<view>蒲公英优选</view>
@@ -120,7 +120,7 @@
 	<block wx:if="{{supplierGoods.length > 0}}">
 		<view class="border-top"></view>
 
-		<view class="item-view">
+		<view class="item-view item_view--modify">
 			<view class="platform align-center">
 				<view class="platform_tag platform_tag--supplier">平台</view>
 				<view>商家直供</view>
@@ -160,7 +160,7 @@
 									<view class="vip_card--type card_type--{{level}}">{{title}}价</view>
 									<view class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(item.price_sale)}}</view>
 								</view>
-								<view class="normal_price " style="line-height: 10rpx;">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
+								<view class="normal_price " style="line-height: 10rpx;margin-bottom:10rpx;">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
 							</block>
 							<view class="price-unit skeleton-rect" wx:else>
 								￥{{tools.returnPrice(item.price_sale)}}
@@ -193,7 +193,7 @@
 	<block wx:if="{{giftGoods.length > 0}}">
 		<view class="border-top"></view>
 
-		<view class="item-view">
+		<view class="item-view item_view--modify">
 			<view
 			 class="item"
 			 wx:for="{{giftGoods}}"
@@ -236,7 +236,7 @@
 
 							<view class="num-price">
 								<text class="num-str skeleton-rect">× {{item.number}}</text>
-								<text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale * item.number)}}</text>
+								<text class="price-str skeleton-rect">￥0</text>
 							</view>
 						</view>
 					</view>

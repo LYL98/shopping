@@ -62,7 +62,7 @@
 		<view class="item-view item-view-box">
 
 			<view
-			 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }}"
+			 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }} {{index == 0 ? 'item_normal--one' : ''}}"
 			 wx:for="{{validCartList}}"
 			 wx:key="{{item.id}}"
 			>
@@ -108,6 +108,7 @@
 											<text wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤 </text>
 											<text wx:if="{{item.frame_id}}" class="frame">| 有筐 </text>
 											<text wx:if="{{item.min_num_per_order}}" class="min-num"> | {{item.min_num_per_order}}件起售</text>
+											<text>{{item.id}}</text>
 										</view>
 
 										<view style="height: 30rpx;"></view>
@@ -119,6 +120,7 @@
 										 id="joinShopCart"
 										 size="small"
 										 sourcePage="shoppingCart"
+										 itemIndex="{{index}}"
 										 itemData="{{item}}"
 										 bindcallback="upDownCallback"
 										 isDeleteHint
@@ -204,7 +206,7 @@
 									<view style="height: 30rpx;"></view>
 								</view>
 							</navigator>
-							<view class="join" style="bottom:16rpx; left: 244rpx;">
+							<view class="join" style="bottom:18rpx; left: 244rpx;">
 								<view style="min-height:36rpx;">
 									<joinShopCart
 									 size="small"

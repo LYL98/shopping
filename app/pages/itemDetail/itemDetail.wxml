@@ -137,7 +137,7 @@
 		</view>
 
 	</view>
-	<view class="goods_attr goods_content">
+	<view class="goods_attr goods_content" wx:if="{{(detail.step_prices && detail.step_prices.length > 0) || promotionData.id || couponList.length > 0}}">
 		<!--单品优惠start-->
 		<view class="activity-item discount-item align-center" wx:if="{{detail.step_prices && detail.step_prices.length > 0}}">
 			<view class="title">

@@ -439,11 +439,15 @@ Page({
             wx.navigateBack();
           });
         } else if (res.statusCode == 200 && res.data.code == 109) {
-          console.log('进入这里')
           msgBox('您所购买的商品价格发生改动，请重新提交订单', ()=>{
             wx.navigateBack();
           });
-        } 
+        } else if (res.statusCode == 200 && res.data.code == 110) {
+          msgBox('您所购买的商品有已上架,请重新提交订单', ()=>{
+            wx.navigateBack();
+          });
+        }  
+
         else {
           app.requestResultCode(res); //处理异常
         }
