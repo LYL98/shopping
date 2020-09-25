@@ -188,7 +188,7 @@
     flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
-    height: 258rpx;
+    min-height: 258rpx;
     border-bottom: 1rpx solid #eee;
     .goods-item-info-top {
       height: 154rpx;
