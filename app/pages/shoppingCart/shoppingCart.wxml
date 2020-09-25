@@ -117,7 +117,7 @@
 								<view class="join" style="bottom:60rpx; left: 244rpx;">
 									<view style="min-height:36rpx;">
 										<joinShopCart
-										 id="joinShopCart"
+										 id="joinShopCart{{index}}"
 										 size="small"
 										 sourcePage="shoppingCart"
 										 itemIndex="{{index}}"

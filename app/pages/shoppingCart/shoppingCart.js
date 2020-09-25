@@ -53,7 +53,8 @@ Page({
     title:'',
     receiveCouponList:[],
     autoCouponList:[],
-    address:{}
+    address:{},
+    itemIndex:0,
   },
   onLoad() {
     this.address = {}; //当前选择地址
@@ -281,11 +282,13 @@ Page({
     });
   },
   traggleCartInput(e){
+    const { itemData,itemIndex } = e.detail;
+
     console.log('进入',e)
     this.setData({
-      isShowInput:true
+      isShowInput:true,
+      itemIndex:itemIndex
     })
-    const { itemData } = e.detail;
 
   },
   traggleCartHideInput(){
@@ -365,7 +368,7 @@ Page({
       this.setData({ keyHeight: h - tabBarHeight });
     },
   inputConfirm(e){
-    this.joinShopCart = this.selectComponent('#joinShopCart')
+    this.joinShopCart = this.selectComponent(`#joinShopCart${this.data.itemIndex}`)
     this.joinShopCart.triggleInputNum(this.data.inputNum)
     this.joinShopCart.inputConfirm()
   },

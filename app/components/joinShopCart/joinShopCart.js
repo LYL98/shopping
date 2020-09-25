@@ -245,7 +245,8 @@ Component({
       console.log('this.data.isFromCartPage: ', this.data.isFromCartPage);
       if(this.data.isFromCartPage){
         this.triggerEvent('traggleCartInput', {
-					itemData:this.data.itemData
+          itemData:this.data.itemData,
+          itemIndex:this.data.itemIndex
 				});
       }else{
         this.thatEvent = e;
