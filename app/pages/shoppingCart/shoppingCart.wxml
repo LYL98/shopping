@@ -19,9 +19,9 @@
 			 wx:key="index"
 			>
 				<view class="coupon_info--text" wx:if="{{item.discount_type == 'reduce'}}">
-					<block wx:if="{{item.threshold > 0}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}元</block>
-					<block wx:else>全场减{{tools.returnPrice(item.benefit)}}</block>
-
+					<block wx:if="{{item.use_type  == 'amount'}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}元</block>
+					<block wx:elif="{{item.use_type == 'any'}}">全场减{{tools.returnPrice(item.benefit)}}</block>
+					<block wx:elif="{{item.use_type == 'num'}}">满{{item.threshold}}件减{{tools.returnPrice(item.benefit)}}</block>
 				</view>
 				<view class="coupon_info--text" wx:elif="{{item.discount_type == 'discount'}}">
 					{{item.benefit / 10}}折
@@ -51,7 +51,7 @@
 	<view class=" coupon_num justify-end align-center " wx:if="{{couponNum > 0}}">
 		<navigator url="/pages/coupon-mine/coupon-mine">
 			<view class="align-center">
-				<view>{{couponNum}}张可用优惠券</view>
+				<view>{{couponNum}}张优惠券</view>
 				<text class="right_i--F59725"></text>
 			</view>
 		</navigator>
@@ -64,7 +64,7 @@
 			<view
 			 class="item_normal {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'item_discount' :'' }}"
 			 wx:for="{{validCartList}}"
-			 wx:key="index"
+			 wx:key="{{item.id}}"
 			>
 
 				<view class="discount_info align-center" wx:if="{{item.stepPricesHint && item.stepPricesHint.length > 0}}">
@@ -101,7 +101,7 @@
 									</view>
 									<view class="content">
 										<view class="title goods_title add-dot">{{item.title}}</view>
-										<view class="goods_label">
+										<view class="goods_label add-dot2">
 											<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 </text>
 											<text wx:if="{{item.item_spec}}">| {{item.item_spec}} </text>
 											<text wx:if="{{item.origin_place}}">| {{item.origin_place}} </text>
@@ -192,7 +192,7 @@
 								</view>
 								<view class="content">
 									<view class="title goods_title">{{item.title}}</view>
-									<view class="goods_label">
+									<view class="goods_label add-dot2">
 										<text wx:if="{{item.is_quoted}}" class="tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤 | </text>
 										<text wx:if="{{item.item_spec}}">{{item.item_spec}} </text>
 										<text wx:if="{{item.origin_place}}">| {{item.origin_place}} </text>

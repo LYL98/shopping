@@ -74,7 +74,8 @@ Page({
     level:0,
     title:'',
     selfGoods:[], // 自营的商品
-    supplierGoods:[], // 供应商那个商品
+    supplierGoods:[], // 供应商那个商品,
+    giftGoods:[], // 供应商那个商品,
     isNoUseGoodsCoupon:false,
     isNoUseDeliveryCoupon:false
   },
@@ -334,14 +335,7 @@ Page({
       },
       success: function(res) {
         console.log('res: ***', res.data);
-        that.setData({
-          couponGoodsSelectData:{id:res.data.data.coupon_discount.coupon_store_id || ''},
-          couponDeliverySelectData:{id:res.data.data.delivery_discount.coupon_store_id || ''}
-        },() => {
-          
-          wx.setStorageSync('orderCouponGoodsSelectData', that.data.couponGoodsSelectData)
-          wx.setStorageSync('orderCouponDeliverySelectData', that.data.couponDeliverySelectData)
-        })
+        
         //共用提示
         let msgBox = (str, callback) => {
           wx.showModal({
@@ -364,15 +358,26 @@ Page({
          * 105：商品库存不足
          * 106：超过最大订货数
          */
+        console.log('ssssss',res.data.code)
         if (res.statusCode == 200 && res.data.code === 0) {
           let rd = res.data.data;
-          let selfGoods = rd.items.filter(item => item.sale_type === '自营')
-          let supplierGoods = rd.items.filter(item => item.sale_type === '平台')
+          let selfGoods = rd.items.filter(item => item.sale_type === '自营' && !item.is_gift)
+          let supplierGoods = rd.items.filter(item => item.sale_type === '平台' && !item.is_gift)
+          let giftGoods = rd.items.filter(item => item.is_gift)
+          that.setData({
+            couponGoodsSelectData:{id:res.data.data.coupon_discount.coupon_store_id || ''},
+            couponDeliverySelectData:{id:res.data.data.delivery_discount.coupon_store_id || ''}
+          },() => {
+            
+            wx.setStorageSync('orderCouponGoodsSelectData', that.data.couponGoodsSelectData)
+            wx.setStorageSync('orderCouponDeliverySelectData', that.data.couponDeliverySelectData)
+          })
           that.setData({
             dataItem: rd,
             showSkeleton: false,
             selfGoods,
-            supplierGoods
+            supplierGoods,
+            giftGoods
           });
           /*===== 埋点 start ======*/
           app.gioActionRecordAdd('createOrder', {
@@ -397,6 +402,7 @@ Page({
               quantity_var: item.number, //商品数量
             });
           });
+          
           /*===== 埋点 end ======*/
         } else if (res.statusCode == 200 && res.data.code == 101) {
           msgBox('现为非下单时间', ()=>{
@@ -433,6 +439,7 @@ Page({
             wx.navigateBack();
           });
         } else if (res.statusCode == 200 && res.data.code == 109) {
+          console.log('进入这里')
           msgBox('您所购买的商品价格发生改动，请重新提交订单', ()=>{
             wx.navigateBack();
           });

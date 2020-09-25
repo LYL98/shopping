@@ -32,7 +32,7 @@
 			</view>
 			<view class="freight_all">
 				<view class="freight_all--label">总计</view>
-				<view class="freight_all--value">￥ {{tools.returnPrice(totalDeliveryFee)}}</view>
+				<view class="freight_all--value">￥{{tools.returnPrice(totalDeliveryFee)}}</view>
 			</view>
 		</view>
 

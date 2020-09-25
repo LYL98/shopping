@@ -174,7 +174,7 @@ Page({
     }).then(res => {
       let rd = res.data;
       rd.items.forEach(item => {
-        if(item.coupon_type == 'gift'){
+        if(item.discount_type == 'gift'){
           item.gift_info.forEach(itemChild=> {
             if(itemChild.title.length > 3){
               itemChild.title = itemChild.title.slice(0,3) + '*'
