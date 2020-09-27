@@ -354,6 +354,28 @@ Page({
     //   id:this.data.itemData.id
     // });
   },
+  getStepPricesHint(num,itemData){
+    let price;
+    let d = itemData.step_prices;
+
+    if(d && d.length > 0){
+      for(let i = 0; i < d.length; i++){
+        if(i === d.length - 1 && num >= d[i].num){
+          price = d[i].price_sale
+          break;
+        }
+        if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+          price = d[i].price_sale
+          break;
+        }
+        if(i === 0 && num < d[i].num){
+          price = d[i].price_sale
+          break;
+        }
+      }
+    }
+    return price;
+  },
   // traggleStepPriceHint(e){
   //   console.log('e',e)
   //   let tempData = this.data.validCartList
@@ -527,6 +549,10 @@ Page({
       let inValidCartList = [];
       dataItem.map(item => {
         let stepPricesHint = this.setStepPricesHint(item.select_num,item)
+        console.log('stepPricesHint',stepPricesHint)
+        if(stepPricesHint && stepPricesHint.length > 0){
+          item.price_sale = this.getStepPricesHint(item.select_num,item)
+        }
         item.stepPricesHint = stepPricesHint
         if(item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted){
           validCartList.push(item)

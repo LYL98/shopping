@@ -265,8 +265,8 @@
 				<view
 				 class="amount-pannel"
 				 data-index="{{index}}"
-				 data-type="selfGoods"
-				 bindtap="supplierGoods"
+				 data-type="supplierGoods"
+				 bindtap="showArrow"
 				>
 					<text class="flex">价格变动</text>
 					<view class="flex amount-price justify-end align-center">
