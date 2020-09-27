@@ -100,7 +100,7 @@
 							</view>
 							<view class="item_num-price">
 								<text class="num-str skeleton-rect">X{{d.count_real}}</text>
-								<text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
+								<text class="price-str skeleton-rect">￥0</text>
 							</view>
 						</view>
 					</view>
