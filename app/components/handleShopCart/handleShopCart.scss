@@ -49,6 +49,14 @@
   background: rgba(0, 0, 0, .4);
   z-index: 10;
 }
+.ph {
+  background: #fff;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 30rpx;
+}
 /*cover-view 不可加 > */
 .step-prices{
   background: #fff;

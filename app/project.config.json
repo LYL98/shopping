@@ -4,9 +4,9 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
-		"enhance": false,
+		"enhance": true,
 		"postcss": true,
 		"preloadBackgroundData": false,
 		"minified": true,
@@ -28,8 +28,12 @@
 		},
 		"bundle": false,
 		"useIsolateContext": true,
-		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"useMultiFrameRuntime": false,
+		"useApiHook": false,
+		"packNpmManually": false,
+		"packNpmRelationList": []
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
@@ -242,6 +246,48 @@
 					"name": "运营专区",
 					"pathName": "pages/itemTag/itemTag",
 					"query": "id=41",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "返券明细",
+					"pathName": "pages/coupon-return/coupon-return",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券选择(商品券｜运费券)",
+					"pathName": "pages/coupon-select/coupon-select",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券领取",
+					"pathName": "pages/coupon-get/coupon-get",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的优惠券",
+					"pathName": "pages/coupon-mine/coupon-mine",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品分类",
+					"pathName": "pages/itemList/itemList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/orderDetail/orderDetail",
+					"pathName": "pages/orderDetail/orderDetail",
+					"query": "id=1011922",
 					"scene": null
 				}
 			]

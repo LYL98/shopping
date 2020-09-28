@@ -1,8 +1,7 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <view wx:if="{{isOnSale}}">
 	<button class="share_btn align-center" open-type="share">
-		<image src="./../../assets/img/detail_share.png" style="width: 32rpx; height: 32rpx;margin-right:6rpx" />
-		<text>分享</text>
+		<image src="./../../assets/img/detail_share.png" style="width: 32rpx; height: 32rpx;margin-bottom: 6rpx;" />
 	</button>
 	<!-- </view> -->
 	<view style="position:relative;">
@@ -51,7 +50,7 @@
 			 class="temp-img"
 			 style="width: 100%; height: 100vw;"
 			/>
-			<view class="dotwrap">{{currentSwiper + 1}}/{{detail.images.length}}</view>
+			<view class="dotwrap">{{currentSwiper + 1}}/{{detail.images.length || 1}}</view>
 		</view>
 	</view>
 	<view class="goods_info">
@@ -74,20 +73,18 @@
 			<text wx:if="{{detail.price_origin > detail.price_sale}}" class="origin_price">{{tools.returnPrice(detail.price_origin)}}/件</text>
 		</view>
 		<view class="goods_info--title">
-			{{detail.title}}
+			<text wx:if="{{detail.grade}}">{{detail.grade}}级-</text>
+			<text>{{detail.title}}</text>
+
 		</view>
-		<view class="store-type">
-			<view class="store-type">
-				<block wx:if="{{detail.sale_type == '平台'}}">
-					<text class="type-label" >商家</text>
-					<text>{{detail.supplier}}门店</text>
-				</block>
-				<text wx:elif="{{detail.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
-			</view>
+		<view class="goods_info_points add-dot2 " wx:if="{{detail.selling_points.length > 0}}">
+			卖点: {{detail.selling_points}}
 		</view>
+
 		<view class="goods_info--tag justify-between align-center">
 			<view class="align-center">
 				<view
+				 wx:if="{{detail.tags.length > 0}}"
 				 class="tag_item align-center"
 				 wx:for="{{tools.returnTags(detail.tags)}}"
 				 wx:for-item="t"
@@ -97,35 +94,52 @@
 				>
 					{{t}}
 				</view>
-			</view>
-			<view class="goods_info--limit align-center">
-				<text wx:if="{{detail.delivery_price === 0}}">免运费</text>
-				<text wx:else>运费{{tools.returnPrice(detail.delivery_price)}}元</text>
-				<block wx:if="{{detail.min_num_per_order}}">
-					<view class="cicle"></view>
-					<text>{{detail.min_num_per_order}}件起售</text>
-				</block>
-				<block wx:if="{{detail.order_num_max < 1000}}">
-					<view class="cicle"></view>
-					<text>限购{{detail.order_num_max}}件</text>
-				</block>
+				<view class="store-type">
+					<view class="align-center" wx:if="{{detail.sale_type == '平台'}}">
+						<view class="type-label-vendor tag_item">商家</view>
+						<view class="type-label-spplier">{{detail.supplier}}门店</view>
+					</view>
+					<view wx:elif="{{detail.sale_type == '自营'}}" class="tag_item type-label-self">优选</view>
+				</view>
 			</view>
 
 		</view>
 
-		<view class="goods_info--weight align-center justify-between" style="margin-right:59rpx;">
-			<view class="align-center label_item">
-				<view class="goods_info--label goods_info--label--auto_width goods_info--label--top">毛重</view>
-				<view class="goods_info--value flex1">{{detail.gross_weight ? '约' + tools.returnGrossWeight(detail.gross_weight) + '斤' : '-'}}</view>
+		<view class="goods_header--conetnt align-center justify-between">
+			<view class="align-center">
+				<view class="goods_value--weight">毛重{{detail.gross_weight ? '约' + tools.returnGrossWeight(detail.gross_weight) + '斤' : '-'}}</view>
+				<view class="goods_value--weight">净重{{detail.net_weight ? '约' + tools.returnGrossWeight(detail.net_weight) + '斤' : '-'}}</view>
 			</view>
-			<view class="align-center ">
-				<view class="goods_info--label goods_info--label--auto_width  goods_info--label--top">净重</view>
-				<view class="goods_info--value flex1">{{detail.net_weight ? '约' + tools.returnGrossWeight(detail.net_weight) + '斤' : '-'}}</view>
-			</view>
+			<view class="goods_info--delivery" wx:if="{{detail.delivery_price === 0}}">免运费</view>
+			<view class="goods_info--delivery" wx:else>运费{{tools.returnPrice(detail.delivery_price)}}元</view>
 		</view>
 
+		<!--预售商品日期start-->
+		<view class="goods_header--conetnt align-center activity-item" wx:if="{{detail.is_presale}}">
+			<view class="send_title">配送时间</view>
+			<view class="content">
+				{{detail.presale_begin}}
+				<text style="margin-left: 10rpx;margin-right: 10rpx;">至</text>
+				{{detail.presale_end}}
+			</view>
+		</view>
+		<!--预售商品日期end-->
+
+		<view class="goods_info--limit goods_header--conetnt  align-center" wx:if="{{detail.min_num_per_order || detail.order_num_max < 1000}}">
+
+			<block wx:if="{{detail.min_num_per_order}}">
+				<text>起购价{{detail.min_num_per_order}}件</text>
+			</block>
+			<block wx:if="{{detail.order_num_max < 1000}}">
+				<view class="cicle"></view>
+				<text>最多下单{{detail.order_num_max}}件</text>
+			</block>
+		</view>
+
+	</view>
+	<view class="goods_attr goods_content" wx:if="{{(detail.step_prices && detail.step_prices.length > 0) || promotionData.id || couponList.length > 0}}">
 		<!--单品优惠start-->
-		<view class="activity-item discount-item" wx:if="{{detail.step_prices && detail.step_prices.length > 0}}">
+		<view class="activity-item discount-item align-center" wx:if="{{detail.step_prices && detail.step_prices.length > 0}}">
 			<view class="title">
 				<text class="discount">优惠</text>
 			</view>
@@ -136,7 +150,7 @@
 		<!--单品优惠end-->
 
 		<!--全场满减start-->
-		<view class="activity-item reduction-item" wx:if="{{promotionData.id && promotionData.promotion_type === 'type_reduction'}}">
+		<view class="activity-item reduction-item align-center" wx:if="{{promotionData.id && promotionData.promotion_type === 'type_reduction'}}">
 			<view class="title">
 				<text class="discount">满减</text>
 			</view>
@@ -147,26 +161,48 @@
 		<!--全场满减end-->
 
 		<!--全场满折start-->
-		<view class="activity-itemreduction-item" wx:if="{{promotionData.id && promotionData.promotion_type === 'scope_discount'}}">
+		<view class="activity-item reduction-item align-center" wx:if="{{promotionData.id && promotionData.promotion_type === 'scope_discount'}}">
 			<view class="title">
 				<text class="discount">满折</text>
 			</view>
 			<view class="content">
-				<text wx:for="{{promotionData.rules}}" wx:key="key">全场满{{tools.returnPrice(item.full)}}打{{tools.returnDiscount(item.reduction)}}折{{index < promotionData.rules.length - 1 ? '；' : ''}}</text>
+				<text wx:for="{{promotionData.rules}}" wx:key="key">全场满{{tools.returnPrice(item.full)}}打{{tools.returnDiscount(item.discount)}}折{{index < promotionData.rules.length - 1 ? '；' : ''}}</text>
 			</view>
 		</view>
 		<!--全场满折end-->
 
-		<!--预售商品日期start-->
-		<view class="activity-item" wx:if="{{detail.is_presale}}">
-			<view class="send_title">配送时间</view>
-			<view class="content">
-				{{detail.presale_begin}} 至 {{detail.presale_end}}
+		<!--优惠券start-->
+		<view
+		 class="activity-item activity-coupon-item align-center"
+		 wx:if="{{couponList.length > 0}}"
+		 bindtap="toGetCoupon"
+		>
+			<view class="send_title">优惠券</view>
+			<view class="justify-between" style="width:100%">
+				<view class="content align-center">
+					<view class="coupon_item align-center" wx:for="{{couponList}}">
+						<block wx:if="{{item.discount_type == 'reduce'}}">
+							<block wx:if="{{item.use_type  == 'amount'}}">满{{tools.returnPrice(item.threshold)}}减{{tools.returnPrice(item.benefit)}}元</block>
+							<block wx:elif="{{item.use_type == 'any'}}">全场减{{tools.returnPrice(item.benefit)}}元</block>
+							<block wx:elif="{{item.use_type == 'num'}}">满{{item.threshold}}件减{{tools.returnPrice(item.benefit)}}</block>
+						</block>
+						<block wx:elif="{{item.discount_type == 'discount'}}">
+							{{item.benefit / 10}}折
+						</block>
+						<block wx:elif="{{item.discount_type == 'gift'}}">
+							赠{{item.gift_info[0].title}}
+						</block>
+					</view>
+				</view>
+				<view class="get align-center">
+					领取
+					<text class="right_i--989797"></text>
+				</view>
 			</view>
-		</view>
-		<!--预售商品日期end-->
-	</view>
 
+		</view>
+		<!--优惠券end-->
+	</view>
 	<view class="goods_attr">
 		<view class="goods_header goods_header--attr goods_header_attr--other">商品属性</view>
 		<view class="align-center goods_attr--box goods_attr--box--gray pl24">
@@ -200,13 +236,13 @@
 				<view class="goods_info--value">{{detail.system_class.store_save_way}}</view>
 			</view>
 		</view>
-		<view class="align-center pl24">
+		<!-- <view class="align-center pl24">
 			<view class="align-center label_item goods_info--label--max">
 				<view class="goods_info--label">卖点</view>
 				<view class="goods_info--value" wx:if="{{detail.selling_points.length > 0}}">{{detail.selling_points}}</view>
 				<view class="goods_info--value" wx:else> - </view>
 			</view>
-		</view>
+		</view> -->
 		<view class="align-center goods_attr--box--gray pl24">
 			<view class="align-center label_item goods_info--label--max">
 				<view class="goods_info--label" style="width: 104rpx; padding-right: 40rpx;">可能存在的瑕疵</view>
@@ -314,9 +350,9 @@
 	<view class="goods_reback" wx:if="{{detail.compensated && detail.sale_type == '平台'}}">
 		<view class="goods_header ">退赔规则</view>
 		<view class="align-center goods_attr--box goods_attr--box--gray">
-			<view class="align-start label_item pre">
+			<view class="align-start label_item">
 				<view class="goods_info--label goods_info--label--reback">可赔付范围</view>
-				<view class="goods_info--value pre" style="width: 500rpx;">{{detail.compensated}}</view>
+				<view class="goods_info--value">{{detail.compensated}}</view>
 			</view>
 		</view>
 	</view>
