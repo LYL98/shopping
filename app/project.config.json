@@ -112,7 +112,7 @@
 					"id": 6,
 					"name": "商品详情",
 					"pathName": "pages/itemDetail/itemDetail",
-					"query": "id=16536",
+					"query": "id=16661",
 					"scene": null
 				},
 				{
@@ -284,10 +284,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/orderDetail/orderDetail",
+					"id": 31,
+					"name": "订单详情",
 					"pathName": "pages/orderDetail/orderDetail",
-					"query": "id=1011922",
+					"query": "id=1011575",
 					"scene": null
 				}
 			]

@@ -158,6 +158,7 @@
 					</view>
 				</view>
 			</view>
+			<view wx:if="{{d.final_amount != d.amount_real && d.final_amount > 0 }}"  style="font-size: 24rpx;color: #F54F3F;text-align: right;">实付：¥{{tools.returnPrice(d.final_amount)}}</view>
 			<view class="price-log" wx:if="{{d.amount_real - d.amount_pre != 0}}">
 				<view
 				 class="amount-pannel"
@@ -224,7 +225,6 @@
 		 wx:for="{{supplierGoods}}"
 		 wx:key="index"
 		>
-
 			<view class="no-nav">
 				<view class="img">
 					<view class="mark">
@@ -258,9 +258,9 @@
 							<text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
 						</view>
 					</view>
-
 				</view>
 			</view>
+			<view wx:if="{{d.final_amount != d.amount_real && d.final_amount > 0 }}" style="font-size: 24rpx;color: #F54F3F;text-align: right;">实付：¥{{tools.returnPrice(d.final_amount)}}</view>
 			<view class="price-log" wx:if="{{d.amount_real - d.amount_pre != 0}}">
 				<view
 				 class="amount-pannel"
@@ -358,6 +358,7 @@
 
 				</view>
 			</view>
+			
 		</view>
 	</view>
 	<view class="bottom-border2"></view>
