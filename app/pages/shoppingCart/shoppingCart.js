@@ -355,6 +355,7 @@ Page({
     // });
   },
   getStepPricesHint(num,itemData){
+    console.log('aaanum',num,itemData)
     let price;
     let d = itemData.step_prices;
 
@@ -369,11 +370,12 @@ Page({
           break;
         }
         if(i === 0 && num < d[i].num){
-          price = d[i].price_sale
+          price = itemData.originPriceSale
           break;
         }
       }
     }
+    console.log('***',price,itemData.originPriceSale)
     return price;
   },
   // traggleStepPriceHint(e){
@@ -548,6 +550,7 @@ Page({
       let validCartList = [];
       let inValidCartList = [];
       dataItem.map(item => {
+        item.originPriceSale = item.originPriceSale || item.price_sale;
         let stepPricesHint = this.setStepPricesHint(item.select_num,item)
         console.log('stepPricesHint',stepPricesHint)
         if(stepPricesHint && stepPricesHint.length > 0){
