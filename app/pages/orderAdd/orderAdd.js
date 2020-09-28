@@ -522,7 +522,7 @@ Page({
           // 如果已经超过授信额度
           if (rd.to_be_canceled) {
             that.setData({
-              payWarning: ['您未支付的订单累计金额已超授信额度，需支付该订单！', '否则订单将在30分钟后取消']
+              payWarning: ['您未支付的订单累计金额已超授信额度，需支付该订单！', '否则订单将在10分钟后取消']
             })
             that.orderPay(rd); //去支付
           } else {

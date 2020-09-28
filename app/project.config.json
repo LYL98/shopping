@@ -282,6 +282,13 @@
 					"pathName": "pages/itemList/itemList",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/orderDetail/orderDetail",
+					"pathName": "pages/orderDetail/orderDetail",
+					"query": "id=1011922",
+					"scene": null
 				}
 			]
 		}

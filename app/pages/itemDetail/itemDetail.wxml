@@ -166,7 +166,7 @@
 				<text class="discount">满折</text>
 			</view>
 			<view class="content">
-				<text wx:for="{{promotionData.rules}}" wx:key="key">全场满{{tools.returnPrice(item.full)}}打{{tools.returnDiscount(item.reduction)}}折{{index < promotionData.rules.length - 1 ? '；' : ''}}</text>
+				<text wx:for="{{promotionData.rules}}" wx:key="key">全场满{{tools.returnPrice(item.full)}}打{{tools.returnDiscount(item.discount)}}折{{index < promotionData.rules.length - 1 ? '；' : ''}}</text>
 			</view>
 		</view>
 		<!--全场满折end-->

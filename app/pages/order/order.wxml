@@ -82,7 +82,8 @@
 						<view class="content">
 							<view class="item_title">
 								<text class="present" wx:if="{{d.is_gift}}">赠品</text>
-								{{d.item_title}}
+								<text>{{d.item_title}}</text>
+								
 							</view>
 							<view class="item_label">
 								<text wx:for="{{d.item_attrs}}" wx:for-item="a" wx:key="a">{{a}} | </text>
@@ -100,7 +101,7 @@
 							</view>
 							<view class="item_num-price">
 								<text class="num-str skeleton-rect">X{{d.count_real}}</text>
-								<text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
+								<text class="price-str skeleton-rect">￥{{d.is_gift ? 0 : tools.returnPrice(d.amount_real)}}</text>
 							</view>
 						</view>
 					</view>

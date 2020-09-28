@@ -254,7 +254,7 @@
 							￥{{tools.returnPrice(d.item_price_sale)}}
 						</view>
 						<view class="num-price">
-							<text class="num-str skeleton-rect">X{{d.count_real}}</text>
+							<text class="num-str skeleton-rect">× {{d.count_real}}</text>
 							<text class="price-str skeleton-rect">￥{{tools.returnPrice(d.amount_real)}}</text>
 						</view>
 					</view>
@@ -265,8 +265,8 @@
 				<view
 				 class="amount-pannel"
 				 data-index="{{index}}"
-				 data-type="selfGoods"
-				 bindtap="supplierGoods"
+				 data-type="supplierGoods"
+				 bindtap="showArrow"
 				>
 					<text class="flex">价格变动</text>
 					<view class="flex amount-price justify-end align-center">
@@ -351,7 +351,7 @@
 							￥{{tools.returnPrice(d.item_price_sale)}}
 						</view>
 						<view class="num-price">
-							<text class="num-str skeleton-rect">X{{d.count_real}}</text>
+							<text class="num-str skeleton-rect">× {{d.count_real}}</text>
 							<text class="price-str skeleton-rect">￥0</text>
 						</view>
 					</view>
