@@ -127,7 +127,7 @@
   color: #FF6868;
 }
 .send_price{
-  padding: 14rpx 32rpx;
+  padding: 0rpx 32rpx;
   background: #F9F9F9;
 
 }
@@ -158,20 +158,25 @@
     height: 25rpx !important;
     margin-top: 3rpx !important;
     margin-left: 4rpx !important;
-    margin-bottom: 8rpx;
+    margin-bottom: 4rpx;
 
 
   }
 .item-view>.item {
   margin-top:30rpx;
   height: 220rpx;
+  .content {
+    .title {
+      width: 500rpx;
+    }
+  }
 }
 
 .item_bottom_price{
   position: absolute;
-  bottom: -48rpx;
+  bottom: -20rpx;
   left: 184rpx;
-  right: 0;
+  right: -30rpx;
 }
 .content .num-price{
   bottom: 4rpx !important;
@@ -224,7 +229,7 @@ padding-right: 32rpx;
 .store-type {
   font-size: 18rpx;
   color: #989797;
-  margin-top: 12rpx;
+  // margin-top: 12rpx;
   .type-label {
     color: #FFF;
     background: #FF8F1F;
@@ -235,4 +240,32 @@ padding-right: 32rpx;
   .type-label-self {
     background: #FF6010;
   }
+}
+.reason{
+  font-size: 20rpx;
+  color: #F54F3F;
+  position: absolute;
+  bottom: -48rpx;
+  right: 0;
+}
+.item{
+  height:220rpx!important;
+}
+.pay_coupon{
+  font-size: 26rpx;
+color: #989797;
+padding:32rpx;
+}
+.submit{
+  font-size: 32rpx;
+color: #151515;
+}
+.present{
+  background: #E8541E!important;
+    color: white!important;
+    padding: 2rpx 4rpx!important;
+    border-radius: 4rpx!important;
+}
+.item_view--modify{
+  padding: 0!important;
 }

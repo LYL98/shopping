@@ -183,33 +183,35 @@
   >.goods-item-info {
     position: relative;
     flex: 1;
+    min-width: 0px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
-    height: 258rpx;
+    min-height: 258rpx;
     border-bottom: 1rpx solid #eee;
     .goods-item-info-top {
       height: 154rpx;
       margin-bottom: 16rpx;
       .goods-titles {
+        width: 100%;
         line-height: 40rpx;
         font-size: 30rpx;
         margin-bottom: 8rpx;
         color: #242424;
         overflow: hidden;
-        > text{
+        > .main-title{
           font-size: 30rpx;
           vertical-align: middle;
         }
         > .icon-tag{
+          display: inline-block;
           vertical-align: middle;
           margin-right: 6rpx;
           overflow: hidden;
           font-size: 22rpx;
           line-height: 26rpx;
           color: #fff;
-          display: inline-block;
           height: 28rpx;
           text-align: center;
           border-radius: 4rpx;

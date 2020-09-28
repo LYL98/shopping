@@ -1,6 +1,6 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 <import src="index.skeleton.wxml"/>
-
+<pageNavBar title="蒲公英" color="#000" back="{{false}}" home="{{false}}" background="#FFE05C"></pageNavBar>
 <view class="{{isShowSelect ? 'show-select' : ''}}">
 	<!--选择门店组件-->
 	<view class="" style="background: #FFE05C;">
@@ -208,24 +208,21 @@
 								priceSale="{{item.price_sale}}"
 								priceOrigin="{{item.price_origin}}"
 								priceNoVip="{{item.price_novip}}"
+								saleType="{{item.sale_type}}"
+								supplier="{{item.supplier}}"
 							/>
-							<view class="goods-item-info-bottom">
-								<view class="store-type">
-									<block wx:if="{{item.sale_type == '平台'}}">
-										<text class="type-label" >商家</text>
-										<text>{{item.supplier}}门店</text>
-									</block>
-									<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
-								</view>
+							
+						</view>
+
+					</view>
+					<view class="goods-item-info-bottom">
+								
 
 								<view class="cart-wrapper">
 									<handleShopCart itemData="{{item}}" />
 								</view>
 							</view>
 
-						</view>
-
-					</view>
 				</view>
 			</view>
 
@@ -234,13 +231,24 @@
 			<defaultPage wx:else currentPage="itemList" style="position: relative; top: -100rpx;"></defaultPage>
 		</block>
 
-		<newCoupon
+		<!-- <newCoupon
 			wx:if="{{userInfo.id && address.id}}"
-			wx:if="{{true}}"
 			storeId="{{address.id}}"
 			bindtoggle="showHideToggle"
+		/> -->
+
+		<coupon-dialog 
+			wx:if="{{userInfo.id && address.id}}"
+			storeId="{{address.id}}"
+			provinceCode="{{address.province_code}}"
 		/>
+
 
 		<gio-marketing/>
 	</view>
 </view>
+
+<view class="coupon-entry-fixed" catchtap="tapCouponGet" wx:if="{{hasCouponEntry && showCouponEntry}}">
+	<image src="./../../assets/img/coupon/coupon_entry.png"></image>
+</view>
+

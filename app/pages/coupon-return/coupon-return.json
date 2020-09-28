@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "返券明细",
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage"
+  }
+}
