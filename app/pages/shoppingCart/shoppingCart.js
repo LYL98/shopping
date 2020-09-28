@@ -51,6 +51,10 @@ Page({
     discount:0,
     level:0,
     title:'',
+    receiveCouponList:[],
+    autoCouponList:[],
+    address:{},
+    itemIndex:0,
   },
   onLoad() {
     this.address = {}; //当前选择地址
@@ -67,11 +71,60 @@ Page({
     //判断登录
     app.signIsLogin(() => {
       // this.activity();
+      this.setData({
+        address: app.getSelectStore()
+      })
+      let address = app.getSelectStore(); //当前选择的地址
       this.getWorkTime();
       this.getShoppingCartData();
       this.couponList(); //获取优惠券列表
       this.getUserLevel()
+      this.getReceiveCoupon()
+      this.getAutoCoupon()
+    });
+  },
+  getReceiveCoupon(){
+    const that = this;
+    console.log('this.data.address.province_code',this.data.address.province_code)
+    Http.get(Config.api.receiveCoupon, {
+      page:1,
+      page_size:3,
+      store_id: this.data.address.id || '',
+      province_code:this.data.address.province_code
+    }, { handleError: false }).then((res) => {
+      res.data.items.forEach(item => {
+        if(item.discount_type == 'gift'){
+          item.gift_info.forEach(itemChild=> {
+            if(itemChild.title.length > 3){
+              itemChild.title = itemChild.title.slice(0,3) + '*'
 
+            }
+          })
+        }
+      })
+      that.setData({ receiveCouponList: res.data.items });
+    });
+  },
+  getAutoCoupon(){
+    const that = this;
+    Http.get(Config.api.receiveCoupon, {
+      page:1,
+      page_size:6,
+      grant_way:'auto',
+      store_id: this.data.address.id || '',
+      province_code:this.data.address.province_code
+
+    }, { handleError: false }).then((res) => {
+      res.data.items.forEach(item => {
+        if(item.coupon_type == 'goods_gift'){
+          item.gift_info.forEach(itemChild=> {
+            if(itemChild.title.length > 3){
+              itemChild.title = itemChild.title.split(0,3) + '*'
+            }
+          })
+        }
+      })
+      that.setData({ autoCouponList: res.data.items });
     });
   },
   //点击页面底下的tab
@@ -96,11 +149,9 @@ Page({
   //获取优惠券列表
   couponList() {
     let that = this;
-    Http.get(Config.api.couponList, {
-      avaiable: 1,
-      avaiable_now: 1,
-      is_no_prompt: true,
-      store_id: that.address.id
+    Http.get(Config.api.myCoupon, {
+      status: 'unused',
+      store_id: this.data.address.id || ''
     }, { handleError: false }).then((res) => {
       that.setData({ couponNum: res.data.num, isShowCouponHint: true });
     });
@@ -231,11 +282,14 @@ Page({
     });
   },
   traggleCartInput(e){
-    console.log('进入')
+    const { itemData,itemIndex } = e.detail;
+
+    console.log('进入',e)
     this.setData({
-      isShowInput:true
+      isShowInput:true,
+      itemIndex:itemIndex
     })
-    // const { itemData } = e.detail;
+
   },
   traggleCartHideInput(){
     this.setData({ isShowInput: false, inputNum: '' });
@@ -250,11 +304,33 @@ Page({
   inputBlur(e){
     this.setData({ keyHeight: 0 });
   },
+  stepPriceInfo(num,itemData){
+    let d = itemData.step_prices;
+    console.log('d',d)
+    let isStepPrice = false
+    let stepPrice = 0
+    if(d && d.length > 0){
+      console.log('1')
+      for(let i = 0; i < d.length; i++){
+        console.log(2,num >= d[i].num)
+        if(i === d.length - 1 && num >= d[i].num){
+          isStepPrice = true;
+          stepPrice = d[i].price_sale;
+          break;
+        }else if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+          isStepPrice = true;
+          stepPrice = d[i].price_sale;
+          break;
+        }
+      }
+    }
+    return {isStepPrice,stepPrice};
+  },
   setStepPricesHint(num,itemData){
-
     console.log('this.data.discount: ', this.data.discount);
     let sph = '';
     let d = itemData.step_prices;
+
     if(d && d.length > 0){
       for(let i = 0; i < d.length; i++){
         if(i === d.length - 1 && num >= d[i].num){
@@ -277,6 +353,28 @@ Page({
     //   stepPricesHint,
     //   id:this.data.itemData.id
     // });
+  },
+  getStepPricesHint(num,itemData){
+    let price;
+    let d = itemData.step_prices;
+
+    if(d && d.length > 0){
+      for(let i = 0; i < d.length; i++){
+        if(i === d.length - 1 && num >= d[i].num){
+          price = d[i].price_sale
+          break;
+        }
+        if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+          price = d[i].price_sale
+          break;
+        }
+        if(i === 0 && num < d[i].num){
+          price = d[i].price_sale
+          break;
+        }
+      }
+    }
+    return price;
   },
   // traggleStepPriceHint(e){
   //   console.log('e',e)
@@ -314,7 +412,7 @@ Page({
       this.setData({ keyHeight: h - tabBarHeight });
     },
   inputConfirm(e){
-    this.joinShopCart = this.selectComponent('#joinShopCart')
+    this.joinShopCart = this.selectComponent(`#joinShopCart${this.data.itemIndex}`)
     this.joinShopCart.triggleInputNum(this.data.inputNum)
     this.joinShopCart.inputConfirm()
   },
@@ -373,6 +471,7 @@ Page({
       if (d[i].id == item.id) {
         d[i].is_select = item.is_select;
         d[i].num = 0;
+        d[i].price = item.price_sale
       }
     }
     wx.setStorageSync('shoppingCartData', d);
@@ -450,6 +549,10 @@ Page({
       let inValidCartList = [];
       dataItem.map(item => {
         let stepPricesHint = this.setStepPricesHint(item.select_num,item)
+        console.log('stepPricesHint',stepPricesHint)
+        if(stepPricesHint && stepPricesHint.length > 0){
+          item.price_sale = this.getStepPricesHint(item.select_num,item)
+        }
         item.stepPricesHint = stepPricesHint
         if(item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted){
           validCartList.push(item)
@@ -457,17 +560,18 @@ Page({
           inValidCartList.push(item)
         }
       })
-      console.log('validCartList',validCartList)
+      console.log('打印更新后的validCartList',validCartList)
      
       that.setData({
         dataItem: dataItem,
         totalNum: totalNum,
         totalPrice: totalPrice,
         discountsPrice: discountsPrice,
-        validCartList,
+        validCartList: dataItem.filter(item => item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted),
         inValidCartList,
       }, () => {
         that.judgeIsAllSelect();//判断是否全选
+        console.log('***validCartList',this.data.validCartList);
       });
     } else {
       that.setData({
@@ -520,7 +624,7 @@ Page({
         ids.push(d[i].id);
         item.push({
           id: d[i].id,
-          num: d[i].num
+          num: d[i].num,
         })
       }
 
@@ -528,7 +632,7 @@ Page({
       that.setData({ loading: true }, ()=>{
         Http.post(Config.api.itemCartQuery, {
           ids: ids,
-          store_id: this.address.id || ''
+          store_id: this.data.address.id || ''
         }).then((res) => {
           let rd = res.data;
           if (rd.length === 0) {
@@ -580,12 +684,52 @@ Page({
       })
     });
   },
+
+  onSubmit(){
+    let d = wx.getStorageSync('shoppingCartData');
+    this.data.validCartList.map(item => {
+      if(item.is_select){
+        d.forEach(itemChild => {
+          if(item.id == itemChild.id){
+            console.log('item.id',item.id)
+            console.log('itemChild.id',itemChild.id)
+            let stepPriceInfo = this.stepPriceInfo(itemChild.num,item)
+            console.log('stepPriceInfo',stepPriceInfo)
+            if(stepPriceInfo.isStepPrice){
+              itemChild.price = stepPriceInfo.stepPrice < item.price_sale ? stepPriceInfo.stepPrice : item.price_sale
+            }else{
+              itemChild.price = item.price_sale
+            }
+          }
+        })
+      }
+        
+    })
+    console.log('d',d)
+    wx.setStorageSync('shoppingCartData',d);
+    wx.navigateTo({
+			url: `/pages/orderAdd/orderAdd`
+		});
+    this.submitClearing()
+  },  
   //结算
   submitClearing() {
     /*===== 埋点 start ======*/
     app.gioActionRecordAdd('firstBuyEntrance_evar', '购物车');
     app.gioActionRecordAdd('secBuyEntrance_evar', '-');
     /*===== 埋点 end ======*/
+  },
+
+  toGetCoupon(){
+    wx.navigateTo({
+			url: `/pages/coupon-get/coupon-get`
+		});
+  },
+
+  toReturnCoupon(){
+    wx.navigateTo({
+			url: `/pages/coupon-return/coupon-return`
+		});
   },
   /**
    * 页面上拉触底事件的处理函数

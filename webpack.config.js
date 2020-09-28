@@ -5,7 +5,7 @@ const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const chalk = require('chalk');
 const figlet = require('figlet');
 const CSS_PATH = {
-	pattern: ['app/pages/**/*.scss', 'app/components/**/*.scss', 'app/app.scss'],
+	pattern: ['app/pages/**/*.scss', 'app/components/**/*.scss', 'app/app.scss','app/utils/**/*.scss'],
 	app: path.join(__dirname, 'app')
 };
 

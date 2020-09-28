@@ -1,7 +1,10 @@
 {
   "navigationBarTitleText": "蒲公英",
+  "navigationStyle": "custom",
   "navigationBarBackgroundColor": "#FFE05C",
   "usingComponents": {
+    "pageNavBar": "/components/pageNavBar/pageNavBar",
+    "coupon-dialog": "/pages/index/coupon-dialog/coupon-dialog",
     "handleShopCart": "/components/handleShopCart/handleShopCart",
     "priceBox": "/components/priceBox/priceBox",
     "newCoupon": "/components/newCoupon/newCoupon",

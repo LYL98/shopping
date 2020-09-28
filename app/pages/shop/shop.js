@@ -76,6 +76,7 @@ Page({
     let data = e.currentTarget.dataset.item;
     if (this.data.optionType === 'select'){
       wx.setStorageSync('addOrderSelectAddress', data);
+      wx.setStorageSync('isOrderSelectAddress',true)
       wx.navigateBack();
     }else{
       if(!data.is_freeze) {

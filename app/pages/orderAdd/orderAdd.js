@@ -74,7 +74,10 @@ Page({
     level:0,
     title:'',
     selfGoods:[], // 自营的商品
-    supplierGoods:[], // 供应商那个商品
+    supplierGoods:[], // 供应商那个商品,
+    giftGoods:[], // 供应商那个商品,
+    isNoUseGoodsCoupon:false,
+    isNoUseDeliveryCoupon:false
   },
 
   /**
@@ -95,6 +98,11 @@ Page({
     //判断登录
     app.signIsLogin(() => {
       let address = app.getSelectStore(); //当前选择的地址
+      if(wx.getStorageSync('isOrderSelectAddress')){
+        wx.setStorageSync('orderCouponGoodsSelectData',{})
+        wx.setStorageSync('orderCouponDeliverySelectData',{})
+        wx.setStorageSync('isOrderSelectAddress',false)
+      }
       that.setData({
         address: address
       }, ()=>{
@@ -127,7 +135,7 @@ Page({
     let { couponGoodsListData } = this.data;
     if(couponGoodsListData.length  > 0){
       wx.navigateTo({
-        url: '/pages/orderCoupon/orderCoupon?type=goods'
+        url: '/pages/coupon-select/coupon-select?type=goods'
       });
     }
   },
@@ -137,7 +145,7 @@ Page({
     let { couponDeliveryListData } = this.data;
     if(couponDeliveryListData.length  > 0){
       wx.navigateTo({
-        url: '/pages/orderCoupon/orderCoupon?type=delivery'
+        url: '/pages/coupon-select/coupon-select?type=delivery'
       });
     }
   },
@@ -148,6 +156,44 @@ Page({
     wx.navigateTo({
       url: page
     });
+  },  
+
+  // 不使用优惠券
+  noUseGoodsCoupon(e){
+    console.log('使用优惠券',e)
+    this.setData({
+      isNoUseGoodsCoupon:e
+    })
+  },
+
+  noUseDeliveryCoupon(e){
+    this.setData({
+      isNoUseDeliveryCoupon:e
+    })
+  },
+
+  getUseGoodsCouponInfo(info){
+    let value;
+    if(info.id){
+      value = info.id
+    }else if(this.data.isNoUseGoodsCoupon){
+      value = 0;
+    }else{
+      value = ''
+    }
+    return value;
+  },
+
+  getUseDeliveryCouponInfo(info){
+    let value;
+    if(info.id){
+      value = info.id
+    }else if(this.data.isNoUseDeliveryCoupon){
+      value = 0;
+    }else{
+      value = ''
+    }
+    return value;
   },
 
   //获取优惠券列表
@@ -165,6 +211,7 @@ Page({
           data.push({
             id: shoppingCartData[i].id,
             "number": shoppingCartData[i].num,
+            price: shoppingCartData[i].price
           });
         }
       }
@@ -183,8 +230,8 @@ Page({
           let couponGoodsSelectData = {}; // 选择的商品优惠券
           let couponDeliverySelectData = {}; // 选择的运费优惠券
           let rd = res.data;
-          let couponGoodsUseData = rd.filter(item => item.is_usable && item.coupon.coupon_type != 'type_delivery'); //可用
-          let couponDeliveryUseData = rd.filter(item => item.is_usable && item.coupon.coupon_type == 'type_delivery'); //可用
+          let couponGoodsUseData = rd.filter(item => item.coupon_type == 'goods'); //可用
+          let couponDeliveryUseData = rd.filter(item => item.coupon_type == 'delivery'); //可用
           //如果已选择商品优惠券
           if(typeof couponGoodsStorageSelectData === 'object'){
             if(couponGoodsStorageSelectData.id){
@@ -198,10 +245,8 @@ Page({
                //如果选择不使用优惠券
               couponGoodsSelectData = {}
             }
-          }else{
-            //如刚进页面未有选择，自动选择最最优的
-            couponGoodsSelectData = couponGoodsUseData.length > 0 ? couponGoodsUseData[0] : {};
           }
+          
 
           //如果已选择运费优惠券
           if(typeof couponDeliveryStorageSelectData === 'object'){
@@ -216,13 +261,11 @@ Page({
                //如果选择不使用优惠券
               couponDeliverySelectData = {}
             }
-          }else{
-            //如刚进页面未有选择，自动选择最最优的
-            couponDeliverySelectData = couponDeliveryUseData.length > 0 ? couponDeliveryUseData[0] : {};
           }
-
-          wx.setStorageSync('orderCouponGoodsListData', rd.filter(item => item.coupon.coupon_type != 'type_delivery')); //所有商品优惠券
-          wx.setStorageSync('orderCouponDeliveryListData', rd.filter(item => item.coupon.coupon_type == 'type_delivery')); //所有运费优惠券
+          
+          console.log('rd:**** ', rd);
+          wx.setStorageSync('orderCouponGoodsListData', rd.filter(item => item.coupon_type == 'goods')); //所有商品优惠券
+          wx.setStorageSync('orderCouponDeliveryListData', rd.filter(item => item.coupon_type == 'delivery')); //所有运费优惠券
 
           that.setData({
             couponGoodsListData: couponGoodsUseData, //只有可用的
@@ -248,8 +291,33 @@ Page({
   //预生成订单
   orderPre() {
     let that = this;
-    let { address, orderType, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
+    let {orderType} = that.data;
+      //判断是预售或正常订单
+      let shoppingCartData = wx.getStorageSync(orderType === 'presale' ? 'shoppingCartPresaleData' : 'shoppingCartData');
+
+      if (shoppingCartData && shoppingCartData.length > 0) {
+        let data = [];
+        for (let i = 0; i < shoppingCartData.length; i++) {
+          if (shoppingCartData[i].is_select) {
+            data.push({
+              id: shoppingCartData[i].id,
+              "number": shoppingCartData[i].num,
+              price: shoppingCartData[i].price
+            });
+          }
+        }
+  
+        that.setData({
+          orderAddData: {
+            items: data
+          }
+        })
+      }
+    let { address, deliveryDate, couponGoodsSelectData, couponDeliverySelectData,orderAddData } = that.data;
+    console.log('*****couponGoodsSelectData: ', couponGoodsSelectData);
     wx.showNavigationBarLoading();
+    let goodsCouponData = that.getUseGoodsCouponInfo(couponGoodsSelectData)
+    let deliveryCouponData = that.getUseDeliveryCouponInfo(couponDeliverySelectData)
     wx.request({
       url: Config.api.orderPre,
       header: {
@@ -259,24 +327,25 @@ Page({
       method: 'POST',
       data: {
         items: orderAddData.items,
-        coupon_merchant_id: couponGoodsSelectData.id || '',
-        delivery_coupon_id: couponDeliverySelectData.id || '',
+        coupon_merchant_id: goodsCouponData,
+        delivery_coupon_id: deliveryCouponData,
         store_id: address.id || '',
         delivery_date: deliveryDate,
         is_presale: orderType === 'presale' ? true : false //是否预售订单
       },
       success: function(res) {
-
+        console.log('res: ***', res.data);
+        
         //共用提示
         let msgBox = (str, callback) => {
           wx.showModal({
             title: '提示',
             content: str,
             confirmText: '我知道了',
-            confirmColor: '#00AE66',
+            confirmColor: '#FDCA1F',
             showCancel: false,
             success: function() {
-              typeof callback === 'function' && callback();
+              typeof callback === 'function' && callback(); 
             }
           });
         };
@@ -289,15 +358,26 @@ Page({
          * 105：商品库存不足
          * 106：超过最大订货数
          */
+        console.log('ssssss',res.data.code)
         if (res.statusCode == 200 && res.data.code === 0) {
           let rd = res.data.data;
-          let selfGoods = rd.items.filter(item => item.sale_type === '自营')
-          let supplierGoods = rd.items.filter(item => item.sale_type === '平台')
+          let selfGoods = rd.items.filter(item => item.sale_type === '自营' && !item.is_gift)
+          let supplierGoods = rd.items.filter(item => item.sale_type === '平台' && !item.is_gift)
+          let giftGoods = rd.items.filter(item => item.is_gift)
+          that.setData({
+            couponGoodsSelectData:{id:res.data.data.coupon_discount.coupon_store_id || ''},
+            couponDeliverySelectData:{id:res.data.data.delivery_discount.coupon_store_id || ''}
+          },() => {
+            
+            wx.setStorageSync('orderCouponGoodsSelectData', that.data.couponGoodsSelectData)
+            wx.setStorageSync('orderCouponDeliverySelectData', that.data.couponDeliverySelectData)
+          })
           that.setData({
             dataItem: rd,
             showSkeleton: false,
             selfGoods,
-            supplierGoods
+            supplierGoods,
+            giftGoods
           });
           /*===== 埋点 start ======*/
           app.gioActionRecordAdd('createOrder', {
@@ -322,6 +402,7 @@ Page({
               quantity_var: item.number, //商品数量
             });
           });
+          
           /*===== 埋点 end ======*/
         } else if (res.statusCode == 200 && res.data.code == 101) {
           msgBox('现为非下单时间', ()=>{
@@ -350,14 +431,24 @@ Page({
             wx.navigateBack();
           });
         } else if (res.statusCode == 200 && res.data.code == 107) {
-          msgBox('您所购买的商品有预售商品，请在购物车移除', ()=>{
+          msgBox(`${res.data.message},请在购物车移除`, ()=>{
             wx.navigateBack();
           });
         } else if (res.statusCode == 200 && res.data.code == 108) {
-          msgBox('您所购买的商品有少于最小订货数，请在购物车修改购买数量', ()=>{
+          msgBox(res.data.message, ()=>{
             wx.navigateBack();
           });
-        } else {
+        } else if (res.statusCode == 200 && res.data.code == 109) {
+          msgBox('您所购买的商品价格发生改动，请重新提交订单', ()=>{
+            wx.navigateBack();
+          });
+        } else if (res.statusCode == 200 && res.data.code == 110) {
+          msgBox('您所购买的商品已下架,请重新提交订单', ()=>{
+            wx.navigateBack();
+          });
+        }  
+
+        else {
           app.requestResultCode(res); //处理异常
         }
       },
@@ -384,10 +475,12 @@ Page({
       });
       return false;
     }
+    let goodsCouponData = that.getUseGoodsCouponInfo(couponGoodsSelectData)
+    let deliveryCouponData = that.getUseDeliveryCouponInfo(couponDeliverySelectData)
     let d = {
       store_id: address.id,
-      coupon_merchant_id: couponGoodsSelectData.id || '',
-      delivery_coupon_id: couponDeliverySelectData.id || '',
+      coupon_merchant_id: goodsCouponData,
+      delivery_coupon_id: deliveryCouponData,
       ...orderAddData,
       delivery_date: deliveryDate,
       is_presale: orderType === 'presale' ? true : false //是否预售订单
@@ -429,7 +522,7 @@ Page({
           // 如果已经超过授信额度
           if (rd.to_be_canceled) {
             that.setData({
-              payWarning: ['您未支付的订单累计金额已超授信额度，需支付该订单！', '否则订单将在30分钟后取消']
+              payWarning: ['您未支付的订单累计金额已超授信额度，需支付该订单！', '否则订单将在10分钟后取消']
             })
             that.orderPay(rd); //去支付
           } else {

@@ -18,4 +18,11 @@
                 <view wx:else class="no-price">
                   今日未报价
                 </view>
-              </view>
+                <view class="store-type">
+									<block wx:if="{{saleType == '平台'}}">
+										<text class="type-label" >商家</text>
+										<text>{{supplier}}门店</text>
+									</block>
+									<text wx:elif="{{saleType == '自营'}}" class="type-label type-label-self">优选</text>
+								</view>
+            </view>
