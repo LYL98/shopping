@@ -48,6 +48,10 @@ Component({
       type: Number,
       value: 0
     },
+    itemIndex: {
+      type: Number,
+      value: 0
+    },
     title: {
       type: String,
       value: ''
@@ -233,14 +237,16 @@ Component({
 
     //显示输入
     showInput(e){
-      console.log('e: ', e);
+      console.log('e: ', this.data.itemData);
+      console.log('e:itemIndex ', this.data.itemIndex);
       if(!this.data.isTriggleCartEvent){
         return
       }
       console.log('this.data.isFromCartPage: ', this.data.isFromCartPage);
       if(this.data.isFromCartPage){
         this.triggerEvent('traggleCartInput', {
-					itemData:this.data.itemData
+          itemData:this.data.itemData,
+          itemIndex:this.data.itemIndex
 				});
       }else{
         this.thatEvent = e;
@@ -321,6 +327,7 @@ Component({
     },
     // 购物车触发修改inputNum
     triggleInputNum(e){
+      console.log('触发input ok',this.data.itemData)
       this.setData({
         inputNum:e
       })
@@ -355,6 +362,7 @@ Component({
         return
       }
       let { itemData } = this.data;
+      console.log('***',itemData)
       let tempData = {};
       // this.touchOnGoods(this.thatEvent);
       let data = wx.getStorageSync('shoppingCartData');

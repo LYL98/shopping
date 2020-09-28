@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "选择优惠券",
   "usingComponents": {
-    "skeleton": "/components/skeleton/skeleton"
+    "coupon-item": "/components/coupon-item/coupon-item"
   }
 }

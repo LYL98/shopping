@@ -80,6 +80,8 @@ module.exports = {
     itemCollectionCancel: apiC + '/item/collection/cancel',//商品收藏信息取消
     itemCollectionQuery: apiC + '/item/collection/query',//收藏商品展示
     itemDetail: apiC + '/item/detail',//商品详情
+    itemDetailCoupon: apiC + '/coupon/item/available/query',//商品详情优惠券
+    receiveCoupon: apiC + '/coupon/receive/query',//可领取优惠券列表
     displayClassQuery: apiC + '/display_class/list',//商品分类展示
     itemListDisplayClass: apiC + '/item/query/by_display_class',//用户端商品浏览(根据展示分类code)
     itemListDisplayClassNew: apiC + '/item/query/by_display_class_new', //用户端商品浏览(根据展示分类code)new
@@ -134,6 +136,14 @@ module.exports = {
     couponList: apiC + '/promotion/own_coupon/query', //优惠券列表(我的优惠券)
     orderCouponList: apiC + '/order/coupon/list', //优惠券列表(下单选择优惠券)
     userVipSelf: apiC + '/vip/myself', //获取用户level
+  
+    // v4.3
+    myCoupon: apiC + '/coupon/mine', // 我的优惠券
+    getCoupon: apiC + '/coupon/receive', // 立即领取优惠券
+    queryCoupon: apiC + '/coupon/gain/list', // 查询获取优惠券（弹窗）
+    availableAllCoupon : apiC + '/coupon/receive/query', // 可领取的优惠券列表(所有)
+    availableCoupon : apiC + '/coupon/item/available/query', // 可领取的优惠券列表（商品）
+
 
     sysBrand: apiC + '/basicdata/constant/brand', //获取品牌
     sysService: apiC + '/basicdata/constant/customer_service', //投诉电话

@@ -45,7 +45,9 @@ color: #242424;
 }
 .item-view {
   padding: 0!important;
-    margin: 0 !important;
+  margin: 0 !important;
+
+  
 }
 .item-view-box{
   margin: 0 24rpx;
@@ -54,10 +56,25 @@ color: #242424;
 .item{
   padding-top: 30rpx;
   margin-left: 24rpx;
-  // margin-right: 24rpx;
   border-radius: 10rpx;
   height:230rpx;
   background-color: white;
+  .item-nav {
+    .checked {
+      flex-shrink: 0;
+    }
+    .img {
+      flex-shrink: 0;
+    }
+    .content {
+      flex: 1;
+      min-width: 0;
+      > .title {
+        width: 412rpx;
+      }
+    }
+
+  }
   .under_ground{
     opacity: .4;
   }
@@ -174,7 +191,7 @@ color: #242424;
     flex: initial !important;
     width: 198rpx;
     > button, >navigator{
-      border-radius: 88rpx;
+      border-radius: 10rpx;
       font-size: 32rpx;
       height: 88rpx;
       line-height: 88rpx;
@@ -223,6 +240,7 @@ color: #242424;
 .goods_label{
   font-size: 24rpx;
   color:#999;
+  width: 412rpx;
 }
 .goods_bottom_tip{
   position: absolute;
@@ -257,16 +275,17 @@ color: #242424;
   border-bottom: 1rpx solid #EEEEEE;
 }
 .discount_info--type{
-  background: #FFECE3;
   font-size: 24rpx;
-  color: #FF6010;
+  color: #F59725;
   display: inline-block;
+  border:1rpx solid #F59725; 
   margin-right: 20rpx;
-  padding: 0 4rpx;
+  padding: 0 6rpx;
+  border-radius:4rpx;
 }
 .discount_info--text{
   font-size: 24rpx;
-  color:#808080;
+    color: #F59725;
 }
 .item_discount{
   height: 362rpx;
@@ -289,7 +308,6 @@ color: #242424;
 
 .cart_type{
   padding-top: 24rpx;
-  
 	.title{
 		font-size: 30rpx;
 		color: #151515;
@@ -374,4 +392,59 @@ color: #242424;
   .type-label-self {
     background: #FF6010;
   }
+}
+
+.cart_coupon{
+  background:white;
+  height: 88rpx;
+  padding-right: 36rpx;
+  .label{
+    width: 120rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: #151515;
+    padding-right: 10rpx;
+    flex-shrink: 0;
+  }
+}
+.get_coupon{
+  .coupon_info{
+   
+    
+    font-size: 21rpx;
+    color: #F59725;
+    border-radius: 4rpx;
+    margin-right: 12rpx;
+  }
+  .coupon_info--text{
+    padding: 0 10rpx;
+     border: 1rpx solid #F59725;
+  }
+}
+.reback_coupon{
+  .reback_info{
+    font-size: 22rpx;
+    color: #989797;
+  }
+  .reback_content{
+    font-size:22rpx;
+    line-height: 26rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: #989797;
+  }
+
+}
+
+.coupon_num{
+  font-size: 26rpx;
+  color: #F59725;
+  height:69rpx;
+  margin-right:24rpx;
+}
+.item_normal--one{
+  margin-top: 0!important;
 }

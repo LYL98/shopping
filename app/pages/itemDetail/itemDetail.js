@@ -18,8 +18,8 @@ Page({
     isShowVideo: false,
     loginUserInfo:{},
     isOnSale:true,
-    isShowVipInfo:false
-
+    isShowVipInfo:false,
+    couponList:[],
   },
   //播放视频
   playVideo(){
@@ -80,6 +80,8 @@ Page({
       }, ()=>{
         that.getItemDetail();
         that.promotion();
+        that.getCoupon()
+
       });
     });
 
@@ -109,7 +111,6 @@ Page({
           isOnSale:true
         })
       }
-      
       let vidoes= [];
       if(rd.content){
         let m = rd.content.match(/\<iframe .*<\/iframe>/g) ? rd.content.match(/\<iframe .*<\/iframe>/)[0] : '';
@@ -164,6 +165,32 @@ Page({
       wx.hideNavigationBarLoading();
     });
   },
+
+  getCoupon(){
+    Http.get(Config.api.itemDetailCoupon, {
+      item_id: this.data.id,
+      store_id: this.data.address.id || '',
+      province_code:this.data.address.province_code
+    }).then(res => {
+      let rd = res.data;
+      rd.items.forEach(item => {
+        if(item.discount_type == 'gift'){
+          item.gift_info.forEach(itemChild=> {
+            if(itemChild.title.length > 3){
+              itemChild.title = itemChild.title.slice(0,3) + '*'
+            }
+          })
+        }
+       
+      })
+      this.setData({
+        couponList : rd.items.slice(0,2) ||  []
+      })
+     
+    }).catch(error => {
+      console.log('error',error)
+    });
+  },
   convert(htmlText) {
 		let str = htmlText.replace(/<img[^>]*>/gi, function (match) {
 			return match.replace(
@@ -173,7 +200,12 @@ Page({
 		});
 
 		return str;
-	},
+  },
+  toGetCoupon(){
+    wx.navigateTo({
+			url: `/pages/coupon-get/coupon-get`
+		});
+  },
   //全场活动
   promotion(){
     let that = this;

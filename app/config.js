@@ -9,11 +9,11 @@ export const Version = 'V4.3.1';
 export const Conn = 'pro';
 
 //测试环境api地址
-export const RequestHttpDev = 'https://vestadev.pgyscm.com';
+export const RequestHttpDev = 'https://vestadevls.pgyscm.com';
 export const RequestWsDev = 'wss://iris.pgyscm.com/connection/websocket';
 
 //测试发布环境api地址
-export const RequestHttpTest = 'https://vestatest.pgyscm.com';
+export const RequestHttpTest = 'https://vestatestls.pgyscm.com';
 export const RequestWsTest = 'wss://iris.pgyscm.com/connection/websocket';
 
 //预发布环境api地址
