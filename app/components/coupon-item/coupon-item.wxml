@@ -1,0 +1,75 @@
+<wxs src="./../../utils/tools.wxs" module="tools"></wxs>
+
+<view class="coupon-item custom-class {{status}}">
+      <view class="coupon-item-top" bindtap="tapCoupon">
+        <view class="counpon-item-tl">
+          <view class="v-line"></view>
+          <view class="coupon-denomination center">
+            <!-- 1.商品券 -->
+            <block wx:if="{{itemData.coupon_type == 'goods'}}">
+                <!-- 1.1满减券 -->
+                <block wx:if="{{itemData.discount_type == 'reduce'}}">
+                  <view class="coupon-value mj" style="font-family: 'DINAlternate-Bold';">{{tools.returnPrice(itemData.benefit)}}</view>
+                </block>
+                <!-- 1.2满折券 -->
+                <block wx:elif="{{itemData.discount_type == 'discount'}}">
+                  <view class="coupon-value zk" style="font-family: 'DINAlternate-Bold';">{{tools.returnDiscount(itemData.benefit)}}</view>
+                </block>
+                <!-- 1.3赠品券 -->
+                <block wx:elif="{{itemData.discount_type == 'gift'}}">
+                  <view class="coupon-value" style="font-family: 'PingFangSC-Semibold';">赠</view>
+                </block>
+            </block>
+            <!-- 2. 运费券 -->
+            <block wx:if="{{itemData.coupon_type == 'delivery'}}">
+                <!-- 目前只有运费券满减类型 -->
+                <view class="coupon-value mj" style="font-family: 'PingFangSC-Semibold';">{{tools.returnPrice(itemData.benefit)}}</view>
+            </block>
+
+            <view class="coupon-limit" wx:if="{{itemData.use_type == 'any'}}">全场无门槛</view>
+            <view class="coupon-limit" wx:if="{{itemData.use_type == 'amount'}}">满¥{{tools.returnPrice(itemData.threshold)}}可用</view>
+            <view class="coupon-limit" wx:if="{{itemData.use_type == 'num'}}">购买数量满{{itemData.threshold}}可用</view>
+            <view class="coupon-limit" wx:if="{{itemData.use_type == 'delivery_fee'}}">运费满¥{{tools.returnPrice(itemData.threshold)}}可用</view>
+          </view>
+          <view class="v-dashline"></view>
+        </view>
+        <view class="counpon-item-tc">
+          <view class="coupon-title add-dot2">
+            {{itemData.coupon_type == 'delivery' ? '【运费券】': '【商品券】'}}{{itemData.title}}
+          </view>
+
+          <block wx:if="{{currentPage === 'coupon-get'}}">
+              <view wx:if="{{itemData.date_type == 'fixed'}}" class="coupon-validity">{{itemData.effective_date}}至{{itemData.expire_date}}</view>
+              <view wx:if="{{itemData.date_type == 'offset'}}" class="coupon-validity">有效期：领取{{itemData.effective_days}}天后{{itemData.expire_days}}天内有效</view>
+          </block>
+          <block wx:else>
+              <view class="coupon-validity">{{itemData.effective_date}}至{{itemData.expire_date}}</view>
+          </block>
+
+        </view>
+        <view class="counpon-item-tr">
+          <!-- 优惠券领取页面 -->
+          <block wx:if="{{currentPage==='coupon-get'}}">
+            <view wx:if="{{itemData.is_receive}}" class="btn-get-already" hover-class="view-hover">已领取</view>
+            <view wx:else class="btn-get" hover-class="view-hover" catchtap="receiveCoupon">立即领取</view>
+          </block>
+          <!-- 我的优惠券页面 -->
+          <block wx:if="{{currentPage==='coupon-mine'}}">
+            <image wx:if="{{ status ==='used' }}" class="coupon-label-img" src="./img/coupon_used.png"></image>
+            <image wx:if="{{ status ==='expired' }}" class="coupon-label-img" src="./img/coupon_expired.png"></image>
+            <view wx:if="{{itemData.beWillExpired && status == 'unused'}}" class="overdue">快过期</view>
+          </block>
+          <!-- 选择优惠券页面 -->
+          <block wx:if="{{currentPage==='coupon-select'}}">
+            <image wx:if="{{itemData.fe_checked}}" src="./img/coupon_checked.png" class="coupon-checked"></image>
+          </block>
+        </view>
+      </view>
+      <view class="coupon-item-bottom" bindtap="expandHandle">
+        <view class="coupon-desc {{isExpand? 'flex-column': 'add-dot'}}">
+          <text wx:if="{{itemData.coupon_type=='goods' && itemData.discount_type=='gift' }}" decode>赠品：{{tools.returnGiftInfoText(itemData.gift_info)}}&nbsp;&nbsp;</text>
+          <text decode>适用范围：{{tools.returnCouponScopeText(itemData.scope_type, itemData.usable_scope, itemData.unusable_scope)}}</text>
+        </view>
+        <image class="{{isExpand? 'rotate' : ''}}" style="margin-top:6rpx;width:24rpx;height:24rpx;transition: all .3s linear;" src="./img/open.png"></image>
+      </view>
+</view>

@@ -18,6 +18,7 @@
 
 <!--阶梯价弹框选-->
 <cover-view class="step-prices-body" wx:if="{{isShowStepPrices}}" bindtap="cancelSelectStepPrices">
+<cover-view class="ph"></cover-view>
   <cover-view class="step-prices" catchtap>
     <cover-view class="title">
       <cover-view class="str">单品优惠</cover-view>

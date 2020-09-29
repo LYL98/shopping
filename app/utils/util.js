@@ -131,6 +131,18 @@ const returnDateCalc = (dateStr, num) => {
   return y + "-" + m + "-" + d;
 }
 
+// 两个时间相差的天数 2020-12-12
+function dateDifference(sDate, eDate) {
+	let dateSpan = 0,
+		iDays = -1;
+	sDate = Date.parse(sDate);
+	eDate = Date.parse(eDate);
+	if (sDate > eDate) return -1;
+	dateSpan = Math.abs(eDate - sDate);
+	iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
+	return iDays;
+}
+
 //uuid
 function getUuid() {
   var d = new Date().getTime();
@@ -177,5 +189,6 @@ module.exports = {
   getUuid: getUuid,
   judgeItemStock: judgeItemStock,
   returnDiscount: returnDiscount,
-  returnIsInTimeBucket: returnIsInTimeBucket
+  returnIsInTimeBucket: returnIsInTimeBucket,
+  dateDifference: dateDifference,
 }

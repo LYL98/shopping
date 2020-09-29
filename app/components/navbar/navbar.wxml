@@ -4,7 +4,7 @@
         scroll-x="true" class="navbar {{ fixed && 'fixed' }}" scroll-left="{{listOffset}}" scroll-with-animation="{{true}}">
     <view
             class="item {{activeIndex == index && 'active'}}"
-            style="width: {{width}}rpx;"
+            style="width: {{itemWidth}}rpx;"
             wx:for="{{list}}"
             wx:item="item"
             wx:index="index"
@@ -19,8 +19,3 @@
         style="background-color: {{color}}; width:{{sliderWidth}}rpx; transform: translateX({{sliderLeft + sliderOffset}}rpx);"
     ></view>
 </scroll-view>
-<!--<view class="navbar {{ fixed && 'fixed' }}">-->
-
-
-<!---->
-<!--</view>-->

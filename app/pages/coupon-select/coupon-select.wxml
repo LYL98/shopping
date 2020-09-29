@@ -1,0 +1,14 @@
+<view class="coupon-select-page">
+  <view class="no-select" hover-class="view-hover" bindtap="cancelUseCoupon">
+    不使用优惠券
+  </view>
+  <view>
+    <coupon-item
+    wx:for="{{coupons}}"
+    wx:key="index"
+    itemData="{{item}}"
+    itemIndex="{{index}}"
+    currentPage="coupon-select"
+    bind:handleCouponSelect="handleCouponSelect" />
+  </view>
+</view>

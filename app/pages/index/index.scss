@@ -212,6 +212,7 @@ view, navigator, text {
     margin-bottom: 24rpx;
     box-shadow: 4rpx 0 16rpx rgba($color: #000, $alpha: 0.08);
     height: 626rpx;
+    position:relative;
     .goods-item-img {
       width: 340rpx;
       height: 340rpx;
@@ -280,15 +281,16 @@ view, navigator, text {
           }
         }
       }
-      .goods-item-info-bottom {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
+      
     }
 
   }
 }
+.goods-item-info-bottom {
+            position: absolute;
+    right: 18rpx;
+      bottom: 20rpx;
+      }
 
 .store-type {
   font-size: 18rpx;
@@ -352,4 +354,17 @@ view, navigator, text {
 .notice_right{
   width: 14rpx;
   height: 18rpx;
+}
+
+.coupon-entry-fixed {
+  position: fixed;
+  bottom: 214rpx;
+  right: 0;
+  width: 86rpx;
+  height: 118rpx;
+  > image {
+    width: 86rpx;
+    height: 118rpx;
+    display: block;
+  }
 }

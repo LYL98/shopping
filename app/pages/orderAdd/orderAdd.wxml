@@ -49,7 +49,7 @@
 	</view>
 	<block wx:if="{{selfGoods.length > 0}}">
 		<view class="border-top"></view>
-		<view class="item-view">
+		<view class="item-view item_view--modify">
 			<view class="platform align-center">
 				<view class="platform_tag platform_tag--self">优选</view>
 				<view>蒲公英优选</view>
@@ -61,8 +61,8 @@
 			>
 				<view class="no-nav">
 					<view class="img">
-						<view class="mark">
-							<text wx:if="{{item.is_presale}}" class="is-presale">预</text>
+						<view class="mark" wx:if="{{item.is_presale}}">
+							<text  class="is-presale">预</text>
 						</view>
 						<image
 						 class="skeleton-rect"
@@ -73,11 +73,11 @@
 						<view class="image skeleton-rect" wx:else></view>
 					</view>
 					<view class="content">
-						<view class="title skeleton-rect">
-							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
+
+						<view class="title skeleton-rect add-dot">
 							{{item.title}}
 						</view>
-						<view class="goods_label">
+						<view class="goods_label add-dot2">
 							<text class="skeleton-rect tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
 							<text class="skeleton-rect" wx:if="{{item.item_spec}}"> | {{item.item_spec}}</text>
 							<text class="skeleton-rect" wx:if="{{item.origin_place}}"> | {{item.origin_place}}</text>
@@ -96,10 +96,11 @@
 								￥{{tools.returnPrice(item.price_sale)}}
 							</view>
 							<view class="num-price">
-								<text class="num-str skeleton-rect">× {{item.number}}</text>
+								<text class="num-str skeleton-rect">X {{item.number}}</text>
 								<text class="price-str skeleton-rect">￥{{tools.returnPrice(item.price_sale * item.number)}}</text>
 							</view>
 						</view>
+						<view class="reason" wx:if="{{item.remark && item.remark.length > 0 }}">{{item.remark}}</view>
 					</view>
 				</view>
 			</view>
@@ -119,7 +120,7 @@
 	<block wx:if="{{supplierGoods.length > 0}}">
 		<view class="border-top"></view>
 
-		<view class="item-view">
+		<view class="item-view item_view--modify">
 			<view class="platform align-center">
 				<view class="platform_tag platform_tag--supplier">平台</view>
 				<view>商家直供</view>
@@ -143,8 +144,7 @@
 						<view class="image skeleton-rect" wx:else></view>
 					</view>
 					<view class="content">
-						<view class="title skeleton-rect">
-							<text class="present" wx:if="{{item.is_gift}}">赠品</text>
+						<view class="title add-dot skeleton-rect">
 							{{item.title}}
 						</view>
 						<view class="goods_label">
@@ -160,14 +160,14 @@
 									<view class="vip_card--type card_type--{{level}}">{{title}}价</view>
 									<view class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(item.price_sale)}}</view>
 								</view>
-								<view class="normal_price " style="line-height: 10rpx;">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
+								<view class="normal_price " style="line-height: 10rpx;margin-bottom:10rpx;">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
 							</block>
 							<view class="price-unit skeleton-rect" wx:else>
 								￥{{tools.returnPrice(item.price_sale)}}
 							</view>
 							<view class="store-type">
 								<text class="type-label" >商家</text>
-								<text2>{{item.supplier}}门店</text2>
+								<text>{{item.supplier}}门店</text>
 							</view>
 							<view class="num-price">
 								<text class="num-str skeleton-rect">× {{item.number}}</text>
@@ -188,6 +188,61 @@
 				</view>
 
 			</view>
+		</view>
+	</block>
+	<block wx:if="{{giftGoods.length > 0}}">
+		<view class="border-top"></view>
+
+		<view class="item-view item_view--modify">
+			<view
+			 class="item"
+			 wx:for="{{giftGoods}}"
+			 wx:key="index"
+			>
+				<view class="no-nav">
+					<view class="img">
+
+						<image
+						 class="skeleton-rect"
+						 lazy-load="{{index > 4 ? true : false}}"
+						 wx:if="{{item.images.length > 0}}"
+						 src="{{tencentPath + item.images[0]}}_watermark200x200"
+						></image>
+						<view class="image skeleton-rect" wx:else></view>
+					</view>
+					<view class="content">
+						<view class="title skeleton-rect add-dot">
+							<text class="present" >赠品</text>
+							{{item.title}}
+						</view>
+						<view class="goods_label">
+							<text class="skeleton-rect tips-price">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
+							<text class="skeleton-rect" wx:if="{{item.item_spec}}"> | {{item.item_spec}}</text>
+							<text class="skeleton-rect" wx:if="{{item.origin_place}}"> | {{item.origin_place}}</text>
+							<text class="skeleton-rect" wx:if="{{item.gross_weight}}"> | 约{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
+							<text class="skeleton-rect frame" wx:if="{{item.frame_id}}"> | 有筐</text>
+						</view>
+						<view class="item_bottom_price">
+							<block wx:if="{{item.is_vip_item && discount > 0}}">
+								<view class="vip_card align-center">
+									<view class="vip_card--type card_type--{{level}}">{{title}}价</view>
+									<view class="vip_card--price price_type--{{level}}">￥{{tools.returnPrice(item.price_sale)}}</view>
+								</view>
+								<view class="normal_price " style="line-height: 10rpx;">普通价￥{{tools.returnPrice(item.price_novip)}}</view>
+							</block>
+							<view class="price-unit skeleton-rect" wx:else>
+								￥{{tools.returnPrice(item.price_sale)}}
+							</view>
+
+							<view class="num-price">
+								<text class="num-str skeleton-rect">× {{item.number}}</text>
+								<text class="price-str skeleton-rect">￥0</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+
 		</view>
 	</block>
 	<view class="border-top"></view>
@@ -223,14 +278,14 @@
 			<view
 			 class="skeleton-rect add-dot f-r"
 			 style="width: 480rpx;"
-			 wx:elif="{{couponGoodsListData.length > 0 && couponGoodsSelectData && couponGoodsSelectData.id}}"
+			 wx:elif="{{couponGoodsListData.length > 0 && dataItem.coupon_discount && dataItem.coupon_discount.coupon_store_id}}"
 			>
 				<!--满减-->
-				<text class="price_color" wx:if="{{couponGoodsSelectData.coupon.coupon_type === 'type_reduction'}}">-￥{{tools.returnPrice(couponGoodsSelectData.coupon.benefit)}}</text>
+				<text class="price_color" wx:if="{{dataItem.coupon_discount.discount_type === 'reduce'}}">-￥{{tools.returnPrice(dataItem.coupon_discount.dis_amount)}}</text>
 				<!--折扣-->
-				<text class="price_color"  wx:elif="{{couponGoodsSelectData.coupon.coupon_type === 'type_discount'}}">-￥{{tools.returnPrice(dataItem.coupon_reduction)}}</text>
+				<text class="price_color"  wx:elif="{{dataItem.coupon_discount.discount_type === 'discount'}}">-￥{{tools.returnPrice(dataItem.coupon_discount.dis_amount)}}</text>
 				<!--赠送-->
-				<text wx:else>送{{couponGoodsSelectData.coupon.benefit}}件{{couponGoodsSelectData.gift_item.title}}</text>
+				<text wx:else>送{{dataItem.coupon_discount.gift_info[0].title}}*</text>
 			</view>
 			<view
 			 class="skeleton-rect add-dot f-r price_color"
@@ -307,8 +362,8 @@
 			>无可用优惠券
 			</view>
 			<view wx:else bindtap="selectDeliveryCoupon">
-				<view class="send_item--value align-center" wx:if="{{couponDeliveryListData.length > 0 && couponDeliverySelectData && couponDeliverySelectData.id}}">
-					<text>-￥{{tools.returnPrice(couponDeliverySelectData.coupon.benefit)}} </text>
+				<view class="send_item--value align-center" wx:if="{{couponDeliveryListData.length > 0 && dataItem.delivery_discount && dataItem.delivery_discount.coupon_store_id}}">
+					<text>-￥{{tools.returnPrice(dataItem.delivery_discount.dis_fee)}} </text>
 					<image
 					 wx:if="{{couponDeliveryListData.length > 0}}"
 					 class="right-img f-r price-right-img align-center"
@@ -351,6 +406,10 @@
 			</view>
 		</view>
 	</view>
+	<block wx:if="{{dataItem.coupon_bonus && dataItem.coupon_bonus.length > 0}}">
+		<view class="border-top"></view>
+		<view class="pay_coupon">{{dataItem.coupon_bonus}}</view>
+	</block>
 
 	<!--运费start-->
 	<!-- <view class="input-item">
@@ -371,18 +430,18 @@
 	<view class="bottom-view b-cfff">
 		<view class="total-price">
 			<view>
-				合计：
+				<text>合计：</text>
 				<text class="price">￥{{tools.returnPrice(dataItem.order_price)}}</text>
 			</view>
 		</view>
 		<view class="btn">
 			<!--判断orderAddData.items.length, 因dataItem默认有骨架数据-->
 			<button
-			 class="btn1"
+			 class="btn1 submit"
 			 loading="{{orderLoading}}"
 			 disabled="{{orderAddData.items.length <= 0 || orderLoading}}"
 			 bindtap="submitOrder"
-			>去结算
+			>提交订单
 			</button>
 		</view>
 	</view>
