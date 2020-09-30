@@ -91,7 +91,18 @@
 }
 .item_created{
   font-size: 26rpx;
-color: #151515;
+  color: #151515;
+  display: flex;
+  align-items: center;
+  image {
+    width: 24rpx;
+    height: 22rpx;
+    display: block;
+    margin-right: 4rpx;
+  }
+  text {
+    line-height: 1.2;
+  }
 }
 .item_status{
   font-size: 26rpx;
