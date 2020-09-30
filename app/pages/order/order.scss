@@ -42,8 +42,22 @@
   border-bottom: 1rpx solid #eee;
   font-size: 24rpx;
   color: #616161;
-      padding-bottom: 20rpx;
-  >.price-str, >.amout-pay{
+  padding-bottom: 20rpx;
+  .box1 {
+    font-size: 26rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .created {
+      font-size: 26rpx;
+    }
+    >.price-str {
+      text {
+        font-size: 30rpx;
+      }
+    }
+  }
+   >.amout-pay{
     text{
       font-size: 30rpx;
     }
@@ -77,7 +91,18 @@
 }
 .item_created{
   font-size: 26rpx;
-color: #151515;
+  color: #151515;
+  display: flex;
+  align-items: center;
+  image {
+    width: 24rpx;
+    height: 22rpx;
+    display: block;
+    margin-right: 4rpx;
+  }
+  text {
+    line-height: 1.2;
+  }
 }
 .item_status{
   font-size: 26rpx;
