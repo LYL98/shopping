@@ -56,7 +56,10 @@
 >
 	<navigator url="/pages/orderDetail/orderDetail?id={{item.id}}">
 		<view class="order_item--top justify-between align-center">
-			<view class="item_created">{{item.store_title}}</view>
+			<view class="item_created">
+			<image src="./../../assets/img/order_store_icon.png"></image>
+			<text>{{item.store_title}}</text>
+			</view>
 			<view class="item_status">{{orderStatus[item.status]}}</view>
 		</view>
 		<view class="order-content">
