@@ -308,7 +308,7 @@ var returnCouponDetailName = function(item) {
       str = '新用户注册'
       break;
     case 'goods_num':
-      str = '商品数量满' + condition_thr + '件'
+      str = '商品数量(' +  condition_items.join(',') + ')满' + condition_thr + '件'
       break;
     case 'delivery_fee':
       str = '运费金额满' + returnPrice(condition_thr) + '元'
