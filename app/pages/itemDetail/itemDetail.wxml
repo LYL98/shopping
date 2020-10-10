@@ -59,8 +59,9 @@
 				<text class="goods_top--symbol">￥</text>
 				<text class="goods_top--money">{{tools.returnPrice(detail.price_sale)}}</text>
 				<text class="goods_top--symbol">/件</text>
-				<text wx:if="{{ !isShowVipInfo &&  detail.price_origin > detail.price_sale}}" class="origin_price">{{tools.returnPrice(detail.price_origin)}}/件</text>
-				<text class="goods_top--weight" wx:if="{{detail.is_quoted && detail.gross_weight > 0}}">约{{tools.returnPrice(detail.price_sale  / (detail.gross_weight / 10))}}/斤</text>
+				<text wx:if="{{ !isShowVipInfo &&  detail.price_origin > detail.price_sale}}" class="origin_price">￥{{tools.returnPrice(detail.price_origin)}}/件</text>
+				<!--标品不显示-->
+				<text class="goods_top--weight" wx:if="{{detail.system_class && !detail.system_class.is_standard && detail.is_quoted && detail.gross_weight > 0}}">约￥{{tools.returnPrice(detail.price_sale  / (detail.gross_weight / 10))}}/斤</text>
 				<text class="vip_card" wx:if="{{detail.is_vip_item && detail.vip_level && detail.vip_level > 0 && detail.vip_discount > 0}}">
 					<text class="vip_card--type card_type--{{detail.vip_level}}">{{detail.vip_title}}</text>
 				<text  class="vip_card--discount card_discount--{{detail.vip_level}}">专属{{detail.vip_discount / 10}}折</text>
@@ -211,6 +212,12 @@
 			<view class="align-center label_item goods_attr--item">
 				<view class="goods_info--label">产地</view>
 				<view class="goods_info--value">{{detail.origin_place || '-'}}</view>
+			</view>
+		</view>
+		<view class="align-center goods_attr--box goods_attr--box--gray pl24">
+			<view class="align-center label_item goods_attr--item">
+				<view class="goods_info--label">生产日期</view>
+				<view class="goods_info--value">{{detail.produce_date || '-'}}</view>
 			</view>
 		</view>
 		<view class="align-center goods_attr--box pl24">
