@@ -432,7 +432,7 @@ Page({
       that.data.validCartList.forEach((item,index) => {
         let tempIsSelected = `validCartList[${index}].is_selected`;
         this.setData({
-          [tempIsSelected]:res.data.is_selected,
+          [tempIsSelected]:res.data.is_all_selected,
         })
       })
       this.setData({
