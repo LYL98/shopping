@@ -4,6 +4,7 @@
   "usingComponents": {
     "joinShopCart": "/components/joinShopCart/joinShopCart",
     "loading": "/components/loading/loading",
-    "defaultPage": "/components/defaultPage/defaultPage"
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "handleShopCart": "/components/handleShopCart/handleShopCart"
   }
 }

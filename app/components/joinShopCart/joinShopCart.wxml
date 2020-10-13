@@ -20,7 +20,7 @@
 			<!--数量大于0的情况start-->
 			<view
 			 class="plus-minus {{size}}"
-			 wx:if="{{num > 0}}"
+			 wx:if="{{itemData.cart_num > 0}}"
 			 style="margin-top:{{ isFromCartPage ? '32rpx' : 0}}"
 			>
 				<!--阶梯优惠提示-->
@@ -32,9 +32,9 @@
 					<view class="btn minus" bindtap="down">
 						<image class="image" src="{{size =='medium' ? minusIndexSrc : minusSrc}}"></image>
 					</view>
-					<view class="cart_num num" bind:tap="showInput">{{num}}</view>
+					<view class="cart_num num" bind:tap="showInput">{{itemData.cart_num}}</view>
 					<view
-					 wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}"
+					 wx:if="{{itemData.cart_num >= itemData.item_stock || itemData.cart_num >= itemData.order_num_max}}"
 					 class="btn add unusable"
 					 bindtap="upUnusable"
 					>
@@ -53,8 +53,8 @@
 
 			<!--数量等于0的情况start-->
 			<view class="plus-minus {{size}}" wx:else>
-				<view class="join-btn" catchtap="up">加入购物车</view>
-				<view class="add-cart-icon" catchtap="up">
+				<view class="join-btn" catchtap="add">加入购物车</view>
+				<view class="add-cart-icon" catchtap="add">
 					<image class="image" src="./../../assets/img/cart_icon.png" />
 				</view>
 			</view>

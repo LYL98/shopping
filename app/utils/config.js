@@ -86,7 +86,13 @@ module.exports = {
     itemListDisplayClass: apiC + '/item/query/by_display_class',//用户端商品浏览(根据展示分类code)
     itemListDisplayClassNew: apiC + '/item/query/by_display_class_new', //用户端商品浏览(根据展示分类code)new
     itemQuery: apiC + '/item/query',//商品搜索
-    itemCartQuery: apiC + '/item/cart/list',//商品库存查询(购物车用)
+    itemCartQuery: apiC + '/cart/item/list',//商品库存查询(购物车用)
+    itemCartEdit: apiC + '/cart/item/num/edit',//购物车数量修改(购物车用)
+    itemCartSelected: apiC + '/cart/item/selected',//购物车单选
+    itemCartSelectedAll: apiC + '/cart/item/select_all',//购物车全选
+    itemCartAdd: apiC + '/cart/item/add',//加入购物车
+    itemCartRemove: apiC + '/cart/item/remove',//移除购物车
+    itemCartTotalNum: apiC + '/cart/item/total_num',//获取购物车数量
     itemRecoentlyBuy: apiC + '/item/list/recent_buy',//最近购买商品
     activity: apiC + '/order/delivery/info',//邮费优惠
     getNewCoupon: apiC + '/promotion/new_store_coupon/query', //获取新人优惠券

@@ -3,7 +3,7 @@
  */
 
  //版本
-export const Version = 'V4.3.1';
+export const Version = 'V4.3.2';
 
 //是否开发(dev开发、test测试；pre预发布；pro生产)
 export const Conn = 'test';
@@ -27,7 +27,7 @@ export const RequestWsPro = 'wss://iris.pgyscm.com/connection/websocket';
 export const TencentBucketDev = 'durian-dev-1258811046';
 export const TencentRegionDev = 'ap-shanghai';
 
-//生产环境腾讯上传Bucket、Region
+//生产环境腾讯上传Bucket、Regionpcon
 export const TencentBucketPro = 'durian-pro-1258811046';
 export const TencentRegionPro = 'ap-shanghai';
 

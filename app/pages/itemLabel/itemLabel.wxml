@@ -21,13 +21,13 @@
           </view>
           <text>{{item.title}}</text>
         </view>
-        <view class="label">
+        <view class="goods_label add-dot2">
           <text class="tips-price" wx:if="{{item.is_quoted}}">{{tools.returnPrice(item.price_sale  / (item.gross_weight / 10))}}元/斤</text>
-          <text wx:if="{{item.item_spec}}">{{item.item_spec}}</text>
-          <text wx:if="{{item.origin_place}}">{{item.origin_place}}</text>
-          <text wx:if="{{item.gross_weight}}">{{tools.returnGrossWeight(item.gross_weight)}}斤</text>
-          <text class="frame" wx:if="{{item.frame_id}}">有筐</text>
-          <text class="min-num" wx:if="{{item.min_num_per_order}}">{{item.min_num_per_order}}件起售</text>
+          <text wx:if="{{item.item_spec}}"> {{item.item_spec}} </text>
+          <text wx:if="{{item.origin_place}}">| {{item.origin_place}} </text>
+          <text wx:if="{{item.gross_weight}}">| {{tools.returnGrossWeight(item.gross_weight)}}斤 </text>
+          <text class="frame" wx:if="{{item.frame_id}}">| 有筐 </text>
+          <text class="min-num" wx:if="{{item.min_num_per_order}}">| {{item.min_num_per_order}}件起售</text>
         </view>
         <view class="price-unit" wx:if="{{item.is_quoted}}">
           <view class="price-origin" wx:if="{{item.price_origin > item.price_sale}}">原价:￥{{tools.returnPrice(item.price_origin)}}</view>
@@ -42,7 +42,7 @@
     </navigator>
     <view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 50rpx' : 'bottom: 34rpx'}}">
       <view style="min-height:36rpx;">
-        <joinShopCart wx:if="{{tools.judgeItemStock(item)}}" size="small" style="float:right;" bindcallback="joinShoppingCart" itemData="{{item}}" sourcePage="itemLabel" />
+        <handleShopCart itemData="{{item}}"/>
       </view>
       <view style="clear: both;"></view>
       <view class="repertory">{{tools.returnItemStock(item)}}</view>

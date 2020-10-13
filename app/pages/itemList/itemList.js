@@ -40,6 +40,8 @@ Page({
     //判断登录
     app.signIsLogin(() => {
       this.displayClassQuery();//获取商品分类
+      app.getShoppingCartNum();
+
     });
   },
 

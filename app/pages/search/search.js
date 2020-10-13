@@ -28,8 +28,9 @@ Page({
     dataItem: {
       items: [],
       num: 0
-    },
-    searchData: []
+  },
+    searchData: [],
+    shoppingCartNum:0
   },
   onLoad: function (options) {
     this.setData({
@@ -47,22 +48,39 @@ Page({
     //判断登录
     let that = this;
     app.signIsLogin(() => {
-      let num = app.getShoppingCartNum();//获取购物车数量
+      that.getShoppingCartNum()
       let address = app.getSelectStore(); //当前选择的地址
       let { query } = that.data;
       query.store_id = address.id || '';
       that.setData({
-        shoppingCartNum: num,
         query: query,
         searchData: wx.getStorageSync('searchData') || []
       });
     });
   },
-
+  getShoppingCartNum(){
+    const that = this
+    let address = app.getSelectStore()
+    Http.get(Config.api.itemCartTotalNum, {
+      store_id: address.id || ''
+    }).then((res) => {
+      let rd = res.data;
+      that.setData({
+        shoppingCartNum:rd.total_num
+      })
+    }).catch(() => {
+    });
+  },
   joinShoppingCart() {
     let that = this;
     let num = app.getShoppingCartNum();//获取购物车数量
     that.setData({ shoppingCartNum: num });
+  },
+  notifyParent(e){
+    console.log('e',e.detail)
+    this.setData({
+      shoppingCartNum:e.detail.cart_num
+    })
   },
   clearHistory() {
     wx.removeStorageSync('searchData')

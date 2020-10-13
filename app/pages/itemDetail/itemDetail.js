@@ -38,8 +38,6 @@ Page({
   //加入购物车回调
   joinShoppingCart() {
     let that = this;
-    let num = app.getShoppingCartNum();//获取购物车数量
-    that.setData({ shoppingCartNum: num });
   },
  
 
@@ -51,7 +49,6 @@ Page({
     //判断登录
     app.signIsLogin(() => {
       let id = options.id;
-      let num = app.getShoppingCartNum();//获取购物车数量
       let address = app.getSelectStore(); //当前选择的地址
 
       //获取上个页面的数据(加快显示数据)===
@@ -76,18 +73,36 @@ Page({
         tempOneImg: tempOneImg,
         detail: d,
         address: address,
-        shoppingCartNum: num
       }, ()=>{
         that.getItemDetail();
         that.promotion();
         that.getCoupon()
-
+        that.getCartNum()
       });
     });
 
     
   },
 
+  getCartNum(){
+    const that = this
+    let address = app.getSelectStore()
+    Http.get(Config.api.itemCartTotalNum, {
+      store_id: address.id || ''
+    }).then((res) => {
+      let rd = res.data;
+      that.setData({
+        shoppingCartNum:rd.total_num
+      })
+    }).catch(() => {
+    });
+
+  },
+  notifyParent(e){
+    this.setData({
+      shoppingCartNum:e.detail.cart_num
+    })
+  },
   //获取商品详情
   getItemDetail() {
     let that = this;
@@ -133,7 +148,7 @@ Page({
       }
       that.setData({
         detail: rd,
-        vidoes: vidoes
+        vidoes: vidoes,
       });
       //不是不本省商品，提示
       console.log(rd.province_code, address.province_code);

@@ -1,8 +1,8 @@
 // components/joinShopCart/joinShopCart.js
 //获取应用实例
 const app = getApp();
-import { Util, Verification } from './../../utils/index';
-
+import { Util, Verification,Http,Config } from './../../utils/index';
+let isCanAdd = true
 Component({
   /**
    * 组件的属性列表
@@ -32,6 +32,10 @@ Component({
       type: Boolean,
       value: true
     },
+    isValid: {
+      type: Boolean,
+      value: true
+    },
     isTriggleCartEvent: {
       type: Boolean,
       value: true
@@ -56,6 +60,15 @@ Component({
       type: String,
       value: ''
     },
+    num: {
+      type: Number,
+      value: 0
+    },
+    id: {
+      type: Number,
+      value: 0
+    },
+
   },
 
   /**
@@ -66,7 +79,7 @@ Component({
     minusIndexSrc: './../../assets/img/minus_index.png',
     addSrc: './../../assets/img/add_index.png',
     minusSrc: './../../assets/img/minus_index.png',
-    num: 0,
+    // num: 0,
     tempNum: 0,
     hide_good_box: true,
     isCanPresale: false, //是否可预订
@@ -87,9 +100,9 @@ Component({
   //监听
   observers: {
     //数据
-    itemData(a){
-      this.initData();
-    }
+    // itemData(a){
+    //   this.initData();
+    // }
   },
 
   lifetimes: {
@@ -103,11 +116,11 @@ Component({
   pageLifetimes: {
     show: function(){
       let that = this;
-      let num = that.getShoppingCart();
-      that.setData({
-        num: num,
-        tempNum: num
-      });
+      // let num = that.getShoppingCart();
+      // that.setData({
+      //   num: num,
+      //   tempNum: num
+      // });
       that.judgePresale();//判断预定
     }
   },
@@ -119,13 +132,13 @@ Component({
     //初始化数据
     initData(){
       let that = this;
-      let num = that.getShoppingCart();
-      that.setData({
-        num: num,
-        tempNum: num
-      }, ()=>{
+      // let num = that.getShoppingCart();
+      // that.setData({
+      //   num: num,
+      //   tempNum: num
+      // }, ()=>{
         this.setStepPricesHint();
-      });
+      // });
       let ww = app.globalData.ww;
       let x = ww - (ww / 5) - (ww / 5 / 2);
       let y = app.globalData.hh;
@@ -169,13 +182,50 @@ Component({
      * 加入购物车
      */
     up(e) {
-      this.thatEvent = e;
-      let { itemData, num } = this.data;
-      if(itemData.step_prices.length > 0 && num === 0){
-        this.setData({ isShowStepPrices: true, stepPricesIndex: -1 });
-      }else{
-        this.handleNum();
-      }
+      if(!this.data.isValid) return
+      if(!isCanAdd) return;
+        isCanAdd = false
+      const that = this
+      console.log('加入购物车')
+      Http.post(Config.api.itemCartEdit, {
+        cart_item_id: that.data.itemData.cart_item_id || that.data.itemData.id,
+        num:that.data.itemData.cart_num+1
+      }).then((res) => {
+        let rd = res.data;
+        that.setData({
+          ['itemData.cart_num']:that.data.itemData.cart_num+1
+        })
+        isCanAdd = true
+        that.notifyParent(rd.amount,rd.is_all_selected,rd.total_num);
+
+        // that.updateData(rd);//更新本地数据
+        wx.hideNavigationBarLoading();
+        that.setData({ loading: false });
+      }).catch(() => {
+        isCanAdd = true
+        wx.hideNavigationBarLoading();
+        that.setData({ loading: false });
+      });
+    },
+
+    add(){
+      const that = this
+        if(!isCanAdd) return;
+        isCanAdd = false
+        let address = app.getSelectStore();
+        Http.post(Config.api.itemCartAdd, {
+          item_id: that.data.itemData.id,
+          store_id:address.id || ''
+        }, { handleError: false }).then((res) => {
+          that.setData({
+            ['itemData.cart_num']:res.data.item_num,
+          })
+          that.notifyParent(null,null,res.data.total_num);
+
+          isCanAdd = true
+        }).catch(err => {
+          isCanAdd = true
+        });
     },
     //选择阶梯
     selectStepPrices(e){
@@ -191,6 +241,16 @@ Component({
     //取消选择
     cancelSelectStepPrices(){
       this.setData({ isShowStepPrices: false });
+    },
+    // 通知父组件
+    notifyParent(amount,is_all_selected,cart_num){
+      app.setShoppingCartNum(cart_num)
+      this.triggerEvent('notifyParent', {
+        amount,
+        is_all_selected,
+        cart_num,
+        itemData:this.data.itemData,
+			});
     },
     //处理阶梯价
     handleStepPrices(){
@@ -419,61 +479,82 @@ Component({
      * 减少购物车
      */
     down() {
-      if(!this.data.isTriggleCartEvent){
-        return
+      if(!this.data.isValid) return
+      const that = this
+      if(that.data.itemData.min_num_per_order >0 && that.data.num === that.data.itemData.min_num_per_order){
+        print('不让减')
       }
-      let { itemData, num, isDeleteHint } = this.data;
-      let tempData = {};
-      //内部方法
-      let fun = () => {
-        let data = wx.getStorageSync('shoppingCartData');
-        if(itemData.min_num_per_order > 0 && num <= itemData.min_num_per_order){
-          num = 0;
-        }else{
-          --num;
-        }
-        if (data && data.length > 0) {
-          for (let i = 0; i < data.length; i++) {
-            if (itemData.id === data[i].id) {
-              if (num <= 0) {
-                data.remove(i);
-                tempData = { num: 0, is_select: false };
-                break;
-              }
-              data[i].num = num;
-              tempData = data[i];
-              break;
-            }
-          }
-        }
-        wx.setStorageSync('shoppingCartData', data);
+      Http.post(Config.api.itemCartEdit, {
+        cart_item_id: that.data.itemData.id,
+        num:that.data.itemData.cart_num-1
+      }).then((res) => {
+        let rd = res.data;
+        that.setData({
+          ['itemData.cart_num']:that.data.itemData.cart_num-1
+        })
+        that.notifyParent(rd.amount,rd.is_all_selected,rd.total_num);
+        
+        wx.hideNavigationBarLoading();
+        that.setData({ loading: false });
+      }).catch(() => {
+        wx.hideNavigationBarLoading();
+        that.setData({ loading: false });
+      });
+      // if(!this.data.isTriggleCartEvent){
+      //   return
+      // }
+      // let { itemData, num, isDeleteHint } = this.data;
+      // let tempData = {};
+      // //内部方法
+      // let fun = () => {
+      //   let data = wx.getStorageSync('shoppingCartData');
+      //   if(itemData.min_num_per_order > 0 && num <= itemData.min_num_per_order){
+      //     num = 0;
+      //   }else{
+      //     --num;
+      //   }
+      //   if (data && data.length > 0) {
+      //     for (let i = 0; i < data.length; i++) {
+      //       if (itemData.id === data[i].id) {
+      //         if (num <= 0) {
+      //           data.remove(i);
+      //           tempData = { num: 0, is_select: false };
+      //           break;
+      //         }
+      //         data[i].num = num;
+      //         tempData = data[i];
+      //         break;
+      //       }
+      //     }
+      //   }
+      //   wx.setStorageSync('shoppingCartData', data);
 
-        this.setData({
-          num: num
-        }, ()=>{
-          this.setStepPricesHint();
-        });
+      //   this.setData({
+      //     num: num
+      //   }, ()=>{
+      //     this.setStepPricesHint();
+      //   });
 
-        app.shoppingCartNum();//计算购物车数量并显示角标
+      //   app.shoppingCartNum();//计算购物车数量并显示角标
 
-        this.triggerEvent('callback', tempData);//触发回调事件
-      }
+      //   this.triggerEvent('callback', tempData);//触发回调事件
+      // }
 
-      if (((itemData.min_num_per_order > 0 && num <= itemData.min_num_per_order) ||
-          itemData.min_num_per_order === 0 && num === 1) && isDeleteHint){
-        wx.showModal({
-          title: '提示',
-          content: '确认移除商品？',
-          confirmColor: '#FDCA1F',
-          success: function (res) {
-            if (res.confirm) {
-              fun();//调用内部方法
-            }
-          }
-        });
-      }else{
-        fun();//调用内部方法
-      }
+      // if (((itemData.min_num_per_order > 0 && num <= itemData.min_num_per_order) ||
+      //     itemData.min_num_per_order === 0 && num === 1) && isDeleteHint){
+      //   wx.showModal({
+      //     title: '提示',
+      //     content: '确认移除商品？',
+      //     confirmColor: '#FDCA1F',
+      //     success: function (res) {
+      //       if (res.confirm) {
+      //         fun();//调用内部方法
+      //       }
+      //     }
+      //   });
+      // }else{
+      //   fun();//调用内部方法
+      // }
       
     },
 
