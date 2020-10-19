@@ -482,8 +482,22 @@ Component({
     down() {
       if(!this.data.isValid) return
       const that = this
-      if(that.data.itemData.min_num_per_order >0 && that.data.num === that.data.itemData.min_num_per_order){
-        print('不让减')
+      console.log('itemData',that.data.itemData)
+      console.log('itemData',that.data.num)
+      if((that.data.itemData.min_num_per_order >0 && c === that.data.itemData.min_num_per_order) || that.data.itemData.min_num_per_order == 0 && that.data.num == 1){
+        return wx.showModal({
+              title: '提示',
+              content: `确认移除${that.data.itemData.title}？`,
+              confirmColor: '#FDCA1F',
+              success: function (res) {
+                if (res.confirm) {
+                  that.triggerEvent('notifyRemove', {
+                    id:that.data.itemData.id,
+                    index:that.data.itemIndex,
+                  });
+                }
+              }
+            });
       }
       Http.post(Config.api.itemCartEdit, {
         cart_item_id: that.data.itemData.id,

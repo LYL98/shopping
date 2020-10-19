@@ -236,6 +236,8 @@ Page({
     });
   },
 
+  
+
   clearInValid(){
     let that = this;
    
@@ -500,7 +502,6 @@ Page({
       isAllSelect:e.detail.is_all_selected,
     })
     let itemData = e.detail.itemData
-    console.log('itemData',itemData)
     if(itemData.step_prices && itemData.step_prices.length > 0){
       this.data.validCartList.map((item,index) => {
         let tempHint = `validCartList[${index}].stepPricesHint`;
@@ -517,6 +518,21 @@ Page({
     
     
 
+  },
+  notifyRemove(e){
+    const that = this
+    Http.post(Config.api.itemCartRemove, {
+      cart_item_ids: [e.detail.id]
+    }, { handleError: false }).then((res) => {
+      that.data.validCartList.splice(e.detail.index,1)
+      that.setData({ 
+        validCartList: that.data.validCartList,
+        totalNum:res.data.total_num,
+        totalPrice:res.data.amount,
+        isAllSelect:res.data.is_all_selected
+      });
+      app.setShoppingCartNum(res.data.total_num)
+    });
   },
   setStorage(item) {
     let d = wx.getStorageSync('shoppingCartData');

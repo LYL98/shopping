@@ -133,6 +133,7 @@
 										 bind:traggleCartHideInput="traggleCartHideInput"
 										 bind:traggleStepPriceHint="traggleStepPriceHint"
 										bind:notifyParent="notifyParent"
+										bind:notifyRemove="notifyRemove"
 										/>
 									</view>
 
