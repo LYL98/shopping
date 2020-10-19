@@ -86,6 +86,7 @@ Page({
             this.getWorkTime();
             this.getBanner(); //显示ad
             this.getNoticeList()
+            app.getShoppingCartNum();
           });
         }
         app.shoppingCartNum();

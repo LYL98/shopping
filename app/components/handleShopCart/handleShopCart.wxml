@@ -2,15 +2,15 @@
 <view catchtap>
   <!--预定-->
   <view wx:if="{{itemData.is_presale}}">
-    <navigator wx:if="{{tools.judgeItemStock(itemData) && itemData.order_num_max > 0 && isCanPresale}}" url="/pages/itemDetail/itemDetail?id={{itemData.id}}" class="presale-btn">立即预订</navigator>
+    <navigator wx:if="{{tools.judgeItemStock(itemData) && itemData.order_item.num_max > 0 && isCanPresale}}" url="/pages/itemDetail/itemDetail?id={{itemData.id}}" class="presale-btn">立即预订</navigator>
     <view wx:else class="presale-btn presale-disabled-btn">立即预订</view>
   </view>
 
   <view wx:else>
     <view class="add-cart">
-      <view class="badge" wx:if="{{num > 0}}">{{num}}</view>
+      <view class="badge" wx:if="{{itemData.cart_num > 0}}">{{itemData.cart_num}}</view>
       <!-- 加 -->
-      <image class="image" wx:if="{{num >= itemData.item_stock || num >= itemData.order_num_max}}" src="./img/cart_add_unusable.png" catchtap="upUnusable"></image>
+      <image class="image" wx:if="{{itemData.cart_num >= itemData.item_stock || itemData.cart_num >= itemData.order_item.num_max}}" src="./img/cart_add_unusable.png" catchtap="upUnusable"></image>
       <image class="image" wx:else src="./img/cart_add.jpg" catchtap="up"></image>
     </view>
   </view>
@@ -37,7 +37,7 @@
         </cover-view>
       </cover-view>
       <cover-view hover-class="link-active" wx:for="{{itemData.step_prices}}" wx:key="index" data-index="{{index}}" bindtap="selectStepPrices">
-        <cover-view class="item {{item.num > itemData.order_num_max || item.num < itemData.min_num_per_order || item.num > itemData.item_stock ? 'disabled' : ''}}">
+        <cover-view class="item {{itemData.cart_num> itemData.order_item.num_max || itemData.cart_num < itemData.min_item.num_per_order || item.item.num > itemData.item_stock ? 'disabled' : ''}}">
           <cover-view class="left">
             <cover-image class="image" src="./../../assets/img/checked_s.png" wx:if="{{stepPricesIndex=== index}}" style="width: 38rpx; height: 38rpx;"/>
             <cover-image class="image" src="./../../assets/img/checked.png" wx:else style="width: 38rpx; height: 38rpx;"/>

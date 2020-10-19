@@ -138,6 +138,7 @@ App({
 
   //网络请求异常处理方法
   requestResultCode(res) {
+    console.log('网络请求异常处理方法')
     let that = this;
     if (res.statusCode >= 500){
       wx.showModal({
@@ -261,23 +262,21 @@ App({
     }
   },
 
-  //获取购物车数量
+  // //获取购物车数量
   getShoppingCartNum(){
-    let num = 0;
-    let d = wx.getStorageSync('shoppingCartData');
-    if (d && d.length > 0) {
-      for (let i = 0; i < d.length; i++) {
-        num = num + d[i].num;
-      }
-    } else {
-      num = 0;
-    }
-    return num;
+    const that = this
+    let address = that.getSelectStore()
+    Http.get(Config.api.itemCartTotalNum, {
+      store_id: address.id || ''
+    }).then((res) => {
+      console.log('********',res.data)
+      let rd = res.data;
+      that.setShoppingCartNum(rd.total_num)
+    }).catch(() => {
+    });
   },
-
-  //计算购物车数量
-  shoppingCartNum(){
-    let num = this.getShoppingCartNum();
+  // 设置购物车数量
+  setShoppingCartNum(num){
     if(num){
       wx.setTabBarBadge({
         index: 3,
@@ -290,6 +289,11 @@ App({
     }
   },
 
+  //计算购物车数量
+  shoppingCartNum(){
+    this.getShoppingCartNum()
+  },
+
   //小程序初始化完成时触发，全局只触发一次。
   onLaunch() {
     this.screenSize();//获取屏宽高
@@ -298,7 +302,9 @@ App({
   //全局显示时
   onShow(){
     this.updateApp(); //更新小程序
-    this.shoppingCartNum();//计算购物车数量
+    setTimeout(()=> {
+      this.shoppingCartNum();//计算购物车数量
+    },1000)
   },
 
   //更新应用

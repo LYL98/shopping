@@ -200,38 +200,12 @@ Page({
       confirmColor: '#00AE66',
       success: function (res) {
         if (res.confirm) {
-          let { detail } = that.data;
-
-          let data = wx.getStorageSync('shoppingCartData') || [];
-          if (data.length > 0) {
-            for (let i = 0; i < data.length; i++) {
-              for (let j = 0; j < detail.items.length; j++) {
-                if (detail.items[j].item_id === data[i].id) {
-                  data.remove(i);
-                  i--;
-                  break;
-                }
-                if (j === detail.items.length - 1) {
-                  data[i].is_select = false;
-                }
-              }
-            }
-          }
-          for (let d = 0; d < detail.items.length; d++) {
-            //不是赠品的
-            if(!detail.items[d].is_gift){
-              data.unshift({
-                id: detail.items[d].item_id,
-                is_select: true,
-                num: detail.items[d].count_real
-              });
-            }
-          }
-
-          wx.setStorageSync('shoppingCartData', data);
-
-          wx.switchTab({
-            url: '/pages/shoppingCart/shoppingCart'
+          Http.post(Config.api.cartOrderAgain, {
+            order_id: e.target.dataset.id
+          }, { handleError: false }).then((res) => {
+            wx.switchTab({
+              url: '/pages/shoppingCart/shoppingCart'
+            });
           });
         }
       }

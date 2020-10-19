@@ -431,6 +431,7 @@
 			 itemData="{{detail}}"
 			 bindcallback="joinShoppingCart"
 			 sourcePage="itemDetail"
+			 bind:notifyParent="notifyParent"
 			/>
 		</view>
 		<view wx:else class="btn-join">

@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/order/order",
+    "pages/itemLabel/itemLabel",
     "pages/shoppingCart/shoppingCart",
+    "pages/search/search",
     "pages/my/my",
     "pages/member/member",
     "pages/orderAdd/orderAdd",
@@ -10,8 +12,6 @@
     "pages/browser/browser",
     "pages/about/about",
     "pages/myMessage/myMessage",
-    "pages/search/search",
-    "pages/itemLabel/itemLabel",
     "pages/itemTag/itemTag",
     "pages/loginGuide/loginGuide",
     "pages/login/login",
