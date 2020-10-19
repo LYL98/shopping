@@ -1,10 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/order/order",
     "pages/itemLabel/itemLabel",
     "pages/shoppingCart/shoppingCart",
     "pages/search/search",
-    "pages/order/order",
     "pages/my/my",
     "pages/member/member",
     "pages/orderAdd/orderAdd",

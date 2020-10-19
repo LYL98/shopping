@@ -6,7 +6,8 @@ let CATCHE_POSTED_LIST = []; // 缓存 post api 请求 的列表 { url: string, 
 const initConfig = function (method, config) {
   let contentType = config && config.contentType || 'application/json';
   let handleError = true;
-  let throttle = method == 'GET' ? false : true;
+  let throttle = false;
+  // let throttle = method == 'GET' ? false : true;
 
   if (config && typeof config.handleError === 'boolean') {
     handleError = config.handleError;

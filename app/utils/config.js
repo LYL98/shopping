@@ -93,6 +93,7 @@ module.exports = {
     itemCartAdd: apiC + '/cart/item/add',//加入购物车
     itemCartRemove: apiC + '/cart/item/remove',//移除购物车
     itemCartTotalNum: apiC + '/cart/item/total_num',//获取购物车数量
+    cartOrderAgain: apiC + '/cart/order/again',//获取购物车数量
     itemRecoentlyBuy: apiC + '/item/list/recent_buy',//最近购买商品
     activity: apiC + '/order/delivery/info',//邮费优惠
     getNewCoupon: apiC + '/promotion/new_store_coupon/query', //获取新人优惠券

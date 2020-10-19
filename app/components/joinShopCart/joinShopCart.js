@@ -219,6 +219,7 @@ Component({
         }, { handleError: false }).then((res) => {
           that.setData({
             ['itemData.cart_num']:res.data.item_num,
+            ['itemData.cart_item_id']:res.data.cart_item_id,
           })
           that.notifyParent(null,null,res.data.total_num);
 

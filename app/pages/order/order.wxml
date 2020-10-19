@@ -153,6 +153,7 @@
 			 size="mini"
 			 bindtap="againOrder"
 			 data-index="{{index}}"
+			 data-id="{{item.id}}"
 			>再次下单
 			</button>
 			<button
