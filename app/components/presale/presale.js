@@ -34,9 +34,11 @@ Component({
 
   //组件生命周期函数，在组件实例进入页面节点树时执行
   attached(){
+    let { itemData } = this.data;
+    let nowDateTime = Util.returnDateStr(); //返回今日日期时间
     //判断是否可预定
     let isCanPresale = true;
-    if(this.data.itemData.presale_delivery_date > this.data.itemData.presale_end_time) isCanPresale = false;
+    if(itemData.presale_start_time < nowDateTime || nowDateTime > itemData.presale_end_time) isCanPresale = false;
     this.setData({ isCanPresale });
   },
 
