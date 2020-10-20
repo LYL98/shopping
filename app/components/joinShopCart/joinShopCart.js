@@ -149,7 +149,7 @@ Component({
         let nowDateTime = Util.returnDateStr(); //返回今日日期时间
         //判断是否可预定
         let isCanPresale = true;
-        if(itemData.presale_start_time < nowDateTime || nowDateTime > itemData.presale_end_time) isCanPresale = false;
+        if(itemData.presale_start_time > nowDateTime || itemData.presale_end_time < nowDateTime) isCanPresale = false;
         this.setData({ isCanPresale });
       }
     },
