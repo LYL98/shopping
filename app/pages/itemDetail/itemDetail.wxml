@@ -122,14 +122,14 @@
 			<view class="goods_header--conetnt align-center activity-item">
 				<view class="send_title">预售时间</view>
 				<view class="content">
-					{{detail.presale_begin}}
+					{{detail.presale_start_time}}
 					<text style="margin: 0 10rpx;">至</text>
-					{{detail.presale_end}}
+					{{detail.presale_end_time}}
 				</view>
 			</view>
 			<view class="goods_header--conetnt align-center activity-item">
 				<view class="send_title">配送时间</view>
-				<view class="content">{{detail.presale_begin}}</view>
+				<view class="content">{{detail.presale_delivery_date}}</view>
 			</view>
 		</block>
 		<!--预售商品日期end-->

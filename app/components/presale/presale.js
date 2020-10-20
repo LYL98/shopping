@@ -36,7 +36,7 @@ Component({
   attached(){
     //判断是否可预定
     let isCanPresale = true;
-    if(this.data.itemData.delivery_date > this.data.itemData.presale_end) isCanPresale = false;
+    if(this.data.itemData.presale_delivery_date > this.data.itemData.presale_end_time) isCanPresale = false;
     this.setData({ isCanPresale });
   },
 
@@ -267,7 +267,7 @@ Component({
       this.showHideSelect();
       let { itemData } = this.data;
       wx.navigateTo({
-        url: '/pages/orderAdd/orderAdd?type=presale&delivery_date=' + itemData.delivery_date,
+        url: '/pages/orderAdd/orderAdd?type=presale&delivery_date=' + itemData.presale_delivery_date,
       });
     }
   }

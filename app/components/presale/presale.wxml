@@ -11,7 +11,7 @@
     <view class="content">
       <view class="item">
         <view class="left">配送日期</view>
-        <view class="right">{{itemData.delivery_date}}</view>
+        <view class="right">{{itemData.presale_delivery_date}}</view>
       </view>
       <view class="item">
         <view class="left">单价</view>

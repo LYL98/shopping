@@ -152,14 +152,14 @@ Component({
         let tomorrow = Util.returnDateCalc(nowDate, 1); //明天
         let pbt = ''; //临时日期
         //如果配送开始日期 >= 明天
-        if(itemData.presale_begin >= tomorrow){
-          pbt = itemData.presale_begin;
+        if(itemData.presale_start_time >= tomorrow){
+          pbt = itemData.presale_start_time;
         }else{
           pbt = tomorrow;
         }
         //判断是否可预定
         let isCanPresale = true;
-        if(pbt > itemData.presale_end) isCanPresale = false;
+        if(pbt > itemData.presale_end_time) isCanPresale = false;
         that.setData({
           isCanPresale: isCanPresale
         });
