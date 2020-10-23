@@ -179,7 +179,7 @@ Page({
     this.setData({
       isEdit: !isEdit
     });
-    this.updateData();//更新本地数据
+    // this.updateData();//更新本地数据
   },
 
   //删除购物车商品
@@ -308,7 +308,8 @@ Page({
     }
     return {isStepPrice,stepPrice};
   },
-  setStepPricesHint(itemData){
+  setStepPricesHint(itemData,isUpdateOrigin){
+      const that = this
     console.log('this.data.discount: ', itemData);
     let sph = '';
     let d = itemData.step_prices;
@@ -317,14 +318,21 @@ Page({
       for(let i = 0; i < d.length; i++){
         if(i === d.length - 1 && itemData.cart_num >= d[i].num){
           sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件`;
+          itemData.price_sale = d[i].price_sale
+          // if(!isUpdateOrigin) that.setPriceOnDom(itemData.id,d[i].price_sale)
+          
           break;
         }
         if(i < d.length - 1 && itemData.cart_num >= d[i].num && itemData.cart_num < d[i + 1].num){
           sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - itemData.cart_num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
+          itemData.price_sale = d[i].price_sale
+          // if(!isUpdateOrigin) that.setPriceOnDom(itemData.id,d[i].price_sale)
           break;
         }
         if(i === 0 && itemData.cart_num < d[i].num){
           sph = `再买${d[i].num - itemData.cart_num}件享￥${Util.returnPrice(d[i].price_sale)}/件` 
+          itemData.price_sale = itemData.beforePriceSale
+          // if(!isUpdateOrigin) that.setPriceOnDom(itemData.id,itemData.beforePriceSale)
           break;
         }
       }
@@ -332,9 +340,47 @@ Page({
     return sph;
     // if(sph !== stepPricesHint) this.setData({ stepPricesHint: sph });
     // this.triggerEvent('traggleStepPriceHint', {
-    //   stepPricesHint,
+    //   stepPricesHint,item_stock
     //   id:this.data.itemData.id
     // });
+  },
+  setSteppriceSale(itemData){
+    const that = this
+    let sph = '';
+    let d = itemData.step_prices;
+
+    if(d && d.length > 0){
+      for(let i = 0; i < d.length; i++){
+        if(i === d.length - 1 && itemData.cart_num >= d[i].num){
+          sph = d[i].price_sale
+          
+          break;
+        }
+        if(i < d.length - 1 && itemData.cart_num >= d[i].num && itemData.cart_num < d[i + 1].num){
+          sph = d[i].price_sale
+          // if(!isUpdateOrigin) that.setPriceOnDom(itemData.id,d[i].price_sale)
+          break;
+        }
+        if(i === 0 && itemData.cart_num < d[i].num){
+          sph =  itemData.beforePriceSale
+          break;
+        }
+      }
+    }
+    return sph;
+  },
+  setPriceOnDom(id,price_sale){
+    const that= this
+    that.data.validCartList.forEach(item =>{
+      if(item.id == id){
+        if(item.price_sale > price_sale){
+          item.price_sale = price_sale
+        }
+      }
+    })
+    that.setData({
+      validCartList:that.data.validCartList
+    })
   },
   getStepPricesHint(itemData){
     let price;
@@ -395,21 +441,31 @@ Page({
       this.setData({ keyHeight: h - tabBarHeight });
     },
   inputConfirm(e){
-    console.log('****',e)
+    console.log("shoppingcart")
+    const that = this
+    console.log('1')
+      this.joinShopCart = this.selectComponent(`#joinShopCart${this.data.itemIndex}`)
+      console.log('2')
+      this.joinShopCart.triggleInputNum(that.data.inputNum)
+      console.log('3')
+      this.joinShopCart.inputConfirm()
+  },
+
+  donwConfirm(e){
     const that = this
    
-
     Http.post(Config.api.itemCartEdit, {
-      cart_item_id: e.detail.itemData.id,
-      num: that.data.inputNum
+      cart_item_id: that.data.validCartList[that.data.itemIndex].id,
+      num: +e.detail.num
     }).then((res) => {
       let rd = res.data;
+      that.data.validCartList[that.data.itemIndex].cart_num = +e.detail.num
+      console.log('that.data.validCartList[that.data.itemIndex].cart_num ',that.data.validCartList[that.data.itemIndex].cart_num )
       that.setData({
-        ['itemData.cart_num']:that.data.inputNum
+        validCartList:that.data.validCartList,
+        totalPrice:rd.amount,
+        totalNum:rd.total_num
       })
-      this.joinShopCart = this.selectComponent(`#joinShopCart${this.data.itemIndex}`)
-      this.joinShopCart.triggleInputNum(that.data.inputNum)
-      this.joinShopCart.inputConfirm()
 
       that.setData({ loading: false });
     }).catch(() => {
@@ -440,7 +496,9 @@ Page({
       this.setData({
         isAllSelect:res.data.is_all_selected,
         totalPrice:res.data.amount,
+        totalNum:res.data.total_num
       })
+      app.setShoppingCartNum(res.data.total_num)
       console.log('res: ', res);
       
     });
@@ -463,17 +521,21 @@ Page({
   //单选
   redioSelect(e) {
     let that = this;
+    console.log('***',e.currentTarget.dataset.index)
     let item= e.currentTarget.dataset.item;
     Http.post(Config.api.itemCartSelected, {
       cart_item_id: item.id,
-      is_selected:item.is_selected ? 0 : -1
+      is_selected:item.is_selected ? 0 : 1
     }, { handleError: false }).then((res) => {
-      let tempIsSelected = `validCartList[${index}].is_selected`;
+      let tempIsSelected = `validCartList[${e.currentTarget.dataset.index}].is_selected`;
+      console.log('tempIsSelected',tempIsSelected)
       this.setData({
         isAllSelect:res.data.is_all_selected,
         totalPrice:res.data.amount,
-        [tempIsSelected]:res.data.is_selected,
+        [tempIsSelected]:!item.is_selected,
+         totalNum:res.data.total_num
       })
+      app.setShoppingCartNum(res.data.total_num)
       console.log('res: ', res);
       
     });
@@ -494,21 +556,35 @@ Page({
     // }
     // wx.setStorageSync('shoppingCartData', d);
 
-    that.updateData();//更新本地数据
+    // that.updateData();//更新本地数据
   },
   notifyParent(e){
     this.setData({
       totalPrice:e.detail.amount,
       isAllSelect:e.detail.is_all_selected,
     })
+    console.log('通知父组件',e)
     let itemData = e.detail.itemData
     if(itemData.step_prices && itemData.step_prices.length > 0){
       this.data.validCartList.map((item,index) => {
         let tempHint = `validCartList[${index}].stepPricesHint`;
         let tempNum= `validCartList[${index}].cart_num`;
+        let tempPrice = `validCartList[${index}].price_sale`;
+        console.log(item.id,itemData.id)
           if(item.id == itemData.id){
+            console.log("设置cart_num",tempNum)
             this.setData({
               [tempHint]:this.setStepPricesHint(itemData),
+              [tempNum]:itemData.cart_num,
+              [tempPrice]:this.setSteppriceSale(itemData)
+            })
+          }
+        })
+    }else{
+      this.data.validCartList.map((item,index) => {
+        let tempNum= `validCartList[${index}].cart_num`;
+          if(item.id == itemData.id){
+            this.setData({
               [tempNum]:itemData.cart_num
             })
           }
@@ -575,10 +651,10 @@ Page({
     let that = this;
 
     data.effective_items.forEach(item => {
-      item.stepPricesHint = that.setStepPricesHint(item)
+      item.stepPricesHint = that.setStepPricesHint(item,true)
     })
     data.lose_effect_items.forEach(item => {
-      item.stepPricesHint = that.setStepPricesHint(item)
+      item.stepPricesHint = that.setStepPricesHint(item,true)
     })
     that.setData({
       validCartList:data.effective_items,
@@ -704,6 +780,14 @@ Page({
       store_id: this.data.address.id || ''
     }).then((res) => {
       let rd = res.data;
+      if(rd.is_change){
+        wx.showToast({
+          title: '商品信息已变动',
+          icon: 'none'
+      });
+      }
+      rd.effective_items.forEach(item => item.beforePriceSale = item.price_sale)
+      rd.lose_effect_items.forEach(item => item.beforePriceSale = item.price_sale)
       app.setShoppingCartNum(rd.total_num)
       that.updateData(rd);//更新本地数据
       wx.hideNavigationBarLoading();

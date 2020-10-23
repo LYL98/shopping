@@ -54,10 +54,11 @@ Component({
   methods: {
     //获取用户余额信息
     merchantBalance() {
+      let address = app.getSelectStore()
       let that = this;
       that.setData({ loading: true });
       wx.request({
-        url: config.api.merchantBalance,
+        url: `${config.api.merchantBalance}?store_id=${address.id || ''}`,
         header: {
           'content-type': 'application/json',
           'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token

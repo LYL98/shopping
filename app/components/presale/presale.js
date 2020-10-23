@@ -32,6 +32,8 @@ Component({
     inputNum: '',
     stepPricesHint: '',
     discountsPrice: 0, //优惠价格
+    afterPriceSale:0,
+
   },
 
   //组件生命周期函数，在组件实例进入页面节点树时执行
@@ -77,14 +79,23 @@ Component({
       //显示时
       if(!isShow){
         let data = wx.getStorageSync('shoppingCartPresaleData');
-        if (data && data.length > 0 && data[0].id === itemData.id) {
-          num = data[0].num;
+        if(that.data.itemData.cart_num && that.data.itemData.cart_num > 0){
+          num = that.data.itemData.cart_num
+
+        }else if(itemData.min_num_per_order > 0 && (num < itemData.min_num_per_order)){
+          num = itemData.min_num_per_order;
         }else{
-          if(itemData.min_num_per_order > 0 && (num < itemData.min_num_per_order)){
-            num = itemData.min_num_per_order;
-          }else{
-            num = num + 1;
-          }
+          num = 1
+        }
+
+        // if (data && data.length > 0 && data[0].id === itemData.id) {
+        //   num = data[0].num;
+        // }else{
+          // if(itemData.min_num_per_order > 0 && (num < itemData.min_num_per_order)){
+          //   num = itemData.min_num_per_order;
+          // }else{
+          //   num = num + 1;
+          // }
           data = [{
             id: itemData.id,
             price:itemData.price_sale,
@@ -94,7 +105,7 @@ Component({
           num = num;
           console.log('设置',data)
           wx.setStorageSync('shoppingCartPresaleData', data);
-        }
+        // }
       }
       this.setData({
         isShow: !isShow,
@@ -170,25 +181,25 @@ Component({
     handleUp(num){
       let { itemData } = this.data;
       console.log('itemData',itemData)
+      console.log('this.data.afterPriceSale',this.data.afterPriceSale)
       let data = wx.getStorageSync('shoppingCartPresaleData');
-      if (data && data.length > 0) {
-        data[0].num = num;
-      } else {
-        data = [{
-          id: itemData.id,
-          num: num,
-          is_select: true,
-          price:itemData.price_sale,
-          price:itemData.price_sale
-        }];
-      }
-      wx.setStorageSync('shoppingCartPresaleData', data);
-
       this.setData({
         num: num
       }, ()=>{
         this.setStepPricesHint();
+        console.log('11',this.data.afterPriceSale)
+        data = [{
+          id: itemData.id,
+          num: num,
+          is_select: true,
+          price:this.data.afterPriceSale > 0 ? this.data.afterPriceSale : itemData.price_sale ,
+        }];
+      
+        wx.setStorageSync('shoppingCartPresaleData', data);
+
       });
+        
+      
       /*===== 埋点 start ======*/
       app.gioActionRecordAdd('addToCart', {
         productID_var: itemData.id, //商品ID
@@ -256,42 +267,55 @@ Component({
       
       let data = wx.getStorageSync('shoppingCartPresaleData');
       --num;
-      if (data && data.length > 0) {
-        data[0].num = num;
-      }
-      wx.setStorageSync('shoppingCartPresaleData', data);
-
+      
       that.setData({
         num: num
       }, ()=>{
         this.setStepPricesHint();
+        if (data && data.length > 0) {
+          data[0].num = num;
+          data[0].price =  this.data.afterPriceSale > 0 ? this.data.afterPriceSale : itemData.price_sale 
+        }
+        wx.setStorageSync('shoppingCartPresaleData', data);
       });
+
+      
+
+      
     },
 
     //阶梯价提示
     setStepPricesHint(){
+      console.log(1)
       let { num, itemData, stepPricesHint, discountsPrice } = this.data;
       let d = itemData.step_prices;
+      console.log(2,d.length)
+      let afterPriceSale = 0
       if(d && d.length > 0){
+        console.log(3)
         stepPricesHint = '';
         discountsPrice = 0;
         for(let i = 0; i < d.length; i++){
           if(i === d.length - 1 && num >= d[i].num){
             stepPricesHint = `已享￥${Util.returnPrice(d[i].price_sale)}/件`;
             discountsPrice = (itemData.price_sale - d[i].price_sale) * num;
+            afterPriceSale = d[i].price_sale
             break;
           }
           if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
             stepPricesHint = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
             discountsPrice = (itemData.price_sale - d[i].price_sale) * num;
+            console.log('进入已享', d[i].price_sale)
+            afterPriceSale = d[i].price_sale
             break;
           }
           if(i === 0 && num < d[i].num){
             stepPricesHint = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件`;
+            afterPriceSale = itemData.price_sale
             break;
           }
         }
-        this.setData({ stepPricesHint, discountsPrice });
+        this.setData({ stepPricesHint, discountsPrice,afterPriceSale });
       }
     },
     //提交订单

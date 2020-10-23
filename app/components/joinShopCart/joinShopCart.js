@@ -3,6 +3,7 @@
 const app = getApp();
 import { Util, Verification,Http,Config } from './../../utils/index';
 let isCanAdd = true
+let isCanCut = true
 Component({
   /**
    * 组件的属性列表
@@ -182,6 +183,7 @@ Component({
      * 加入购物车
      */
     up(e) {
+      console.log('点击了加')
       if(!this.data.isValid) return
       if(!isCanAdd) return;
         isCanAdd = false
@@ -192,12 +194,18 @@ Component({
         num:that.data.itemData.cart_num+1
       }).then((res) => {
         let rd = res.data;
+        console.log('加入成功')
         that.setData({
-          ['itemData.cart_num']:that.data.itemData.cart_num+1
+          ['itemData.cart_num']:that.data.itemData.cart_num+1,
+          ['itemData.cart_item_id']:rd.cart_item_id,
         })
+        console.log('加入成功1')
         isCanAdd = true
         that.notifyParent(rd.amount,rd.is_all_selected,rd.total_num);
-
+        that.data.itemData.cart_item_id = res.data.cart_item_id
+          this.triggerEvent('setCartItemId', {
+            cart_item_id:res.data.cart_item_id
+          });
         // that.updateData(rd);//更新本地数据
         wx.hideNavigationBarLoading();
         that.setData({ loading: false });
@@ -219,10 +227,14 @@ Component({
         }, { handleError: false }).then((res) => {
           that.setData({
             ['itemData.cart_num']:res.data.item_num,
-            ['itemData.cart_item_id']:res.data.cart_item_id,
           })
+          that.data.itemData.cart_item_id = res.data.cart_item_id
+          this.triggerEvent('setCartItemId', {
+            cart_item_id:res.data.cart_item_id
+          });
+          console.log('cartId',that.data.itemData.cart_item_id)
           that.notifyParent(null,null,res.data.total_num);
-
+          
           isCanAdd = true
         }).catch(err => {
           isCanAdd = true
@@ -266,6 +278,7 @@ Component({
     },
     //数量异常提示
     isNumAbnormal(num){
+      console.log('数据异常')
       let { itemData } = this.data;
       if(num < itemData.min_num_per_order){
         wx.showToast({
@@ -293,7 +306,8 @@ Component({
 
     //库存不足
     upUnusable(){
-      this.isNumAbnormal(this.data.num + 1);
+      console.log('进入这个')
+      this.isNumAbnormal(this.data.itemData.cart_num + 1);
     },
 
     //显示输入
@@ -352,10 +366,12 @@ Component({
     },
     //输入完成
     inputConfirm(){
+      console.log('点击了ok')
       if(!this.data.isTriggleCartEvent){
         return
       }
       let { inputNum } = this.data;
+      console.log('inputNum',inputNum)
       if(!inputNum){
         wx.showToast({
           title: '请输入件数',
@@ -380,10 +396,11 @@ Component({
       let num = Number(inputNum);
       if(!this.isNumAbnormal(num)) return;
       this.handleUp(num);
+      console.log('handleinput')
       this.hideInput();
       if(this.data.isFromCartPage){
-        this.triggerEvent('traggleCartHideInput', {
-				});
+        this.triggerEvent('donwConfirm', {num});
+        this.triggerEvent('traggleCartHideInput', {});
       }
     },
     // 购物车触发修改inputNum
@@ -418,7 +435,6 @@ Component({
     },
     //处理增加购物车
     handleUp(num){
-      wx.sho
       if(!this.data.isTriggleCartEvent){
         return
       }
@@ -426,44 +442,44 @@ Component({
       console.log('***',itemData)
       let tempData = {};
       // this.touchOnGoods(this.thatEvent);
-      let data = wx.getStorageSync('shoppingCartData');
+      // let data = wx.getStorageSync('shoppingCartData');
 
-      if (data && data.length > 0) {
-        for (let i = 0; i < data.length; i++) {
-          if (itemData.id === data[i].id) {
-            data[i].num = num;
-            tempData = data[i];
-            break;
-          }
-          if (i === data.length - 1){
-            tempData = {
-              id: itemData.id,
-              num: num,
-              is_select: true
-            };
-            data.unshift(tempData);
-            break;
-          }
-        }
-      } else {
-        tempData = {
-          id: itemData.id,
-          num: num,
-          is_select: true
-        };
-        data = [tempData];
-      }
-      wx.setStorageSync('shoppingCartData', data);
+      // if (data && data.length > 0) {
+      //   for (let i = 0; i < data.length; i++) {
+      //     if (itemData.id === data[i].id) {
+      //       data[i].num = num;
+      //       tempData = data[i];
+      //       break;
+      //     }
+      //     if (i === data.length - 1){
+      //       tempData = {
+      //         id: itemData.id,
+      //         num: num,
+      //         is_select: true
+      //       };
+      //       data.unshift(tempData);
+      //       break;
+      //     }
+      //   }
+      // } else {
+      //   tempData = {
+      //     id: itemData.id,
+      //     num: num,
+      //     is_select: true
+      //   };
+      //   data = [tempData];
+      // }
+      // wx.setStorageSync('shoppingCartData', data);
 
-      this.setData({
-        num: num
-      }, ()=>{
-        this.setStepPricesHint();
-      });
+      // this.setData({
+      //   num: num
+      // }, ()=>{
+      //   this.setStepPricesHint();
+      // });
 
-      app.shoppingCartNum();//计算购物车数量并显示角标
-
-      this.triggerEvent('callback', tempData);//触发回调事件
+      // app.shoppingCartNum();// 计算购物车数量并显示角标
+      // console.log("*******",num)
+      this.triggerEvent('callback', {num});//触发回调事件
 
       /*===== 埋点 start ======*/
       app.gioActionRecordAdd('addToCart', {
@@ -481,10 +497,13 @@ Component({
      */
     down() {
       if(!this.data.isValid) return
+      if(!isCanCut) return
+      isCanCut = false
       const that = this
-      console.log('itemData',that.data.itemData)
-      console.log('itemData',that.data.num)
-      if((that.data.itemData.min_num_per_order >0 && c === that.data.itemData.min_num_per_order) || that.data.itemData.min_num_per_order == 0 && that.data.num == 1){
+      console.log('****',that.data.itemData.cart_item_id)
+
+      if((that.data.itemData.min_num_per_order >0 && that.data.itemData.cart_num <= that.data.itemData.min_num_per_order) || that.data.itemData.min_num_per_order == 0 && that.data.itemData.cart_num == 1){
+        isCanCut = true
         return wx.showModal({
               title: '提示',
               content: `确认移除${that.data.itemData.title}？`,
@@ -494,13 +513,15 @@ Component({
                   that.triggerEvent('notifyRemove', {
                     id:that.data.itemData.id,
                     index:that.data.itemIndex,
+                    cartId:that.data.itemData.cart_item_id
                   });
                 }
               }
             });
       }
+      console.log('减少购物车',that.data.itemData.cart_item_id)
       Http.post(Config.api.itemCartEdit, {
-        cart_item_id: that.data.itemData.id,
+        cart_item_id: that.data.itemData.cart_item_id || that.data.itemData.id,
         num:that.data.itemData.cart_num-1
       }).then((res) => {
         let rd = res.data;
@@ -511,10 +532,12 @@ Component({
         
         wx.hideNavigationBarLoading();
         that.setData({ loading: false });
+        isCanCut = true
       }).catch(() => {
         wx.hideNavigationBarLoading();
         that.setData({ loading: false });
-      });
+        isCanCut = true
+      })
       // if(!this.data.isTriggleCartEvent){
       //   return
       // }

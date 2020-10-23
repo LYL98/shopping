@@ -11,7 +11,7 @@ Page({
     goods: []
   },
 
-  onLoad: function (options) {
+  onShow: function (options) {
     this.getHotSaleList()
   },
 

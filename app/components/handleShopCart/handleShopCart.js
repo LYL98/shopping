@@ -37,7 +37,7 @@ Component({
       // let num = that.getShoppingCart();
       that.setData({
         // num: num,
-        // tempNum: num
+        // tempNum: numf
       });
       that.judgePresale();//判断预定
     }
@@ -107,7 +107,6 @@ Component({
      * 加入购物车
      */
     up(e) {
-      
       const that = this;
       if(that.data.itemData.step_prices.length > 0 && that.data.itemData.cart_num == 0){
         this.setData({ isShowStepPrices: true, stepPricesIndex: -1 });
@@ -115,16 +114,25 @@ Component({
         if(!isCanAdd) return;
         isCanAdd = false
         let address = app.getSelectStore();
+        console.log('a')
         Http.post(Config.api.itemCartAdd, {
           item_id: that.data.itemData.id,
           store_id:address.id || ''
-        }, { handleError: false }).then((res) => {
-          that.setData({
-            ['itemData.cart_num']:res.data.item_num,
-          })
+        }, { handleError: true }).then((res) => {
+          console.log('res',res)
+          if(res.code != 0){
+            wx.showToast({title:res.message,	icon: 'none'})
+          }else{
+            that.setData({
+              ['itemData.cart_num']:res.data.item_num,
+            })
+            
+            app.setShoppingCartNum(res.data.total_num)
+            that.notifyParent(res.data.total_num)
           
-          app.setShoppingCartNum(res.data.total_num)
-          that.notifyParent(res.data.total_num)
+          }
+          
+          
           isCanAdd = true
         }).catch(err => {
           isCanAdd = true
@@ -273,6 +281,7 @@ Component({
       if(!isCanAdd) return;
       isCanAdd = false
       let { itemData, stepPricesIndex } = this.data;
+      console.log('stepPricesIndex',stepPricesIndex)
       let address = app.getSelectStore();
 
       console.log('address',address);
@@ -282,7 +291,7 @@ Component({
         Http.post(Config.api.itemCartAdd, {
           item_id: itemData.id,
           store_id:address.id || '',
-          num:itemData.step_prices[stepPricesIndex].num
+          num: stepPricesIndex == -1 ? undefined : itemData.step_prices[stepPricesIndex].num
         }, { handleError: false }).then((res) => {
           that.setData({
             ['itemData.cart_num']:res.data.item_num,
