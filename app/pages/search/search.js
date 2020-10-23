@@ -30,7 +30,8 @@ Page({
       num: 0
   },
     searchData: [],
-    shoppingCartNum:0
+    shoppingCartNum:0,
+    isFirst:true
   },
   onLoad: function (options) {
     this.setData({
@@ -41,6 +42,7 @@ Page({
       //todo
     }
   },
+ 
   /**
    * 生命周期函数--监听页面显示
    */
@@ -52,12 +54,44 @@ Page({
       let address = app.getSelectStore(); //当前选择的地址
       let { query } = that.data;
       query.store_id = address.id || '';
+      console.log('that.data.isFirst',that.data.isFirst)
+      if(!that.data.isFirst){
+      that.getReabckQuery()
+      }
       that.setData({
         query: query,
         searchData: wx.getStorageSync('searchData') || []
       });
+    that.data.isFirst = false
+
     });
   },
+  getReabckQuery(){
+    let that = this;
+    let queryParmas = JSON.parse(JSON.stringify(that.data.query));
+    queryParmas.page = 1;
+    queryParmas.page_size =  that.data.query.page * that.data.query.page_size
+    that.setData({ loading: true }, ()=>{
+      Http.get(Config.api.itemQuery, queryParmas).then(res => {
+        let rd = res.data;
+          that.setData({
+            dataItem: rd,
+            loading: false
+          });
+          /*===== 埋点 start ======*/
+          app.gioActionRecordAdd('searchSuccess', { 
+            searchWord_var: query.condition, //搜索词
+            ifSearchResult_var: rd.num > 0 ? '是' : '否', //搜索词是否有结果
+            searchSource_var: that.searchSource_var //搜索词来源
+          });
+          app.gioActionRecordAdd('searchWord_evar', query.condition);
+          /*===== 埋点 end ======*/
+      }).catch(error => {
+        that.setData({ loading: false });
+      });
+    });
+  },
+  
   getShoppingCartNum(){
     const that = this
     let address = app.getSelectStore()

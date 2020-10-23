@@ -429,9 +429,12 @@
 			 size="large"
 			 wx:if="{{!detail.is_presale && detail.id && detail.code}}"
 			 itemData="{{detail}}"
-			 bindcallback="joinShoppingCart"
+			 bind:callback="joinShoppingCart"
 			 sourcePage="itemDetail"
 			 bind:notifyParent="notifyParent"
+			 bind:notifyRemove="notifyRemove"
+			 bind:setCartItemId="setCartItemId"
+			 
 			/>
 		</view>
 		<view wx:else class="btn-join">

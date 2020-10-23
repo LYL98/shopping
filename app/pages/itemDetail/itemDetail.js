@@ -36,11 +36,28 @@ Page({
     });
   },
   //加入购物车回调
-  joinShoppingCart() {
+  joinShoppingCart(e) {
     let that = this;
+    console.log('购物车毁掉',e)
+    Http.post(Config.api.itemCartEdit, {
+      cart_item_id: that.data.detail.cart_item_id,
+      num: e.detail.num
+    }).then((res) => {
+      let rd = res.data;
+      that.setData({
+        ['detail.cart_num']:e.detail.num,
+        ['detail.cart_item_id']:rd.cart_item_id,
+        shoppingCartNum:rd.total_num
+      })
+      
+      console.log('that.data.detail.cart_item_id',that.data.detail.cart_item_id)
+      
+    })
   },
- 
-
+  setCartItemId(e){
+    console.log('e',e)
+    this.data.detail.cart_item_id = e.detail.cart_item_id
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -101,6 +118,20 @@ Page({
   notifyParent(e){
     this.setData({
       shoppingCartNum:e.detail.cart_num
+    })
+  },
+  notifyRemove(e){
+    const that = this
+    Http.post(Config.api.itemCartRemove, {
+      cart_item_ids: [e.detail.cartId]
+    }, { handleError: false }).then((res) => {
+      that.setData({ 
+        ['detail.cart_num'] : 0
+      });
+      that.getCartNum()
+    });
+    this.setData({
+      
     })
   },
   //获取商品详情
@@ -216,6 +247,7 @@ Page({
 
 		return str;
   },
+  
   toGetCoupon(){
     wx.navigateTo({
 			url: `/pages/coupon-get/coupon-get`

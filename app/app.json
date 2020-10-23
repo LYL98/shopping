@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/shoppingCart/shoppingCart",
+    "pages/itemTag/itemTag",
     "pages/order/order",
     "pages/itemLabel/itemLabel",
-    "pages/shoppingCart/shoppingCart",
     "pages/search/search",
     "pages/my/my",
     "pages/member/member",
@@ -12,7 +13,6 @@
     "pages/browser/browser",
     "pages/about/about",
     "pages/myMessage/myMessage",
-    "pages/itemTag/itemTag",
     "pages/loginGuide/loginGuide",
     "pages/login/login",
     "pages/loginBind/loginBind",

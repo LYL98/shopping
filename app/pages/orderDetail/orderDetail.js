@@ -192,8 +192,9 @@ Page({
     });
   },
   //再次下单
-  againOrder() {
+  againOrder(e) {
     let that = this;
+    let address = app.getSelectStore();
     wx.showModal({
       title: '提示',
       content: '确定再次下单？订单的商品将自动加入购物车。',
@@ -201,7 +202,8 @@ Page({
       success: function (res) {
         if (res.confirm) {
           Http.post(Config.api.cartOrderAgain, {
-            order_id: e.target.dataset.id
+            order_id: that.data.detail.id,
+            store_id: address.id || ''
           }, { handleError: false }).then((res) => {
             wx.switchTab({
               url: '/pages/shoppingCart/shoppingCart'

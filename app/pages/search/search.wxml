@@ -57,6 +57,7 @@
 					 wx:for-item="t"
 					 wx:for-index="i"
 					 wx:key="i"
+					 wx:if="{{t.length > 0}}"
 					>
 						{{t}}
 					</view>
@@ -81,12 +82,11 @@
 				</view>
 			</view>
 		</navigator>
-		<view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 50rpx' : 'bottom: 0'}}">
+		<view class="join" style="{{tools.returnItemStock(item) ? 'bottom: 0rpx' : 'bottom: 0'}}">
 			<view style="min-height:36rpx;">
 			<handleShopCart itemData="{{item}}" bind:notifyParent="notifyParent"/>
 			</view>
 			<view style="clear: both;"></view>
-			<view class="repertory">{{tools.returnItemStock(item)}}</view>
 		</view>
 	</view>
 	<view class="load-more" wx:if="{{dataItem.num > 0}}">已加载所有</view>
@@ -105,4 +105,5 @@
 </navigator>
 
 <loading loading="{{loading}}" />
+
 

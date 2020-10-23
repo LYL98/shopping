@@ -265,6 +265,7 @@ App({
   // //获取购物车数量
   getShoppingCartNum(){
     const that = this
+    console.log('请求************')
     let address = that.getSelectStore()
     Http.get(Config.api.itemCartTotalNum, {
       store_id: address.id || ''

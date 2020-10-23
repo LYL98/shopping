@@ -35,10 +35,9 @@
               </view>
               <view class="join" catchtap="return ture" style="{{tools.returnItemStock(item) ? 'bottom: 32rpx' : 'bottom: 0rpx'}}">
                 <view style="min-height:36rpx;">
-                  <joinShopCart wx:if="{{tools.judgeItemStock(item)}}" showFlyball="{{false}}" size="small" style="float:right;" itemData="{{item}}"/>
+                  <handleShopCart itemData="{{item}}" />
                 </view>
                 <view style="clear: both;"></view>
-                <view class="repertory">{{tools.returnItemStock(item)}}</view>
               </view>
             </view>
           </view>
