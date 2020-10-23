@@ -1,9 +1,9 @@
 // components/handleShopCart/handleShopCart.js
 //获取应用实例
 
-import { Util, Verification } from './../../utils/index';
+import { Util, Verification,Http,Config } from './../../utils/index';
 const app = getApp();
-
+let isCanAdd = true;
 Component({
 
   properties: {
@@ -15,11 +15,12 @@ Component({
   },
 
   data: {
-    num: 0,
-    tempNum: 0,
+    // num: 0,
+    // tempNum: 0,
     isCanPresale: false, //是否可预订
     isShowStepPrices: false, //打开阶梯价格选择
     stepPricesIndex: -1,
+    
   },
 
   //监听
@@ -33,10 +34,10 @@ Component({
   pageLifetimes: {
     show: function(){
       let that = this;
-      let num = that.getShoppingCart();
+      // let num = that.getShoppingCart();
       that.setData({
-        num: num,
-        tempNum: num
+        // num: num,
+        // tempNum: numf
       });
       that.judgePresale();//判断预定
     }
@@ -45,10 +46,10 @@ Component({
   methods: {
     initData() {
       let that = this;
-      let num = that.getShoppingCart();
+      // let num = that.getShoppingCart();
       that.setData({
-        num: num,
-        tempNum: num
+        // num: num,
+        // tempNum: num
       }, ()=>{
         // this.setStepPricesHint();
       });
@@ -106,15 +107,51 @@ Component({
      * 加入购物车
      */
     up(e) {
-      this.thatEvent = e;
-      let { itemData, num } = this.data;
-      if(itemData.step_prices.length > 0 && num === 0){
+      const that = this;
+      if(that.data.itemData.step_prices.length > 0 && that.data.itemData.cart_num == 0){
         this.setData({ isShowStepPrices: true, stepPricesIndex: -1 });
       }else{
-        this.handleNum();
+        if(!isCanAdd) return;
+        isCanAdd = false
+        let address = app.getSelectStore();
+        console.log('a')
+        Http.post(Config.api.itemCartAdd, {
+          item_id: that.data.itemData.id,
+          store_id:address.id || ''
+        }, { handleError: true }).then((res) => {
+          console.log('res',res)
+          if(res.code != 0){
+            wx.showToast({title:res.message,	icon: 'none'})
+          }else{
+            that.setData({
+              ['itemData.cart_num']:res.data.item_num,
+            })
+            
+            app.setShoppingCartNum(res.data.total_num)
+            that.notifyParent(res.data.total_num)
+          
+          }
+          
+          
+          isCanAdd = true
+        }).catch(err => {
+          isCanAdd = true
+        });
       }
+     
+      // this.thatEvent = e;
+      // let { itemData, num } = this.data;
+      // if(itemData.step_prices.length > 0 && num === 0){
+      //   this.setData({ isShowStepPrices: true, stepPricesIndex: -1 });
+      // }else{
+      //   this.handleNum();
+      // }
     },
-
+    notifyParent(cart_num){
+      this.triggerEvent('notifyParent', {
+        cart_num,
+			});
+    },
     //处理点击或输入数量、不使用优惠数量
     handleNum(){
       let { itemData, num} = this.data;
@@ -240,14 +277,40 @@ Component({
 
     //处理阶梯价
     handleStepPrices(){
+      console.log('isCanAdd',isCanAdd)
+      if(!isCanAdd) return;
+      isCanAdd = false
       let { itemData, stepPricesIndex } = this.data;
-      this.setData({ isShowStepPrices: false }, ()=>{
-        if(stepPricesIndex >= 0){
-          this.handleUp(itemData.step_prices[stepPricesIndex].num);
-        }else{
-          this.handleNum();
-        }
-      });
+      console.log('stepPricesIndex',stepPricesIndex)
+      let address = app.getSelectStore();
+
+      console.log('address',address);
+      console.log('itemData',itemData);
+      const that = this;
+
+        Http.post(Config.api.itemCartAdd, {
+          item_id: itemData.id,
+          store_id:address.id || '',
+          num: stepPricesIndex == -1 ? undefined : itemData.step_prices[stepPricesIndex].num
+        }, { handleError: false }).then((res) => {
+          that.setData({
+            ['itemData.cart_num']:res.data.item_num,
+            isShowStepPrices:false
+          })
+          app.setShoppingCartNum(res.data.total_num)
+          isCanAdd = true
+        }).catch(err => {
+          isCanAdd = true
+        });
+      
+      
+      // this.setData({ isShowStepPrices: false }, ()=>{
+      //   if(stepPricesIndex >= 0){
+      //     this.handleUp(itemData.step_prices[stepPricesIndex].num);
+      //   }else{
+      //     this.handleNum();
+      //   }
+      // });
     },
 
   }

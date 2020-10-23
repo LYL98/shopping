@@ -2,6 +2,7 @@
   "usingComponents": {
     "joinShopCart": "/components/joinShopCart/joinShopCart",
     "search": "/components/search/search",
-    "defaultPage": "/components/defaultPage/defaultPage"
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "handleShopCart": "/components/handleShopCart/handleShopCart"
   }
 }

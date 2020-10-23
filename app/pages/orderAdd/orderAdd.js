@@ -446,7 +446,15 @@ Page({
           msgBox('您所购买的商品已下架,请重新提交订单', ()=>{
             wx.navigateBack();
           });
-        }  
+        }  else if (res.statusCode == 200 && res.data.code == 111) {
+          msgBox(res.data.message, ()=>{
+            wx.navigateBack();
+          });
+        } else if (res.statusCode == 200 && res.data.code == 112) {
+          msgBox(res.data.message, ()=>{
+            wx.navigateBack();
+          });
+        }
 
         else {
           app.requestResultCode(res); //处理异常

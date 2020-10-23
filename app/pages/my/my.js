@@ -100,6 +100,7 @@ Page({
       this.afterMsg();
       this.messageInfo(); // 获取未读消息数量
       this.getMyGrade(); // 获取会员等级
+      app.getShoppingCartNum();
     });
   },
   //点击页面底下的tab

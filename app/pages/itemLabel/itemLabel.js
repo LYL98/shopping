@@ -34,6 +34,7 @@ Page({
     account: './../../assets/img/my.png',
     collectSSrc: './../../assets/img/collect_s.png',
     collectSrc: './../../assets/img/collect.png',
+    address:{}
   },
 
   /**
@@ -49,11 +50,10 @@ Page({
       query.sort = options.sort || '';
       query.tag = options.tag || '收藏商品';
 
-      let num = app.getShoppingCartNum(); //获取购物车数量
       this.setData({
         query: query,
-        shoppingCartNum: num,
-        system: app.globalData.system
+        system: app.globalData.system,
+        address:address
       }, () => {
         // that.getTagsList(); //获取标签
         this.itemQuery();
@@ -66,10 +66,6 @@ Page({
   //加入购物车
   joinShoppingCart() {
     let that = this;
-    let num = app.getShoppingCartNum(); //获取购物车数量
-    that.setData({
-      shoppingCartNum: num
-    });
   },
   //获取商品标签
   getTagsList(){
@@ -151,7 +147,7 @@ Page({
       query,
       dataItem
     } = that.data;
-
+    query.store_id = this.data.address.id
     wx.request({
       url: Config.api.itemCollectionQuery,
       header: {

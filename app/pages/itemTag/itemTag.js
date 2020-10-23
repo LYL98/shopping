@@ -35,10 +35,10 @@ Page({
       let { query } = this.data;
       let ad = app.getSelectStore(); //当前选择的地址
       if(ad && ad.id){
-        let num = app.getShoppingCartNum();//获取购物车数量
+         this.getShoppingCartNum();//获取购物车数量
         query.store_id = ad.id;
         query.item_tag_id = this.options.id;
-        this.setData({ query: query, shoppingCartNum: num, }, () => {
+        this.setData({ query: query }, () => {
           this.itemQuery();
           this.itemTagsDetail();
         });
@@ -46,6 +46,25 @@ Page({
     });
   },
 
+  getShoppingCartNum(){
+    const that = this
+    let address = app.getSelectStore()
+    Http.get(Config.api.itemCartTotalNum, {
+      store_id: address.id || ''
+    }).then((res) => {
+      let rd = res.data;
+      that.setData({
+        shoppingCartNum:rd.total_num
+      })
+    }).catch(() => {
+    });
+  },
+  notifyParent(e){
+    console.log('e',e.detail)
+    this.setData({
+      shoppingCartNum:e.detail.cart_num
+    })
+  },
   joinShoppingCart() {
     let that = this;
     let num = app.getShoppingCartNum();//获取购物车数量

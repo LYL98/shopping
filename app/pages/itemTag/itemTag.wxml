@@ -67,7 +67,7 @@
 						</view>
 
 						<view class="cart-wrapper">
-							<handleShopCart itemData="{{item}}" bindcallback="joinShoppingCart"/>
+							<handleShopCart itemData="{{item}}" bindcallback="joinShoppingCart" bind:notifyParent="notifyParent"/>
 						</view>
 					</view>
 
