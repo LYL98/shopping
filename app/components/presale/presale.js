@@ -24,8 +24,6 @@ Component({
     addSrc: './../../assets/img/add_index.png',
     num: 1,
     isShow: false,
-    deliveryDate: '', //配送日期
-    presaleBeginTemp: '', //开始时间
     isCanPresale: false, //是否可预订
     isShowInput: false, //手动输入
     keyHeight: 0,
@@ -38,33 +36,12 @@ Component({
 
   //组件生命周期函数，在组件实例进入页面节点树时执行
   attached(){
-    let that = this;
     let { itemData } = this.data;
     let nowDateTime = Util.returnDateStr(); //返回今日日期时间
-    let nowDate = Util.returnDateFormat(nowDateTime, 'yyyy-MM-dd'); //今日日期
-    let tomorrow = Util.returnDateCalc(nowDate, 1); //明天
-    let pbt = ''; //临时日期
-    //如果配送开始日期 >= 明天
-    if(itemData.presale_begin >= tomorrow){
-      pbt = itemData.presale_begin;
-      that.setData({
-        deliveryDate: itemData.presale_begin,
-        presaleBeginTemp: pbt
-      });
-    }else{
-      pbt = tomorrow;
-      that.setData({
-        deliveryDate: tomorrow,
-        presaleBeginTemp: pbt
-      });
-    }
-
     //判断是否可预定
     let isCanPresale = true;
-    if(pbt > itemData.presale_end) isCanPresale = false;
-    that.setData({
-      isCanPresale: isCanPresale
-    });
+    if(itemData.presale_start_time > nowDateTime || itemData.presale_end_time < nowDateTime) isCanPresale = false;
+    this.setData({ isCanPresale });
   },
 
   /**
@@ -112,13 +89,6 @@ Component({
         num: num
       }, ()=>{
         this.setStepPricesHint();
-      });
-    },
-    //修改日期
-    changePresaleDate(e){
-      let v = e.detail.value;
-      this.setData({
-        deliveryDate: v
       });
     },
     //显示输入
@@ -321,9 +291,9 @@ Component({
     //提交订单
     submitOrder(){
       this.showHideSelect();
-      let { deliveryDate } = this.data;
+      let { itemData } = this.data;
       wx.navigateTo({
-        url: '/pages/orderAdd/orderAdd?type=presale&delivery_date=' + deliveryDate,
+        url: '/pages/orderAdd/orderAdd?type=presale&delivery_date=' + itemData.presale_delivery_date,
       });
     }
   }

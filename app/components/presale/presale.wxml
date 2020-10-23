@@ -9,12 +9,10 @@
     </view>
     <view class="title">预订</view>
     <view class="content">
-      <picker mode="date" value="{{deliveryDate}}" start="{{presaleBeginTemp}}" end="{{itemData.presale_end}}" bindchange="changePresaleDate">
-        <view class="item">
-          <view class="left">配送日期</view>
-          <view class="right">{{deliveryDate}}<image class="right-img" src="{{rightSrc}}"></image></view>
-        </view>
-      </picker>
+      <view class="item">
+        <view class="left">配送日期</view>
+        <view class="right">{{itemData.presale_delivery_date}}</view>
+      </view>
       <view class="item">
         <view class="left">单价</view>
         <view class="right">

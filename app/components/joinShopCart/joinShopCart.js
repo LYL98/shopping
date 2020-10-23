@@ -157,26 +157,14 @@ Component({
     },
     //判断是否可预订
     judgePresale(){
-      let that = this;
-      let { itemData } = that.data;
+      let { itemData } = this.data;
       //如果为预订
       if(itemData.is_presale){
         let nowDateTime = Util.returnDateStr(); //返回今日日期时间
-        let nowDate = Util.returnDateFormat(nowDateTime, 'yyyy-MM-dd'); //今日日期
-        let tomorrow = Util.returnDateCalc(nowDate, 1); //明天
-        let pbt = ''; //临时日期
-        //如果配送开始日期 >= 明天
-        if(itemData.presale_begin >= tomorrow){
-          pbt = itemData.presale_begin;
-        }else{
-          pbt = tomorrow;
-        }
         //判断是否可预定
         let isCanPresale = true;
-        if(pbt > itemData.presale_end) isCanPresale = false;
-        that.setData({
-          isCanPresale: isCanPresale
-        });
+        if(itemData.presale_start_time > nowDateTime || itemData.presale_end_time < nowDateTime) isCanPresale = false;
+        this.setData({ isCanPresale });
       }
     },
     /**
