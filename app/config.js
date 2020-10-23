@@ -3,17 +3,17 @@
  */
 
  //版本
-export const Version = 'V4.4.0';
+export const Version = 'V4.3.2';
 
 //是否开发(dev开发、test测试；pre预发布；pro生产)
-export const Conn = 'test';
+export const Conn = 'pro';
 
 //测试环境api地址
 export const RequestHttpDev = 'https://vestadev.pgyscm.com';
 export const RequestWsDev = 'wss://iris.pgyscm.com/connection/websocket';
 
 //测试发布环境api地址
-export const RequestHttpTest = 'https://vestatest.pgyscm.com';
+export const RequestHttpTest = 'https://vestatestls.pgyscm.com';
 export const RequestWsTest = 'wss://iris.pgyscm.com/connection/websocket';
 
 //预发布环境api地址
@@ -27,7 +27,7 @@ export const RequestWsPro = 'wss://iris.pgyscm.com/connection/websocket';
 export const TencentBucketDev = 'durian-dev-1258811046';
 export const TencentRegionDev = 'ap-shanghai';
 
-//生产环境腾讯上传Bucket、Region
+//生产环境腾讯上传Bucket、Regionpcon
 export const TencentBucketPro = 'durian-pro-1258811046';
 export const TencentRegionPro = 'ap-shanghai';
 

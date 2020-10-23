@@ -192,46 +192,22 @@ Page({
     });
   },
   //再次下单
-  againOrder() {
+  againOrder(e) {
     let that = this;
+    let address = app.getSelectStore();
     wx.showModal({
       title: '提示',
       content: '确定再次下单？订单的商品将自动加入购物车。',
       confirmColor: '#00AE66',
       success: function (res) {
         if (res.confirm) {
-          let { detail } = that.data;
-
-          let data = wx.getStorageSync('shoppingCartData') || [];
-          if (data.length > 0) {
-            for (let i = 0; i < data.length; i++) {
-              for (let j = 0; j < detail.items.length; j++) {
-                if (detail.items[j].item_id === data[i].id) {
-                  data.remove(i);
-                  i--;
-                  break;
-                }
-                if (j === detail.items.length - 1) {
-                  data[i].is_select = false;
-                }
-              }
-            }
-          }
-          for (let d = 0; d < detail.items.length; d++) {
-            //不是赠品的
-            if(!detail.items[d].is_gift){
-              data.unshift({
-                id: detail.items[d].item_id,
-                is_select: true,
-                num: detail.items[d].count_real
-              });
-            }
-          }
-
-          wx.setStorageSync('shoppingCartData', data);
-
-          wx.switchTab({
-            url: '/pages/shoppingCart/shoppingCart'
+          Http.post(Config.api.cartOrderAgain, {
+            order_id: that.data.detail.id,
+            store_id: address.id || ''
+          }, { handleError: false }).then((res) => {
+            wx.switchTab({
+              url: '/pages/shoppingCart/shoppingCart'
+            });
           });
         }
       }

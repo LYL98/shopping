@@ -47,9 +47,9 @@ Page({
     let { query, dataItem } = that.data;
 
     that.setData({ loading: true });
-
+    let address = app.getSelectStore()
     wx.request({
-      url: config.api.balanceLog,
+      url: `${config.api.balanceLog}?store_id=${address.id || ''}`,
       header: {
         'content-type': 'application/json',
         'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token

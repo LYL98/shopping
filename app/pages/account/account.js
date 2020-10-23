@@ -52,14 +52,16 @@ Page({
       topupPrice: value
     });
   },
+
   balanceLog() {
     let that = this;
     let { query, dataItem } = that.data;
 
     that.setData({ loading: true });
+    let address = app.getSelectStore()
 
     wx.request({
-      url: config.api.balanceLog,
+      url: `${config.api.balanceLog}?store_id=${address.id || ''}`,
       header: {
         'content-type': 'application/json',
         'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token
@@ -89,8 +91,9 @@ Page({
   merchantBalance() {
     let that = this;
     that.setData({ loading: true });
+    let address = app.getSelectStore()
     wx.request({
-      url: config.api.merchantBalance,
+      url: `${config.api.merchantBalance}?store_id=${address.id || ''}`,
       header: {
         'content-type': 'application/json',
         'Vesta-Custom-Access-Token': app.globalData.loginUserInfo.access_token

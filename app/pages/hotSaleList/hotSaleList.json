@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "热销榜",
   "usingComponents": {
-    "joinShopCart": "/components/joinShopCart/joinShopCart"
+     "handleShopCart": "/components/handleShopCart/handleShopCart"
   }
 }

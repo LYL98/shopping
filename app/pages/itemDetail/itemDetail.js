@@ -36,13 +36,28 @@ Page({
     });
   },
   //加入购物车回调
-  joinShoppingCart() {
+  joinShoppingCart(e) {
     let that = this;
-    let num = app.getShoppingCartNum();//获取购物车数量
-    that.setData({ shoppingCartNum: num });
+    console.log('购物车毁掉',e)
+    Http.post(Config.api.itemCartEdit, {
+      cart_item_id: that.data.detail.cart_item_id,
+      num: e.detail.num
+    }).then((res) => {
+      let rd = res.data;
+      that.setData({
+        ['detail.cart_num']:e.detail.num,
+        ['detail.cart_item_id']:rd.cart_item_id,
+        shoppingCartNum:rd.total_num
+      })
+      
+      console.log('that.data.detail.cart_item_id',that.data.detail.cart_item_id)
+      
+    })
   },
- 
-
+  setCartItemId(e){
+    console.log('e',e)
+    this.data.detail.cart_item_id = e.detail.cart_item_id
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -51,7 +66,6 @@ Page({
     //判断登录
     app.signIsLogin(() => {
       let id = options.id;
-      let num = app.getShoppingCartNum();//获取购物车数量
       let address = app.getSelectStore(); //当前选择的地址
 
       //获取上个页面的数据(加快显示数据)===
@@ -76,18 +90,50 @@ Page({
         tempOneImg: tempOneImg,
         detail: d,
         address: address,
-        shoppingCartNum: num
       }, ()=>{
         that.getItemDetail();
         that.promotion();
         that.getCoupon()
-
+        that.getCartNum()
       });
     });
 
     
   },
 
+  getCartNum(){
+    const that = this
+    let address = app.getSelectStore()
+    Http.get(Config.api.itemCartTotalNum, {
+      store_id: address.id || ''
+    }).then((res) => {
+      let rd = res.data;
+      that.setData({
+        shoppingCartNum:rd.total_num
+      })
+    }).catch(() => {
+    });
+
+  },
+  notifyParent(e){
+    this.setData({
+      shoppingCartNum:e.detail.cart_num
+    })
+  },
+  notifyRemove(e){
+    const that = this
+    Http.post(Config.api.itemCartRemove, {
+      cart_item_ids: [e.detail.cartId]
+    }, { handleError: false }).then((res) => {
+      that.setData({ 
+        ['detail.cart_num'] : 0
+      });
+      that.getCartNum()
+    });
+    this.setData({
+      
+    })
+  },
   //获取商品详情
   getItemDetail() {
     let that = this;
@@ -133,7 +179,7 @@ Page({
       }
       that.setData({
         detail: rd,
-        vidoes: vidoes
+        vidoes: vidoes,
       });
       //不是不本省商品，提示
       console.log(rd.province_code, address.province_code);
@@ -201,6 +247,7 @@ Page({
 
 		return str;
   },
+  
   toGetCoupon(){
     wx.navigateTo({
 			url: `/pages/coupon-get/coupon-get`

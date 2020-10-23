@@ -76,20 +76,21 @@
 				<mp-slideview
 				 buttons="{{slideButtons}}"
 				 data-index="{{index}}"
-				 data-id="{{item.id}}"
+				 data-item="{{item}}"
 				 data-valid="{{true}}"
 				 bindbuttontap="onDelete"
 				>
 					<mp-cell>
 						<view class="item-view">
 							<view class="item">
-								<navigator class="item-nav" url="/pages/itemDetail/itemDetail?id={{item.id}}">
+								<navigator class="item-nav" url="/pages/itemDetail/itemDetail?id={{item.item_id}}">
 									<view
 									 class="checked"
 									 catch:tap="redioSelect"
-									 data-rs="{{item}}"
+									 data-item="{{item}}"
+									 data-index="{{index}}"
 									>
-										<image src="{{item.is_select  ? checkedSSrc : checkedSrc}}"></image>
+										<image src="{{item.is_selected  ? checkedSSrc : checkedSrc}}"></image>
 									</view>
 									<view class="img goods_image_box">
 										<image
@@ -128,9 +129,13 @@
 										 discount="{{discount}}"
 										 level="{{level}}"
 										 title="{{title}}"
+										 num="{{item.num}}"
 										 bind:traggleCartInput="traggleCartInput"
+										 bind:donwConfirm="donwConfirm"
 										 bind:traggleCartHideInput="traggleCartHideInput"
 										 bind:traggleStepPriceHint="traggleStepPriceHint"
+										bind:notifyParent="notifyParent"
+										bind:notifyRemove="notifyRemove"
 										/>
 									</view>
 
@@ -146,7 +151,7 @@
 								</view>
 								<view class="goods_bottom_tip {{item.stepPricesHint && item.stepPricesHint.length > 0 ? 'goods_bottom_tip--discount' :''}}">
 									<text class="shop_type"></text>
-									<text class="shop_stock" wx:if="{{item.item_stock < 10 && !item.is_presale}}">剩余{{item.item_stock}}件</text>
+									<text class="shop_stock" wx:if="{{item.item_stock - item.cart_num < 10 && !item.is_presale}}">剩余{{item.item_stock - item.cart_num}}件</text>
 								</view>
 
 							</view>
@@ -175,13 +180,13 @@
 					</view>
 					<view class="item-view invaild_opacity">
 						<view class="item">
-							<navigator url="/pages/itemDetail/itemDetail?id={{item.id}}">
+							<navigator url="/pages/itemDetail/itemDetail?id={{item.item_id}}">
 								<view
 								 class="checked"
 								 catch:tap="redioSelect"
 								 data-rs="{{item}}"
 								>
-									<image src="{{item.is_select  ? checkedSrc : checkedSrc}}"></image>
+									<image src="{{item.is_selected  ? checkedSrc : checkedSrc}}"></image>
 								</view>
 								<view class="img goods_image_box">
 									<image
@@ -210,6 +215,7 @@
 								<view style="min-height:36rpx;">
 									<joinShopCart
 									 size="small"
+									 isValid="{{false}}"
 									 sourcePage="shoppingCart"
 									 itemData="{{item}}"
 									 bindcallback="upDownCallback"
@@ -229,7 +235,7 @@
 
 			<!-- <view class="load-more" wx:if="{{dataItem.length > 0}}">已加载所有</view> -->
 			<defaultPage
-			 wx:if="{{dataItem.length  === 0}}"
+			 wx:if="{{validCartList.length  === 0 && inValidCartList.length === 0}}"
 			 currentPage="shoppingCart"
 			 loading="{{loading}}"
 			></defaultPage>
@@ -250,7 +256,7 @@
 		</block> -->
 
 		<view style="height: 120rpx;"></view>
-		<view class="bottom-view b-cfff" wx:if="{{dataItem.length > 0}}">
+		<view class="bottom-view b-cfff" wx:if="{{validCartList.length > 0 || inValidCartList.length > 0}}">
 			<view class="checked" bindtap="allSelect">
 				<image src="{{isAllSelect ? checkedSSrc : checkedSrc}}"></image>
 				<text class="check_all">全选</text>
@@ -271,7 +277,7 @@
 			<view class="btn" wx:if="{{!isEdit}}">
 				<button
 				 class="btn2"
-				 wx:if="{{totalNum <= 0 || !closeStore}}"
+				 wx:if="{{totalPrice <= 0 || !closeStore}}"
 				 disabled
 				>去结算
 				</button>

@@ -63,7 +63,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    app.shoppingCartNum(); //计算购物车数量并显示角标
     this.address = app.getSelectStore(); //当前选择地址    
     this.setData({
       loginUserInfo:app.globalData.loginUserInfo
@@ -180,21 +179,12 @@ Page({
     this.setData({
       isEdit: !isEdit
     });
-    this.updateData();//更新本地数据
+    // this.updateData();//更新本地数据
   },
 
   //删除购物车商品
   removeItem() {
     let that = this;
-    let d = wx.getStorageSync('shoppingCartData');
-
-    if (!d.some(item => item.is_select)) {
-      wx.showToast({
-        title: '请选择要删除的商品',
-        icon: 'none'
-      });
-      return;
-    }
 
     wx.showModal({
       title: '提示',
@@ -220,39 +210,33 @@ Page({
   },
 
   onDelete(e){
-    const { id } = e.currentTarget.dataset;
-    console.log('id: ', id);
+    const { item,index } = e.currentTarget.dataset;
+    console.log('index',index)
     let that = this;
-    let shoppingCartData = wx.getStorageSync('shoppingCartData');
 		wx.showModal({
       title: '提示',
-      content: '确认从购物车移除？',
+      content: `确认从购物车移除${item.title}`,
       confirmColor: '#FDCA1F',
       success: function (res) {
         if (res.confirm) {
-          shoppingCartData.map((item,index) => {
-              if (item.id === id) {
-                console.log('item.id: ', item.id);
-                // let validCartList = that.data.validCartList
-                // validCartList.map((itemChild,indexChild) => {
-                //   if(itemChild.id = id){
-                //     console.log('indexChild: ', indexChild);
-                //     that.setData({
-                //       validCartList: validCartList.splice(indexChild,1)
-                //     })
-                //   }
-                // })
-                shoppingCartData.splice(index,1)
-               
-              }
+          Http.post(Config.api.itemCartRemove, {
+            cart_item_ids: [item.id]
+          }, { handleError: false }).then((res) => {
+            that.data.validCartList.splice(index,1)
+            that.setData({ 
+              validCartList: that.data.validCartList,
+              totalNum:res.data.total_num,
+              totalPrice:res.data.amount,
+              isAllSelect:res.data.is_all_selected
+            });
+            app.setShoppingCartNum(res.data.total_num)
           });
-          wx.setStorageSync('shoppingCartData', shoppingCartData);
-          that.updateData();
         }
       }
-      
     });
   },
+
+  
 
   clearInValid(){
     let that = this;
@@ -263,19 +247,17 @@ Page({
       confirmColor: '#FDCA1F',
       success: function (res) {
         if (res.confirm) {
-          let inValidCartList = that.data.inValidCartList.map(item => item.id)
-          console.log('inValidCartList',inValidCartList)
-          let shoppingCartData = wx.getStorageSync('shoppingCartData');
-          let tempShowCartData = []
-          shoppingCartData.map(item => {
-            if(!inValidCartList.includes(item.id)){
-              tempShowCartData.push(item)
-            }
-          })
-          
-          wx.setStorageSync('shoppingCartData', tempShowCartData);
-          
-          that.updateData();
+          Http.post(Config.api.itemCartRemove, {
+            cart_item_ids: that.data.inValidCartList.map(item => item.id)
+          }, { handleError: false }).then((res) => {
+            that.setData({ 
+              inValidCartList: [],
+              totalNum:res.data.total_num,
+              totalPrice:res.data.amount,
+              isAllSelect:res.data.is_all_selected
+            });
+            app.setShoppingCartNum(res.data.total_num)
+          });
         }
       }
       
@@ -326,23 +308,31 @@ Page({
     }
     return {isStepPrice,stepPrice};
   },
-  setStepPricesHint(num,itemData){
-    console.log('this.data.discount: ', this.data.discount);
+  setStepPricesHint(itemData,isUpdateOrigin){
+      const that = this
+    console.log('this.data.discount: ', itemData);
     let sph = '';
     let d = itemData.step_prices;
 
     if(d && d.length > 0){
       for(let i = 0; i < d.length; i++){
-        if(i === d.length - 1 && num >= d[i].num){
+        if(i === d.length - 1 && itemData.cart_num >= d[i].num){
           sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件`;
+          itemData.price_sale = d[i].price_sale
+          // if(!isUpdateOrigin) that.setPriceOnDom(itemData.id,d[i].price_sale)
+          
           break;
         }
-        if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
-          sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
+        if(i < d.length - 1 && itemData.cart_num >= d[i].num && itemData.cart_num < d[i + 1].num){
+          sph = `已享￥${Util.returnPrice(d[i].price_sale)}/件，再买${d[i + 1].num - itemData.cart_num}件享￥${Util.returnPrice(d[i + 1].price_sale)}/件`;
+          itemData.price_sale = d[i].price_sale
+          // if(!isUpdateOrigin) that.setPriceOnDom(itemData.id,d[i].price_sale)
           break;
         }
-        if(i === 0 && num < d[i].num){
-          sph = `再买${d[i].num - num}件享￥${Util.returnPrice(d[i].price_sale)}/件` 
+        if(i === 0 && itemData.cart_num < d[i].num){
+          sph = `再买${d[i].num - itemData.cart_num}件享￥${Util.returnPrice(d[i].price_sale)}/件` 
+          itemData.price_sale = itemData.beforePriceSale
+          // if(!isUpdateOrigin) that.setPriceOnDom(itemData.id,itemData.beforePriceSale)
           break;
         }
       }
@@ -350,26 +340,63 @@ Page({
     return sph;
     // if(sph !== stepPricesHint) this.setData({ stepPricesHint: sph });
     // this.triggerEvent('traggleStepPriceHint', {
-    //   stepPricesHint,
+    //   stepPricesHint,item_stock
     //   id:this.data.itemData.id
     // });
   },
-  getStepPricesHint(num,itemData){
-    console.log('aaanum',num,itemData)
+  setSteppriceSale(itemData){
+    const that = this
+    let sph = '';
+    let d = itemData.step_prices;
+
+    if(d && d.length > 0){
+      for(let i = 0; i < d.length; i++){
+        if(i === d.length - 1 && itemData.cart_num >= d[i].num){
+          sph = d[i].price_sale
+          
+          break;
+        }
+        if(i < d.length - 1 && itemData.cart_num >= d[i].num && itemData.cart_num < d[i + 1].num){
+          sph = d[i].price_sale
+          // if(!isUpdateOrigin) that.setPriceOnDom(itemData.id,d[i].price_sale)
+          break;
+        }
+        if(i === 0 && itemData.cart_num < d[i].num){
+          sph =  itemData.beforePriceSale
+          break;
+        }
+      }
+    }
+    return sph;
+  },
+  setPriceOnDom(id,price_sale){
+    const that= this
+    that.data.validCartList.forEach(item =>{
+      if(item.id == id){
+        if(item.price_sale > price_sale){
+          item.price_sale = price_sale
+        }
+      }
+    })
+    that.setData({
+      validCartList:that.data.validCartList
+    })
+  },
+  getStepPricesHint(itemData){
     let price;
     let d = itemData.step_prices;
 
     if(d && d.length > 0){
       for(let i = 0; i < d.length; i++){
-        if(i === d.length - 1 && num >= d[i].num){
+        if(i === d.length - 1 && itemData.num >= d[i].num){
           price = d[i].price_sale
           break;
         }
-        if(i < d.length - 1 && num >= d[i].num && num < d[i + 1].num){
+        if(i < d.length - 1 && itemData.num >= d[i].num && itemData.num < d[i + 1].num){
           price = d[i].price_sale
           break;
         }
-        if(i === 0 && num < d[i].num){
+        if(i === 0 && itemData.num < d[i].num){
           price = itemData.originPriceSale
           break;
         }
@@ -414,9 +441,35 @@ Page({
       this.setData({ keyHeight: h - tabBarHeight });
     },
   inputConfirm(e){
-    this.joinShopCart = this.selectComponent(`#joinShopCart${this.data.itemIndex}`)
-    this.joinShopCart.triggleInputNum(this.data.inputNum)
-    this.joinShopCart.inputConfirm()
+    console.log("shoppingcart")
+    const that = this
+    console.log('1')
+      this.joinShopCart = this.selectComponent(`#joinShopCart${this.data.itemIndex}`)
+      console.log('2')
+      this.joinShopCart.triggleInputNum(that.data.inputNum)
+      console.log('3')
+      this.joinShopCart.inputConfirm()
+  },
+
+  donwConfirm(e){
+    const that = this
+   
+    Http.post(Config.api.itemCartEdit, {
+      cart_item_id: that.data.validCartList[that.data.itemIndex].id,
+      num: +e.detail.num
+    }).then((res) => {
+      let rd = res.data;
+      that.data.validCartList[that.data.itemIndex].cart_num = +e.detail.num
+      console.log('that.data.validCartList[that.data.itemIndex].cart_num ',that.data.validCartList[that.data.itemIndex].cart_num )
+      that.setData({
+        validCartList:that.data.validCartList,
+        totalPrice:rd.amount,
+        totalNum:rd.total_num
+      })
+
+      that.setData({ loading: false });
+    }).catch(() => {
+    });
   },
 
   //添加或减少回调
@@ -429,43 +482,133 @@ Page({
   //全选购物车
   allSelect() {
     let that = this;
-    let { isAllSelect } = that.data;
-    let d = wx.getStorageSync('shoppingCartData');
+    Http.post(Config.api.itemCartSelectedAll, {
+      is_select_all: that.data.isAllSelect ? 0 : 1,
+      store_id:that.data.address.id || ''
+    }, { handleError: false }).then((res) => {
+     
+      that.data.validCartList.forEach((item,index) => {
+        let tempIsSelected = `validCartList[${index}].is_selected`;
+        this.setData({
+          [tempIsSelected]:res.data.is_all_selected,
+        })
+      })
+      this.setData({
+        isAllSelect:res.data.is_all_selected,
+        totalPrice:res.data.amount,
+        totalNum:res.data.total_num
+      })
+      app.setShoppingCartNum(res.data.total_num)
+      console.log('res: ', res);
+      
+    });
+    // let { isAllSelect } = that.data;
+    // let d = wx.getStorageSync('shoppingCartData');
 
-    //更新本地存储
-    for (let i = 0; i < d.length; i++) {
-      if (isAllSelect) {
-        d[i].is_select = false;
-      } else {
-        d[i].is_select = true;
-      }
-    }
-    wx.setStorageSync('shoppingCartData', d);
-    that.updateData();//更新本地数据
+    // //更新本地存储
+    // for (let i = 0; i < d.length; i++) {
+    //   if (isAllSelect) {
+    //     d[i].is_select = false;
+    //   } else {
+    //     d[i].is_select = true;
+    //   }
+    // }
+    // wx.setStorageSync('shoppingCartData', d);
+    // that.updateData();//更新本地数据
 
   },
 
   //单选
   redioSelect(e) {
     let that = this;
-    let id = e.currentTarget.dataset.rs.id;
-    let rs = e.currentTarget.dataset.rs;
-    let status = rs.is_quoted && rs.is_on_sale && Util.judgeItemStock(rs);
-    let d = wx.getStorageSync('shoppingCartData');
-    //更新本地存储
+    console.log('***',e.currentTarget.dataset.index)
+    let item= e.currentTarget.dataset.item;
+    Http.post(Config.api.itemCartSelected, {
+      cart_item_id: item.id,
+      is_selected:item.is_selected ? 0 : 1
+    }, { handleError: false }).then((res) => {
+      let tempIsSelected = `validCartList[${e.currentTarget.dataset.index}].is_selected`;
+      console.log('tempIsSelected',tempIsSelected)
+      this.setData({
+        isAllSelect:res.data.is_all_selected,
+        totalPrice:res.data.amount,
+        [tempIsSelected]:!item.is_selected,
+         totalNum:res.data.total_num
+      })
+      app.setShoppingCartNum(res.data.total_num)
+      console.log('res: ', res);
+      
+    });
+    
+    // let rs = e.currentTarget.dataset.rs;
+    // let status = rs.is_quoted && rs.is_on_sale && Util.judgeItemStock(rs);
+    // let d = wx.getStorageSync('shoppingCartData');
+    // //更新本地存储
 
-    for (let i = 0; i < d.length; i++) {
-      if (d[i].id === id && status) {
-        d[i].is_select = !d[i].is_select;
-        break;
-      } else if (d[i].id === id && !status && this.data.isEdit) {
-        d[i].is_select = !d[i].is_select;
-        break;
-      }
+    // for (let i = 0; i < d.length; i++) {
+    //   if (d[i].id === id && status) {
+    //     d[i].is_select = !d[i].is_select;
+    //     break;
+    //   } else if (d[i].id === id && !status && this.data.isEdit) {
+    //     d[i].is_select = !d[i].is_select;
+    //     break;
+    //   }
+    // }
+    // wx.setStorageSync('shoppingCartData', d);
+
+    // that.updateData();//更新本地数据
+  },
+  notifyParent(e){
+    this.setData({
+      totalPrice:e.detail.amount,
+      isAllSelect:e.detail.is_all_selected,
+    })
+    console.log('通知父组件',e)
+    let itemData = e.detail.itemData
+    if(itemData.step_prices && itemData.step_prices.length > 0){
+      this.data.validCartList.map((item,index) => {
+        let tempHint = `validCartList[${index}].stepPricesHint`;
+        let tempNum= `validCartList[${index}].cart_num`;
+        let tempPrice = `validCartList[${index}].price_sale`;
+        console.log(item.id,itemData.id)
+          if(item.id == itemData.id){
+            console.log("设置cart_num",tempNum)
+            this.setData({
+              [tempHint]:this.setStepPricesHint(itemData),
+              [tempNum]:itemData.cart_num,
+              [tempPrice]:this.setSteppriceSale(itemData)
+            })
+          }
+        })
+    }else{
+      this.data.validCartList.map((item,index) => {
+        let tempNum= `validCartList[${index}].cart_num`;
+          if(item.id == itemData.id){
+            this.setData({
+              [tempNum]:itemData.cart_num
+            })
+          }
+        })
     }
-    wx.setStorageSync('shoppingCartData', d);
+    
+    
+    
 
-    that.updateData();//更新本地数据
+  },
+  notifyRemove(e){
+    const that = this
+    Http.post(Config.api.itemCartRemove, {
+      cart_item_ids: [e.detail.id]
+    }, { handleError: false }).then((res) => {
+      that.data.validCartList.splice(e.detail.index,1)
+      that.setData({ 
+        validCartList: that.data.validCartList,
+        totalNum:res.data.total_num,
+        totalPrice:res.data.amount,
+        isAllSelect:res.data.is_all_selected
+      });
+      app.setShoppingCartNum(res.data.total_num)
+    });
   },
   setStorage(item) {
     let d = wx.getStorageSync('shoppingCartData');
@@ -506,88 +649,102 @@ Page({
   updateData(data) {
     wx.showLoading();
     let that = this;
-    let totalNum = 0, totalPrice = 0, discountsPrice = 0;
-    let { dataItem } = that.data;
-    if (data) dataItem = data;
 
-    let d = wx.getStorageSync('shoppingCartData');
+    data.effective_items.forEach(item => {
+      item.stepPricesHint = that.setStepPricesHint(item,true)
+    })
+    data.lose_effect_items.forEach(item => {
+      item.stepPricesHint = that.setStepPricesHint(item,true)
+    })
+    that.setData({
+      validCartList:data.effective_items,
+      inValidCartList:data.lose_effect_items,
+      isAllSelect:data.is_all_selected,
+      totalPrice:data.amount,
+      totalNum:data.total_num
+    })
+    wx.hideLoading();
+    // let totalNum = 0, totalPrice = 0, discountsPrice = 0;
+    // let { dataItem } = that.data;
+    // if (data) dataItem = data;
 
-    if (d.length > 0) {
-      for (let i = 0; i < dataItem.length; i++) {
-        for (let j = 0; j < d.length; j++) {
-          if (dataItem[i].id === d[j].id) {
-            let status = dataItem[i].is_quoted && dataItem[i].is_on_sale && Util.judgeItemStock(dataItem[i])
-            //上架
-            if (status) {
-              dataItem[i].is_select = d[j].is_select;
-            } else if (!status && that.data.isEdit) {
-              dataItem[i].is_select = d[j].is_select;
-            } else if (!status && !that.data.isEdit) {
-              dataItem[i].is_select = false;
-              that.setStorage(dataItem[i]);
-            }
-            dataItem[i].select_num = d[j].num;
+    // let d = wx.getStorageSync('shoppingCartData');
 
-            if (dataItem[i].is_select && status) {
-              let td = this.getStepPrices(dataItem[i]);
-              totalPrice += td.totalPrice;
-              discountsPrice += td.discountsPrice;
-            }
-            if (dataItem[i].is_select) {
-              totalNum += dataItem[i].select_num;
-            }
-            break;
-          }
-          if (j === d.length - 1) {
-            dataItem.remove(i);
-            i--;
-          }
-        }
-      }
+    // if (d.length > 0) {
+    //   for (let i = 0; i < dataItem.length; i++) {
+    //     for (let j = 0; j < d.length; j++) {
+    //       if (dataItem[i].id === d[j].id) {
+    //         let status = dataItem[i].is_quoted && dataItem[i].is_on_sale && Util.judgeItemStock(dataItem[i])
+    //         //上架
+    //         if (status) {
+    //           dataItem[i].is_select = d[j].is_select;
+    //         } else if (!status && that.data.isEdit) {
+    //           dataItem[i].is_select = d[j].is_select;
+    //         } else if (!status && !that.data.isEdit) {
+    //           dataItem[i].is_select = false;
+    //           that.setStorage(dataItem[i]);
+    //         }
+    //         dataItem[i].select_num = d[j].num;
+
+    //         if (dataItem[i].is_select && status) {
+    //           let td = this.getStepPrices(dataItem[i]);
+    //           totalPrice += td.totalPrice;
+    //           discountsPrice += td.discountsPrice;
+    //         }
+    //         if (dataItem[i].is_select) {
+    //           totalNum += dataItem[i].select_num;
+    //         }
+    //         break;
+    //       }
+    //       if (j === d.length - 1) {
+    //         dataItem.remove(i);
+    //         i--;
+    //       }
+    //     }
+    //   }
 
       
 
-      let validCartList = [];
-      let inValidCartList = [];
-      dataItem.map(item => {
-        item.originPriceSale = item.originPriceSale || item.price_sale;
-        let stepPricesHint = this.setStepPricesHint(item.select_num,item)
-        console.log('stepPricesHint',stepPricesHint)
-        if(stepPricesHint && stepPricesHint.length > 0){
-          item.price_sale = this.getStepPricesHint(item.select_num,item)
-        }
-        item.stepPricesHint = stepPricesHint
-        if(item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted){
-          validCartList.push(item)
-        }else{
-          inValidCartList.push(item)
-        }
-      })
-      console.log('打印更新后的validCartList',validCartList)
+    //   let validCartList = [];
+    //   let inValidCartList = [];
+    //   dataItem.map(item => {
+    //     item.originPriceSale = item.originPriceSale || item.price_sale;
+    //     let stepPricesHint = this.setStepPricesHint(item.select_num,item)
+    //     console.log('stepPricesHint',stepPricesHint)
+    //     if(stepPricesHint && stepPricesHint.length > 0){
+    //       item.price_sale = this.getStepPricesHint(item.select_num,item)
+    //     }
+    //     item.stepPricesHint = stepPricesHint
+    //     if(item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted){
+    //       validCartList.push(item)
+    //     }else{
+    //       inValidCartList.push(item)
+    //     }
+    //   })
+    //   console.log('打印更新后的validCartList',validCartList)
      
-      that.setData({
-        dataItem: dataItem,
-        totalNum: totalNum,
-        totalPrice: totalPrice,
-        discountsPrice: discountsPrice,
-        validCartList: dataItem.filter(item => item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted),
-        inValidCartList,
-      }, () => {
-        that.judgeIsAllSelect();//判断是否全选
-        console.log('***validCartList',this.data.validCartList);
-      });
-    } else {
-      that.setData({
-        dataItem: [],
-        totalNum: 0,
-        totalPrice: 0,
-        discountsPrice: 0,
-        validCartList:[],
-        inValidCartList:[]
-      });
-    }
-    wx.hideLoading();
-    app.shoppingCartNum(); //计算购物车数量并显示角标
+    //   that.setData({
+    //     dataItem: dataItem,
+    //     totalNum: totalNum,
+    //     totalPrice: totalPrice,
+    //     discountsPrice: discountsPrice,
+    //     validCartList: dataItem.filter(item => item.is_on_sale && Util.judgeItemStock(item) && item.is_quoted),
+    //     inValidCartList,
+    //   }, () => {
+    //     that.judgeIsAllSelect();//判断是否全选
+    //     console.log('***validCartList',this.data.validCartList);
+    //   });
+    // } else {
+    //   that.setData({
+    //     dataItem: [],
+    //     totalNum: 0,
+    //     totalPrice: 0,
+    //     discountsPrice: 0,
+    //     validCartList:[],
+    //     inValidCartList:[]
+    //   });
+    // }
+    // app.shoppingCartNum(); //计算购物车数量并显示角标
   },
 
   //阶梯价
@@ -618,65 +775,27 @@ Page({
 
   //获取购物车数据
   getShoppingCartData() {
-    let that = this;
-    let d = wx.getStorageSync('shoppingCartData');
-    let item = [];
-    if (d && d.length > 0) {
-      let ids = [];
-      for (let i = 0; i < d.length; i++) {
-        ids.push(d[i].id);
-        item.push({
-          id: d[i].id,
-          num: d[i].num,
-        })
+    const that = this;
+    Http.get(Config.api.itemCartQuery, {
+      store_id: this.data.address.id || ''
+    }).then((res) => {
+      let rd = res.data;
+      if(rd.is_change){
+        wx.showToast({
+          title: '商品信息已变动',
+          icon: 'none'
+      });
       }
-
-      wx.showNavigationBarLoading();
-      that.setData({ loading: true }, ()=>{
-        Http.post(Config.api.itemCartQuery, {
-          ids: ids,
-          store_id: this.data.address.id || ''
-        }).then((res) => {
-          let rd = res.data;
-          if (rd.length === 0) {
-            wx.removeStorageSync('shoppingCartData');
-          } else {
-            for (let i = 0; i < d.length; i++) {
-              let obj = d[i];
-              let dId = obj.id;
-              let isExist = false;
-
-              for (let j = 0; j < rd.length; j++) {
-                let child = rd[j];
-                let status = child.is_quoted && child.is_on_sale && Util.judgeItemStock(child);
-                let n = child.id;
-                if (n == dId) { //判断ID是否相等
-                  if (obj.num < 1 && status) obj.num = child.min_num_per_order || 1;
-                  isExist = true;
-                  break;
-                }
-              }
-              if (!isExist) {
-                d.remove(i);
-              }
-            }
-            wx.setStorageSync('shoppingCartData', d);
-          }
-          that.updateData(rd);//更新本地数据
-          wx.hideNavigationBarLoading();
-          that.setData({ loading: false });
-        }).catch(() => {
-          wx.hideNavigationBarLoading();
-          that.setData({ loading: false });
-        });
-      });
-    } else {
-      that.setData({
-        dataItem: [],
-        validCartList:[],
-        inValidCartList:[],
-      });
-    }
+      rd.effective_items.forEach(item => item.beforePriceSale = item.price_sale)
+      rd.lose_effect_items.forEach(item => item.beforePriceSale = item.price_sale)
+      app.setShoppingCartNum(rd.total_num)
+      that.updateData(rd);//更新本地数据
+      wx.hideNavigationBarLoading();
+      that.setData({ loading: false });
+    }).catch(() => {
+      wx.hideNavigationBarLoading();
+      that.setData({ loading: false });
+    });
   },
   //邮费优惠
   activity() {
@@ -689,21 +808,21 @@ Page({
   },
 
   onSubmit(){
-    let d = wx.getStorageSync('shoppingCartData');
+    let d = []
     this.data.validCartList.map(item => {
-      if(item.is_select){
-        d.forEach(itemChild => {
-          if(item.id == itemChild.id){
-            console.log('item.id',item.id)
-            console.log('itemChild.id',itemChild.id)
-            let stepPriceInfo = this.stepPriceInfo(itemChild.num,item)
-            console.log('stepPriceInfo',stepPriceInfo)
-            if(stepPriceInfo.isStepPrice){
-              itemChild.price = stepPriceInfo.stepPrice < item.price_sale ? stepPriceInfo.stepPrice : item.price_sale
-            }else{
-              itemChild.price = item.price_sale
-            }
-          }
+      if(item.is_selected){
+        let price;
+        let stepPriceInfo = this.stepPriceInfo(item.cart_num,item)
+        if(stepPriceInfo.isStepPrice){
+          price = stepPriceInfo.stepPrice < item.price_sale ? stepPriceInfo.stepPrice : item.price_sale
+        }else{
+          price = item.price_sale
+        }
+        d.push({
+          id:item.item_id,
+          is_select:item.is_selected,
+          num:item.cart_num,
+          price
         })
       }
         
