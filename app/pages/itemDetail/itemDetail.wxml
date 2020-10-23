@@ -122,14 +122,14 @@
 			<view class="goods_header--conetnt align-center activity-item">
 				<view class="send_title">预售时间</view>
 				<view class="content">
-					{{detail.presale_start_time}}
+					{{tools.returnDateFormat(detail.presale_start_time, 'MM-dd HH:mm')}}
 					<text style="margin: 0 10rpx;">至</text>
-					{{detail.presale_end_time}}
+					{{tools.returnDateFormat(detail.presale_end_time, 'MM-dd HH:mm')}}
 				</view>
 			</view>
 			<view class="goods_header--conetnt align-center activity-item">
 				<view class="send_title">配送时间</view>
-				<view class="content">{{detail.presale_delivery_date}}</view>
+				<view class="content">{{tools.returnDateFormat(detail.presale_delivery_date, 'MM-dd')}}</view>
 			</view>
 		</block>
 		<!--预售商品日期end-->

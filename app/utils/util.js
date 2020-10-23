@@ -117,6 +117,10 @@ const returnSurplusNum = (endDateStr) => {
     return dateStr.substring(5, 10);
   } else if (format === 'HH:mm:ss') {
     return dateStr.substring(11, 19);
+  } else if (format === 'HH:mm') {
+    return dateStr.substring(11, 16);
+  } else if (format === 'MM-dd HH:mm') {
+    return dateStr.substring(5, 16);
   } else {
     return dateStr;
   }
