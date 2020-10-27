@@ -56,33 +56,21 @@ Component({
       //显示时
       if(!isShow){
         let data = wx.getStorageSync('shoppingCartPresaleData');
-        if(that.data.itemData.cart_num && that.data.itemData.cart_num > 0){
-          num = that.data.itemData.cart_num
-
-        }else if(itemData.min_num_per_order > 0 && (num < itemData.min_num_per_order)){
+        if(itemData.cart_num && itemData.cart_num > 0){
+          num = itemData.cart_num;
+        }else if(itemData.min_num_per_order > 0 && num < itemData.min_num_per_order){
           num = itemData.min_num_per_order;
-        }else{
-          num = 1
+        }else if(itemData.min_num_per_order <= 0){
+          num = 1;
         }
 
-        // if (data && data.length > 0 && data[0].id === itemData.id) {
-        //   num = data[0].num;
-        // }else{
-          // if(itemData.min_num_per_order > 0 && (num < itemData.min_num_per_order)){
-          //   num = itemData.min_num_per_order;
-          // }else{
-          //   num = num + 1;
-          // }
-          data = [{
-            id: itemData.id,
-            price:itemData.price_sale,
-            num: num,
-            is_select: true
-          }];
-          num = num;
-          console.log('设置',data)
-          wx.setStorageSync('shoppingCartPresaleData', data);
-        // }
+        data = [{
+          id: itemData.id,
+          price: itemData.price_sale,
+          num: num,
+          is_select: true
+        }];
+        wx.setStorageSync('shoppingCartPresaleData', data);
       }
       this.setData({
         isShow: !isShow,

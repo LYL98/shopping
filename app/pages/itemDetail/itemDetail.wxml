@@ -226,6 +226,13 @@
 				<view class="goods_info--value">{{detail.produce_date}}</view>
 			</view>
 		</view>
+		<!--标品显示-->
+		<view class="align-center goods_attr--box goods_attr--box--gray pl24" wx:if="{{detail.is_standard}}">
+			<view class="align-center label_item goods_attr--item">
+				<view class="goods_info--label">保质期</view>
+				<view class="goods_info--value">{{detail.shelf_life}}天</view>
+			</view>
+		</view>
 		<view class="align-center goods_attr--box pl24">
 			<view class="align-center label_item goods_attr--item">
 				<view class="goods_info--label">规格</view>
