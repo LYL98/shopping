@@ -11,6 +11,7 @@ Page({
     statusStr: ['', 102, 101, 103],
 
     query: {
+      store_id: '',
       live_status: '',
       page: 1,
       page_size: 10
@@ -22,20 +23,19 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-    //判断登录
-    app.signIsLogin(() => {
-      this.liveQuery();
-    });
-  },
-
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    app.shoppingCartNum();
+    //判断登录
+    app.signIsLogin(() => {
+      let address = app.getSelectStore();
+      this.setData({
+        'query.store_id': address.id || ''
+      }, () => {
+        this.liveQuery();
+        app.shoppingCartNum();
+      });
+    });
   },
 
   // navbar 切换的响应事件

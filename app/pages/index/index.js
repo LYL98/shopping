@@ -158,7 +158,7 @@ Page({
         that.getWorkTime();
       });
       /*===== 埋点 start ======*/
-      app.gioSetUser(rd.id);
+      app.gioSetUser(rd);
       /*===== 埋点 end ======*/
     }
   },

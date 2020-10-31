@@ -3,7 +3,7 @@
  */
 
  //版本
-export const Version = 'V4.5.0';
+export const Version = 'V4.5.1';
 
 //是否开发(dev开发、test测试；pre预发布；pro生产)
 export const Conn = 'pro';
