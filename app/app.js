@@ -76,7 +76,7 @@ App({
             }
             let address = that.getSelectStore();
             if(!that.globalData.gioIsSetUser && address.id){
-              that.gioSetUser(address.id);
+              that.gioSetUser(address);
             }
             typeof callBack == "function" && callBack(rd);
           } else {
@@ -108,37 +108,19 @@ App({
   },
 
   //gio设置用户变量
-  gioSetUser(storeId){
-    let that = this;
-    let { loginUserInfo } = that.globalData;
-    Http.get(Config.api.getStoreTags, {
-      id: storeId
-    }, {
-      handleError: false
-    }).then(res => {
-      let rd = res.data;
-      let tags = '';
-      rd.tags.forEach(item => {
-        tags = `${tags}${tags ? ',' : ''}[${item}]`;
-      });
-      that.gioActionRecordAdd('setUser', {
-        id: loginUserInfo.id,
+  gioSetUser(data){
+    let { loginUserInfo } = this.globalData;
+    this.gioActionRecordAdd('setUser', {
+      id: loginUserInfo.id,
 
-        memberId_ppl: rd.id, //登录用户ID（取门店id）
-        storeArea_ppl: '', //门店面积
-        storePosition_ppl: '', //门店位置
-        ownerCharacter_ppl: '', //店主性格
-        ownerStyle_ppl: '', //店主风格
-        customerPriceType_ppl: '', //客户价格类型
-        buyTime_ppl: '' //购买次数
-      });
-      that.globalData.gioIsSetUser = true;
+      memberId_ppl: data.id, //登录用户ID（取门店id）
+      provinceTitle_ppl: (data.province && data.province.title) || '', //登录用户区域
     });
+    this.globalData.gioIsSetUser = true;
   },
 
   //网络请求异常处理方法
   requestResultCode(res) {
-    console.log('网络请求异常处理方法')
     let that = this;
     if (res.statusCode >= 500){
       wx.showModal({
@@ -265,12 +247,10 @@ App({
   // //获取购物车数量
   getShoppingCartNum(){
     const that = this
-    console.log('请求************')
     let address = that.getSelectStore()
     Http.get(Config.api.itemCartTotalNum, {
       store_id: address.id || ''
     }).then((res) => {
-      console.log('********',res.data)
       let rd = res.data;
       that.setShoppingCartNum(rd.total_num)
     }).catch(() => {
