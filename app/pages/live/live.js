@@ -11,7 +11,7 @@ Page({
     statusStr: ['', 102, 101, 103],
 
     query: {
-      store_id: null,
+      store_id: '',
       live_status: '',
       page: 1,
       page_size: 10
@@ -30,7 +30,7 @@ Page({
     app.signIsLogin(() => {
       let address = app.getSelectStore();
       this.setData({
-        'query.store_id': address.id
+        'query.store_id': address.id || ''
       }, () => {
         this.liveQuery();
         app.shoppingCartNum();
