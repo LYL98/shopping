@@ -2,7 +2,6 @@
 
 <import src="itemTag.skeleton.wxml"/>
 <template is="skeleton" wx-if="{{showSkeleton}}" />
-
 <view wx:elif="{{dataItem.num > 0}}">
 	<view class="top-bg" wx:if="{{detail.topic_image_header.length > 0}}">
 		<image src="{{tencentPath + detail.topic_image_header[0] + '_min750x750'}}" style="width: 100vw; height: 100vw;" />
