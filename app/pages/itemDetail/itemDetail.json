@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "商品详情",
   "usingComponents": {
+    "pageNavBar": "/components/pageNavBar/pageNavBar",
     "joinShopCart": "/components/joinShopCart/joinShopCart",
     "presale": "/components/presale/presale"
   }

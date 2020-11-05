@@ -30,6 +30,10 @@ Page({
     this.windowWidth = wx.getSystemInfoSync().windowWidth;
     this.windowHeight = wx.getSystemInfoSync().windowHeight;
     this.factor = this.windowWidth / 750;
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#e14543',
+    })
     //判断登录
     app.signIsLogin((res) => {
       let { query } = this.data;
