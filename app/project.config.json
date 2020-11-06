@@ -303,6 +303,12 @@
         {
           "name": "pages/itemTag/itemTag",
           "pathName": "pages/itemTag/itemTag",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/itemList/itemList",
+          "pathName": "pages/itemList/itemList",
           "scene": null
         }
       ]

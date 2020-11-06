@@ -68,7 +68,8 @@
       .goods-item-info {
         position: relative;
         min-height: 286rpx;
-        padding: 12rpx 16rpx 16rpx;
+        padding: 12rpx 16rpx 10rpx;
+        // padding: 12rpx 16rpx 16rpx;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -164,5 +165,34 @@
       font-size: 22rpx;
       height: 34rpx;
       line-height: 34rpx;
+    }
+  }
+
+  .store-type {
+    font-size: 18rpx;
+    color: #989797;
+    margin-top: 6rpx;
+    .type-label {
+      color: #FFF;
+      background: #FF8F1F;
+      border-radius: 4rpx;
+      padding: 0rpx 3rpx;
+      margin-right: 6rpx;
+    }
+    .type-label-self {
+      background: #FF6010;
+    }
+    .type-buyer{
+      color:#FF8F1F;
+      border:1rpx solid #FF8F1F;
+      // width: 50rpx;
+      // padding-left: 2rpx;
+      // padding-right: 2rpx;
+      text-align: center;
+      border-radius: 4rpx;
+      margin-right: 4rpx;
+      line-height: 22rpx;
+      height: 24rpx;
+      // margin-bottom: 4rpx;
     }
   }

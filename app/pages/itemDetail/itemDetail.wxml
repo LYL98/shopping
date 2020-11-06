@@ -107,6 +107,11 @@
 			<view class="goods_info--delivery" wx:else>运费{{tools.returnPrice(detail.delivery_price)}}元</view>
 		</view>
 
+		<view class="store-type align-center" wx:if="{{detail.buyer.length > 0}}">
+						<view class="type-buyer tag_item">买手</view>
+						<text>{{detail.buyer}}</text>
+				</view>
+
 		<view class="goods_header--conetnt align-center">
 			<view class="align-center justify-between" style="width: 100%;">
 				<view class="goods_value--weight">毛重{{detail.gross_weight ? '约' + tools.returnGrossWeight(detail.gross_weight) + '斤' : '-'}}</view>

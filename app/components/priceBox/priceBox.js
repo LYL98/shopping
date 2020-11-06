@@ -48,7 +48,11 @@ Component({
     supplier: {
       type: String,
       value: ''
-    }
+    },
+    buyer: {
+      type: String,
+      value: ''
+    },
   },
 
   observers: {
