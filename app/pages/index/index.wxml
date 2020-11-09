@@ -124,10 +124,7 @@
 			<view class="step" style="margin-left: {{tagsListX}}rpx;"></view>
 		</view>
 		
-		<!-- 双11入口 -->
-		<navigator class="hot-sale-entry" url="/pages/hotSaleList/hotSaleList">
-			<image src="/assets/img/hotSale/hot_sale_entry.png"></image>
-		</navigator>
+		
 
 		<!--卡片区-->
 		<view class="cards" wx:if="{{tagsList.card.length > 0}}">
@@ -153,7 +150,10 @@
 			</view>
 		</view>
 
-		
+		<!-- 双11入口 -->
+		<navigator class="buy-11-entry" url="/pages/itemTag/itemTag?id=32">
+			<image src="/assets/img/buy11.png"></image>
+		</navigator>
 
 		<!-- 热销榜单入口 -->
 		<navigator class="hot-sale-entry" url="/pages/hotSaleList/hotSaleList">
