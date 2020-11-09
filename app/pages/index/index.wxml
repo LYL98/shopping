@@ -206,7 +206,10 @@
 							</view>
 						</view>
 						<view>
-							<priceBox
+							
+						</view>
+							<view class="goods-item-info-bottom">
+								<priceBox
 								vipLevel="{{dataItem.vip_level}}"
 								vipTitle="{{dataItem.vip_title}}"
 								vipDiscount="{{dataItem.vip_discount}}"
@@ -217,20 +220,16 @@
 								priceNoVip="{{item.price_novip}}"
 								saleType="{{item.sale_type}}"
 								supplier="{{item.supplier}}"
+								buyer="{{item.buyer}}"
 							/>
-							
-						</view>
-
-					</view>
-					<view class="goods-item-info-bottom">
-								
-
 								<view class="cart-wrapper">
 									<handleShopCart itemData="{{item}}" />
 								</view>
 							</view>
 
 				</view>
+					</view>
+					
 			</view>
 
 			<view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query)}}</view>
