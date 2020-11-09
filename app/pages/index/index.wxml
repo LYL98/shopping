@@ -123,6 +123,11 @@
 		<view class="tags-list-step-body" wx:if="{{tagsList.kingkong.length > 8}}">
 			<view class="step" style="margin-left: {{tagsListX}}rpx;"></view>
 		</view>
+		
+		<!-- 双11入口 -->
+		<navigator class="hot-sale-entry" url="/pages/hotSaleList/hotSaleList">
+			<image src="/assets/img/hotSale/hot_sale_entry.png"></image>
+		</navigator>
 
 		<!--卡片区-->
 		<view class="cards" wx:if="{{tagsList.card.length > 0}}">
@@ -147,6 +152,8 @@
 				<image class="image" src="/assets/img/card_default.png" style="width: 233.33rpx; height: 233.33rpx;"/>
 			</view>
 		</view>
+
+		
 
 		<!-- 热销榜单入口 -->
 		<navigator class="hot-sale-entry" url="/pages/hotSaleList/hotSaleList">

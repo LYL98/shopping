@@ -1,13 +1,14 @@
 <wxs src="./../../utils/tools.wxs" module="tools" />
 
 <import src="itemTag.skeleton.wxml"/>
-<view  style="background: {{tagDetail.bg_color}}">
-	<view class="top-bg" wx:if="{{tagDetail.header_image.length > 0}}">
-		<image src="{{tencentPath + tagDetail.header_image+ '_min750x750'}}" style="width: 100vw; height: 100vw;" />
+<template is="skeleton" wx-if="{{showSkeleton}}" />
+<view  wx:elif="{{tagDetail.areas.length > 0}}" style="background: {{tagDetail.bg_color}}">
+	<view class="top-bg" wx:if="{{tagDetail.topic_image_header.length > 0}}">
+		<image src="{{tencentPath + tagDetail.topic_image_header[0]+ '_min750x750'}}" style="width: 100vw; height: 100vw;" />
 	</view>
 
 	<view wx:for="{{tagDetail.areas}}" wx:key="index" wx:for-item="area" >
-	<image src="{{tencentPath + area.area_image}}" style="width: 100vw; height: 128rpx;" />
+	<image wx:if="{{area.area_image && area.area_image.length > 0}}" src="{{tencentPath + area.area_image}}" style="width: 100vw; height: 128rpx;" />
 		<view class="goods-list" >
 		<view
 			class="goods-item"
@@ -87,4 +88,4 @@
 	</navigator>
 </view>
 
-
+<defaultPage wx:else currentPage="itemList"></defaultPage>
