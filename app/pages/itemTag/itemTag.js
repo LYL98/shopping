@@ -96,7 +96,7 @@ Page({
         title: res.data.title
       });
       wx.setNavigationBarColor({
-        frontColor: res.data.font_color,
+        frontColor: res.data.font_color.length > 0 ? res.data.font_color : '#000000',
         backgroundColor: res.data.bg_color,
         animation: {
           duration: 400,
