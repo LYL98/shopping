@@ -43,7 +43,7 @@ Page({
         query.store_id = ad.id;
         query.item_tag_id = this.options.id;
         this.setData({ query: query }, () => {
-          this.itemQuery();
+          // this.itemQuery();
           this.itemTagsDetail();
         });
       }
