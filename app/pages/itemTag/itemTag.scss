@@ -1,7 +1,7 @@
 @import "./itemTag.skeleton.scss";  
   .top-bg{
     height: 100vw;
-    margin-bottom: 10rpx;
+    margin-bottom: 15rpx;
     >image{
       display: block;
     }
@@ -13,6 +13,7 @@
   .goods-list {
     width: 700rpx;
     margin: 0 auto;
+    margin-top: 5rpx;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

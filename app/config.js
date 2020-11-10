@@ -6,14 +6,14 @@
 export const Version = 'V4.5.3';
 
 //是否开发(dev开发、test测试；pre预发布；pro生产)
-export const Conn = 'test';
+export const Conn = 'pro';
 
 //测试环境api地址
 export const RequestHttpDev = 'https://vestadev.pgyscm.com';
 export const RequestWsDev = 'wss://iris.pgyscm.com/connection/websocket';
 
 //测试发布环境api地址
-export const RequestHttpTest = 'https://vestatestls.pgyscm.com';
+export const RequestHttpTest = 'https://vestatest.pgyscm.com';
 export const RequestWsTest = 'wss://iris.pgyscm.com/connection/websocket';
 
 //预发布环境api地址
