@@ -410,6 +410,23 @@ Page({
     app.gioActionRecordAdd('secBuyEntrance_evar', type === 'kingkong' ? '金刚区' : '卡片区');
     /*===== 埋点 end ======*/
   },
+  onBuy11(){
+    console.log('this.data.address.province_code ',this.data.address.province_code )
+    wx.navigateTo({
+      url: `/pages/itemTag/itemTag?id=${this.data.address.province_code == 791 ? 83 : 88}`,
+    })
+    
+     /*===== 埋点 start ======*/
+     app.gioActionRecordAdd('positionClick', {
+      moduleTitle_var: '双11', //楼层
+      position_var: 1, //坑位
+      positonName_var: '双11', //流量位名称
+    });
+
+    app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');
+    app.gioActionRecordAdd('secBuyEntrance_evar', '双11');
+    /*===== 埋点 end ======*/
+  },
   //点击商品
   clickItem(e){
     let item = e.currentTarget.dataset.item;

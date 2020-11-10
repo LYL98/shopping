@@ -2,14 +2,15 @@
 
 <import src="itemTag.skeleton.wxml"/>
 <template is="skeleton" wx-if="{{showSkeleton}}" />
-<view wx:elif="{{dataItem.num > 0}}" style="background:#e14543">
-	<view class="top-bg" wx:if="{{detail.topic_image_header.length > 0}}">
-		<image src="{{tencentPath + detail.topic_image_header[0] + '_min750x750'}}" style="width: 100vw; height: 100vw;" />
-	</view>
-	<view class="goods-list">
+<view  wx:else style="background: {{tagDetail.bg_color}}">
+	<image wx:if="{{tagDetail.topic_image_header.length > 0}}" mode='widthFix' src="{{tencentPath + tagDetail.topic_image_header[0]}}" style="width: 100%" />
+
+	<view wx:for="{{tagDetail.areas}}" wx:key="index" wx:for-item="area" >
+	<image wx:if="{{area.area_image && area.area_image.length > 0}}" src="{{tencentPath + area.area_image}}" style="width: 100vw; height: 128rpx;" />
+		<view class="goods-list" >
 		<view
 			class="goods-item"
-			wx:for="{{dataItem.items}}"
+			wx:for="{{area.items}}"
 			wx:key="index"
 			bind:tap="clickItem"
 			data-item="{{item}}"
@@ -46,25 +47,27 @@
 					</view>
 				</view>
 				<view>
-					<priceBox
-						vipLevel="{{dataItem.vip_level}}"
-						vipTitle="{{dataItem.vip_title}}"
-						vipDiscount="{{dataItem.vip_discount}}"
-						isVipItem="{{item.is_vip_item}}"
-						isQuoted="{{item.is_quoted}}"
-						priceSale="{{item.price_sale}}"
-						priceOrigin="{{item.price_origin}}"
-						priceNoVip="{{item.price_novip}}"
-					/>
-					<view class="goods-item-info-bottom">
-						<view class="store-type">
+				<view class="store-type">
 							<block wx:if="{{item.sale_type == '平台'}}">
 								<text class="type-label" >商家</text>
 								<text>{{item.supplier}}门店</text>
 							</block>
 							<text wx:elif="{{item.sale_type == '自营'}}" class="type-label type-label-self">优选</text>
 						</view>
-
+					
+					<view class="goods-item-info-bottom">
+						
+						<priceBox
+						vipLevel="{{tagDetail.vip_level}}"
+						vipTitle="{{tagDetail.vip_title}}"
+						vipDiscount="{{tagDetail.vip_discount}}"
+						isVipItem="{{item.is_vip_item}}"
+						isQuoted="{{item.is_quoted}}"
+						priceSale="{{item.price_sale}}"
+						priceOrigin="{{item.price_origin}}"
+						priceNoVip="{{item.price_novip}}"
+						buyer="{{item.buyer}}"
+					/>
 						<view class="cart-wrapper">
 							<handleShopCart itemData="{{item}}" bindcallback="joinShoppingCart" bind:notifyParent="notifyParent"/>
 						</view>
@@ -75,9 +78,10 @@
 			</view>
 		</view>
 	</view>
-	<view class="load-more" hover-class="link-hover" bind:tap="loadMore" wx:if="{{dataItem.num / query.page_size > query.page}}">{{loading ? '加载中...' : '点击加载更多'}}</view>
-	<view class="bottom-bg" wx:if="{{detail.topic_image_detail.length > 0}}">
-		<image wx:for="{{detail.topic_image_detail}}" wx:key="index" src="{{tencentPath + item + '_min750x750'}}" style="width: 100vw; height: 100vw;" />
+	</view>
+	
+	<view class="bottom-bg" wx:if="{{tagDetail.topic_image_detail.length > 0}}">
+		<image wx:for="{{tagDetail.topic_image_detail}}" wx:key="index" src="{{tencentPath + item + '_min750x750'}}" style="width: 100vw; height: 100vw;" />
 	</view>
 
 	<navigator url="/pages/shoppingCart/shoppingCart" open-type="switchTab" class="shopping-btn">
@@ -86,4 +90,3 @@
 	</navigator>
 </view>
 
-<defaultPage wx:else currentPage="itemList"></defaultPage>
