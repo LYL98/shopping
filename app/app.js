@@ -258,16 +258,16 @@ App({
   },
   // 设置购物车数量
   setShoppingCartNum(num){
-    if(num){
-      wx.setTabBarBadge({
-        index: 3,
-        text: num.toString()
-      });
-    }else{
-      wx.removeTabBarBadge({
-        index: 3
-      });
-    }
+    // if(num){
+    //   wx.setTabBarBadge({
+    //     index: 3,
+    //     text: num.toString()
+    //   });
+    // }else{
+    //   wx.removeTabBarBadge({
+    //     index: 3
+    //   });
+    // }
   },
 
   //计算购物车数量

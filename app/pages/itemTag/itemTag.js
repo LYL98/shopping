@@ -2,6 +2,7 @@
 
 const app = getApp();
 import { Http, Constant, Config } from './../../utils/index';
+
 Page({
 
   data: {
@@ -22,7 +23,14 @@ Page({
       num: 0
     },
     loading: false,
-    showSkeleton: true
+    showSkeleton: true,
+
+    tagDetail:{
+      title:'',
+      header_image:'',
+      areas:[],
+    }
+    
   },
 
   //页面装载时
@@ -30,10 +38,7 @@ Page({
     this.windowWidth = wx.getSystemInfoSync().windowWidth;
     this.windowHeight = wx.getSystemInfoSync().windowHeight;
     this.factor = this.windowWidth / 750;
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#e14543',
-    })
+    
     //判断登录
     app.signIsLogin((res) => {
       let { query } = this.data;
@@ -43,8 +48,8 @@ Page({
         query.store_id = ad.id;
         query.item_tag_id = this.options.id;
         this.setData({ query: query }, () => {
-          this.itemQuery();
-          this.itemTagsDetail();
+          // this.itemQuery();
+          this.itemTagsDetail(query.store_id);
         });
       }
     });
@@ -75,15 +80,33 @@ Page({
     that.setData({ shoppingCartNum: num });
   },
 
-  itemTagsDetail(){
+  itemTagsDetail(store_id){
+     
     let that = this;
     Http.get(Config.api.itemTagsDetail, {
-      id: that.data.query.item_tag_id
+      id: that.data.query.item_tag_id,
+      store_id
+
     }).then(res => {
-      that.setData({ detail: res.data });
+      that.setData({ 
+        tagDetail: res.data,
+        showSkeleton:false
+      });
       wx.setNavigationBarTitle({
         title: res.data.title
       });
+      wx.setNavigationBarColor({
+        frontColor: res.data.font_color.length > 0 ? res.data.font_color : '#000000',
+        backgroundColor: res.data.bg_color,
+        animation: {
+          duration: 400,
+          timingFunc: 'easeIn'
+        }
+      })
+      // wx.setNavigationBarColor({
+      //   frontColor: "#cccccc",
+      //   backgroundColor: res.data.bg_color.substring(0,res.data.bg_color.length),
+      // })   
     });
   },
 
