@@ -8,10 +8,12 @@
 
   <view wx:else>
     <view class="add-cart">
-      <view class="badge" wx:if="{{itemData.cart_num > 0}}">{{itemData.cart_num}}</view>
+      <view class="badge" wx:if="{{itemData.cart_num > 0 }}">{{itemData.cart_num}}</view>
       <!-- 加 -->
-      <image class="image" wx:if="{{itemData.cart_num >= itemData.item_stock || itemData.cart_num >= itemData.order_num_max || itemData.min_num_per_order > itemData.item_stock}}" src="./img/cart_add_unusable.png" catchtap="upUnusable"></image>
+      <text style="color:#989797;font-size:24rpx" wx:if="{{itemData.cart_num >= itemData.item_stock || itemData.cart_num >= itemData.order_num_max || itemData.min_num_per_order > itemData.item_stock}}">售馨</text>
       <image class="image" wx:else src="./img/cart_add.jpg" catchtap="up"></image>
+       <!-- <image class="image"  src="./img/cart_add_unusable.png" catchtap="upUnusable"></image> -->
+      
     </view>
   </view>
 </view>

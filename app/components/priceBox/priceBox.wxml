@@ -1,17 +1,7 @@
               <wxs src="./../../utils/tools.wxs" module="tools" />
               <view class="price-box" >
              
-              <view class="store-type">
-									<block wx:if="{{saleType == '平台'}}">
-										<text class="type-label" >商家</text>
-										<text>{{supplier}}门店</text>
-									</block>
-									<text wx:elif="{{saleType == '自营'}}" class="type-label type-label-self">优选</text>
-								</view>
-                 <view class="store-type align-center" wx:if="{{buyer.length > 0}}">
-                <view class="type-buyer" >买手</view>
-									<text>{{buyer}}</text>
-              </view>
+              
                 <block wx:if="{{isQuoted}}">
                 <!-- 普通价 -->
                   <view class="normal-price" wx:if="{{vipLevel == 0 || !isVipItem || vipDiscount == 0 || vipDiscount == 100}}">
@@ -30,5 +20,21 @@
                 <view wx:else class="no-price">
                   今日未报价
                 </view>
+                <view class="store-type align-center">
+									<view class="store-type-supplier align-center" wx:if="{{saleType == '平台'}}">
+										<view class="type-label-supplier" >商</view>
+										<view class="store-type-supplier-text">{{tools.returnSubString(supplier,0,6)}}</view>
+									</view>
+									<view wx:elif="{{saleType == '自营'}}" class="type-label type-label-self">
+                   <text>优选</text> 
+                  </view>
+                   <view class="align-center" wx:if="{{buyer.length > 0}}">
+                    <view class="type-buyer align-center">
+                      <view class="front">买</view>
+                      <text class="buyer">{{tools.returnSubString(buyer,0,5)}}</text>
+                    </view>
+								</view>
                 
+									
+              </view>
             </view>
