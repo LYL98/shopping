@@ -620,37 +620,71 @@ left: 28rpx;
 }
 
 .store-type {
-  font-size: 22rpx;
+  font-size: 18rpx;
   color: #989797;
+  margin-top: 6rpx;
+  height: 22rpx;
   .type-label {
+    color: #FFF;
+    background: #FF8F1F;
     border-radius: 4rpx;
-    padding: 0 10rpx;
-    line-height:32rpx;
-    margin-right: 8rpx;
-    font-size: 22rpx;
-    color:white;
+    padding:0rpx 3rpx;
+    margin-right: 6rpx;
   }
   .type-label-self {
     background: #FF6010;
-  }
-  .type-label-vendor{
-    background:#FF8F1F;
-
-  }
-  .type-label-spplier{
-    margin-top:4rpx;
-  }
-  .type-buyer{
-    color:#FF8F1F;
-    border:1rpx solid #FF8F1F;
-    text-align: center;
-    border-radius: 4rpx;
-    margin-right: 4rpx;
     line-height: 22rpx;
-    height: 24rpx;
-    padding: 0!important;
+    padding: 1rpx;
+  }
+  
+  .type-buyer{
+    border: 1rpx solid #68564C;
+    border-radius: 4rpx;
+    height: 22rpx;
+    line-height: 2rpx;
+    .front{
+      text-align: center;
+      color: #FFD426;
+      width: 32rpx;
+      height: 100%;
+      line-height: 22rpx;
+      font-size: 18rpx;
+      margin-right: 2rpx;
+      padding-right: 4rpx;
+      background-size: 100% 100%;
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAYCAYAAADtaU2/AAAAAXNSR0IArs4c6QAAAQRJREFUSA291rEOwVAUBuBzWkKMGrGYjDZvYbCIBDEYTKUv0ZeodGoagzCI1TsYbEYPQLpXpD3u1bRp7P673Dvd7/7ntMlhezIUAi9mvhhgM+MM9uAwE0ftWvMAh4k5cMMwhsKqtymZVV/Xu4LssZCc/d3xrk1oYlNMLw8Kg5np3ur1z3BYgb7ruikWZoqNWjXIUb2DSs17b3uK4LBKtymjwMS/LKjUIuT80pAeC8vUWYysMg6BSaievt5LPJyJtvqPi6DFofyaf5xVn7vP23WQ3w2DNZhwUnxkUFgNAYPVfNzVj4DCImJQ8rY1zOhh7zv6NKwONLFOqoYB6xFHMzj8xYXWH/JqQanR0xxSAAAAAElFTkSuQmCC");
+    }
+   .buyer{
+     color:#68564C;
+    padding-right: 4rpx;
+
+   }
   }
 }
+
+.store-type-supplier,.type-label-self{
+  margin-right: 4rpx;
+  height: 22rpx;
+}
+.store-type-supplier{
+  border: 1rpx solid #FF6010;
+  font-size: 18rpx;
+  border-radius: 4rpx;
+  line-height: 22rpx;
+  color:#FF6010;
+  .type-label-supplier{
+    width: 28rpx;
+    text-align: center;
+    height: 100%;
+    background-color: #ff6010;
+    color:white;
+  }
+  .store-type-supplier-text{
+    padding: 0 4rpx;
+    color:#FF6010;
+  }
+}
+
 .activity-coupon-item{
   height: 88rpx;
 }

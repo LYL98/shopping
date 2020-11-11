@@ -418,9 +418,9 @@ Page({
     
      /*===== 埋点 start ======*/
      app.gioActionRecordAdd('positionClick', {
-      moduleTitle_var: '双11', //楼层
+      moduleTitle_var: 'buy11', //楼层
       position_var: 1, //坑位
-      positonName_var: '双11', //流量位名称
+      positonName_var: 'buy11', //流量位名称
     });
 
     app.gioActionRecordAdd('firstBuyEntrance_evar', '首页');

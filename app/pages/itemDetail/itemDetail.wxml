@@ -82,10 +82,9 @@
 			卖点: {{detail.selling_points}}
 		</view>
 
-		<view class="goods_info--tag justify-between align-center">
+		<view class="goods_info--tag justify-between align-center" wx:if="{{detail.tags.length > 0}}">
 			<view class="align-center">
 				<view
-				 wx:if="{{detail.tags.length > 0}}"
 				 class="tag_item align-center"
 				 wx:for="{{tools.returnTags(detail.tags)}}"
 				 wx:for-item="t"
@@ -95,23 +94,32 @@
 				>
 					{{t}}
 				</view>
-				<view class="store-type">
-					<view class="align-center" wx:if="{{detail.sale_type == '平台'}}">
-						<view class="type-label-vendor tag_item">商家</view>
-						<view class="type-label-spplier">{{detail.supplier}}门店</view>
-					</view>
-					<view wx:elif="{{detail.sale_type == '自营'}}" class="tag_item type-label-self">优选</view>
-				</view>
+				
 			</view>
 			<view class="goods_info--delivery" wx:if="{{detail.delivery_price === 0}}">免运费</view>
 			<view class="goods_info--delivery" wx:else>运费{{tools.returnPrice(detail.delivery_price)}}元</view>
 		</view>
 
-		<view class="store-type align-center" wx:if="{{detail.buyer.length > 0}}">
-						<view class="type-buyer tag_item">买手</view>
-						<text>{{detail.buyer}}</text>
+			<view class="align-center justify-between">
+				<view class="store-type  align-center">
+						<view class="store-type-supplier align-center" wx:if="{{detail.sale_type  == '平台'}}">
+							<view class="type-label-supplier" >商</view>
+							<view class="store-type-supplier-text">{{detail.supplier}}</view>
+						</view>
+						<view wx:elif="{{detail.sale_type == '自营'}}" class="type-label type-label-self">
+							<text>优选</text> 
+						</view>
+					<view class="align-center" wx:if="{{detail.buyer.length > 0}}">
+							<view class="type-buyer align-center">
+								<view class="front">买</view>
+								<text class="buyer">{{detail.buyer}}</text>
+							</view>
+						</view>
 				</view>
-
+								
+				<view class="goods_info--delivery" wx:if="{{detail.delivery_price === 0 && detail.tags.length ==0}}">免运费</view>
+				<view class="goods_info--delivery" wx:elif="{{detail.delivery_price  > 0 && detail.tags.length ==0}}">运费{{tools.returnPrice(detail.delivery_price)}}元</view>				
+            </view>
 		<view class="goods_header--conetnt align-center">
 			<view class="align-center justify-between" style="width: 100%;">
 				<view class="goods_value--weight">毛重{{detail.gross_weight ? '约' + tools.returnGrossWeight(detail.gross_weight) + '斤' : '-'}}</view>
@@ -121,6 +129,8 @@
 				<view style="width:100rpx;" wx:else></view>
 			</view>
 		</view>
+
+	
 
 		<!--预售商品日期start-->
 		<block wx:if="{{detail.is_presale}}">
