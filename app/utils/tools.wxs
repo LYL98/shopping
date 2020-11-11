@@ -24,6 +24,11 @@ var returnGrossWeight = function(data) {
   return data / 10;
 }
 
+//返回指定字符串
+var returnSubString = function(str,indexStart,indexEnd) {
+  return str.substring(indexStart,indexEnd);
+}
+
 //返回五舍五入
 var returnToFixed = function(data, num) {
   return data.toFixed(num || 2);
@@ -378,6 +383,7 @@ var returnCouponDetailName = function(item) {
 module.exports = {
   returnPrice: returnPrice,
   returnPriceAbs: returnPriceAbs,
+  returnSubString: returnSubString,
   returnGrossWeight: returnGrossWeight,
   returnToFixed: returnToFixed,
   returnMore: returnMore,

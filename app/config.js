@@ -3,10 +3,10 @@
  */
 
  //版本
-export const Version = 'V4.5.3';
+export const Version = 'V4.5.4';
 
 //是否开发(dev开发、test测试；pre预发布；pro生产)
-export const Conn = 'pro';
+export const Conn = 'test';
 
 //测试环境api地址
 export const RequestHttpDev = 'https://vestadev.pgyscm.com';

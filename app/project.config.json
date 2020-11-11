@@ -98,10 +98,9 @@
           "scene": null
         },
         {
-          "id": 6,
           "name": "商品详情",
           "pathName": "pages/itemDetail/itemDetail",
-          "query": "id=25145",
+          "query": "id=27054",
           "scene": null
         },
         {

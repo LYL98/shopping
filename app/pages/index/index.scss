@@ -302,44 +302,13 @@ view, navigator, text {
     //         position: absolute;
     // right: 18rpx;
     //   bottom: 20rpx;
-    height: 94rpx;
+    height: 84rpx;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
       }
 
-.store-type {
-  font-size: 18rpx;
-  color: #989797;
-  margin-top: 6rpx;
-  .type-label {
-    color: #FFF;
-    background: #FF8F1F;
-    border-radius: 4rpx;
-    padding: 0rpx 3rpx;
-    margin-right: 6rpx;
-  }
-  .type-label-self {
-    background: #FF6010;
-  }
-  .type-buyer{
-    color:#FF8F1F;
-    border:1rpx solid #FF8F1F;
-    // width: 50rpx;
-    text-align: center;
-    border-radius: 4rpx;
-    margin-right: 4rpx;
-    // padding-left: 2rpx;
-    // padding-right: 2rpx;
-    // height: 28rpx;
-    // height: 28rpx;
-    // margin-bottom: 4rpx;
-    padding-bottom: 4rpx;
-    line-height: 20rpx;
-    height: 24rpx;
-    // padding-top: 4rpx;
-  }
-}
+
 .load-more, .load-none{
   background:#fff;
   color: #EEE;
@@ -400,4 +369,8 @@ view, navigator, text {
     height: 118rpx;
     display: block;
   }
+}
+
+.type-label-supplier{
+  line-height: 20rpx!important;
 }
